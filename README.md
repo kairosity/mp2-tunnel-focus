@@ -13,6 +13,8 @@ This web application has been conceptualised and designed around that premise.
 It works as a simple task manager, except that it also keeps track of how long a user works on a particular task. The app is built to encourage and track a sprint-like methodology, or focused work for 
 shorter periods of time. 
 
+# UX
+
 ## User Stories 
 
 ### First Time User Stories
@@ -40,8 +42,11 @@ a visual indication that the countdown is over.
 - If I forget that the open-ended timer is running, I want to be able to delete that segment of time and not have it added to the total
 time spent focused on that task.  
 
-- I want to see summary charts and information displayed telling me how much total time I have spent on each task. 
-- I would like to see this information displayed in pleasing and easy to comprehend visuals.
+- I want to know how much time I have spent on each task today.
+- I want to know how much time I have spent on each task overall. 
+- I want to know how much time I have spent focused and working today.
+- I would like to see this information displayed in pleasing and easy to comprehend charts and visuals.
+- I would like to see a list of what tasks I completed today.
 
 ### Returning User Stories
 
@@ -49,3 +54,80 @@ time spent focused on that task.
 
 ### Accessibility User Stories
 - As a user who is hard of hearing, I want there to be a visual display when the countdown timer ends. 
+
+## Strategy
+
+## Scope
+
+## Structure
+
+## Skeleton
+
+## Surface
+
+# Features
+
+# Accessibility
+
+# Future Release Features
+
+1. Connecting to a database and creating user accounts with proper storage and retrieval of data. 
+2. Connect up API for Google Calendar. 
+3. Add due-dates to tasks. 
+4. Adding project / category functionality. 
+5. Wage calculations for people who are paid per hour/ on a time basis. Very useful for freelancers who operate by time expended.
+6. Daily/weekly/monthly view of time spent working on each task/project. - Automated graphs with D3.js
+
+# Testing
+
+# Issues / Room For Improvement
+
+# Attribution
+
+# Deployment
+
+# Tools & Other Resources Used 
+
+## 1. Design 
+
+- ### **[Dribble](https://dribbble.com/)**
+
+    Used for UX and design inspiration.
+
+
+- ### **[Awwwards](https://www.awwwards.com/)**
+
+    Used for design inspiration.
+
+- ### **[Coolors](https://coolors.co/)**
+    Used to select the colour palette for the project, as well as to generate the printed palette.
+
+- ### **[Figma](https://www.figma.com/)**
+    Used for wireframing and mock-ups
+
+- ### **[Google Fonts]()**
+    All fonts used are google fonts.
+
+- ### **[Font Awesome]()**
+    Most of the icons used are from Font Awesome.
+
+## 2. CSS
+
+## 3. JavaScript
+
+## 4. General
+
+- ### **[How to Write a Git Commit Message - Chris Beams](https://chris.beams.io/posts/git-commit/)**
+    Great post about writing commits for Git.
+
+# Technology Used
+
+- HTML
+- CSS
+- JavaScript
+- D3.js
+- Git 
+- GitHub
+- GitPod
+
+# Acknowledgements

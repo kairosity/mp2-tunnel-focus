@@ -3,10 +3,76 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/a27a231c02.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="assets/css/style.css">
     <title>Tunnel Focus: Time Your Tasks</title>
 </head>
 <body>
+
+    <div class="page-container grid-overlord"> <!--THE RED BORDER IS GRID OVERLORD-->
+    
+        <header class="main-header">
+            <h1 class="main-heading">Tunnel Focus</h1>
+            <h2 class="main-sub-heading">Time Your Tasks</h2>
+        </header>
+
+         <div class="timer-container"> <!--TIMER GOES HERE: THIS IS A GRID CHILD OF GRID-OVERLORD -->
+            TIMER GOES HERE
+        </div>
+      
+        <div class="list-container"> <!--TASK LIST GOES HERE: THIS IS A GRID CHILD OF GRID-OVERLORD-->
+            
+            <div class="add-new-task">
+                <input type="text" id="new-task-input" placeholder="Add new task...">
+                <button><i class="fas fa-plus add-new-task-plus-icon"></i></button>
+            </div>
+
+                <div class="popover-wrapper">
+                    <div class="popover-box">
+                        <ul class="task-options-list">
+                            <li class="task-option edit-task-option"><i class="far fa-edit task-icon task-edit-icon"></i>Edit Task</li>
+                            <li class="task-option delete-task-option"><i class="fas fa-trash-alt task-icon task-delete-icon"></i>Delete Task</li>
+                            <li class="task-option countdown15-task-option"><i class="fas fa-hourglass-half task-icon countdown-timer-icon"></i>Countdown 15 Mins</li>
+                            <li class="task-option countdown25-task-option"><i class="fas fa-hourglass-half task-icon countdown-timer-icon"></i>Countdown 25 Mins</li>
+                            <li class="task-option start-stopwatch-task-option"><i class="fas fa-stopwatch task-icon open-timer-icon"></i>Start Stopwatch</li>
+                            <li class="task-option edit-task-time-task-option"><i class="fas fa-user-clock task-icon manual-edit-time-icon"></i>Edit Task Time</li>
+                        </ul>
+                    </div>
+                </div>
+
+            <div class="list"> 
+                <div class="task">
+                    <p>14m12s</p>
+                    <input type="checkbox" id="task1" name="task1">
+                    <li>Complete the Wireframes</li>
+                    <i class="fas fa-sort"></i>
+                    <i class="fas fa-ellipsis-v"></i>
+                </div>
+                <div class="task">
+                    <p>14m12s</p>
+                    <input type="checkbox" id="task1" name="task1">
+                    <li>Research Typography</li>
+                    <i class="fas fa-sort"></i>
+                    <i class="fas fa-ellipsis-v"></i>
+                </div>
+                <div class="task">
+                    <p>14m12s</p>
+                    <input type="checkbox" id="task1" name="task1">
+                    <li>Select Colour Palette</li>
+                    <i class="fas fa-sort"></i>
+                    <i class="fas fa-ellipsis-v"></i>
+                </div>
+                
+            </div>
+        </div>
+
+       
+
+        <div class="focus-summary-container"> <!--FOCUS SUMMARIES & CHARTS GO HERE : THIS IS A GRID CHILD OF GRID-OVERLORD -->
+            CHARTS GO HERE
+        </div>
+       
+    </div>
     <script type="text/javascript" src="assets/js/app.js"></script>
 </body>
 </html>

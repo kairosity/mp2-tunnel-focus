@@ -1,6 +1,6 @@
 // A main task list that should be an array of task Objects
 
-let taskList = {};
+let taskList = [];
 let timeSegment = 0;
 
 // A Task Class that has all the properties and methods associated with a task
@@ -8,6 +8,7 @@ let timeSegment = 0;
 class Task {
     constructor(taskDescription){
         this.taskDescription = taskDescription; //obvz - the only essential prop to create a new task obj.
+        this.id = null;
         this.completed = false; //obvz.
         this.order = -1; //order of priority in list - will use to structure list order
         this.totalTimeFocusedOnTask = null; //running total of time focused on a specific task
@@ -38,10 +39,6 @@ class Task {
     
 }
 
-let newTask45 = new Task("Testing this function");
-
-console.log(newTask45);
-
 
 //FUNCTIONS TO WRITE
 
@@ -49,18 +46,49 @@ function createNewTask(){
     let taskDescription = document.querySelector('#new-task-input').value;
     if (taskDescription) {
         let newTask = new Task(taskDescription);
+        //add the new task to the array of task objects.
+        newTask.id = taskList.length;
+        taskList.push(newTask);
+        
         document.getElementById('list').innerHTML +=
             `<div class="task">
                 <p>0h0m0s</p>
-                <input type="checkbox" id="task${newTask.order}" name="task${newTask.order}">
+                <input class="taskCheckbox" type="checkbox" id="task${newTask.id}" name="task${newTask.id}" onclick="toggleTaskCompletedOnTaskObject()">
                 <li>${newTask.taskDescription}</li>
-                <i class="fas fa-sort"></i>
-                <i class="fas fa-ellipsis-v"></i>
+                <a><i class="fas fa-sort sort-tasks-icon"></i></a>
+                <a><i class="fas fa-ellipsis-v task-options-icon"></i></a>
             </div>`;
         document.querySelector('#new-task-input').value = "";
+       
+
         }
     
 }
+
+//Need a function that listens for a checkbox being ticked and toggle the completed property on the object being checked. 
+
+
+    
+  function toggleTaskCompletedOnTaskObject(event){
+      var checkboxes = document.querySelectorAll('.taskCheckbox');
+
+      for (let box of checkboxes){
+          box.addEventListener('change', function(event){
+              if(event.target.checked){
+                  event.target.nextElementSibling.classList.add('completed');
+                  console.log(`${event.target.id} is completed`);
+              } else {
+                  event.target.nextElementSibling.classList.remove('completed');
+                  console.log(`${event.target.id}still needs to be completed!`);
+              }
+          })
+      }
+
+  }
+            
+
+
+
 
 
 //1. createNewTask() --> instantiates a new task object and adds it to the list & saves to local storage.

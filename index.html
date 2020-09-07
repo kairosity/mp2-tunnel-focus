@@ -29,7 +29,7 @@
             
             <div class="add-new-task">
                 <input type="text" id="new-task-input" placeholder="Add new task...">
-                <button><i class="fas fa-plus add-new-task-plus-icon"></i></button>
+                <button onclick="createNewTask()"><i class="fas fa-plus add-new-task-plus-icon"></i></button>
             </div>
 
                 <div class="popover-wrapper">
@@ -45,7 +45,7 @@
                     </div>
                 </div>
 
-            <div class="list"> 
+            <div id="list"> 
                 <div class="task">
                     <p>14m12s</p>
                     <input type="checkbox" id="task1" name="task1">

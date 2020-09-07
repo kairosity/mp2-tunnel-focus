@@ -36,11 +36,33 @@ class Task {
     // before being added - should there be a time segment object? Or just a global variable? probably just need a global var.
 
     
-
-
 }
 
+let newTask45 = new Task("Testing this function");
+
+console.log(newTask45);
+
+
 //FUNCTIONS TO WRITE
+
+function createNewTask(){
+    let taskDescription = document.querySelector('#new-task-input').value;
+    if (taskDescription) {
+        let newTask = new Task(taskDescription);
+        document.getElementById('list').innerHTML +=
+            `<div class="task">
+                <p>0h0m0s</p>
+                <input type="checkbox" id="task${newTask.order}" name="task${newTask.order}">
+                <li>${newTask.taskDescription}</li>
+                <i class="fas fa-sort"></i>
+                <i class="fas fa-ellipsis-v"></i>
+            </div>`;
+        document.querySelector('#new-task-input').value = "";
+        }
+    
+}
+
+
 //1. createNewTask() --> instantiates a new task object and adds it to the list & saves to local storage.
 
 //2. countDown15 --> starts a countdown timer for 15 mins. 

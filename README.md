@@ -57,6 +57,19 @@ time spent focused on that task.
 
 ## Strategy
 
+### __*Project Goals*__
+- Create a time based task manager for project development 
+- Create a simple product that can be used in the browser and with local storage.
+- Create a product that is intuitive and useful for anyone working on a particular set of tasks. 
+- Create a product that is scalable and has potential to develop further into a fully blown application with database storage. 
+
+### __*Target Users*__
+The target users are people working on a series of tasks and particularly people employing a sprint methodology for task completion. 
+
+### __*Research*__
+I researched other task managers online and found a number that do
+
+
 ## Scope
 
 ## Structure

@@ -128,6 +128,23 @@
     border: solid lightsalmon 4px;
     grid-column: 1 / 13;
     grid-row: 2 / 3;
+    display: flex;
+    position: relative;
+    justify-content: center;
+    align-items: center;
+}
+
+.close-timer-x {
+    position: absolute;
+    right: 12px;
+    top: 5px;
+    font-size: 1.6rem;
+
+}
+.timer-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 /*----------------------------------------------------------- Charts   */

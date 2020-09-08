@@ -16,7 +16,7 @@ class Task {
 
 class List {
     constructor(){
-        this.taskList = [
+        this.taskList = [ //this will be where there is a reference to localStorage eventually.
             {
                 taskDescription: "Task numero uno",
                 id: null,
@@ -37,10 +37,17 @@ class List {
                 completed: false,
                 order: -1,
                 totalTimeFocusedOnTask: "1hr20m04s"
+            },
+            {
+                taskDescription: "Task numero quatro",
+                id: null,
+                completed: false,
+                order: -1,
+                totalTimeFocusedOnTask: "6hr24m04s"
             }
         ];
         this.completedTasks = [];
-        this.buildTaskList(this.taskList) //the method of building a list is automatic when a new list is instantiated.
+        this.buildTaskList(this.taskList) //the method of building the list up in HTML is automatic when a new list is instantiated which will be every time page is loaded.
     }
 
     buildTaskList(arrayOfTaskObjectsToBuildListWith){
@@ -58,10 +65,10 @@ class List {
         }
     }
 
-    addNewTask(){
-        document.getElementById('add-new-task').addEventListener('click', function(){
-            console.log("clicked")
-        })
+    //need a way of taking the input value and connecting that to the taskDescription param. 
+    addNewTask(taskDescription){
+        let newTask = new Task(taskDescription);
+        this.taskList.push(newTask);
     }
 }
 

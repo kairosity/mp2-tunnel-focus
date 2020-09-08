@@ -11,44 +11,16 @@ class Task {
         this.completed = false; 
         this.order = -1; //order of priority in list - will use to structure list order
         this.totalTimeFocusedOnTask = null; //running total of time focused on a specific task
+
     }   
 }
 
 class List {
     constructor(){
-        this.taskList = [ //this will be where there is a reference to localStorage eventually.
-            {
-                taskDescription: "Task numero uno",
-                id: null,
-                completed: false,
-                order: -1,
-                totalTimeFocusedOnTask: "20m43s"
-            },
-            {
-                taskDescription: "Task numero duo",
-                id: null,
-                completed: false,
-                order: -1,
-                totalTimeFocusedOnTask: "4hr10m34s"
-            },
-            {
-                taskDescription: "Task numero tres",
-                id: null,
-                completed: false,
-                order: -1,
-                totalTimeFocusedOnTask: "1hr20m04s"
-            },
-            {
-                taskDescription: "Task numero quatro",
-                id: null,
-                completed: false,
-                order: -1,
-                totalTimeFocusedOnTask: "6hr24m04s"
-            }
-        ];
+        this.taskList = [];//this will be where there is a reference to localStorage eventually.
         this.completedTasks = [];
         this.buildTaskList(this.taskList); //the method of building the list up in HTML is automatic when a new list is instantiated which will be every time page is loaded.
-        this.addNewTask(this.taskList);
+        this.addNewTask(this.taskList, this.completedTasks);
         this.toggleTaskComplete(this.taskList, this.completedTasks);
     }
 
@@ -59,7 +31,7 @@ class List {
         for (let i=0; i<taskList.length; i++){
             document.getElementById('list').innerHTML +=
                 `<div class="task">
-                    <p>${taskList[i].totalTimeFocusedOnTask}</p>
+                    <p class="total-task-time">${taskList[i].totalTimeFocusedOnTask}</p>
                     <input class="taskCheckbox" type="checkbox" id="${taskList[i].id}" name="task-${taskList[i].id}">
                     <li>${taskList[i].taskDescription}</li>
                     <a><i class="fas fa-sort sort-tasks-icon"></i></a>
@@ -72,12 +44,13 @@ class List {
     AND it writes it to the HTML. As long as the value is not null or an empty string. It then clears the input box ready 
     for a new task.
     */
-    addNewTask(taskListToAddTasksTo){
+    addNewTask(taskListToAddTasksTo, arrayOfCompletedTasks){
         const addNewTaskButton = document.querySelector('#add-new-task');
 
         addNewTaskButton.addEventListener('click', function(){ //event listener working. 
             const newTaskInput = document.querySelector('#new-task-input').value;
             console.log(newTaskInput); 
+            
             if((newTaskInput !== null) && (newTaskInput !== "")){
                 let newTask = new Task(newTaskInput); //creates a new Task obj. & sets its props.
                 newTask.id = taskListToAddTasksTo.length;
@@ -87,7 +60,7 @@ class List {
                 //adds the task to the list in html
                 document.getElementById('list').innerHTML +=
                 `<div class="task">
-                    <p>${newTask.totalTimeFocusedOnTask}</p>
+                    <p class="total-task-time">${newTask.totalTimeFocusedOnTask}</p>
                     <input class="taskCheckbox" type="checkbox" id="${newTask.id}" name="task-${newTask.id}">
                     <li>${newTask.taskDescription}</li>
                     <a><i class="fas fa-sort sort-tasks-icon"></i></a>
@@ -96,13 +69,16 @@ class List {
 
                 //clears the input value
                 document.querySelector('#new-task-input').value = "";
+                list.toggleTaskComplete(taskListToAddTasksTo); //this works well. 
+
 
             } else if ((newTaskInput === "") || (newTaskInput === null)){ //this doesn't fire with spaces - look into that. 
                 alert("Please add a task."); 
             }
             
+            
         })
-
+        
         console.log(this); //this here refers to the List object. 
     }
 
@@ -120,33 +96,43 @@ class List {
         //on save flip back to the <li> </li> html view. 
     }
 
-    toggleTaskComplete(arrayOfTaskObjs, arrayOfCompletedTasks){
+    toggleTaskComplete(arrayOfTasks){ //this is only firing on page load. how can I make it fire all the time? Or when adding a new task? 
         //listen for checkbox clicks on specific task.
         const arrayOfCheckboxes = document.querySelectorAll('.taskCheckbox');
+        console.log(`Array of checkboxes: ` + arrayOfCheckboxes )
+        console.log(`Array of Tasks:  `);
+        console.log(arrayOfTasks);
 
-        arrayOfCheckboxes.forEach(function(checkbox){
-            checkbox.addEventListener('change', function(){ //works correctly.
-                if(checkbox.checked == true){ //works
-                    checkbox.nextElementSibling.classList.add('completed');
-                    let checkboxTask = checkbox.nextElementSibling.textContent;
-                    console.log(checkboxTask);
+        arrayOfCheckboxes.forEach(function(checkbox){ //this pressupposes that there are checkboxes present? Is the event listener hidden inside? Yes.
+            console.log("each checkbox present");
+            let checkboxTask = checkbox.nextElementSibling.textContent;
+            checkbox.addEventListener('change', function(){ 
+                if(checkbox.checked == true){
+                    checkbox.nextElementSibling.classList.add('completed'); 
 
-                    arrayOfTaskObjs.forEach(function(task){
-                        // console.log(task.taskDescription);
+                    arrayOfTasks.forEach(function(task){
                         if (task.taskDescription === checkboxTask){
-                            console.log(task.taskDescription + "this is a specific task");
-                            arrayOfCompletedTasks.push(task);
-                            console.log(arrayOfCompletedTasks);
+                            task.completed = true;
+                            list.completedTasks.push(task);
+                            console.log(list.completedTasks);
                         }
                     })
                         
                 } else if (checkbox.checked == false){
                     checkbox.nextElementSibling.classList.remove('completed');
+                     
+                    arrayOfTasks.forEach(function(task){
+                        if (task.taskDescription === checkboxTask){
+                            task.completed = false;
+                            list.completedTasks.unshift() //need a remove function here. //maybe first find the index of task and then delete? 
+                            console.log(list.completedTasks);
+                        }
+                    })
                 }
             })
 
         })
-
+    }
         //if not already checked: 
             //1 - mark it as checked
             //2 mark the task object as completed = true
@@ -160,7 +146,6 @@ class List {
             //4. Remove from array of completed tasks.
 
 
-    }
 
     deleteTask(){
         //listen for clicks on any of the delete buttons.

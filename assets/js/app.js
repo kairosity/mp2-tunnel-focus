@@ -49,6 +49,7 @@ class List {
         this.completedTasks = [];
         this.buildTaskList(this.taskList); //the method of building the list up in HTML is automatic when a new list is instantiated which will be every time page is loaded.
         this.addNewTask(this.taskList);
+        this.toggleTaskComplete(this.taskList, this.completedTasks);
     }
 
     //takes all the tasks store in taskList and adds them to HTML on page load.
@@ -119,8 +120,32 @@ class List {
         //on save flip back to the <li> </li> html view. 
     }
 
-    toggleTaskComplete(){
+    toggleTaskComplete(arrayOfTaskObjs, arrayOfCompletedTasks){
         //listen for checkbox clicks on specific task.
+        const arrayOfCheckboxes = document.querySelectorAll('.taskCheckbox');
+
+        arrayOfCheckboxes.forEach(function(checkbox){
+            checkbox.addEventListener('change', function(){ //works correctly.
+                if(checkbox.checked == true){ //works
+                    checkbox.nextElementSibling.classList.add('completed');
+                    let checkboxTask = checkbox.nextElementSibling.textContent;
+                    console.log(checkboxTask);
+
+                    arrayOfTaskObjs.forEach(function(task){
+                        // console.log(task.taskDescription);
+                        if (task.taskDescription === checkboxTask){
+                            console.log(task.taskDescription + "this is a specific task");
+                            arrayOfCompletedTasks.push(task);
+                            console.log(arrayOfCompletedTasks);
+                        }
+                    })
+                        
+                } else if (checkbox.checked == false){
+                    checkbox.nextElementSibling.classList.remove('completed');
+                }
+            })
+
+        })
 
         //if not already checked: 
             //1 - mark it as checked

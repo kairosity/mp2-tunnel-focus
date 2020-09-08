@@ -51,9 +51,10 @@ class List {
         this.addNewTask(this.taskList);
     }
 
+    //takes all the tasks store in taskList and adds them to HTML on page load.
     buildTaskList(arrayOfTaskObjectsToBuildListWith){
         let taskList = this.taskList;
-        //takes the tasks stored and formats them into a list when window is loaded. 
+        
         for (let i=0; i<taskList.length; i++){
             document.getElementById('list').innerHTML +=
                 `<div class="task">
@@ -66,21 +67,23 @@ class List {
         }
     }
 
-    //need a way of taking the input value and connecting that to the taskDescription param. 
+    /* listens for a click event on the add new task button and then adds the value of the input to both the taskList 
+    AND it writes it to the HTML. As long as the value is not null or an empty string. It then clears the input box ready 
+    for a new task.
+    */
     addNewTask(taskListToAddTasksTo){
-
         const addNewTaskButton = document.querySelector('#add-new-task');
 
         addNewTaskButton.addEventListener('click', function(){ //event listener working. 
             const newTaskInput = document.querySelector('#new-task-input').value;
             console.log(newTaskInput); 
             if((newTaskInput !== null) && (newTaskInput !== "")){
-                let newTask = new Task(newTaskInput);
+                let newTask = new Task(newTaskInput); //creates a new Task obj. & sets its props.
                 newTask.id = taskListToAddTasksTo.length;
                 newTask.totalTimeFocusedOnTask = "00h00m00s";
-                taskListToAddTasksTo.push(newTask); //this works - it pushes the new task into the taskList array.
+                taskListToAddTasksTo.push(newTask); //adds the new task into the taskList array.
 
-                //add task to list in html
+                //adds the task to the list in html
                 document.getElementById('list').innerHTML +=
                 `<div class="task">
                     <p>${newTask.totalTimeFocusedOnTask}</p>
@@ -90,45 +93,61 @@ class List {
                     <a><i class="fas fa-ellipsis-v task-options-icon"></i></a>
                 </div>`;
 
-                //clear input value
+                //clears the input value
                 document.querySelector('#new-task-input').value = "";
 
             } else if ((newTaskInput === "") || (newTaskInput === null)){ //this doesn't fire with spaces - look into that. 
-                console.log("You need to write something"); //working now.
+                alert("Please add a task."); 
             }
             
         })
 
         console.log(this); //this here refers to the List object. 
     }
+
+    editTask(){
+        //need to listen for clicks on any of the edit buttons
+
+        //then target that specific task that the specific edit button refers to 
+
+        //turn the task's <li> section into an input? with a save button. 
+
+        //show the current task descrip. in the input as the value. 
+
+        //save the new description over the old one. task.taskDescription = input.value
+
+        //on save flip back to the <li> </li> html view. 
+    }
+
+    toggleTaskComplete(){
+        //listen for checkbox clicks on specific task.
+
+        //if not already checked: 
+            //1 - mark it as checked
+            //2 mark the task object as completed = true
+            //3. Draw a line through the task in html (add class completed)
+            //4. Add to array of completed tasks.
+
+        //if already checked
+            //1. unmark as checked. 
+            //2. change the task obj to completed = false
+            //3. Remove the line through task (remove class completed)
+            //4. Remove from array of completed tasks.
+
+
+    }
+
+    deleteTask(){
+        //listen for clicks on any of the delete buttons.
+
+        //target specific task referred to by that delete button. 
+
+        // remove the task from the taskList array
+
+        //remove the <li> of the task </li> from the html. 
+
+        //redo and reorder the task arrays ids? 
+    }
 }
 
 let list = new List();
-
-
-//     if (!list){
-//         let list = new List();
-//         let taskDescription = document.querySelector('#new-task-input').value;
-//         if (taskDescription) {
-//             let newTask = new Task(taskDescription);
-//             //add the new task to the array of task objects.
-//             
-//             taskList.push(newTask);
-            
-//             document.getElementById('list').innerHTML +=
-//                 `<div class="task">
-//                     <p>0h0m0s</p>
-//                     <input class="taskCheckbox" type="checkbox" id="${newTask.id}" name="task-${newTask.id}">
-//                     <li>${newTask.taskDescription}</li>
-//                     <a><i class="fas fa-sort sort-tasks-icon"></i></a>
-//                     <a><i class="fas fa-ellipsis-v task-options-icon"></i></a>
-//                 </div>`;
-//             
-        
-
-//             }
-        
-//     }
-
-//     }
-// })

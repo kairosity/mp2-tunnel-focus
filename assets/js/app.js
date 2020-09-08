@@ -44,7 +44,7 @@ class List {
     AND it writes it to the HTML. As long as the value is not null or an empty string. It then clears the input box ready 
     for a new task.
     */
-    addNewTask(taskListToAddTasksTo, arrayOfCompletedTasks){
+    addNewTask(taskListToAddTasksTo){
         const addNewTaskButton = document.querySelector('#add-new-task');
 
         addNewTaskButton.addEventListener('click', function(){ //event listener working. 
@@ -78,8 +78,6 @@ class List {
             
             
         })
-        
-        console.log(this); //this here refers to the List object. 
     }
 
     editTask(){
@@ -103,7 +101,7 @@ class List {
         console.log(`Array of Tasks:  `);
         console.log(arrayOfTasks);
 
-        arrayOfCheckboxes.forEach(function(checkbox){ //this pressupposes that there are checkboxes present? Is the event listener hidden inside? Yes.
+        arrayOfCheckboxes.forEach(function(checkbox){ //this pressupposes that there are checkboxes present? Is the event listener hidden inside? Yes. Doesn't matter though. 
             console.log("each checkbox present");
             let checkboxTask = checkbox.nextElementSibling.textContent;
             checkbox.addEventListener('change', function(){ 
@@ -124,15 +122,20 @@ class List {
                     arrayOfTasks.forEach(function(task){
                         if (task.taskDescription === checkboxTask){
                             task.completed = false;
-                            list.completedTasks.unshift() //need a remove function here. //maybe first find the index of task and then delete? 
-                            console.log(list.completedTasks);
                         }
                     })
-                }
-            })
+                    list.completedTasks.forEach(function(task){
+                        if (task.taskDescription === checkboxTask){
+                            list.completedTasks.pop(task);
+                            console.log(list.completedTasks); //works
+                    }
+                })
+            }
 
         })
-    }
+    })
+}
+
         //if not already checked: 
             //1 - mark it as checked
             //2 mark the task object as completed = true
@@ -159,5 +162,4 @@ class List {
         //redo and reorder the task arrays ids? 
     }
 }
-
 let list = new List();

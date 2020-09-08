@@ -47,7 +47,8 @@ class List {
             }
         ];
         this.completedTasks = [];
-        this.buildTaskList(this.taskList) //the method of building the list up in HTML is automatic when a new list is instantiated which will be every time page is loaded.
+        this.buildTaskList(this.taskList); //the method of building the list up in HTML is automatic when a new list is instantiated which will be every time page is loaded.
+        this.addNewTask(this.taskList);
     }
 
     buildTaskList(arrayOfTaskObjectsToBuildListWith){
@@ -66,9 +67,39 @@ class List {
     }
 
     //need a way of taking the input value and connecting that to the taskDescription param. 
-    addNewTask(taskDescription){
-        let newTask = new Task(taskDescription);
-        this.taskList.push(newTask);
+    addNewTask(taskListToAddTasksTo){
+
+        const addNewTaskButton = document.querySelector('#add-new-task');
+
+        addNewTaskButton.addEventListener('click', function(){ //event listener working. 
+            const newTaskInput = document.querySelector('#new-task-input').value;
+            console.log(newTaskInput); 
+            if((newTaskInput !== null) && (newTaskInput !== "")){
+                let newTask = new Task(newTaskInput);
+                newTask.id = taskListToAddTasksTo.length;
+                newTask.totalTimeFocusedOnTask = "00h00m00s";
+                taskListToAddTasksTo.push(newTask); //this works - it pushes the new task into the taskList array.
+
+                //add task to list in html
+                document.getElementById('list').innerHTML +=
+                `<div class="task">
+                    <p>${newTask.totalTimeFocusedOnTask}</p>
+                    <input class="taskCheckbox" type="checkbox" id="${newTask.id}" name="task-${newTask.id}">
+                    <li>${newTask.taskDescription}</li>
+                    <a><i class="fas fa-sort sort-tasks-icon"></i></a>
+                    <a><i class="fas fa-ellipsis-v task-options-icon"></i></a>
+                </div>`;
+
+                //clear input value
+                document.querySelector('#new-task-input').value = "";
+
+            } else if ((newTaskInput === "") || (newTaskInput === null)){ //this doesn't fire with spaces - look into that. 
+                console.log("You need to write something"); //working now.
+            }
+            
+        })
+
+        console.log(this); //this here refers to the List object. 
     }
 }
 
@@ -81,7 +112,7 @@ let list = new List();
 //         if (taskDescription) {
 //             let newTask = new Task(taskDescription);
 //             //add the new task to the array of task objects.
-//             newTask.id = taskList.length;
+//             
 //             taskList.push(newTask);
             
 //             document.getElementById('list').innerHTML +=
@@ -92,7 +123,7 @@ let list = new List();
 //                     <a><i class="fas fa-sort sort-tasks-icon"></i></a>
 //                     <a><i class="fas fa-ellipsis-v task-options-icon"></i></a>
 //                 </div>`;
-//             document.querySelector('#new-task-input').value = "";
+//             
         
 
 //             }

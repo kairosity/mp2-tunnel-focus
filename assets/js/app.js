@@ -119,6 +119,7 @@ class List {
                     saveButton.textContent = "Save Changes";
                     newInput.after(saveButton);
                 }
+                
                 const saveButton = document.querySelector('.save-button');
                 const inputBox = document.querySelector('.editedTask')
                 saveButton.addEventListener('click', function(){
@@ -133,35 +134,20 @@ class List {
                     //remove the save button
                     saveButton.remove();
 
-                    //change the value of the task description in BOTH the taskList and the completedTasks List if in the latter. 
+                    //change the value of the task description in the taskList. 
                     list.taskList.forEach(task => {
                         if(task.id == newLi.id){
                             task.taskDescription = newLi.textContent;
                         }
-                    })
-                    // update the task description in the completed Tasks list as well as ensuring that the html reflects the task's state of completion.
-                    list.completedTasks.forEach(task => {
-                        if(task.id == newLi.id){
-                            task.taskDescription = newLi.textContent;
+                        if((task.id == newLi.id) && (task.completed == true)){
                             newLi.classList.add('completed');
                         }
                     })
-
                 })     
 
             })
         }) 
 
-                //then target that specific task that the specific edit button refers to 
-
-        //turn the task's <li> section into an input? with a save button. 
-        // Maybe use this: MDN: The ChildNode.replaceWith() method replaces this ChildNode in the children list of its parent with a set of Node or DOMString objects. DOMString objects are inserted as equivalent Text nodes.
-
-        //show the current task descrip. in the input as the value. 
-
-        //save the new description over the old one. task.taskDescription = input.value
-
-        //on save flip back to the <li> </li> html view. 
     }
 
     toggleTaskComplete(arrayOfTasks){
@@ -178,7 +164,6 @@ class List {
                     arrayOfTasks.forEach(function(task){
                         if (task.id == checkboxId){ 
                             task.completed = true;
-                            list.completedTasks.push(task);
                         }
                     })
                         
@@ -190,10 +175,9 @@ class List {
                             task.completed = false;
                         }
                     })
-                    list.completedTasks.splice(list.completedTasks.findIndex(task => task.id == checkboxId), 1);//find the index of the task in the completed Tasks array and removes it.
-                            console.log(list.completedTasks); 
+                    // list.completedTasks.splice(list.completedTasks.findIndex(task => task.id == checkboxId), 1);//find the index of the task in the completed Tasks array and removes it.
+                    //         console.log(list.completedTasks); 
                     }
-                    console.log(list.completedTasks);
                 })
             })
         }
@@ -209,21 +193,26 @@ class List {
 
                 //remove from taskList
                 list.taskList.splice(list.taskList.findIndex(task => task.id == taskToDeleteId), 1);//working
-                list.completedTasks.splice(list.completedTasks.findIndex(task => task.id === taskToDeleteId), 1); 
+                // list.completedTasks.splice(list.completedTasks.findIndex(task => task.id === taskToDeleteId), 1); 
 
+                let tList = list.taskList;
                 //reorder the task ids and html ids accordingly.
-                    
+                for (let i=0; i<tList.length; i++){
+                    tList[i].id = i;
+                }
                 })
                 
             })
+           
         }
-   }
+    
 
-        //redo and reorder the task arrays ids? 
+   }
  
+
 let list = new List();
 
 //call these functions so they are operational on the list that is built from local storage.
-// list.toggleTaskComplete(list.taskList); //checks for completion tasks when new tasks are added.
+
 list.deleteTask();
 list.editTask();

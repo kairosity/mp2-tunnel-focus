@@ -1,7 +1,4 @@
 
-
-let timeSegment = 0;
-
 // A Task Class that has all the properties and methods associated with a task
 
 class Task {
@@ -11,18 +8,15 @@ class Task {
         this.completed = false; 
         this.order = -1; //order of priority in list - will use to structure list order
         this.totalTimeFocusedOnTask = null; //running total of time focused on a specific task
-
     }   
 }
 
 class List {
     constructor(){
-        this.taskList = [{"taskDescription": "Testing Task List Building", "id": 0, "completed": false, "order": -1, "totalTimeFocusedOnTask": null}];//this will be where there is a reference to localStorage eventually.
-        this.completedTasks = [];
+        this.taskList = JSON.parse(window.localStorage.getItem("taskList")) || [] ;//this will be where there is a reference to localStorage eventually.
         this.buildTaskList(this.taskList); //the method of building the list up in HTML is automatic when a new list is instantiated which will be every time page is loaded.
         this.addNewTask(this.taskList, this.completedTasks);
-        this.toggleTaskComplete(this.taskList, this.completedTasks);
-        
+        this.toggleTaskComplete(this.taskList);    
     }
 
     //takes all the tasks store in taskList and adds them to HTML on page load.
@@ -30,7 +24,24 @@ class List {
         let taskList = this.taskList;
         
         for (let i=0; i<taskList.length; i++){
-            document.getElementById('list').innerHTML +=
+            if (taskList[i].completed === true){
+                document.getElementById('list').innerHTML +=
+                `<div class="task">
+                    <p class="total-task-time">${taskList[i].totalTimeFocusedOnTask}</p>
+                    <input class="taskCheckbox" type="checkbox" name="task-${taskList[i].id}" checked>
+                    <li class="task-description completed" id="${taskList[i].id}">${taskList[i].taskDescription}</li>
+                    <i class="far fa-edit task-icon task-edit-icon"></i>
+                    <i class="fas fa-trash-alt task-icon task-delete-icon"></i>
+                    <i class="fas fa-hourglass-half task-icon countdown-timer-icon"></i>
+                    <i class="fas fa-hourglass-half task-icon countdown-timer-icon"></i>
+                    <i class="fas fa-stopwatch task-icon open-timer-icon"></i>
+                    <i class="fas fa-user-clock task-icon manual-edit-time-icon"></i>
+                    <a><i class="fas fa-sort sort-tasks-icon"></i></a>
+                    <a><i class="fas fa-ellipsis-v task-options-icon"></i></a>
+                </div>`;
+
+            } else if(taskList[i].completed === false) {
+                document.getElementById('list').innerHTML +=
                 `<div class="task">
                     <p class="total-task-time">${taskList[i].totalTimeFocusedOnTask}</p>
                     <input class="taskCheckbox" type="checkbox" name="task-${taskList[i].id}">
@@ -44,7 +55,10 @@ class List {
                     <a><i class="fas fa-sort sort-tasks-icon"></i></a>
                     <a><i class="fas fa-ellipsis-v task-options-icon"></i></a>
                 </div>`;
+            }
         }
+                    
+        this.toggleTaskComplete();
     }
 
     /* listens for a click event on the add new task button and then adds the value of the input to both the taskList 
@@ -63,7 +77,7 @@ class List {
                 newTask.totalTimeFocusedOnTask = "00h00m00s";
                 taskListToAddTasksTo.push(newTask); //adds the new task into the taskList array.
 
-                //adds the task to the list in html
+                //adds the task to the list in html  
                 document.getElementById('list').innerHTML +=
                 `<div class="task">
                     <p class="total-task-time">${newTask.totalTimeFocusedOnTask}</p>
@@ -86,6 +100,7 @@ class List {
                 list.toggleTaskComplete(taskListToAddTasksTo); //checks for completion tasks when new tasks are added.
                 list.deleteTask();
                 list.editTask();
+                list.setDataToLocalStorage()
 
             } else if ((newTaskInput === "") || (newTaskInput === null)){ //this doesn't fire with spaces - look into that. 
                 alert("Please add a task."); 
@@ -119,7 +134,7 @@ class List {
                     saveButton.textContent = "Save Changes";
                     newInput.after(saveButton);
                 }
-                
+
                 const saveButton = document.querySelector('.save-button');
                 const inputBox = document.querySelector('.editedTask')
                 saveButton.addEventListener('click', function(){
@@ -143,6 +158,7 @@ class List {
                             newLi.classList.add('completed');
                         }
                     })
+                    list.setDataToLocalStorage()
                 })     
 
             })
@@ -150,7 +166,7 @@ class List {
 
     }
 
-    toggleTaskComplete(arrayOfTasks){
+    toggleTaskComplete(){
         //listen for checkbox clicks on specific task.
         const arrayOfCheckboxes = document.querySelectorAll('.taskCheckbox');
 
@@ -161,7 +177,7 @@ class List {
                 if(checkbox.checked == true){
                     checkbox.nextElementSibling.classList.add('completed'); 
                         
-                    arrayOfTasks.forEach(function(task){
+                    list.taskList.forEach(function(task){
                         if (task.id == checkboxId){ 
                             task.completed = true;
                         }
@@ -170,16 +186,16 @@ class List {
                 } else if (checkbox.checked == false){
                     checkbox.nextElementSibling.classList.remove('completed');
                      
-                    arrayOfTasks.forEach(function(task){
+                    list.taskList.forEach(function(task){
                         if (task.id == checkboxId){
                             task.completed = false;
                         }
                     })
-                    // list.completedTasks.splice(list.completedTasks.findIndex(task => task.id == checkboxId), 1);//find the index of the task in the completed Tasks array and removes it.
-                    //         console.log(list.completedTasks); 
                     }
-                })
+                    list.setDataToLocalStorage()
+                })       
             })
+            
         }
 
     deleteTask(){
@@ -193,20 +209,23 @@ class List {
 
                 //remove from taskList
                 list.taskList.splice(list.taskList.findIndex(task => task.id == taskToDeleteId), 1);//working
-                // list.completedTasks.splice(list.completedTasks.findIndex(task => task.id === taskToDeleteId), 1); 
 
                 let tList = list.taskList;
                 //reorder the task ids and html ids accordingly.
                 for (let i=0; i<tList.length; i++){
                     tList[i].id = i;
                 }
+                 list.setDataToLocalStorage();
                 })
                 
             })
-           
+          
+        }
+        //this needs to be here or it will overwrite everything with ind. bits and pieces.
+        setDataToLocalStorage(){
+            window.localStorage.setItem("taskList", JSON.stringify(list.taskList));
         }
     
-
    }
  
 

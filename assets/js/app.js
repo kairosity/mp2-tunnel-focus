@@ -22,6 +22,7 @@ class List {
         this.buildTaskList(this.taskList); //the method of building the list up in HTML is automatic when a new list is instantiated which will be every time page is loaded.
         this.addNewTask(this.taskList, this.completedTasks);
         this.toggleTaskComplete(this.taskList, this.completedTasks);
+        
     }
 
     //takes all the tasks store in taskList and adds them to HTML on page load.
@@ -32,12 +33,22 @@ class List {
             document.getElementById('list').innerHTML +=
                 `<div class="task">
                     <p class="total-task-time">${taskList[i].totalTimeFocusedOnTask}</p>
-                    <input class="taskCheckbox" type="checkbox" id="${taskList[i].id}" name="task-${taskList[i].id}">
-                    <li>${taskList[i].taskDescription}</li>
+                    <input class="taskCheckbox" type="checkbox" name="task-${newTask.id}">
+                    <li class="task-description" id="${taskList[i].id}">${taskList[i].taskDescription}</li>
+                    <i class="far fa-edit task-icon task-edit-icon"></i>
+                    <i class="fas fa-trash-alt task-icon task-delete-icon"></i>
+                    <i class="fas fa-hourglass-half task-icon countdown-timer-icon"></i>
+                    <i class="fas fa-hourglass-half task-icon countdown-timer-icon"></i>
+                    <i class="fas fa-stopwatch task-icon open-timer-icon"></i>
+                    <i class="fas fa-user-clock task-icon manual-edit-time-icon"></i>
                     <a><i class="fas fa-sort sort-tasks-icon"></i></a>
                     <a><i class="fas fa-ellipsis-v task-options-icon"></i></a>
                 </div>`;
         }
+
+        
+
+
     }
 
     /* listens for a click event on the add new task button and then adds the value of the input to both the taskList 
@@ -49,11 +60,10 @@ class List {
 
         addNewTaskButton.addEventListener('click', function(){ //event listener working. 
             const newTaskInput = document.querySelector('#new-task-input').value;
-            console.log(newTaskInput); 
             
             if((newTaskInput !== null) && (newTaskInput !== "")){
                 let newTask = new Task(newTaskInput); //creates a new Task obj. & sets its props.
-                newTask.id = taskListToAddTasksTo.length;
+                newTask.id = taskListToAddTasksTo.length; //it will always be 1to1.
                 newTask.totalTimeFocusedOnTask = "00h00m00s";
                 taskListToAddTasksTo.push(newTask); //adds the new task into the taskList array.
 
@@ -61,17 +71,25 @@ class List {
                 document.getElementById('list').innerHTML +=
                 `<div class="task">
                     <p class="total-task-time">${newTask.totalTimeFocusedOnTask}</p>
-                    <input class="taskCheckbox" type="checkbox" id="${newTask.id}" name="task-${newTask.id}">
-                    <li>${newTask.taskDescription}</li>
+                    <input class="taskCheckbox" type="checkbox" name="task-${newTask.id}">
+                    <li class="task-description" id="${newTask.id}">${newTask.taskDescription}</li>
+                    <i class="far fa-edit task-icon task-edit-icon"></i>
                     <i class="fas fa-trash-alt task-icon task-delete-icon"></i>
+                    <i class="fas fa-hourglass-half task-icon countdown-timer-icon"></i>
+                    <i class="fas fa-hourglass-half task-icon countdown-timer-icon"></i>
+                    <i class="fas fa-stopwatch task-icon open-timer-icon"></i>
+                    <i class="fas fa-user-clock task-icon manual-edit-time-icon"></i>
                     <a><i class="fas fa-sort sort-tasks-icon"></i></a>
                     <a><i class="fas fa-ellipsis-v task-options-icon"></i></a>
                 </div>`;
 
                 //clears the input value
                 document.querySelector('#new-task-input').value = "";
+
+                //calls these functions so they are operational on the new task.
                 list.toggleTaskComplete(taskListToAddTasksTo); //checks for completion tasks when new tasks are added.
                 list.deleteTask();
+                list.editTask();
 
             } else if ((newTaskInput === "") || (newTaskInput === null)){ //this doesn't fire with spaces - look into that. 
                 alert("Please add a task."); 
@@ -82,6 +100,43 @@ class List {
 
     editTask(){
         //need to listen for clicks on any of the edit buttons
+        const arrayOfEditIcons = document.querySelectorAll('.task-edit-icon');
+
+        arrayOfEditIcons.forEach(function(editIcon){ 
+            editIcon.addEventListener('click', function(event){
+
+                let taskToEdit = event.target.previousElementSibling;
+                let textToEdit = taskToEdit.textContent;
+                let taskObjectToEdit;
+            
+                if (!document.querySelector('.save-button')){
+                    
+                    const newInput = document.createElement("INPUT");
+                    newInput.setAttribute("type", "text")
+                    newInput.setAttribute("value", `${textToEdit}`);
+                    newInput.setAttribute("class", "editedTask")
+                    taskToEdit.parentNode.replaceChild(newInput, taskToEdit);//works
+
+                    const saveButton = document.createElement('BUTTON');
+                    saveButton.setAttribute("class", "save-button");
+                    saveButton.setAttribute("type", "submit");
+                    saveButton.textContent = "Save Changes";
+                    newInput.after(saveButton);
+                }
+                const saveButton = document.querySelector('.save-button');
+                const inputBox = document.querySelector('.editedTask')
+                saveButton.addEventListener('click', function(){
+                    console.log(inputBox.value); // take this value and place it into .... a new <li> as a task </li> AND add it to the task object as the task descrip. // if it's completed we have to change the value in completed list as well. 
+                    console.log(textToEdit);
+                })
+                
+                
+
+                
+
+            })
+        }) 
+
                 //then target that specific task that the specific edit button refers to 
 
         //turn the task's <li> section into an input? with a save button. 
@@ -99,16 +154,18 @@ class List {
         const arrayOfCheckboxes = document.querySelectorAll('.taskCheckbox');
 
         arrayOfCheckboxes.forEach(function(checkbox){  
-            let checkboxTask = checkbox.nextElementSibling.textContent;
+            
+            let checkboxId = checkbox.nextElementSibling.id; //.id
             checkbox.addEventListener('change', function(){ 
                 if(checkbox.checked == true){
                     checkbox.nextElementSibling.classList.add('completed'); 
-
+                        
                     arrayOfTasks.forEach(function(task){
-                        if (task.taskDescription === checkboxTask){
+                        if (task.id == checkboxId){ 
                             task.completed = true;
                             list.completedTasks.push(task);
-                            console.log(list.completedTasks);
+                            console.log(task.id);
+                            console.log(checkboxId);  
                         }
                     })
                         
@@ -116,13 +173,14 @@ class List {
                     checkbox.nextElementSibling.classList.remove('completed');
                      
                     arrayOfTasks.forEach(function(task){
-                        if (task.taskDescription === checkboxTask){
+                        if (task.id == checkboxId){
                             task.completed = false;
                         }
                     })
-                    list.completedTasks.splice(list.completedTasks.findIndex(task => task.taskDescription === checkboxTask), 1);//working
-                            console.log(list.completedTasks); //works
+                    list.completedTasks.splice(list.completedTasks.findIndex(task => task.id == checkboxId), 1);//find the index of the task in the completed Tasks array and removes it.
+                            console.log(list.completedTasks); 
                     }
+                    console.log(list.completedTasks);
                 })
             })
         }
@@ -133,7 +191,7 @@ class List {
         arrayOfDeleteIcons.forEach(function(deleteIcon){
             deleteIcon.addEventListener('click', function(event){
                 let taskToDelete = event.target.parentNode;
-                let taskToDeleteText = event.target.previousElementSibling.textContent;
+                let taskToDeleteText = event.target.previousElementSibling.previousElementSibling.textContent;//need to chain properly to make work. 
                 taskToDelete.remove();//remove from DOM
 
                 //remove from taskList
@@ -149,3 +207,8 @@ class List {
         //redo and reorder the task arrays ids? 
  
 let list = new List();
+
+//call these functions so they are operational on the list that is built from local storage.
+list.toggleTaskComplete(list.taskList); //checks for completion tasks when new tasks are added.
+list.deleteTask();
+list.editTask();

@@ -17,7 +17,7 @@ class Task {
 
 class List {
     constructor(){
-        this.taskList = [];//this will be where there is a reference to localStorage eventually.
+        this.taskList = [{"taskDescription": "Testing Task List Building", "id": 0, "completed": false, "order": -1, "totalTimeFocusedOnTask": null}];//this will be where there is a reference to localStorage eventually.
         this.completedTasks = [];
         this.buildTaskList(this.taskList); //the method of building the list up in HTML is automatic when a new list is instantiated which will be every time page is loaded.
         this.addNewTask(this.taskList, this.completedTasks);
@@ -26,14 +26,14 @@ class List {
     }
 
     //takes all the tasks store in taskList and adds them to HTML on page load.
-    buildTaskList(arrayOfTaskObjectsToBuildListWith){
+    buildTaskList(){
         let taskList = this.taskList;
         
         for (let i=0; i<taskList.length; i++){
             document.getElementById('list').innerHTML +=
                 `<div class="task">
                     <p class="total-task-time">${taskList[i].totalTimeFocusedOnTask}</p>
-                    <input class="taskCheckbox" type="checkbox" name="task-${newTask.id}">
+                    <input class="taskCheckbox" type="checkbox" name="task-${taskList[i].id}">
                     <li class="task-description" id="${taskList[i].id}">${taskList[i].taskDescription}</li>
                     <i class="far fa-edit task-icon task-edit-icon"></i>
                     <i class="fas fa-trash-alt task-icon task-delete-icon"></i>
@@ -45,10 +45,6 @@ class List {
                     <a><i class="fas fa-ellipsis-v task-options-icon"></i></a>
                 </div>`;
         }
-
-        
-
-
     }
 
     /* listens for a click event on the add new task button and then adds the value of the input to both the taskList 
@@ -164,8 +160,6 @@ class List {
                         if (task.id == checkboxId){ 
                             task.completed = true;
                             list.completedTasks.push(task);
-                            console.log(task.id);
-                            console.log(checkboxId);  
                         }
                     })
                         
@@ -191,12 +185,12 @@ class List {
         arrayOfDeleteIcons.forEach(function(deleteIcon){
             deleteIcon.addEventListener('click', function(event){
                 let taskToDelete = event.target.parentNode;
-                let taskToDeleteText = event.target.previousElementSibling.previousElementSibling.textContent;//need to chain properly to make work. 
+                let taskToDeleteId = event.target.previousElementSibling.previousElementSibling.id;//need to chain properly to make work. 
                 taskToDelete.remove();//remove from DOM
 
                 //remove from taskList
-                list.taskList.splice(list.taskList.findIndex(task => task.taskDescription === taskToDeleteText), 1);//working
-                list.completedTasks.splice(list.completedTasks.findIndex(task => task.taskDescription === taskToDeleteText), 1); 
+                list.taskList.splice(list.taskList.findIndex(task => task.id == taskToDeleteId), 1);//working
+                list.completedTasks.splice(list.completedTasks.findIndex(task => task.id === taskToDeleteId), 1); 
                     
                 })
                 
@@ -209,6 +203,6 @@ class List {
 let list = new List();
 
 //call these functions so they are operational on the list that is built from local storage.
-list.toggleTaskComplete(list.taskList); //checks for completion tasks when new tasks are added.
+// list.toggleTaskComplete(list.taskList); //checks for completion tasks when new tasks are added.
 list.deleteTask();
 list.editTask();

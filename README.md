@@ -62,21 +62,56 @@ time spent focused on that task.
 - Create a simple product that can be used in the browser and with local storage.
 - Create a product that is intuitive and useful for anyone working on a particular set of tasks. 
 - Create a product that is scalable and has potential to develop further into a fully blown application with database storage. 
+- Create an application that has clean lines and is minimal in design. 
+- Bright toned design, whites, light greys and an accent colour or two.
+- Encourage the use of sprint methodology when working to complete tasks.
 
 ### __*Target Users*__
 The target users are people working on a series of tasks and particularly people employing a sprint methodology for task completion. 
 
 ### __*Research*__
-I researched other task managers online and found a number that do
+I researched other task managers online and found a number that have similar functionality, but all were behind paywalls. I could not find a free and simple
+task manager with timer functionality
 
 
 ## Scope
+- A todo list with timer functionality. 
+- I resisted adding a heap of other functions that I believe would add immense value to the application, but the application itself would become 
+too large and unworkable in its current manifestation as a lightweight localStorage based app. 
+- I kept coming back to the original idea of todo list with timer + basic chart analysis. 
+- The scope was defined because it is an app I have regularly wanted to use without committing to a monthly fee. 
+- I may expand on it after this project is completed. 
+
 
 ## Structure
 
+- I have designed this as a relatively simple application with 1 page on desktop screens and two/three views on medium and mobile screens.
+- On desktop everything will be visible at once. 
+    - When you click on timer via a task, the timer will open in an area above the task list.
+    - the task list will take center stage 
+    - The charts and summary of what has been accomplished will go beneath the tasklist.
+
+
 ## Skeleton
 
+- On desktop - hierarchical tree structure top to bottom. 
+- On mobile more of a new page experience - spoke and hub. Timer opens a new frame / window. As do charts. 
+- This was for display purposes as well. - Too hard to view everything in the one window and unlike a typical website, the application does not espouse 
+a scrolling interaction. It is more functional, therefore when you click on a timer, the timer functionality must appear. It would not be ok to have to scroll or look
+for the timer. 
+
+
+[My full Figma workspace for this project can be viewed here](https://www.figma.com/file/3LBKUPc79uP1qAKMfSBXKs/Wireframes1?node-id=0%3A1)
+
+__*Alternatively here are the individual wireframes in pdf format:*__
+
+If you choose to view them this way, please click download as the GitHub viewer expands the smaller wireframes to an uncomfortably large zoom ratio.
+
 ## Surface
+- Typography - Clean sans-serif
+- Design puts list front and center and because there are a number of elements in play, I want to keep it as minimal as possible, to avoid
+overwhelming the user with colour and charts. 
+
 
 # Features
 
@@ -92,6 +127,15 @@ I researched other task managers online and found a number that do
 6. Daily/weekly/monthly view of time spent working on each task/project. - Automated graphs with D3.js
 
 # Testing
+
+- Manipulating the DOM and working out how to access the objects referred to by the HTML elements was challenging. The problem was that the objects were separate entities to the HTML classes. 
+- I had to create a continuous linkage between the two. 
+- I started by creating only a Task class and then a heap of functions that used that class to manipulate the DOM, but after reviewing a lot of OOP videos online, I realised I could add a List class
+and use them conjointly to do almost all the manipulation without having to manage a bunch of functions in the global scope.
+- So each time the HTML was updated, so too was the object in the array of tasks.
+
+- Ran into issue with local storage. Didn't realise that it overwrote each time you called. localStorage.set method. 
+Fix: I created a local storage method on the List Object. 
 
 # Issues / Room For Improvement
 
@@ -124,14 +168,40 @@ I researched other task managers online and found a number that do
 - ### **[Font Awesome]()**
     Most of the icons used are from Font Awesome.
 
-## 2. CSS
+## 2. HTML & CSS
+
+- ### **[CSS Tooltip](https://www.w3schools.com/css/css_tooltip.asp)**
+    W3Schools information about using and writing CSS tooltips.
+
+- ### **[CSS Cursor Property](https://www.w3schools.com/cssref/pr_class_cursor.asp)**
+    W3Schools information about using the different cursors.
 
 ## 3. JavaScript
+
+- ### **[OOP in JavaScript: Made Super Simple](https://www.youtube.com/watch?v=PFmuCDHHpwk)**
+    YouTube Tutorial by Mosh.
+
+- ### **[Working with Objects - JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Working_with_Objects)**
+    MDN JS Objects Overview.
+
+- ### **[The find() method](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/find)**
+    MDN information on the find() array method. 
+
+- ### **[EveryThing You Need to Know About Local Storage](https://www.boldare.com/blog/everything-you-need-to-know-about-local-storage/)**
+    Useful reference for how to use local storage.
+
+- ### **[Local Storage Info](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage)**
+    MDN Local Storage reference. 
+    
+
 
 ## 4. General
 
 - ### **[How to Write a Git Commit Message - Chris Beams](https://chris.beams.io/posts/git-commit/)**
     Great post about writing commits for Git.
+
+- ### **[Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/)**
+    More specifications about commits.
 
 # Technology Used
 

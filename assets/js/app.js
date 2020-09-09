@@ -103,9 +103,9 @@ class List {
 
                 let taskToEdit = event.target.previousElementSibling;
                 let textToEdit = taskToEdit.textContent;
-                let taskObjectToEdit;
+                
             
-                if (!document.querySelector('.save-button')){
+                if (!document.querySelector('.save-button')){  //stops the situation whereby a user can open 2 or more input edit boxes.
                     
                     const newInput = document.createElement("INPUT");
                     newInput.setAttribute("type", "text")
@@ -122,13 +122,32 @@ class List {
                 const saveButton = document.querySelector('.save-button');
                 const inputBox = document.querySelector('.editedTask')
                 saveButton.addEventListener('click', function(){
-                    console.log(inputBox.value); // take this value and place it into .... a new <li> as a task </li> AND add it to the task object as the task descrip. // if it's completed we have to change the value in completed list as well. 
-                    console.log(textToEdit);
-                })
-                
-                
 
-                
+                    //create a new list element to put the edited task into
+                    const newLi = document.createElement('LI');
+                    newLi.setAttribute("class", "task-description");
+                    newLi.setAttribute("id", `${taskToEdit.id}` ); //because it's still available in memory.
+                    newLi.textContent = inputBox.value; //set the value of the li to the edited task value.
+                    inputBox.parentNode.replaceChild(newLi, inputBox); //confusing AF but basically replace the input box with the Li in the most awkward way possible. 
+                    
+                    //remove the save button
+                    saveButton.remove();
+
+                    //change the value of the task description in BOTH the taskList and the completedTasks List if in the latter. 
+                    list.taskList.forEach(task => {
+                        if(task.id == newLi.id){
+                            task.taskDescription = newLi.textContent;
+                        }
+                    })
+                    // update the task description in the completed Tasks list as well as ensuring that the html reflects the task's state of completion.
+                    list.completedTasks.forEach(task => {
+                        if(task.id == newLi.id){
+                            task.taskDescription = newLi.textContent;
+                            newLi.classList.add('completed');
+                        }
+                    })
+
+                })     
 
             })
         }) 
@@ -191,6 +210,8 @@ class List {
                 //remove from taskList
                 list.taskList.splice(list.taskList.findIndex(task => task.id == taskToDeleteId), 1);//working
                 list.completedTasks.splice(list.completedTasks.findIndex(task => task.id === taskToDeleteId), 1); 
+
+                //reorder the task ids and html ids accordingly.
                     
                 })
                 

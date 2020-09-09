@@ -63,29 +63,29 @@ class List {
                     <p class="total-task-time">${newTask.totalTimeFocusedOnTask}</p>
                     <input class="taskCheckbox" type="checkbox" id="${newTask.id}" name="task-${newTask.id}">
                     <li>${newTask.taskDescription}</li>
+                    <i class="fas fa-trash-alt task-icon task-delete-icon"></i>
                     <a><i class="fas fa-sort sort-tasks-icon"></i></a>
                     <a><i class="fas fa-ellipsis-v task-options-icon"></i></a>
                 </div>`;
 
                 //clears the input value
                 document.querySelector('#new-task-input').value = "";
-                list.toggleTaskComplete(taskListToAddTasksTo); //this works well. 
-
+                list.toggleTaskComplete(taskListToAddTasksTo); //checks for completion tasks when new tasks are added.
+                list.deleteTask();
 
             } else if ((newTaskInput === "") || (newTaskInput === null)){ //this doesn't fire with spaces - look into that. 
                 alert("Please add a task."); 
             }
-            
             
         })
     }
 
     editTask(){
         //need to listen for clicks on any of the edit buttons
-
-        //then target that specific task that the specific edit button refers to 
+                //then target that specific task that the specific edit button refers to 
 
         //turn the task's <li> section into an input? with a save button. 
+        // Maybe use this: MDN: The ChildNode.replaceWith() method replaces this ChildNode in the children list of its parent with a set of Node or DOMString objects. DOMString objects are inserted as equivalent Text nodes.
 
         //show the current task descrip. in the input as the value. 
 
@@ -94,15 +94,11 @@ class List {
         //on save flip back to the <li> </li> html view. 
     }
 
-    toggleTaskComplete(arrayOfTasks){ //this is only firing on page load. how can I make it fire all the time? Or when adding a new task? 
+    toggleTaskComplete(arrayOfTasks){
         //listen for checkbox clicks on specific task.
         const arrayOfCheckboxes = document.querySelectorAll('.taskCheckbox');
-        console.log(`Array of checkboxes: ` + arrayOfCheckboxes )
-        console.log(`Array of Tasks:  `);
-        console.log(arrayOfTasks);
 
-        arrayOfCheckboxes.forEach(function(checkbox){ //this pressupposes that there are checkboxes present? Is the event listener hidden inside? Yes. Doesn't matter though. 
-            console.log("each checkbox present");
+        arrayOfCheckboxes.forEach(function(checkbox){  
             let checkboxTask = checkbox.nextElementSibling.textContent;
             checkbox.addEventListener('change', function(){ 
                 if(checkbox.checked == true){
@@ -124,42 +120,32 @@ class List {
                             task.completed = false;
                         }
                     })
-                    list.completedTasks.forEach(function(task){
-                        if (task.taskDescription === checkboxTask){
-                            list.completedTasks.pop(task);
+                    list.completedTasks.splice(list.completedTasks.findIndex(task => task.taskDescription === checkboxTask), 1);//working
                             console.log(list.completedTasks); //works
                     }
                 })
-            }
-
-        })
-    })
-}
-
-        //if not already checked: 
-            //1 - mark it as checked
-            //2 mark the task object as completed = true
-            //3. Draw a line through the task in html (add class completed)
-            //4. Add to array of completed tasks.
-
-        //if already checked
-            //1. unmark as checked. 
-            //2. change the task obj to completed = false
-            //3. Remove the line through task (remove class completed)
-            //4. Remove from array of completed tasks.
-
-
+            })
+        }
 
     deleteTask(){
+        const arrayOfDeleteIcons = document.querySelectorAll('.task-delete-icon');
         //listen for clicks on any of the delete buttons.
+        arrayOfDeleteIcons.forEach(function(deleteIcon){
+            deleteIcon.addEventListener('click', function(event){
+                let taskToDelete = event.target.parentNode;
+                let taskToDeleteText = event.target.previousElementSibling.textContent;
+                taskToDelete.remove();//remove from DOM
 
-        //target specific task referred to by that delete button. 
-
-        // remove the task from the taskList array
-
-        //remove the <li> of the task </li> from the html. 
+                //remove from taskList
+                list.taskList.splice(list.taskList.findIndex(task => task.taskDescription === taskToDeleteText), 1);//working
+                list.completedTasks.splice(list.completedTasks.findIndex(task => task.taskDescription === taskToDeleteText), 1); 
+                    
+                })
+                
+            })
+        }
+   }
 
         //redo and reorder the task arrays ids? 
-    }
-}
+ 
 let list = new List();

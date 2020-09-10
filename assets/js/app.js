@@ -36,8 +36,8 @@ class List {
                     <i class="fas fa-hourglass-half task-icon countdown-timer-icon"></i>
                     <i class="fas fa-stopwatch task-icon open-timer-icon"></i>
                     <i class="fas fa-user-clock task-icon manual-edit-time-icon"></i>
-                    <a><i class="fas fa-sort sort-tasks-icon"></i></a>
-                    <a><i class="fas fa-ellipsis-v task-options-icon"></i></a>
+                    <a class="task-sort" tabindex=0><i class="fas fa-sort sort-tasks-icon"></i></a>
+                    <a class="task-options" aria-label="task-options-ellipsis" tabindex=0><i class="fas fa-ellipsis-v task-options-icon"></i></a>
                 </div>`;
 
             } else if(taskList[i].completed === false) {
@@ -52,12 +52,11 @@ class List {
                     <i class="fas fa-hourglass-half task-icon countdown-timer-icon"></i>
                     <i class="fas fa-stopwatch task-icon open-timer-icon"></i>
                     <i class="fas fa-user-clock task-icon manual-edit-time-icon"></i>
-                    <a><i class="fas fa-sort sort-tasks-icon"></i></a>
-                    <a><i class="fas fa-ellipsis-v task-options-icon"></i></a>
+                    <a class="task-sort" tabindex=0><i class="fas fa-sort sort-tasks-icon"></i></a>
+                    <a class="task-options" tabindex=0><i class="fas fa-ellipsis-v task-options-icon"></i></a>
                 </div>`;
             }
         }
-                    
         this.toggleTaskComplete();
     }
 
@@ -89,8 +88,8 @@ class List {
                     <i class="fas fa-hourglass-half task-icon countdown-timer-icon"></i>
                     <i class="fas fa-stopwatch task-icon open-timer-icon"></i>
                     <i class="fas fa-user-clock task-icon manual-edit-time-icon"></i>
-                    <a><i class="fas fa-sort sort-tasks-icon"></i></a>
-                    <a><i class="fas fa-ellipsis-v task-options-icon"></i></a>
+                    <a class="task-sort" tabindex=0><i class="fas fa-sort sort-tasks-icon"></i></a>
+                    <a class="task-options" tabindex=0><i class="fas fa-ellipsis-v task-options-icon"></i></a>
                 </div>`;
 
                 //clears the input value
@@ -100,7 +99,8 @@ class List {
                 list.toggleTaskComplete(taskListToAddTasksTo); //checks for completion tasks when new tasks are added.
                 list.deleteTask();
                 list.editTask();
-                list.setDataToLocalStorage()
+                list.setDataToLocalStorage();
+                list.dynamicPopoverNav();
 
             } else if ((newTaskInput === "") || (newTaskInput === null)){ //this doesn't fire with spaces - look into that. 
                 alert("Please add a task."); 
@@ -237,6 +237,23 @@ class List {
         setDataToLocalStorage(){
             window.localStorage.setItem("taskList", JSON.stringify(list.taskList));
         }
+
+        dynamicPopoverNav(){
+            const ellipsisArray = document.querySelectorAll('.task-options');
+            const popover = document.getElementById('popover');
+
+            ellipsisArray.forEach(icon=>{
+                icon.addEventListener('click', function(event){
+                    let ellipsis = event.target;
+                    console.log(ellipsis.getBoundingClientRect());
+                    popover.style.top = (ellipsis.getBoundingClientRect().top + 90).toString()+"px";
+                    popover.style.left = (ellipsis.getBoundingClientRect().left - 95).toString()+"px";
+
+                    popover.style.zIndex = "1";
+                    
+                })
+            })
+        }
     
    }
  
@@ -247,3 +264,16 @@ let list = new List();
 
 list.deleteTask();
 list.editTask();
+list.dynamicPopoverNav();
+
+
+//Dynamic popover menu navigation?? 
+
+//1. Popover is hidden using z-index to start. done
+
+//2. When an ellipsis is clicked - the popover moves to 20px above that ellipsis. 
+
+
+
+
+//3. The popover's buttons reference that particular ellipsises task. 

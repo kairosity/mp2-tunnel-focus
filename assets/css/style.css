@@ -15,6 +15,7 @@
     background-color: #D5D9DE;
     grid-template-columns: repeat(12, 1fr);
     grid-template-rows: 200px 150px 1fr 1fr;
+    position: relative;
 }
 
 /*----------------------------------------------------------- Header  */
@@ -58,6 +59,7 @@
     right: 12px;
     top: 5px;
     font-size: 1.6rem;
+    cursor: pointer;
 
 }
 .timer-box {
@@ -68,9 +70,10 @@
 /*----------------------------------------------------------- Popover Options Box  */
 
 
-.popover-wrapper{
+#popover {
     position: absolute;
-    left: -3000px;
+    left: 100px;
+    z-index: -3000; //working
 }
 .popover-box {
     border: 1px solid black;
@@ -79,6 +82,10 @@
 
 .task-options-list{
     list-style-type: none;
+}
+.task-delete-icon,
+.task-edit-icon {
+    cursor: pointer;
 }
 
 /*----------------------------------------------------------- Add New Task  */
@@ -124,7 +131,7 @@
     display: grid;
     list-style-type: none;
     align-items: center;
-    grid-template-columns: 100px 30px 1fr 20px 20px;
+    grid-template-columns: 150px 30px 1fr auto 20px 20px 20px 20px 20px 20px 20px 20px;
 
 }
 
@@ -137,17 +144,18 @@
   margin-top: 5px;
 }
 
-.task-icons{
-    margin-left: 1rem;
+.task-options-icon {
+    cursor: pointer;
 }
 
-.task-delete-icon{
-    margin-left: 0.2rem;
+.sort-tasks-icon{
+    cursor: grab;
 }
 
-.timer-icons {
-    margin-left: 1rem;
+.completed {
+    text-decoration: line-through;
 }
+
 
 
 

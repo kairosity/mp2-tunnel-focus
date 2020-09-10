@@ -30,12 +30,6 @@ class List {
                     <p class="total-task-time">${taskList[i].totalTimeFocusedOnTask}</p>
                     <input class="taskCheckbox" type="checkbox" checked>
                     <li class="task-description completed" id="${taskList[i].id}">${taskList[i].taskDescription}</li>
-                    <i class="far fa-edit task-icon task-edit-icon"></i>
-                    <i class="fas fa-trash-alt task-icon task-delete-icon"></i>
-                    <i class="fas fa-hourglass-half task-icon countdown-timer-icon"></i>
-                    <i class="fas fa-hourglass-half task-icon countdown-timer-icon"></i>
-                    <i class="fas fa-stopwatch task-icon open-timer-icon"></i>
-                    <i class="fas fa-user-clock task-icon manual-edit-time-icon"></i>
                     <a class="task-sort" tabindex=0><i class="fas fa-sort sort-tasks-icon"></i></a>
                     <a class="task-options" aria-label="task-options-ellipsis" tabindex=0><i class="fas fa-ellipsis-v task-options-icon"></i></a>
                 </div>`;
@@ -46,12 +40,6 @@ class List {
                     <p class="total-task-time">${taskList[i].totalTimeFocusedOnTask}</p>
                     <input class="taskCheckbox" type="checkbox">
                     <li class="task-description" id="${taskList[i].id}">${taskList[i].taskDescription}</li>
-                    <i class="far fa-edit task-icon task-edit-icon"></i>
-                    <i class="fas fa-trash-alt task-icon task-delete-icon"></i>
-                    <i class="fas fa-hourglass-half task-icon countdown-timer-icon"></i>
-                    <i class="fas fa-hourglass-half task-icon countdown-timer-icon"></i>
-                    <i class="fas fa-stopwatch task-icon open-timer-icon"></i>
-                    <i class="fas fa-user-clock task-icon manual-edit-time-icon"></i>
                     <a class="task-sort" tabindex=0><i class="fas fa-sort sort-tasks-icon"></i></a>
                     <a class="task-options" tabindex=0><i class="fas fa-ellipsis-v task-options-icon"></i></a>
                 </div>`;
@@ -82,12 +70,6 @@ class List {
                     <p class="total-task-time">${newTask.totalTimeFocusedOnTask}</p>
                     <input class="taskCheckbox" type="checkbox">
                     <li class="task-description" id="${newTask.id}">${newTask.taskDescription}</li>
-                    <i class="far fa-edit task-icon task-edit-icon"></i>
-                    <i class="fas fa-trash-alt task-icon task-delete-icon"></i>
-                    <i class="fas fa-hourglass-half task-icon countdown-timer-icon"></i>
-                    <i class="fas fa-hourglass-half task-icon countdown-timer-icon"></i>
-                    <i class="fas fa-stopwatch task-icon open-timer-icon"></i>
-                    <i class="fas fa-user-clock task-icon manual-edit-time-icon"></i>
                     <a class="task-sort" tabindex=0><i class="fas fa-sort sort-tasks-icon"></i></a>
                     <a class="task-options" tabindex=0><i class="fas fa-ellipsis-v task-options-icon"></i></a>
                 </div>`;
@@ -113,43 +95,51 @@ class List {
         //need to listen for clicks on any of the edit buttons
         const arrayOfEditIcons = document.querySelectorAll('.task-edit-icon');
 
-        arrayOfEditIcons.forEach(function(editIcon){ 
-            editIcon.addEventListener('click', function(event){
+        const ellipsisArray = document.querySelectorAll('.task-options');
 
-                let taskToEdit = event.target.previousElementSibling;
-                let textToEdit = taskToEdit.textContent;
-                
-            
-                if (!document.querySelector('.save-button')){  //stops the situation whereby a user can open 2 or more input edit boxes.
+        ellipsisArray.forEach(function(ellipsis){    
+            ellipsis.addEventListener('click', function(){
+
+                const editTaskButton = document.querySelector('.edit-task-option');
+                editTaskButton.addEventListener('click', function(event){
+                    console.log("edit button clicked");
+
+                    let parentDiv = event.target.closest('.task');
+                    let liToReplace = parentDiv.children[2];
+                    let textToEdit = parentDiv.children[2].textContent;
+                    console.log(liToReplace);
+
+                    if (!document.querySelector('.save-button')){  //stops the situation whereby a user can open 2 or more input edit boxes.
                     
-                    const newInput = document.createElement("INPUT");
-                    newInput.setAttribute("type", "text")
-                    newInput.setAttribute("value", `${textToEdit}`);
-                    newInput.setAttribute("class", "editedTask")
-                    taskToEdit.parentNode.replaceChild(newInput, taskToEdit);//works
+                        const newInput = document.createElement("INPUT");
+                        newInput.setAttribute("type", "text")
+                        newInput.setAttribute("value", `${textToEdit}`);
+                        newInput.setAttribute("class", "editedTask")
+                        liToReplace.parentNode.replaceChild(newInput, liToReplace);//works
 
-                    const saveButton = document.createElement('BUTTON');
-                    saveButton.setAttribute("class", "save-button");
-                    saveButton.setAttribute("type", "submit");
-                    saveButton.textContent = "Save Changes";
-                    newInput.after(saveButton);
-                }
+                        const saveButton = document.createElement('BUTTON');
+                        saveButton.setAttribute("class", "save-button");
+                        saveButton.setAttribute("type", "submit");
+                        saveButton.textContent = "Save Changes";
+                        newInput.after(saveButton);
+
+                    }
 
                 const saveButton = document.querySelector('.save-button');
                 const inputBox = document.querySelector('.editedTask')
+                
                 saveButton.addEventListener('click', function(){
 
                     //create a new list element to put the edited task into
                     const newLi = document.createElement('LI');
                     newLi.setAttribute("class", "task-description");
-                    newLi.setAttribute("id", `${taskToEdit.id}` ); //because it's still available in memory.
+                    newLi.setAttribute("id", `${liToReplace.id}` ); //because it's still available in memory.
                     newLi.textContent = inputBox.value; //set the value of the li to the edited task value.
                     inputBox.parentNode.replaceChild(newLi, inputBox); //confusing AF but basically replace the input box with the Li in the most awkward way possible. 
                     
                     //remove the save button
                     saveButton.remove();
 
-                    //change the value of the task description in the taskList. 
                     list.taskList.forEach(task => {
                         if(task.id == newLi.id){
                             task.taskDescription = newLi.textContent;
@@ -158,13 +148,12 @@ class List {
                             newLi.classList.add('completed');
                         }
                     })
-                    list.setDataToLocalStorage()
-                })     
-
+                  list.setDataToLocalStorage()
             })
-        }) 
-
-    }
+        })
+    })
+})
+}
 
     toggleTaskComplete(){
         //listen for checkbox clicks on specific task.
@@ -200,43 +189,41 @@ class List {
         }
 
     deleteTask(){
-        const arrayOfDeleteIcons = document.querySelectorAll('.task-delete-icon');
+        const ellipsisArray = document.querySelectorAll('.task-options');
 
-        //listens for clicks on any of the delete buttons.
-        arrayOfDeleteIcons.forEach(function(deleteIcon){
-            deleteIcon.addEventListener('click', function(event){
-                console.log("A delete button has been clicked!");
-                let taskToDelete = event.target.parentNode;
-                let taskToDeleteId = event.target.previousElementSibling.previousElementSibling.id;
+        ellipsisArray.forEach(function(ellipsis){
                 
-                console.log(typeof(taskToDeleteId))
+            ellipsis.addEventListener('click', function(){
+                const deleteTask = document.querySelector('.delete-task-option');
+                deleteTask.addEventListener('click', function(event){
+                    
+                    let taskToDelete = event.target.closest('.task');
+                    let taskToDeleteId = taskToDelete.children[2].id;
+                    console.log(taskToDeleteId);
 
-                //Removes the task from the DOM
-                taskToDelete.remove();
+                    //Removes the task from the DOM
+                    taskToDelete.remove();
 
-                //Removes the Task from the taskList array.
-                list.taskList.splice(list.taskList.findIndex(task => task.id == taskToDeleteId), 1);
+                    //Removes the Task from the taskList array.
+                    list.taskList.splice(list.taskList.findIndex(task => task.id == taskToDeleteId), 1);
 
-                //resets the Task object ids to run from 0 upwards.
-                let tList = list.taskList;
-                for (let i=0; i<tList.length; i++){
-                    tList[i].id = i;
-                }
-                let arrOfDomTasks = document.querySelectorAll('.task-description');
-                for (let i=0; i<arrOfDomTasks.length; i++){
-                    arrOfDomTasks[i].id = i.toString();
-                }
+                    //resets the Task object ids to run from 0 upwards.
+                    let tList = list.taskList;
+                    for (let i=0; i<tList.length; i++){
+                        tList[i].id = i;
+                    }
+                    let arrOfDomTasks = document.querySelectorAll('.task-description');
+                    for (let i=0; i<arrOfDomTasks.length; i++){
+                        arrOfDomTasks[i].id = i.toString();
+                    }
 
-
-                 list.setDataToLocalStorage();
-                })
-                
-            })
-          
-        }
-
+                    list.setDataToLocalStorage();
+                })  
+            })     
+        })
+    }
         dynamicPopoverNav(){
-            const ellipsisArray = document.querySelectorAll('.task-options');
+            // const ellipsisArray = document.querySelectorAll('.task-options');
             const popover = document.getElementById('popover');
 
             tippy('.task-options', {
@@ -254,38 +241,6 @@ class List {
             });
             
         }
-
-        testLinkMethod(){
-            const ellipsisArray = document.querySelectorAll('.task-options');
-
-            ellipsisArray.forEach(function(ellipsis){
-                
-                ellipsis.addEventListener('click', function(){
-                    const testlink = document.querySelector('.test-link');
-            
-                    testlink.addEventListener('click', function(event){
-                        let taskToEdit = event.target.closest('.task');
-                        let taskTime = taskToEdit.querySelector('.total-task-time');
-                        taskTime.textContent = "3hr24m34s";
-
-                        //get a reference to the associated task object using the id.
-                        // the html id is stored as the id on the task description which is a sibling of taskTime. 
-
-                        let taskhtmlidParent = taskTime.parentElement
-                        let id = taskhtmlidParent.children[2].id
-
-                        //the html is not saved - the html is read FROM the task object and THAT is what needs to be saved. 
-                        let taskObjToChange = list.taskList[id];
-                        taskObjToChange.totalTimeFocusedOnTask = taskTime.textContent; //this works. 
-
-                        list.setDataToLocalStorage(); 
-
-                    })
-                    
-                })
-                
-            });          
-        }
        
         setDataToLocalStorage(){
             window.localStorage.setItem("taskList", JSON.stringify(list.taskList));
@@ -297,12 +252,6 @@ class List {
 let list = new List();
 
 //call these functions so they are operational on the list that is built from local storage.
-list.testLinkMethod();
 list.deleteTask();
 list.editTask();
 list.dynamicPopoverNav();
-
-document.addEventListener('click', function(){
-    console.log("a click happened!")
-    list.setDataToLocalStorage();
-})

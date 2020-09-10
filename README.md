@@ -158,8 +158,6 @@ I fixed this by using two small for loops that run just after tasks are deleted.
                         for (let i=0; i<tList.length; i++){
                             tList[i].id = i;
                         }
-                        list.setDataToLocalStorage();
-                        })
 
 And the second re-numbers the DOM tasks also from 0 upwards: 
 
@@ -169,13 +167,11 @@ And the second re-numbers the DOM tasks also from 0 upwards:
                         arrOfDomTasks[i].id = i.toString();
                         }
 
-BUG: This solution created another bug that behaved oddly. When a user loads their list from local storage and then adds some tasks and then checks off some of the new tasks, and then 
+BUG: This solution created another bug that behaved oddly. When a user loads a previously saved list from local storage and then adds some tasks and then checks off some of the new tasks, and then 
 adds another task, the checkmarks were disappearing on some of the newer additions. I debugged this using the Chrome JavaScript debugger, and the breakpoints pointed at the particular method causing the 
-error. 
-
-The addNewTask method calls the toggleTaskComplete method when it finishes running, to ensure that checkmark capability is available for the new task added. The debugger pointed to the part of 
+error. The addNewTask method calls the toggleTaskComplete method when it finishes running, to ensure that checkmark capability is available for the new task added. The debugger pointed to the part of 
 the toggleTaskComplete method where it checks if the item is 'checked' and if it is to add the class "completed". For some reason, this is where the actual ticks in the checkboxes were being removed 
-from the items. I found that by adding: ```checkbox.setAttribute("checked", true)``` fixed the issue by explicitly forcing the "checked" attribute. 
+from the items. I found that adding: ```checkbox.setAttribute("checked", true)``` fixed the issue by explicitly forcing the "checked" attribute on all new task additions.
 
 
 - I started by creating only a Task class and then a heap of functions that used that class to manipulate the DOM, but after reviewing a lot of OOP videos online, I realised I could add a List class
@@ -188,6 +184,38 @@ and use them conjointly to do almost all the manipulation without having to mana
 Fix: I created a local storage method on the List Object. 
 
 - PROBLEM: The popover. I want to dynamically summon the navigation popover (containing edit, delete, timers etc...) 
+I created an array of ellipsis icons that I iterated through and added an event listener for clicks. When any of the icons were clicked the popover would appear over the associated icon. 
+I started by using getBoundingClientRect() as illustrated below. 
+
+            const ellipsisArray = document.querySelectorAll('.task-options');
+            const popover = document.getElementById('popover');
+
+            ellipsisArray.forEach(icon=>{
+                icon.addEventListener('click', function(event){
+                    let ellipsis = event.target;
+                    console.log(ellipsis.getBoundingClientRect());
+                    popover.style.top = (ellipsis.getBoundingClientRect().y).toString()+"px";
+                    popover.style.left = (ellipsis.getBoundingClientRect().x - 95).toString()+"px";
+
+                    window.addEventListener('scroll', function(){
+                        popover.style.top = (ellipsis.getBoundingClientRect().y).toString()+"px";
+                        popover.style.left = (ellipsis.getBoundingClientRect().x - 95).toString()+"px";
+                    })
+
+                    popover.style.zIndex = "1";
+                    
+                })
+            })
+            if(popover.style.zIndex === "1"){
+                !ellipsisArray.addEventListener('click', function(){
+                    console.log("something else clicked.")
+                })
+            }
+
+I added an amount of px to the top and left of this, but that didn't work as the top and left values are dependent on page scroll. I.e. when I scrolled 
+up the page, the location of the popover shifted dramatically. I needed to make it relative to the ellipsis itself **and** responsive to scroll events. I started 
+playing around with the x & y offsets on the page, and then in an angry burst of stack overflowing, I happened upon tippy.js, which enabled me to implement the exact 
+functionality I wanted in less than 15 minutes. Long live tippy.js.
 
 # Issues / Room For Improvement
 
@@ -244,8 +272,12 @@ Fix: I created a local storage method on the List Object.
 
 - ### **[Local Storage Info](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage)**
     MDN Local Storage reference. 
-    
 
+- ### **[Positioning popovers & tooltips](https://dev.to/atomiks/everything-i-know-about-positioning-poppers-tooltips-popovers-dropdowns-in-uis-3nkl)**
+    An excellent reference and summary of the amount of factors you have to take into account when trying to position elements dynamically in the DOM.    
+
+- ### **[Traversing the DOM with JavaScript](https://zellwk.com/blog/dom-traversals/)**
+    A super useful article on DOM traversal with Vanilla JS.
 
 ## 4. General
 
@@ -255,12 +287,20 @@ Fix: I created a local storage method on the List Object.
 - ### **[Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/)**
     More specifications about commits.
 
+- ### **[Debugging in Chrome](https://javascript.info/debugging-chrome)**
+    Information about Chrome Debugging tools. 
+
+## 5. Frameworks
+
+- ### **[tippy.js](https://atomiks.github.io/tippyjs/v6/getting-started/)**
+    A wonderful JavaScript framework for tooltips, popovers, dropdowns & menus. Best thing since sliced bread.
 # Technology Used
 
 - HTML
 - CSS
 - JavaScript
 - D3.js
+- tippy.js 
 - Git 
 - GitHub
 - GitPod

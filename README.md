@@ -81,7 +81,7 @@ too large and unworkable in its current manifestation as a lightweight localStor
 - I kept coming back to the original idea of todo list with timer + basic chart analysis. 
 - The scope was defined because it is an app I have regularly wanted to use without committing to a monthly fee. 
 - I may expand on it after this project is completed. 
-
+- Very tempted to add an option to customise lists. To be able to create new lists for different categories.
 
 ## Structure
 
@@ -115,6 +115,12 @@ overwhelming the user with colour and charts.
 
 # Features
 
+- If you write your task in without capitalizing the first letter, it does that for you.
+- Affirmations API is fed in under Timer. 
+- A chart to show how long you spent on each task in the past 24hours.
+- A chart to show the full length of time spent on each task.
+- A list of all completed tasks. 
+
 # Accessibility
 
 # Future Release Features
@@ -130,12 +136,58 @@ overwhelming the user with colour and charts.
 
 - Manipulating the DOM and working out how to access the objects referred to by the HTML elements was challenging. The problem was that the objects were separate entities to the HTML classes. 
 - I had to create a continuous linkage between the two. 
+- First solution was to link them using the task descriptions. I figured that if I pushed the tasks into the array from what the user writes - then the task descriptions are always going 
+to be identical, and I can therefore summon the task object using the html task and vice-versa. 
+- I wasn't entirely happy with this solution, but it did work. But then I thought about the potential edge case whereby a user writes in two identical tasks. 
+- That situation would break the entire app, because if they then went to edit or delete either of those tasks the application would not be able to discern between the two. 
+- I discovered this while manually testing the functionality. 
+
+- My solution was to change from using task descriptions to using ids. 
+    - The task object ids are set when they are initialised and they are based on the current length of the taskList array.
+    - This way, as long as I manage the rest of the code, the ids will always run from 0 upwards and they will always match the id attributes of their html counterparts. 
+
+Problem:
+When deleting a task - a user removes that task and its id from the task list array. Therefore when a new task in instantiated based on the length of the task List array, it is 
+most likely that there will be two tasks with the same id number in the array. Again this would completely break the application. 
+
+Solution:
+I fixed this by using two small for loops that run just after tasks are deleted. The first re-numbers the task object ids from 0 upwards: 
+        
+                        let tList = list.taskList;
+        
+                        for (let i=0; i<tList.length; i++){
+                            tList[i].id = i;
+                        }
+                        list.setDataToLocalStorage();
+                        })
+
+And the second re-numbers the DOM tasks also from 0 upwards: 
+
+                        let arrOfDomTasks = document.querySelectorAll('.task-description');
+                        
+                        for (let i=0; i<arrOfDomTasks.length; i++){
+                        arrOfDomTasks[i].id = i.toString();
+                        }
+
+BUG: This solution created another bug that behaved oddly. When a user loads their list from local storage and then adds some tasks and then checks off some of the new tasks, and then 
+adds another task, the checkmarks were disappearing on some of the newer additions. I debugged this using the Chrome JavaScript debugger, and the breakpoints pointed at the particular method causing the 
+error. 
+
+The addNewTask method calls the toggleTaskComplete method when it finishes running, to ensure that checkmark capability is available for the new task added. The debugger pointed to the part of 
+the toggleTaskComplete method where it checks if the item is 'checked' and if it is to add the class "completed". For some reason, this is where the actual ticks in the checkboxes were being removed 
+from the items. I found that by adding: ```checkbox.setAttribute("checked", true)``` fixed the issue by explicitly forcing the "checked" attribute. 
+
+
 - I started by creating only a Task class and then a heap of functions that used that class to manipulate the DOM, but after reviewing a lot of OOP videos online, I realised I could add a List class
 and use them conjointly to do almost all the manipulation without having to manage a bunch of functions in the global scope.
 - So each time the HTML was updated, so too was the object in the array of tasks.
 
+
+
 - Ran into issue with local storage. Didn't realise that it overwrote each time you called. localStorage.set method. 
 Fix: I created a local storage method on the List Object. 
+
+- PROBLEM: The popover. I want to dynamically summon the navigation popover (containing edit, delete, timers etc...) 
 
 # Issues / Room For Improvement
 

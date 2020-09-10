@@ -28,7 +28,7 @@ class List {
                 document.getElementById('list').innerHTML +=
                 `<div class="task">
                     <p class="total-task-time">${taskList[i].totalTimeFocusedOnTask}</p>
-                    <input class="taskCheckbox" type="checkbox" name="task-${taskList[i].id}" checked>
+                    <input class="taskCheckbox" type="checkbox" checked>
                     <li class="task-description completed" id="${taskList[i].id}">${taskList[i].taskDescription}</li>
                     <i class="far fa-edit task-icon task-edit-icon"></i>
                     <i class="fas fa-trash-alt task-icon task-delete-icon"></i>
@@ -44,7 +44,7 @@ class List {
                 document.getElementById('list').innerHTML +=
                 `<div class="task">
                     <p class="total-task-time">${taskList[i].totalTimeFocusedOnTask}</p>
-                    <input class="taskCheckbox" type="checkbox" name="task-${taskList[i].id}">
+                    <input class="taskCheckbox" type="checkbox">
                     <li class="task-description" id="${taskList[i].id}">${taskList[i].taskDescription}</li>
                     <i class="far fa-edit task-icon task-edit-icon"></i>
                     <i class="fas fa-trash-alt task-icon task-delete-icon"></i>
@@ -81,7 +81,7 @@ class List {
                 document.getElementById('list').innerHTML +=
                 `<div class="task">
                     <p class="total-task-time">${newTask.totalTimeFocusedOnTask}</p>
-                    <input class="taskCheckbox" type="checkbox" name="task-${newTask.id}">
+                    <input class="taskCheckbox" type="checkbox">
                     <li class="task-description" id="${newTask.id}">${newTask.taskDescription}</li>
                     <i class="far fa-edit task-icon task-edit-icon"></i>
                     <i class="fas fa-trash-alt task-icon task-delete-icon"></i>
@@ -175,7 +175,8 @@ class List {
             let checkboxId = checkbox.nextElementSibling.id; //.id
             checkbox.addEventListener('change', function(){ 
                 if(checkbox.checked == true){
-                    checkbox.nextElementSibling.classList.add('completed'); 
+                    checkbox.nextElementSibling.classList.add('completed');
+                    checkbox.setAttribute("checked", true); 
                         
                     list.taskList.forEach(function(task){
                         if (task.id == checkboxId){ 
@@ -184,7 +185,7 @@ class List {
                     })
                         
                 } else if (checkbox.checked == false){
-                    checkbox.nextElementSibling.classList.remove('completed');
+                    checkbox.nextElementSibling.classList.remove('completed'); //I think this is causing the issue? 
                      
                     list.taskList.forEach(function(task){
                         if (task.id == checkboxId){
@@ -200,21 +201,32 @@ class List {
 
     deleteTask(){
         const arrayOfDeleteIcons = document.querySelectorAll('.task-delete-icon');
-        //listen for clicks on any of the delete buttons.
+
+        //listens for clicks on any of the delete buttons.
         arrayOfDeleteIcons.forEach(function(deleteIcon){
             deleteIcon.addEventListener('click', function(event){
                 let taskToDelete = event.target.parentNode;
-                let taskToDeleteId = event.target.previousElementSibling.previousElementSibling.id;//need to chain properly to make work. 
-                taskToDelete.remove();//remove from DOM
+                let taskToDeleteId = event.target.previousElementSibling.previousElementSibling.id;
+                
+                console.log(typeof(taskToDeleteId))
 
-                //remove from taskList
-                list.taskList.splice(list.taskList.findIndex(task => task.id == taskToDeleteId), 1);//working
+                //Removes the task from the DOM
+                taskToDelete.remove();
 
+                //Removes the Task from the taskList array.
+                list.taskList.splice(list.taskList.findIndex(task => task.id == taskToDeleteId), 1);
+
+                //resets the Task object ids to run from 0 upwards.
                 let tList = list.taskList;
-                //reorder the task ids and html ids accordingly.
                 for (let i=0; i<tList.length; i++){
                     tList[i].id = i;
                 }
+                let arrOfDomTasks = document.querySelectorAll('.task-description');
+                for (let i=0; i<arrOfDomTasks.length; i++){
+                    arrOfDomTasks[i].id = i.toString();
+                }
+
+
                  list.setDataToLocalStorage();
                 })
                 

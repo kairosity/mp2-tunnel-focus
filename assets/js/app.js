@@ -201,7 +201,7 @@ class List {
 
     deleteTask(){
         const arrayOfDeleteIcons = document.querySelectorAll('.task-delete-icon');
-
+        
         //listens for clicks on any of the delete buttons.
         arrayOfDeleteIcons.forEach(function(deleteIcon){
             deleteIcon.addEventListener('click', function(event){
@@ -242,17 +242,25 @@ class List {
             const ellipsisArray = document.querySelectorAll('.task-options');
             const popover = document.getElementById('popover');
 
-            ellipsisArray.forEach(icon=>{
-                icon.addEventListener('click', function(event){
-                    let ellipsis = event.target;
-                    console.log(ellipsis.getBoundingClientRect());
-                    popover.style.top = (ellipsis.getBoundingClientRect().top + 90).toString()+"px";
-                    popover.style.left = (ellipsis.getBoundingClientRect().left - 95).toString()+"px";
+            tippy('.task-options', {
+                allowHTML: true, 
+                content: popover.innerHTML,
+                aria: {
+                    content: 'auto',
+                    expanded: 'auto'
+                },
+                hideOnClick: true,
+                interactive: true,
+                placement: 'auto',
+                trigger: 'click focus',
+                theme: 'blueish',
+            });
+            
+        }
 
-                    popover.style.zIndex = "1";
-                    
-                })
-            })
+        testLinkMethod(){
+            const testlink = document.getElementById('test-link');
+            console.log(testlink);
         }
     
    }
@@ -261,19 +269,7 @@ class List {
 let list = new List();
 
 //call these functions so they are operational on the list that is built from local storage.
-
+list.testLinkMethod();
 list.deleteTask();
 list.editTask();
 list.dynamicPopoverNav();
-
-
-//Dynamic popover menu navigation?? 
-
-//1. Popover is hidden using z-index to start. done
-
-//2. When an ellipsis is clicked - the popover moves to 20px above that ellipsis. 
-
-
-
-
-//3. The popover's buttons reference that particular ellipsises task. 

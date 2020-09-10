@@ -201,10 +201,11 @@ class List {
 
     deleteTask(){
         const arrayOfDeleteIcons = document.querySelectorAll('.task-delete-icon');
-        
+
         //listens for clicks on any of the delete buttons.
         arrayOfDeleteIcons.forEach(function(deleteIcon){
             deleteIcon.addEventListener('click', function(event){
+                console.log("A delete button has been clicked!");
                 let taskToDelete = event.target.parentNode;
                 let taskToDeleteId = event.target.previousElementSibling.previousElementSibling.id;
                 
@@ -233,10 +234,6 @@ class List {
             })
           
         }
-        //this needs to be here or it will overwrite everything with ind. bits and pieces.
-        setDataToLocalStorage(){
-            window.localStorage.setItem("taskList", JSON.stringify(list.taskList));
-        }
 
         dynamicPopoverNav(){
             const ellipsisArray = document.querySelectorAll('.task-options');
@@ -259,8 +256,39 @@ class List {
         }
 
         testLinkMethod(){
-            const testlink = document.getElementById('test-link');
-            console.log(testlink);
+            const ellipsisArray = document.querySelectorAll('.task-options');
+
+            ellipsisArray.forEach(function(ellipsis){
+                
+                ellipsis.addEventListener('click', function(){
+                    const testlink = document.querySelector('.test-link');
+            
+                    testlink.addEventListener('click', function(event){
+                        let taskToEdit = event.target.closest('.task');
+                        let taskTime = taskToEdit.querySelector('.total-task-time');
+                        taskTime.textContent = "3hr24m34s";
+
+                        //get a reference to the associated task object using the id.
+                        // the html id is stored as the id on the task description which is a sibling of taskTime. 
+
+                        let taskhtmlidParent = taskTime.parentElement
+                        let id = taskhtmlidParent.children[2].id
+
+                        //the html is not saved - the html is read FROM the task object and THAT is what needs to be saved. 
+                        let taskObjToChange = list.taskList[id];
+                        taskObjToChange.totalTimeFocusedOnTask = taskTime.textContent; //this works. 
+
+                        list.setDataToLocalStorage(); 
+
+                    })
+                    
+                })
+                
+            });          
+        }
+       
+        setDataToLocalStorage(){
+            window.localStorage.setItem("taskList", JSON.stringify(list.taskList));
         }
     
    }
@@ -273,3 +301,8 @@ list.testLinkMethod();
 list.deleteTask();
 list.editTask();
 list.dynamicPopoverNav();
+
+document.addEventListener('click', function(){
+    console.log("a click happened!")
+    list.setDataToLocalStorage();
+})

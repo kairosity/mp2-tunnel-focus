@@ -1,4 +1,113 @@
 
+
+class Timer {
+    constructor(){
+        this.seconds = 0;
+        this.minutes = 0;
+        this.hours = 0;
+    }
+
+    buildTimer(){
+        //set an interval timer that runs a function every second. 
+    
+        let secondsHtml = document.getElementById('seconds');
+        let minutesHtml = document.getElementById('minutes');
+        let hoursHtml = document.getElementById('hours');
+
+        console.log(this.seconds)
+        secondsHtml.innerHTML = this.seconds;
+        minutesHtml.innerHTML = this.minutes;
+        hoursHtml.innerHTML = this.hours;
+
+        console.log(typeof(secondsHtml.innerHTML))
+        console.log(typeof(this.seconds))
+       
+
+    }
+
+    startStopwatch(){
+        let seconds = 57;
+        let minutes = 59;
+        let hours = 0;
+
+        let startStopwatchButtonArray = document.querySelectorAll('.start-stopwatch');
+
+        function stopWatch(){
+
+            seconds = seconds + 1;
+
+            if(seconds >= 60){
+                seconds = 0;
+                minutes = minutes + 1;
+
+            } else if(minutes >= 60){
+                minutes = 0;
+                hours = hours + 1;
+            }
+
+
+            let secondsHtml = document.getElementById('seconds');
+            let minutesHtml = document.getElementById('minutes');
+            let hoursHtml = document.getElementById('hours');
+            
+
+            //Formatting the timer correctly. 
+            if(seconds <= 9){
+                secondsHtml.innerHTML = `0${seconds}`
+            } else {
+                secondsHtml.innerHTML = seconds
+            }
+
+            if(minutes <= 9){
+                minutesHtml.innerHTML = `0${minutes}`
+            } else {
+                minutesHtml.innerHTML = minutes
+            }
+
+             if(hours <= 9){
+                hoursHtml.innerHTML = `0${hours}`
+            } else {
+                hoursHtml.innerHTML = hours
+            }
+
+            console.log(typeof(seconds))
+            console.log(typeof(secondsHtml.innerHTML))
+
+
+        }
+        
+        startStopwatchButtonArray.forEach(function(stopwatchButton){
+            stopwatchButton.addEventListener('click', function(){
+                console.log("button clicked")
+
+            //function to update seconds, minutes & hours every second.
+            setInterval(function(){ stopWatch(); }, 1000);
+
+        })
+
+
+        })
+
+        
+            
+            //function to run goes here. 
+
+
+            //1. needs to update the html every second to show seconds passing. 
+
+            //2. Needs to add each bit of time into temporary time segment variables. (That will potentially be saved into the totalTimeFocused prop.)
+
+            //3. 3 variables:  1. Seconds variable. 2. Minutes var. 3. Hours var. 
+                //3.1 When seconds variable reaches 60 it resets and starts again from 0 and adds 1 to minutes variable. Likewise for minutes and hours. 
+
+            //4. When a user clicks "save time to task" at the end of a timed work session the time stored in these variables is added to the total time for that 
+            //task property. -- May have to create 3 time props on task totalHours, totalMinutes, totalSeconds??
+
+            //5. Maybe there should be three separate timers 1.seconds, 2. minutes, 3. hours?
+
+    }   
+}
+
 // A Task Class that has all the properties and methods associated with a task
 
 class Task {
@@ -8,7 +117,8 @@ class Task {
         this.completed = false; 
         this.order = -1; //order of priority in list - will use to structure list order
         this.totalTimeFocusedOnTask = null; //running total of time focused on a specific task
-    }   
+    }
+
 }
 
 class List {
@@ -30,6 +140,7 @@ class List {
                     <p class="total-task-time">${taskList[i].totalTimeFocusedOnTask}</p>
                     <input class="taskCheckbox" type="checkbox" checked>
                     <li class="task-description completed" id="${taskList[i].id}">${taskList[i].taskDescription}</li>
+                    <a><i class="fas fa-stopwatch start-stopwatch"></i></i></a>
                     <a class="task-sort" tabindex=0><i class="fas fa-sort sort-tasks-icon"></i></a>
                     <a class="task-options" aria-label="task-options-ellipsis" tabindex=0><i class="fas fa-ellipsis-v task-options-icon"></i></a>
                 </div>`;
@@ -40,6 +151,7 @@ class List {
                     <p class="total-task-time">${taskList[i].totalTimeFocusedOnTask}</p>
                     <input class="taskCheckbox" type="checkbox">
                     <li class="task-description" id="${taskList[i].id}">${taskList[i].taskDescription}</li>
+                    <a><i class="fas fa-stopwatch start-stopwatch"></i></i></a>
                     <a class="task-sort" tabindex=0><i class="fas fa-sort sort-tasks-icon"></i></a>
                     <a class="task-options" tabindex=0><i class="fas fa-ellipsis-v task-options-icon"></i></a>
                 </div>`;
@@ -47,6 +159,7 @@ class List {
         }
         this.toggleTaskComplete();
     }
+
 
     /* listens for a click event on the add new task button and then adds the value of the input to both the taskList 
     AND it writes it to the HTML. As long as the value is not null or an empty string. It then clears the input box ready 
@@ -70,6 +183,7 @@ class List {
                     <p class="total-task-time">${newTask.totalTimeFocusedOnTask}</p>
                     <input class="taskCheckbox" type="checkbox">
                     <li class="task-description" id="${newTask.id}">${newTask.taskDescription}</li>
+                    <a><i class="fas fa-stopwatch start-stopwatch"></i></i></a>
                     <a class="task-sort" tabindex=0><i class="fas fa-sort sort-tasks-icon"></i></a>
                     <a class="task-options" tabindex=0><i class="fas fa-ellipsis-v task-options-icon"></i></a>
                 </div>`;
@@ -250,8 +364,11 @@ class List {
  
 
 let list = new List();
+let timer = new Timer();
 
 //call these functions so they are operational on the list that is built from local storage.
 list.deleteTask();
 list.editTask();
 list.dynamicPopoverNav();
+timer.buildTimer();
+timer.startStopwatch();

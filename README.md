@@ -217,6 +217,12 @@ up the page, the location of the popover shifted dramatically. I needed to make 
 playing around with the x & y offsets on the page, and then in an angry burst of stack overflowing, I happened upon tippy.js, which enabled me to implement the exact 
 functionality I wanted in less than 15 minutes. Long live tippy.js.
 
+PROBLEM: When creating my Timer object, I tried initialising the times to 00:00:00 and discovered that "Octal literals are not allowed in strict mode." I've discovered that this refers to prefixing numbers with 0. 
+FIX: I will just add string "0"s on to my timer for numbers less than 9. 
+PROBLEM: Even though I initialised the time properties to integers - when they are written dynamically in the DOM they are converted to strings. 
+FIX: I found that for the purpose of this application it's ok that the html representation of time is in string form. The conversion is automatic to strings, and then when I work with the total time I will have to 
+convert those strings back to numbers. 
+
 # Issues / Room For Improvement
 
 # Attribution
@@ -278,6 +284,9 @@ functionality I wanted in less than 15 minutes. Long live tippy.js.
 
 - ### **[Traversing the DOM with JavaScript](https://zellwk.com/blog/dom-traversals/)**
     A super useful article on DOM traversal with Vanilla JS.
+
+- ### **[Information about Octal Literals](https://stackoverflow.com/questions/34358331/why-are-octal-numeric-literals-not-allowed-in-strict-mode-and-what-is-the-worka?lq=1)
+    A stack overflow discussion about Octal Literals and how to get around using them. 
 
 ## 4. General
 

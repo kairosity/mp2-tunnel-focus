@@ -100,7 +100,7 @@ that can be broken into smaller tasks. Because I got back such a wide variety of
 
 #|Opportunity/Potential Feature | Importance | Viability | Score
 ---|------------ | -------------|--------------|------------------
-- | __*TASK LIST FUNCTIONALITY & FEATURES*__ 
+. | __*TASK LIST FUNCTIONALITY & FEATURES*__ 
 1.| Add tasks to the task List  | 5 | 5 | 10
 2.| Edit tasks | 5 | 5 | 10
 3.| Delete tasks | 5 | 5 | 10
@@ -116,7 +116,7 @@ that can be broken into smaller tasks. Because I got back such a wide variety of
 4.| Allow users to select their own Pomodoro time length |2 | 3 | 5
 5.| Stopwatch open-ended timer |4 | 5 | 9
 6.| Focus Reminder Beeps / Pop-up messages |2 | 3 | 5
-- | __*TASK CHARTS FUNCTIONALITY & FEATURES*__ 
+. | __*TASK CHARTS FUNCTIONALITY & FEATURES*__ 
 1.| A display showing the total time focused "today" |4 | 4 | 8
 2.| A display showing the total time focused overall |2 | 4 | 6
 3.| A Chart showing the time focused on each task "today" |4 | 4 | 8
@@ -125,7 +125,7 @@ that can be broken into smaller tasks. Because I got back such a wide variety of
 6.| Weekly and monthly charts of time spent per task |2 | 2 | 4
 7.| A list of tasks completed today |3 | 5 | 8
 8.| A list of tasks completed overall |2 | 5 | 7
-- | __*OTHER FUNCTIONALITY & FEATURES*__ 
+. | __*OTHER FUNCTIONALITY & FEATURES*__ 
 1.| Randomly selected affirmations/quotes about work that appear when the timer is on |2 | 3 | 5
 2.| Wage calculations for users who work by the hour/time period |1 | 2 | 3
 3.| Display weather for the day at the top of the screen |1 | 3 | 4

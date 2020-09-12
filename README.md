@@ -109,7 +109,7 @@ that can be broken into smaller tasks. Because I got back such a wide variety of
 6.| Add due-dates for tasks |2 | 4 | 6
 7.| Sync task lists to Google Calendar API |2 | 2 | 4
 8.| Speech to text functionality for adding tasks to lists |2 | 2 | 4
-- | __*TASK TIMER FUNCTIONALITY & FEATURES*__ 
+. | __*TASK TIMER FUNCTIONALITY & FEATURES*__ 
 1.| Pomodoro style timer of 25 minutes |3 | 5 | 8
 2.| Pomodoro style timer of 15 minutes |2 | 5 | 7
 3.| Pomodoro style break time segments |1 | 3 | 4

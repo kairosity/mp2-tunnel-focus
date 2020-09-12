@@ -1,27 +1,31 @@
 # Tunnel Focus: Time Your Tasks
 ## Code Institute Milestone Project 2: Interactive Front-End Development
 
-This is a task manager with a difference. 
-Breaking large projects up into smaller tasks is a great way to get things done efficiently. 
+Tunnel Focus is a browser based task manager with a difference. 
+A key methodology of Agile Development is breaking large projects up into smaller tasks as a way to get things done efficiently. 
 
-Sometimes focusing on a task "until it's done" is not a good way to get things done, as your mind can wander and concentration can lag.
-
+For many people focusing on a task "until it's done" is not the most efficient way to complete it, as your mind can wander and concentration can lag.
 Focusing in small bursts and maintaining intense focus for small periods of time, punctuated by regular breaks can yield massive benefits in terms of work effiency.
 
-This web application has been conceptualised and designed around that premise. 
-
-It works as a simple task manager, except that it also keeps track of how long a user works on a particular task. The app is built to encourage and track a sprint-like methodology, or focused work for 
-shorter periods of time. 
+This web application has been conceptualised and designed around that premise: small bursts of 
+productivity which added together result in successfully completed tasks and projects. Tunnel Focus works as a simple task manager, except that it also keeps track of 
+how long a user works on a particular task. As such it can be used to help with and encourage an Agile approach to development or any other area that requires task management.  
 
 # UX
 
 ## User Stories 
 
+The application is targeted at any user who requires a task manager for any purpose. It is particularly useful for anyone working on a large project with a lot of working parts.
+
 ### First Time User Stories
 
-- As a first time user, I want to be able to easily and clearly understand the purpose of this web application.
+__*As a first time user:*__
+- I want to be able to easily and clearly understand the purpose of this web application.
+- I want to be able to quickly and easily understand how to navigate the application. 
+- I want the application to be visually appealing and have a clean interface that is easy to view.
 
-- As a user:
+ __*As a user:*__
+    
 - I want to be able to add tasks to a list.
 - I want to be able to edit a task.
 - I want to be able to check off tasks when they are completed.
@@ -50,10 +54,15 @@ time spent focused on that task.
 
 ### Returning User Stories
 
-- As a returning user, I want my tasks to be stored and recalled when I navigate to the webpage.
+__*As a returning user:*__ 
+- I want my tasks to be stored and recalled when I navigate to the webpage.
+- I want all the specifics associated with the tasks to be loaded correctly and accurately.
 
 ### Accessibility User Stories
-- As a user who is hard of hearing, I want there to be a visual display when the countdown timer ends. 
+
+- As a user who is __*hard of hearing*__, I want there to be a visual display when the countdown timer ends. 
+- As a user who is __*colourblind*__, I want the colours used to employ sufficient contrast so that any visual cues are apparent to me.
+- As a user who is __*physically impaired*__ I want to be able to use the keyboard to navigate and interact with the application. 
 
 ## Strategy
 
@@ -75,21 +84,69 @@ task manager with timer functionality
 
 
 ## Scope
+
+The basis for this application's scope, was actually to create an app I wanted to use for my own projects. I've used a variety of task managers over the years, 
+and have always reverted to just writing lists on paper, which I still believe is a powerful method for many reasons. 
+
+However, the one functionality I always felt was lacking from your run-of-the-mill online todo list / task manager, was the ability to time tasks. The internet is replete with 
+todo lists and pomodoro timers and I felt they are most useful when combined. 
+
+So the basic and general scope for this project is:
 - A todo list with timer functionality. 
-- I resisted adding a heap of other functions that I believe would add immense value to the application, but the application itself would become 
-too large and unworkable in its current manifestation as a lightweight localStorage based app. 
-- I kept coming back to the original idea of todo list with timer + basic chart analysis. 
-- The scope was defined because it is an app I have regularly wanted to use without committing to a monthly fee. 
-- I may expand on it after this project is completed. 
-- Very tempted to add an option to customise lists. To be able to create new lists for different categories.
+
+To further define both the task list functionality and features for the timer and the task manager components, I began by sketching out exactly what I would like to use and then I
+spoke to friends in various creative and professional industries to see what ideas they could contribute. A timer functionality is most attractive to users who work on a varied list of projects 
+that can be broken into smaller tasks. Because I got back such a wide variety of feature requests I sketched out the feature list chart displayed below to help me decide on what to include.
+
+#|Opportunity/Potential Feature | Importance | Viability | Score
+---|------------ | -------------|--------------|------------------
+- | __*TASK LIST FUNCTIONALITY & FEATURES*__ 
+1.| Add tasks to the task List  | 5 | 5 | 10
+2.| Edit tasks | 5 | 5 | 10
+3.| Delete tasks | 5 | 5 | 10
+4.| Check tasks as completed | 5 | 5 | 10
+5.| Add multiple task lists for different categories of tasks / different projects |2 | 3 | 5
+6.| Add due-dates for tasks |2 | 4 | 6
+7.| Sync task lists to Google Calendar API |2 | 2 | 4
+8.| Speech to text functionality for adding tasks to lists |2 | 2 | 4
+- | __*TASK TIMER FUNCTIONALITY & FEATURES*__ 
+1.| Pomodoro style timer of 25 minutes |3 | 5 | 8
+2.| Pomodoro style timer of 15 minutes |2 | 5 | 7
+3.| Pomodoro style break time segments |1 | 3 | 4
+4.| Allow users to select their own Pomodoro time length |2 | 3 | 5
+5.| Stopwatch open-ended timer |4 | 5 | 9
+6.| Focus Reminder Beeps / Pop-up messages |2 | 3 | 5
+- | __*TASK CHARTS FUNCTIONALITY & FEATURES*__ 
+1.| A display showing the total time focused "today" |4 | 4 | 8
+2.| A display showing the total time focused overall |2 | 4 | 6
+3.| A Chart showing the time focused on each task "today" |4 | 4 | 8
+4.| A Chart showing the time focused on each task overall |3 | 4 | 7
+5.| A Chart showing the amount of time segments per task and their times |2 | 2 | 4
+6.| Weekly and monthly charts of time spent per task |2 | 2 | 4
+7.| A list of tasks completed today |3 | 5 | 8
+8.| A list of tasks completed overall |2 | 5 | 7
+- | __*OTHER FUNCTIONALITY & FEATURES*__ 
+1.| Randomly selected affirmations/quotes about work that appear when the timer is on |2 | 3 | 5
+2.| Wage calculations for users who work by the hour/time period |1 | 2 | 3
+3.| Display weather for the day at the top of the screen |1 | 3 | 4
+ 
 
 ## Structure
 
-- I have designed this as a relatively simple application with 1 page on desktop screens and two/three views on medium and mobile screens.
-- On desktop everything will be visible at once. 
-    - When you click on timer via a task, the timer will open in an area above the task list.
-    - the task list will take center stage 
-    - The charts and summary of what has been accomplished will go beneath the tasklist.
+- I have designed this as a relatively simple application with 1 view on desktop screens and three views on medium and mobile screens.
+
+__*Desktop*__
+
+- 1 page view with the name of the application, followed by the task list, followed by the task charts.
+- When the user clicks to start any of the timers, a timer will appear above the task list.
+
+- This structure is based on the idea of a dashboard layout, but instead of filling all the white space as is customary with dashboards, I wanted to 
+keep the task list center stage, to re-emphasize the "Focus" aspect of the application. This strategy also ensures that the design remains clean 
+and visually uncomplicated. 
+
+__*Medium & Mobile*__
+
+
 
 
 ## Skeleton
@@ -131,97 +188,11 @@ overwhelming the user with colour and charts.
 4. Adding project / category functionality. 
 5. Wage calculations for people who are paid per hour/ on a time basis. Very useful for freelancers who operate by time expended.
 6. Daily/weekly/monthly view of time spent working on each task/project. - Automated graphs with D3.js
-
+7. Speech to text functionality for adding tasks to the list. 
 # Testing
 
-- Manipulating the DOM and working out how to access the objects referred to by the HTML elements was challenging. The problem was that the objects were separate entities to the HTML classes. 
-- I had to create a continuous linkage between the two. 
-- First solution was to link them using the task descriptions. I figured that if I pushed the tasks into the array from what the user writes - then the task descriptions are always going 
-to be identical, and I can therefore summon the task object using the html task and vice-versa. 
-- I wasn't entirely happy with this solution, but it did work. But then I thought about the potential edge case whereby a user writes in two identical tasks. 
-- That situation would break the entire app, because if they then went to edit or delete either of those tasks the application would not be able to discern between the two. 
-- I discovered this while manually testing the functionality. 
+[Please click here to read all the testing documentation.](testing.md)
 
-- My solution was to change from using task descriptions to using ids. 
-    - The task object ids are set when they are initialised and they are based on the current length of the taskList array.
-    - This way, as long as I manage the rest of the code, the ids will always run from 0 upwards and they will always match the id attributes of their html counterparts. 
-
-Problem:
-When deleting a task - a user removes that task and its id from the task list array. Therefore when a new task in instantiated based on the length of the task List array, it is 
-most likely that there will be two tasks with the same id number in the array. Again this would completely break the application. 
-
-Solution:
-I fixed this by using two small for loops that run just after tasks are deleted. The first re-numbers the task object ids from 0 upwards: 
-        
-                        let tList = list.taskList;
-        
-                        for (let i=0; i<tList.length; i++){
-                            tList[i].id = i;
-                        }
-
-And the second re-numbers the DOM tasks also from 0 upwards: 
-
-                        let arrOfDomTasks = document.querySelectorAll('.task-description');
-                        
-                        for (let i=0; i<arrOfDomTasks.length; i++){
-                        arrOfDomTasks[i].id = i.toString();
-                        }
-
-BUG: This solution created another bug that behaved oddly. When a user loads a previously saved list from local storage and then adds some tasks and then checks off some of the new tasks, and then 
-adds another task, the checkmarks were disappearing on some of the newer additions. I debugged this using the Chrome JavaScript debugger, and the breakpoints pointed at the particular method causing the 
-error. The addNewTask method calls the toggleTaskComplete method when it finishes running, to ensure that checkmark capability is available for the new task added. The debugger pointed to the part of 
-the toggleTaskComplete method where it checks if the item is 'checked' and if it is to add the class "completed". For some reason, this is where the actual ticks in the checkboxes were being removed 
-from the items. I found that adding: ```checkbox.setAttribute("checked", true)``` fixed the issue by explicitly forcing the "checked" attribute on all new task additions.
-
-
-- I started by creating only a Task class and then a heap of functions that used that class to manipulate the DOM, but after reviewing a lot of OOP videos online, I realised I could add a List class
-and use them conjointly to do almost all the manipulation without having to manage a bunch of functions in the global scope.
-- So each time the HTML was updated, so too was the object in the array of tasks.
-
-
-
-- Ran into issue with local storage. Didn't realise that it overwrote each time you called. localStorage.set method. 
-Fix: I created a local storage method on the List Object. 
-
-- PROBLEM: The popover. I want to dynamically summon the navigation popover (containing edit, delete, timers etc...) 
-I created an array of ellipsis icons that I iterated through and added an event listener for clicks. When any of the icons were clicked the popover would appear over the associated icon. 
-I started by using getBoundingClientRect() as illustrated below. 
-
-            const ellipsisArray = document.querySelectorAll('.task-options');
-            const popover = document.getElementById('popover');
-
-            ellipsisArray.forEach(icon=>{
-                icon.addEventListener('click', function(event){
-                    let ellipsis = event.target;
-                    console.log(ellipsis.getBoundingClientRect());
-                    popover.style.top = (ellipsis.getBoundingClientRect().y).toString()+"px";
-                    popover.style.left = (ellipsis.getBoundingClientRect().x - 95).toString()+"px";
-
-                    window.addEventListener('scroll', function(){
-                        popover.style.top = (ellipsis.getBoundingClientRect().y).toString()+"px";
-                        popover.style.left = (ellipsis.getBoundingClientRect().x - 95).toString()+"px";
-                    })
-
-                    popover.style.zIndex = "1";
-                    
-                })
-            })
-            if(popover.style.zIndex === "1"){
-                !ellipsisArray.addEventListener('click', function(){
-                    console.log("something else clicked.")
-                })
-            }
-
-I added an amount of px to the top and left of this, but that didn't work as the top and left values are dependent on page scroll. I.e. when I scrolled 
-up the page, the location of the popover shifted dramatically. I needed to make it relative to the ellipsis itself **and** responsive to scroll events. I started 
-playing around with the x & y offsets on the page, and then in an angry burst of stack overflowing, I happened upon tippy.js, which enabled me to implement the exact 
-functionality I wanted in less than 15 minutes. Long live tippy.js.
-
-PROBLEM: When creating my Timer object, I tried initialising the times to 00:00:00 and discovered that "Octal literals are not allowed in strict mode." I've discovered that this refers to prefixing numbers with 0. 
-FIX: I will just add string "0"s on to my timer for numbers less than 9. 
-PROBLEM: Even though I initialised the time properties to integers - when they are written dynamically in the DOM they are converted to strings. 
-FIX: I found that for the purpose of this application it's ok that the html representation of time is in string form. The conversion is automatic to strings, and then when I work with the total time I will have to 
-convert those strings back to numbers. 
 
 # Issues / Room For Improvement
 
@@ -287,6 +258,9 @@ convert those strings back to numbers.
 
 - ### **[Information about Octal Literals](https://stackoverflow.com/questions/34358331/why-are-octal-numeric-literals-not-allowed-in-strict-mode-and-what-is-the-worka?lq=1)
     A stack overflow discussion about Octal Literals and how to get around using them. 
+
+- ### **[JSHint](https://jshint.com/)**
+    A JavaScript code quality tool. I used it to check for errors in my code. 
 
 ## 4. General
 

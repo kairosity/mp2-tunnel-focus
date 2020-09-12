@@ -14,36 +14,34 @@ class Timer {
         let minutesHtml = document.getElementById('minutes');
         let hoursHtml = document.getElementById('hours');
 
-        console.log(this.seconds)
         secondsHtml.innerHTML = this.seconds;
         minutesHtml.innerHTML = this.minutes;
         hoursHtml.innerHTML = this.hours;
 
-        console.log(typeof(secondsHtml.innerHTML))
-        console.log(typeof(this.seconds))
-       
-
+    
     }
 
-    startStopwatch(){
+    stopwatch(){
         let seconds = 57;
         let minutes = 59;
-        let hours = 0;
+        let hours = 4;
 
         let startStopwatchButtonArray = document.querySelectorAll('.start-stopwatch');
 
-        function stopWatch(){
+     function startStopwatch(){
 
             seconds = seconds + 1;
 
             if(seconds >= 60){
                 seconds = 0;
                 minutes = minutes + 1;
+            }
 
-            } else if(minutes >= 60){
+            if(minutes >= 60){
                 minutes = 0;
                 hours = hours + 1;
             }
+            //should I add an end point to hours?
 
 
             let secondsHtml = document.getElementById('seconds');
@@ -53,57 +51,55 @@ class Timer {
 
             //Formatting the timer correctly. 
             if(seconds <= 9){
-                secondsHtml.innerHTML = `0${seconds}`
+                secondsHtml.innerHTML = `0${seconds}`;
             } else {
-                secondsHtml.innerHTML = seconds
+                secondsHtml.innerHTML = seconds;
             }
 
             if(minutes <= 9){
-                minutesHtml.innerHTML = `0${minutes}`
+                minutesHtml.innerHTML = `0${minutes}`;
             } else {
-                minutesHtml.innerHTML = minutes
+                minutesHtml.innerHTML = minutes;
             }
 
              if(hours <= 9){
-                hoursHtml.innerHTML = `0${hours}`
+                hoursHtml.innerHTML = `0${hours}`;
             } else {
-                hoursHtml.innerHTML = hours
+                hoursHtml.innerHTML = hours;
             }
-
-            console.log(typeof(seconds))
-            console.log(typeof(secondsHtml.innerHTML))
 
 
         }
         
         startStopwatchButtonArray.forEach(function(stopwatchButton){
             stopwatchButton.addEventListener('click', function(){
-                console.log("button clicked")
+                console.log("button clicked");
 
             //function to update seconds, minutes & hours every second.
-            setInterval(function(){ stopWatch(); }, 1000);
+            setInterval(function(){ startStopwatch(); }, 1000);
 
-        })
+            //Only within this eventListener do we need to add the pause button event listener. 
+            //Also maybe the pause button only appears when the stopwatch is actually running?
+
+            // pauseStopwatch(){
+            //     //pause function goes here. 
+            // }
+
+        });
 
 
-        })
+        });
 
-        
-            
-            //function to run goes here. 
+        // resetStopwatch(){
+        //     //reset function goes here. 
 
 
-            //1. needs to update the html every second to show seconds passing. 
+        // }
 
-            //2. Needs to add each bit of time into temporary time segment variables. (That will potentially be saved into the totalTimeFocused prop.)
-
-            //3. 3 variables:  1. Seconds variable. 2. Minutes var. 3. Hours var. 
-                //3.1 When seconds variable reaches 60 it resets and starts again from 0 and adds 1 to minutes variable. Likewise for minutes and hours. 
-
-            //4. When a user clicks "save time to task" at the end of a timed work session the time stored in these variables is added to the total time for that 
-            //task property. -- May have to create 3 time props on task totalHours, totalMinutes, totalSeconds??
-
-            //5. Maybe there should be three separate timers 1.seconds, 2. minutes, 3. hours?
+        // saveStopwatchTimeToTask(){
+        //     //user will be prompted and asked whether they want to save the time to the associated task. 
+        //     //This allows them to make errors or forget that the timer was running. 
+        // }
 
     }   
 }
@@ -129,7 +125,7 @@ class List {
         this.toggleTaskComplete(this.taskList);    
     }
 
-    //takes all the tasks store in taskList and adds them to HTML on page load.
+    //takes all the tasks stored in taskList and adds them to HTML on page load.
     buildTaskList(){
         let taskList = this.taskList;
         
@@ -371,4 +367,4 @@ list.deleteTask();
 list.editTask();
 list.dynamicPopoverNav();
 timer.buildTimer();
-timer.startStopwatch();
+timer.stopwatch();

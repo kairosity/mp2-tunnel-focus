@@ -47,6 +47,7 @@
     grid-column: 1 / 13;
     grid-row: 2 / 3;
     display: flex;
+    flex-direction: column;
     position: relative;
     justify-content: center;
     align-items: center;
@@ -64,7 +65,6 @@
 }
 .timer-box {
     display: flex;
-    flex-direction: column;
     align-items: center;
 }
 /*----------------------------------------------------------- Popover Options Box  */
@@ -72,21 +72,37 @@
 
 #popover {
     position: absolute;
-    left: 100px;
-    z-index: -3000; //working
+    left: -2100px;
 }
 .popover-box {
-    border: 1px solid black;
     width: 200px;
+}
+
+.tippy-box[data-theme~='blueish'] {
+  background-color: rgb(255, 254, 254);
+  color: rgb(47, 0, 255);
+  box-shadow:inset 0px 0px 0px 5px rgb(47, 0, 255);
+  padding: 10px;
+}
+
+.tippy-box[data-theme~='blueish'][data-placement^='top'] > .tippy-arrow::before {
+  border-top-color: rgb(47, 0, 255);
+}
+.tippy-box[data-theme~='blueish'][data-placement^='bottom'] > .tippy-arrow::before {
+  border-bottom-color: rgb(47, 0, 255);
+}
+.tippy-box[data-theme~='blueish'][data-placement^='left'] > .tippy-arrow::before {
+  border-left-color: rgb(47, 0, 255);
+}
+.tippy-box[data-theme~='blueish'][data-placement^='right'] > .tippy-arrow::before {
+  border-right-color: rgb(47, 0, 255);
 }
 
 .task-options-list{
     list-style-type: none;
-}
-.task-delete-icon,
-.task-edit-icon {
     cursor: pointer;
 }
+
 
 /*----------------------------------------------------------- Add New Task  */
 
@@ -144,6 +160,8 @@
   margin-top: 5px;
 }
 
+
+.start-stopwatch,
 .task-options-icon {
     cursor: pointer;
 }

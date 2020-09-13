@@ -162,15 +162,24 @@ This way the ids will always run from 0 upwards and they will always match the i
 of bugs discussed [here](LINK TO delete() bugs).  
 
 
-
-
 ### __*Unit Testing*__
+
 ## editTask()
-__METHOD SUMMARY__:
+
+__METHOD SUMMARY__: This method takes the ```<li>``` that holds the task description and replaces it in the DOM with an input element that uses the li's task description attribute as it's value. The user can then edit the input and click on a save button to save the new task description.
+
 ### __*Manual Testing*__
 
+__ISSUE 1:__ Once the user had clicked to "edit task" button, they were free to click on it again, as many times as they wanted which could lead to this situation:  
+
+![edit-task-issue](misc-images/edit-task-issue.png)
+
+__FIX 1:__ I added a conditional that only allowed the edit method to be called if the save button was not already in the DOM: ```if (!document.querySelector('.save-button')){```
+
 ### __*Unit Testing*__
+
 ## 4. toggleTaskComplete()
+
 __METHOD SUMMARY__:
 
 ### __*Manual Testing*__

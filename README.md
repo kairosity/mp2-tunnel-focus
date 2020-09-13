@@ -133,20 +133,68 @@ that can be broken into smaller tasks. Because I got back such a wide variety of
 
 ## Structure
 
-- I have designed this as a relatively simple application with 1 view on desktop screens and three views on medium and mobile screens.
+### Application Sections
+
+- I have designed this as a relatively simple application with 1 view on desktop screens and two main views on medium and mobile screens.
+
+__*Mobile & Medium Screens*__ 
+
+- The list is featured first on the landing page and underneath it the daily task time chart is visible when the user scrolls down.
+- Above that chart there is a drop-down arrow that links to the other chart that illustrates the total time spent on each of the tasks.
+- When a user clicks to start the timer, it opens in a new window that displays just the timer. I vacillated between this design and making the timer
+smaller to fit on the page with the task list as it is on larger screens, but I liked the simplicity of this for mobile, as the whole raison d'etre of the application is to focus on one task at a time, thus the user should not need to see anything else on their mobile screen when they are focusing on the task being timed.
+
+**View 1:**
+
+__*Page top*__
+
+1. Header and application heading.
+2. The task list.
+3. The daily task time summary chart, starting at 0:00AM. (With a dropdown menu link to load the other summaries)*
+4. Footer.
+
+* These are links to subviews which will open in this location on the page, but replace the other charts. Only one chart or summary will be displayed at a time. 
+
+
+
+**View 2:**
+
+1. The timer. This will open based on the task that triggered it. It will have the name of the task above the time displayed. There will be an X to close the page and save the time to the task object. 
+
+**Sub-Views**
+These replace view1-item3 (the chart under the task list). They are all contained in the drop-down menu.
+
+1. The summary chart of the total time spent per task.
+2. A list of tasks completed that day.
+3. A list of all the tasks completed.
 
 __*Desktop*__
 
-- 1 page view with the name of the application, followed by the task list, followed by the task charts.
-- When the user clicks to start any of the timers, a timer will appear above the task list.
+**View 1:**
 
-- This structure is based on the idea of a dashboard layout, but instead of filling all the white space as is customary with dashboards, I wanted to 
-keep the task list center stage, to re-emphasize the "Focus" aspect of the application. This strategy also ensures that the design remains clean 
-and visually uncomplicated. 
+__*Page top*__
+1. Header and application title.
+2. The timer (only when clicked on).
+3. The task list
+4. The task charts and task completion summaries laid out side by side, dashboard style.
+5. Footer
 
-__*Medium & Mobile*__
 
+- When the user clicks to start any of the timers, the timer will appear above the task list. 
+- When the user clicks to close the timer, the user will be asked whether or not to save the time into the task. This is designed as such to avoid situations whereby the user hits the timer accidentally, or starts the timer and then gets distracted and doesn't spend the time on the task.  
 
+- The desktop/large screens UI structure is based on the idea of a dashboard layout, but instead of filling all the white space as is customary with dashboards, I wanted to keep the task list center stage, to re-emphasize the "Focus" aspect of the application. This strategy also ensures that the design remains clean and visually uncomplicated. 
+
+### Website Flow
+
+As I've just outlined, most of this application takes place on one main page, with the exception of the timer on mobile and ipad-sized screens which opens a separate view. The idea is that when a user starts the timer, they will be initiating a burst of productivity that does not require them to use their mobile phone or ipad. The only information available to them from the mobile should be the time spent on that particular task. 
+
+For desktop, I though a separate page for the timer, would be unnecessary navigation, as the user will likely minimise the page anyway, while they work on the task at hand. 
+
+The flow is very much focused around the task list and the timer. The charts are a point of interest and reference, but they are scrolled down to, as they need not take center stage. 
+
+### Interaction Design
+### Information Architecture
 
 
 ## Skeleton
@@ -256,11 +304,17 @@ overwhelming the user with colour and charts.
 - ### **[Traversing the DOM with JavaScript](https://zellwk.com/blog/dom-traversals/)**
     A super useful article on DOM traversal with Vanilla JS.
 
-- ### **[Information about Octal Literals](https://stackoverflow.com/questions/34358331/why-are-octal-numeric-literals-not-allowed-in-strict-mode-and-what-is-the-worka?lq=1)
+- ### **[Information about Octal Literals](https://stackoverflow.com/questions/34358331/why-are-octal-numeric-literals-not-allowed-in-strict-mode-and-what-is-the-worka?lq=1)**
     A stack overflow discussion about Octal Literals and how to get around using them. 
 
 - ### **[JSHint](https://jshint.com/)**
     A JavaScript code quality tool. I used it to check for errors in my code. 
+
+- ### **[Unit Testing in JavaScript and Jasmine | TLDR Jasmine Unit Test Tutorial By: Dylan Israel](https://www.youtube.com/watch?v=h2eWfvcAOTI)**
+    A great beginner's guide to Jasmine Testing.
+
+- ### **[BDD Testing JavaScript with Jasmine](https://www.youtube.com/watch?v=BwXuu0gnIoE)**
+    Fabulous video tutorial that goes into good detail into various Jasmine methods.
 
 ## 4. General
 

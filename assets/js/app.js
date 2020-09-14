@@ -121,7 +121,7 @@ class List {
     constructor(){
         this.taskList = JSON.parse(window.localStorage.getItem("taskList")) || [] ;//this will be where there is a reference to localStorage eventually.
         this.buildTaskList(this.taskList); //the method of building the list up in HTML is automatic when a new list is instantiated which will be every time page is loaded.
-        this.addNewTask(this.taskList, this.completedTasks);
+        this.addNewTask();
         this.toggleTaskComplete(this.taskList);    
     }
 
@@ -161,17 +161,18 @@ class List {
     AND it writes it to the HTML. As long as the value is not null or an empty string. It then clears the input box ready 
     for a new task.
     */
-    addNewTask(taskListToAddTasksTo){
+    addNewTask(){
         const addNewTaskButton = document.querySelector('#add-new-task');
 
         addNewTaskButton.addEventListener('click', function(){ //event listener working. 
+        
             const newTaskInput = document.querySelector('#new-task-input').value;
             
             if((newTaskInput !== null) && (newTaskInput !== "")){
                 let newTask = new Task(newTaskInput); //creates a new Task obj. & sets its props.
-                newTask.id = taskListToAddTasksTo.length; //it will always be 1to1.
+                newTask.id = list.taskList.length; //it will always be 1to1.
                 newTask.totalTimeFocusedOnTask = "00h00m00s";
-                taskListToAddTasksTo.push(newTask); //adds the new task into the taskList array.
+                list.taskList.push(newTask); //adds the new task into the taskList array.
 
                 //adds the task to the list in html  
                 document.getElementById('list').innerHTML +=
@@ -188,7 +189,7 @@ class List {
                 document.querySelector('#new-task-input').value = "";
 
                 //calls these functions so they are operational on the new task.
-                list.toggleTaskComplete(taskListToAddTasksTo); //checks for completion tasks when new tasks are added.
+                list.toggleTaskComplete(list.taskList); //checks for completion tasks when new tasks are added.
                 list.deleteTask();
                 list.editTask();
                 list.setDataToLocalStorage();
@@ -212,7 +213,6 @@ class List {
 
                 const editTaskButton = document.querySelector('.edit-task-option');
                 editTaskButton.addEventListener('click', function(event){
-                    console.log("edit button clicked");
 
                     let parentDiv = event.target.closest('.task');
                     let liToReplace = parentDiv.children[2];
@@ -232,14 +232,12 @@ class List {
                         saveButton.setAttribute("type", "submit");
                         saveButton.textContent = "Save Changes";
                         newInput.after(saveButton);
-
-                    }
+                     }
 
                 const saveButton = document.querySelector('.save-button');
                 const inputBox = document.querySelector('.editedTask')
                 
                 saveButton.addEventListener('click', function(){
-
                     //create a new list element to put the edited task into
                     const newLi = document.createElement('LI');
                     newLi.setAttribute("class", "task-description");
@@ -309,7 +307,6 @@ class List {
                     
                     let taskToDelete = event.target.closest('.task');
                     let taskToDeleteId = taskToDelete.children[2].id;
-                    console.log(taskToDeleteId);
 
                     //Removes the task from the DOM
                     taskToDelete.remove();

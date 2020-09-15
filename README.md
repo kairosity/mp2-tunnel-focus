@@ -286,6 +286,9 @@ overwhelming the user with colour and charts.
 - ### **[OOP in JavaScript: Made Super Simple](https://www.youtube.com/watch?v=PFmuCDHHpwk)**
     YouTube Tutorial by Mosh.
 
+- ### **[JavaScript OOP Crash Course](https://www.youtube.com/watch?v=vDJpGenyHaA&feature=youtu.be)**
+    Tutorial by Traversy Media
+
 - ### **[Working with Objects - JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Working_with_Objects)**
     MDN JS Objects Overview.
 
@@ -315,6 +318,9 @@ overwhelming the user with colour and charts.
 
 - ### **[BDD Testing JavaScript with Jasmine](https://www.youtube.com/watch?v=BwXuu0gnIoE)**
     Fabulous video tutorial that goes into good detail into various Jasmine methods.
+
+- ### **[clearInterval() Method](https://www.w3schools.com/jsref/met_win_clearinterval.asp)**
+    w3schools clearInterval() information
 
 ## 4. General
 

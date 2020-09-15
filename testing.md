@@ -10,6 +10,8 @@ the code and make it far easier to manage. I've noticed particularly how useful 
 
 # JavaScript
 
+## Unit Testing
+Unit testing with Jasmine for this project was nothing short of exasperating. As the project is Object Oriented, writing simple functional unit tests was near impossible. I tried setting up an empty SpecRunner.html file as instructed in the Jasmine docs, but I could not get the tests to read the necessary html in order for them to run successfully. I then used Jasmine-jQuery to attempt to avail of fixtures, and while the fixtures did seem to render, the tests would only function if run against my complete page. Finally the only way I was able to avail of unit testing was to duplicate my rough draft html in SpecRunner.html and then to run appSpec.js against that. My reasoning being that I can run the unit tests in SpecRunner.html and still have a clean index.html to view and undertake the manual testing. This is undoubtedly not the correct way of doing things, but it was the only way I could find to integrate the testing into my project.
 
 ## **Timer Class**
 

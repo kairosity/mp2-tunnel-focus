@@ -78,6 +78,14 @@ So the program was just running the seconds logic first and pushing them to 0 an
 
 Changing the code to two IF statements as above, fixed the issue. 
 
+__ISSUE 4:__ There are two separate routes to starting the stopwatch timer. A user can click on the stopwatch icon, and this will always be the first method, as until they click here, the timer box will not be visible. But once the timer is visible, there are two ways to start the timer: the stopwatch icon *and* the play button that appears if the timer has is paused. This caused a bug that meant two or more Interval timers (based on the stopWatchPlay function) could be triggered to run at the same time. This causes the timer to increase the speed at which the seconds and minutes increase, and it ceased being a reliable timer. 
+
+__FIX 4:__ The fix was to add a boolean variable called "playing" that I use anytime the timer is stopped or started. And then to add a small conditional in the stopwatch icon click event handler, that checks whether "playing" is false and if so, it is allowed trigger the stopwatch start function.  
+
+                        if (!playing){
+                            stopWatchPlay();
+                        }
+
 ### __Unit Testing__
 
 
@@ -87,6 +95,7 @@ Changing the code to two IF statements as above, fixed the issue.
 - ## pauseStopWatch()
     __FUNCTION SUMMARY:__ Pauses the stopwatch. 
     ### __*Manual Testing*__
+
 
     ### __*Unit Testing*__
 

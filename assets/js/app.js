@@ -358,7 +358,6 @@ class List {
 
 let list = new List();
 let timer = new Timer();
-
 //call these functions so they are operational on the list that is built from local storage.
 list.deleteTask();
 list.editTask();

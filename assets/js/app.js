@@ -14,21 +14,24 @@ class Timer {
         let minutesHtml = document.getElementById('minutes');
         let hoursHtml = document.getElementById('hours');
 
-        secondsHtml.innerHTML = this.seconds;
-        minutesHtml.innerHTML = this.minutes;
-        hoursHtml.innerHTML = this.hours;
-
-    
+        secondsHtml.innerHTML = `0${this.seconds}`;
+        minutesHtml.innerHTML = `0${this.minutes}`;
+        hoursHtml.innerHTML = `0${this.hours}`;
     }
 
     stopwatch(){
-        let seconds = 57;
-        let minutes = 59;
-        let hours = 4;
+        let seconds = 0;
+        let minutes = 0;
+        let hours = 0;
+
+        var play;
+        var playing = false;
+        let pauseButton = document.querySelector('#pause');
+        let playButton = document.querySelector('#play');
 
         let startStopwatchButtonArray = document.querySelectorAll('.start-stopwatch');
 
-     function startStopwatch(){
+        function startStopwatch(){
 
             seconds = seconds + 1;
 
@@ -67,28 +70,64 @@ class Timer {
             } else {
                 hoursHtml.innerHTML = hours;
             }
-
-
         }
         
-        startStopwatchButtonArray.forEach(function(stopwatchButton){
-            stopwatchButton.addEventListener('click', function(){
-                console.log("button clicked");
+        function stopWatchMethods(){
+        //Event listener on each task's stopwatch icon - have to initialise 'play' because clearInterval needs a variable.
+                startStopwatchButtonArray.forEach(function(stopwatchButton){
+                    stopwatchButton.addEventListener('click', function(){
+                        console.log("stopwatch button clicked");
 
-            //function to update seconds, minutes & hours every second.
-            setInterval(function(){ startStopwatch(); }, 1000);
+                        //timer display appears - displaying only pause button as the timer is playing. 
 
-            //Only within this eventListener do we need to add the pause button event listener. 
-            //Also maybe the pause button only appears when the stopwatch is actually running?
+                        
 
-            // pauseStopwatch(){
-            //     //pause function goes here. 
-            // }
+                        //timer-controls parent div
+                        let timerControls = document.querySelector('.timer-controls');
 
+                        //if the stopwatch isn't already playing then... automatically run StopWatchPlay
+                        if (!playing){
+                            stopWatchPlay();
+                        }
+                        
+                        stopWatchPause();
+
+                });
+                });
+
+        //function to update seconds, minutes & hours every second. is called immediately when stopwatch is clicked.
+        function stopWatchPlay(){
+            playing = true;
+            //calls startStopwatch every second.
+            play = setInterval(function(){ 
+                startStopwatch(); 
+                }, 1000);
+        }
+
+        //called immediately but waits to hear a click on pause button.
+        function stopWatchPause(){
+
+            pauseButton.addEventListener('click', function(){
+                playing = false;
+                //stop interval timer counting.
+                clearInterval(play);   
+                //pause button removed and play button replaces it. 
+                pauseButton.style.display = "none";
+                playButton.style.display = "inline-block";
+                
+            })
+        }
+        playButton.addEventListener('click', function(){
+            playing = true;
+            play = setInterval(function(){ 
+                startStopwatch(); 
+                }, 1000);
+            pauseButton.style.display = "inline-block";
+            playButton.style.display = "none";
         });
 
-
-        });
+    }
+        
 
         // resetStopwatch(){
         //     //reset function goes here. 
@@ -100,6 +139,7 @@ class Timer {
         //     //user will be prompted and asked whether they want to save the time to the associated task. 
         //     //This allows them to make errors or forget that the timer was running. 
         // }
+        stopWatchMethods();
 
     }   
 }
@@ -194,6 +234,7 @@ class List {
                 list.editTask();
                 list.setDataToLocalStorage();
                 list.dynamicPopoverNav();
+                timer.stopwatch();
 
             } else if ((newTaskInput === "") || (newTaskInput === null)){ //this doesn't fire with spaces - look into that. 
                 alert("Please add a task."); 

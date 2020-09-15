@@ -17,6 +17,15 @@
     grid-template-rows: 200px 150px 1fr 1fr;
     position: relative;
 }
+/*----------------------------------------------------------- Timer  */
+
+#tests-heading {
+    padding: 1.2em;
+}
+
+.tests-body {
+    text-align: center;
+}
 
 /*----------------------------------------------------------- Header  */
 .main-header{
@@ -66,6 +75,10 @@
 .timer-box {
     display: flex;
     align-items: center;
+}
+
+#play {
+    display: none;
 }
 /*----------------------------------------------------------- Popover Options Box  */
 

@@ -1,0 +1,77 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script src="https://kit.fontawesome.com/a27a231c02.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://unpkg.com/tippy.js@6/animations/scale.css"/>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <title>Tunnel Focus: Time Your Tasks</title>
+    
+
+</head>
+
+<body>
+    <div class="page-container grid-overlord"> <!--THE RED BORDER IS GRID OVERLORD-->
+    
+        <header class="main-header">
+            <h1 class="main-heading">Tunnel Focus</h1>
+            <h2 class="main-sub-heading">Time Your Tasks</h2>
+        </header>
+
+         <div class="timer-container"> <!--TIMER GOES HERE: THIS IS A GRID CHILD OF GRID-OVERLORD -->
+
+            <div class="timer-box">
+                <h2 id="timer-task-desription">Implement this or that thing correctly.</h2><br>
+                <h2 id="hours"></h2>
+                <h2>:</h2>
+                <h2 id="minutes"></h2>
+                <h2>:</h2>
+                <h2 id="seconds"></h2>
+            </div>
+
+            <div class="timer-controls">
+                <a href="#"><i class="far fa-bell"></i></a>
+                <a href="#"><i class="fas fa-pause"></i></a>    
+            </div>
+
+            <div class="close-timer-x"><i class="fas fa-times"></i></div>
+        </div>
+      
+        <div class="list-container"> <!--TASK LIST GOES HERE: THIS IS A GRID CHILD OF GRID-OVERLORD-->
+            
+            <div class="add-new-task">
+                <input type="text" id="new-task-input" placeholder="Add new task...">
+                <button id="add-new-task"><i class="fas fa-plus add-new-task-plus-icon"></i></button>
+            </div>
+
+
+            <div id="list"> 
+                
+            </div>
+        </div>
+
+                <div class="popover-wrapper" id="popover">
+                    <div class="popover-box">
+                        <ul class="task-options-list">
+                            <li class="task-option edit-task-option" tabindex="0"><i class="far fa-edit task-icon task-edit-icon"></i>Edit Task</li>
+                            <li class="task-option delete-task-option" tabindex="0"><i class="fas fa-trash-alt task-icon task-delete-icon"></i>Delete Task</li>
+                            <li class="task-option countdown15-task-option" tabindex="0"><i class="fas fa-hourglass-half task-icon countdown-timer-icon"></i>Countdown 15 Mins</li>
+                            <li class="task-option countdown25-task-option" tabindex="0"><i class="fas fa-hourglass-half task-icon countdown-timer-icon"></i>Countdown 25 Mins</li>
+                            <li class="task-option start-stopwatch-task-option" tabindex="0"><i class="fas fa-stopwatch task-icon open-timer-icon"></i>Start Stopwatch</li>
+                            <li class="task-option edit-task-time-task-option" tabindex="0"><i class="fas fa-user-clock task-icon manual-edit-time-icon"></i>Edit Task Time</li>
+                            <li class="task-option start-stopwatch-task-option test-link" tabindex="0"><i class="fas fa-stopwatch task-icon open-timer-icon"></i>Test Link</li>
+                        </ul>
+                    </div>
+                </div>
+       
+
+        <div class="focus-summary-container"> <!--FOCUS SUMMARIES & CHARTS GO HERE : THIS IS A GRID CHILD OF GRID-OVERLORD -->
+            CHARTS GO HERE
+        </div>
+       
+    </div>
+</body>
+</html>

@@ -7,7 +7,7 @@ class Timer {
         this.hours = 0;
     }
 
-    buildTimer(){
+    initialiseTimer(){
         //resets / starts the seconds count etc..
     
         let secondsHtml = document.getElementById('seconds');
@@ -18,6 +18,8 @@ class Timer {
         minutesHtml.innerHTML = `0${this.minutes}`;
         hoursHtml.innerHTML = `0${this.hours}`;
     }
+
+    
 
 
     stopwatch(){
@@ -205,7 +207,18 @@ class Timer {
 
 
 
+    }
+    // Thank you to Wilson Lee on Stack Overflow for this code - attributed in README. 
+    convertSecondsToTime(seconds){
+        
+        let hoursConverted = Math.floor(seconds / 3600);
+        let minutesConverted = Math.floor(seconds % 3600 / 60);
+        let secondsConverted = Math.floor(seconds % 3600 % 60);
+
+        return `You've spent ${hoursConverted} hours, ${minutesConverted} minutes and ${secondsConverted} seconds working on that task.`;
+
     }   
+    
 }
 
 // A Task Class that has all the properties and methods associated with a task
@@ -453,19 +466,15 @@ class List {
             });
             
         }
-       
         setDataToLocalStorage(){
             window.localStorage.setItem("taskList", JSON.stringify(list.taskList));
         }
-    
    }
- 
-
 let list = new List();
 let timer = new Timer();
 //call these functions so they are operational on the list that is built from local storage.
 list.deleteTask();
 list.editTask();
 list.dynamicPopoverNav();
-timer.buildTimer();
+timer.initialiseTimer();
 timer.stopwatch();

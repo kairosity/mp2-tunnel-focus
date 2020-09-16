@@ -246,6 +246,9 @@ overwhelming the user with colour and charts.
 
 # Attribution
 
+- ### **[Code to Convert Seconds into Hours, Minutes & Seconds](https://stackoverflow.com/questions/37096367/how-to-convert-seconds-to-minutes-and-hours-in-javascript)**
+    Thank you to Wilson Lee on Stack Overflow for this solution.
+
 # Deployment
 
 # Tools & Other Resources Used 

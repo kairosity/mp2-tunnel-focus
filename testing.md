@@ -27,14 +27,13 @@ Unit testing with Jasmine for this project was nothing short of exasperating. As
 ## **Timer Class**
 
 ## Timer.buildTimer():
+This method is called on page load and all it does is ensure that we don't see "::" (as below) when the timer is called up for the first time. Instead it formats a nice row of 0s: 00:00:00
 
-
-
+![timer-init](misc-images/timer-initialisation.png)
 
 
 ## Timer.stopwatch():
-This method encapsulates the Stopwatch or "open timer" functionality. The idea being that a user might want to start timing 
-their work on a particular task and then manually stop it when they are finished. It includes a series of functions that make the 
+This method encapsulates the Stopwatch or "open timer" functionality. The idea being that a user might want to start timing their work on a particular task and then manually stop it when they are finished. It includes a series of functions that make the 
 stopwatch work correctly. It intialises three local variables in which to store the passage of time.
 
 - ## startStopwatch() 

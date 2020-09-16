@@ -26,7 +26,7 @@ Unit testing with Jasmine for this project was nothing short of exasperating. As
 
 ## **Timer Class**
 
-## Timer.buildTimer():
+## Timer.initialiseTimer():
 This method is called on page load and all it does is ensure that we don't see "::" (as below) when the timer is called up for the first time. Instead it formats a nice row of 0s: 00:00:00
 
 ![timer-init](misc-images/timer-initialisation.png)
@@ -91,13 +91,16 @@ Changing the code to two IF statements as above, fixed the issue.
 __FUNCTION SUMMARY:__ My stopwatch functionality all falls under this function. It is structured as follows:
 1. A click event listener on the stopwatch icons attached to each task in the task list. When clicked it starts the stopWatch timer *on that task* as long as certain conditions are met. This event listener also invokes stopWatchPause(), resetStopWatch() & stopWatchPlayOnClick() to access those functions from within its remit.
 
-2. __*stopWatchPlay()*__ - calls the startStopwatch function every second to update the time variables and the html time representation elements.
+2. __*stopWatchPlay()*__ Calls the startStopwatch function every second to update the time variables and the html time representation elements.
 
-3. __*stopWatchPause()*__ - listens for clicks on the pause button and stops the timer.
+3. __*stopWatchPause()*__ Listens for clicks on the pause button and stops the timer.
 
-4. __*stopWatchPlayOnClick()*__ - calls the stopWatchPlay() function when the play button is clicked and if it's not already playing.
+4. __*stopWatchPlayOnClick()*__ Calls the stopWatchPlay() function when the play button is clicked and if it's not already playing.
 
-5. __*resetStopWatch()*__ - listens for clicks on the reset button and resets all time variables to 0 as well as stopping the timer. 
+5. __*resetStopWatch()*__ Listens for clicks on the reset button and resets all time variables to 0 as well as stopping the timer. 
+
+6. __*resetTimes()*__ Used in conjunction with resetStopWatch() to clear the time variables and reset the DOM as well. 
+
 
 __ISSUE 1:__ There are two separate routes to starting the stopwatch timer. A user can click on the stopwatch icon (and this will always be the first method, as until they click here, the timer box will not be visible). Once the timer is visible, there are two ways to start the timer: the stopwatch icon *and* the play button that appears if the timer has is paused. This caused a bug that meant two or more Interval timers (based on the stopWatchPlay function) could be triggered to run at the same time. This causes the timer to increase the speed at which the seconds and minutes increase, and it ceased being a reliable timer. 
 
@@ -113,22 +116,22 @@ __FIX 1:__ The fix was to add a boolean variable called "playing" that I use any
 
 ### __Unit Testing__
 
+- ## saveTimeButton() & saveTimeToTask()
+    __FUNCTION(S) SUMMARY:__ The saveTimeButton first listens for a click event on the saveButton to save the currently timed time into two different task object properties as well as updating the time based elements in the DOM. 
 
+    This function first checks whether or not time is 'playing' and if it is, it stops it. Then it hides the pause button and adds the play button. This was important because it is not unreasonable to think that a user might not pause the timer before deciding to save it. 
 
+    An alert then asks whether the user is sure that they want to stop timing and save the time. If they confirm that they do, this function calls on the saveTimeToTask() function, passing in the id connected with the title of the task currently sitting in the timer seat. As the DOM ids are perfectly synced with the task ids - this allows me to pass that time data directly into the two task time properties: totalTimeFocusedOnTask & totalTimeFocusedOnTaskLongForm. It uses a Timer method: Timer.convertSecondsToTime to create the data that goes into the totalTimeFocusedOnTaskLongForm property.
 
+    The saveTimeToTask() function then saves those changes to localStorage. And the saveTimeButton() function goes on to change the DOM time elements with updated task time data. 
 
-- ## pauseStopWatch()
-    __FUNCTION SUMMARY:__ Pauses the stopwatch. 
-    ### __*Manual Testing*__
+- ## Timer.convertSecondsToTime(seconds)
+__FUNCTION SUMMARY:__ Takes in seconds and converts them into hours, minutes and seconds in a human readable format. The code was taken from a Stack Overflow question and is referenced in the attribution section of this README. 
 
+__ISSUE 1:__ I could not call this method from within other functions in this class. timer.convertSecondsToTime just was not working. I kept getting a ```"Uncaught ReferenceError: convertSecondsToTime is not defined"```
 
-    ### __*Unit Testing*__
+__FIX 1:__ I had instantiated a local variable called timer and used it to refer to the timer container in the DOM. So calling timer.convertSecondsToTime() when trying to refer to an instance of the Timer Object called timer, was not actually doing that and was indeed not defined. Changing the variable name to timerContainer fixed the issue. 
 
-- ## resetStopWatch()
-    __FUNCTION SUMMARY:__ Resets the stopwatch. 
-    ### __*Manual Testing*__
-
-    ### __*Unit Testing*__
 
 
 ## Task Class

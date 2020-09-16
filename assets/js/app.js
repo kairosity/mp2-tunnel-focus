@@ -2,14 +2,14 @@
 //purpose of all methods is to store the time timed in these timer props which are then used to add to time on tasks. e.g. timer.seconds = 56 
 class Timer {
     constructor(){
+        //am I using these at all? 
         this.seconds = 0;
         this.minutes = 0;
         this.hours = 0;
     }
 
     initialiseTimer(){
-        //resets / starts the seconds count etc..
-    
+
         let secondsHtml = document.getElementById('seconds');
         let minutesHtml = document.getElementById('minutes');
         let hoursHtml = document.getElementById('hours');
@@ -20,8 +20,6 @@ class Timer {
     }
 
     
-
-
     stopwatch(){
         let seconds = 0;
         let minutes = 0;
@@ -35,7 +33,7 @@ class Timer {
         let resetButton = document.querySelector('#reset');
         let startStopwatchButtonArray = document.querySelectorAll('.start-stopwatch');
         let saveButton = document.getElementById('save-time-to-task');
-        let timer = document.querySelector('.timer-container');
+        let timerContainer = document.querySelector('.timer-container');
 
         let secondsHtml = document.getElementById('seconds');
         let minutesHtml = document.getElementById('minutes');
@@ -81,7 +79,7 @@ class Timer {
 
                         //if the stopwatch isn't already playing then... automatically run StopWatchPlay
                         if ((!playing) && (seconds == 0) && (minutes == 0) && (hours==0) && (playButton.style.display == '')) {
-                            timer.style.display = 'flex'; //show timer when stopwatch clicked.
+                            timerContainer.style.display = 'flex'; //show timer when stopwatch clicked.
                             stopWatchPlay();
                             //take id of task clicked on and add it to h2 id? 
                             let id = event.target.parentElement.previousElementSibling.id;
@@ -128,7 +126,6 @@ class Timer {
         function resetStopwatch(){
             resetButton.addEventListener('click', function(){
                 clearInterval(play);
-                console.log(play)
                 pauseButton.style.display = "none";
                 playButton.style.display = "inline-block";
                 resetTimes();
@@ -158,7 +155,10 @@ class Timer {
 
         //Find the task object with that taskId and add the timeToAdd to its timeFocusedOnTask prop.
         list.taskList[id].totalTimeFocusedOnTask += timeToAdd;
-
+        list.taskList[id].totalTimeFocusedOnTaskLongForm = timer.convertSecondsToTime(list.taskList[id].totalTimeFocusedOnTask);
+        console.log(list.taskList[id].totalTimeFocusedOnTaskLongForm);
+        list.setDataToLocalStorage();
+    
     }
 
     function saveTimeButton(){
@@ -174,20 +174,20 @@ class Timer {
             
             if(confirm("Are you sure you want to save [time] to [task]?")){
                 saveTimeToTask(timerTitle.id);
-                list.setDataToLocalStorage()
                 //needs to update the time spent display on task list.
                 let idForSavingTime = timerTitle.id;
                 let taskTimeDisplay1 = document.querySelectorAll('.task-description'); //with the same id as the timertitle id.
                 
                 for (let i=0; i<taskTimeDisplay1.length; i++){
                     if(taskTimeDisplay1[i].id == idForSavingTime){
-                        let timeDisplay = taskTimeDisplay1[i].parentElement.firstElementChild;
-                        timeDisplay.textContent = list.taskList[timerTitle.id].totalTimeFocusedOnTask;
+                        let timeDisplay = taskTimeDisplay1[i].parentElement.firstElementChild; 
+                        timeDisplay.textContent = list.taskList[timerTitle.id].totalTimeFocusedOnTaskLongForm;
+                        // timeDisplay.textContent = list.taskList[timerTitle.id].totalTimeFocusedOnTask;
                     }
+                    
                 }
-
                 //hide timer completely.
-                timer.style.display = "none";
+                timerContainer.style.display = "none";
                 playButton.style.display = "";
                 pauseButton.style.display = "inline-block";
                 seconds = 0;
@@ -215,7 +215,7 @@ class Timer {
         let minutesConverted = Math.floor(seconds % 3600 / 60);
         let secondsConverted = Math.floor(seconds % 3600 % 60);
 
-        return `You've spent ${hoursConverted} hours, ${minutesConverted} minutes and ${secondsConverted} seconds working on that task.`;
+        return `${hoursConverted}hrs ${minutesConverted}mins ${secondsConverted}secs`;
 
     }   
     
@@ -230,6 +230,7 @@ class Task {
         this.completed = false; 
         this.order = -1; //order of priority in list - will use to structure list order
         this.totalTimeFocusedOnTask = 0; //running total of time focused on a specific task saved in seconds. 
+        this.totalTimeFocusedOnTaskLongForm = timer.convertSecondsToTime(this.totalTimeFocusedOnTask);
     }
 
 }
@@ -250,7 +251,7 @@ class List {
             if (taskList[i].completed === true){
                 document.getElementById('list').innerHTML +=
                 `<div class="task">
-                    <p class="total-task-time">${taskList[i].totalTimeFocusedOnTask}</p>
+                    <p class="total-task-time">${taskList[i].totalTimeFocusedOnTaskLongForm}</p>
                     <input class="taskCheckbox" type="checkbox" checked>
                     <li class="task-description completed" id="${taskList[i].id}">${taskList[i].taskDescription}</li>
                     <a><i class="fas fa-stopwatch start-stopwatch"></i></i></a>
@@ -261,7 +262,7 @@ class List {
             } else if(taskList[i].completed === false) {
                 document.getElementById('list').innerHTML +=
                 `<div class="task">
-                    <p class="total-task-time">${taskList[i].totalTimeFocusedOnTask}</p>
+                    <p class="total-task-time">${taskList[i].totalTimeFocusedOnTaskLongForm}</p>
                     <input class="taskCheckbox" type="checkbox">
                     <li class="task-description" id="${taskList[i].id}">${taskList[i].taskDescription}</li>
                     <a><i class="fas fa-stopwatch start-stopwatch"></i></i></a>
@@ -294,7 +295,7 @@ class List {
                 //adds the task to the list in html  
                 document.getElementById('list').innerHTML +=
                 `<div class="task">
-                    <p class="total-task-time">${newTask.totalTimeFocusedOnTask}</p>
+                    <p class="total-task-time">${newTask.totalTimeFocusedOnTaskLongForm}</p>
                     <input class="taskCheckbox" type="checkbox">
                     <li class="task-description" id="${newTask.id}">${newTask.taskDescription}</li>
                     <a><i class="fas fa-stopwatch start-stopwatch"></i></i></a>

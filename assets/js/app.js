@@ -217,7 +217,54 @@ class Timer {
 
         return `${hoursConverted}hrs ${minutesConverted}mins ${secondsConverted}secs`;
 
-    }   
+    }
+    
+    countdown15(){
+        //when the button is clicked
+        // const arrayOfCountdown15Icons = document.querySelectorAll('.countdown15-task-option');
+        let timerContainer = document.querySelector('.timer-container');
+        const ellipsisArray = document.querySelectorAll('.task-options');
+        let seconds = 0;
+        let minutes = 15;
+        let hours = 0;
+        let secondsHtml = document.getElementById('seconds');
+        let minutesHtml = document.getElementById('minutes');
+        let hoursHtml = document.getElementById('hours');
+        secondsHtml.innerHTML = `0${seconds}`;
+        minutesHtml.innerHTML = `${minutes}`;
+        hoursHtml.innerHTML = `0${hours}`;
+
+        ellipsisArray.forEach(function(ellipsis){    
+            ellipsis.addEventListener('click', function(){
+
+                const countdown15Button = document.querySelector('.countdown15-task-option');
+                countdown15Button.addEventListener('click', function(event){
+
+                    console.log(event.target);
+                    //open the timer and have it start by showing 00:15:00
+                    timerContainer.style.display = 'flex'; 
+
+                    //hide popover box when countdown15 button is clicked. 
+
+                    // set an interval timer that decreases the numbers each second. 
+
+                    // should be able to call the pause, reset & play methods on this. refactor if not. 
+
+                    // when ready to save have to minus the amount from 15. E.g. if number left is 00:11:00 The time to save 
+                    //would be 15-11 = 4minutes. (in Seconds.) 4*60 etc.. 
+                    
+                    //if timer gets to zero call on another function (still to write) that plays an alarm both sound and flashing lights. 
+
+                    //a pop-up saying "you've finished your 15 minutes would you like to add that to your task time. "
+
+                    //call on the save functions if yes. Or reset if no. 
+
+                })
+            })
+        })
+
+        
+    }
     
 }
 
@@ -323,7 +370,7 @@ class List {
 
     editTask(){
         //need to listen for clicks on any of the edit buttons
-        const arrayOfEditIcons = document.querySelectorAll('.task-edit-icon');
+        // const arrayOfEditIcons = document.querySelectorAll('.task-edit-icon');
 
         const ellipsisArray = document.querySelectorAll('.task-options');
 
@@ -479,3 +526,4 @@ list.editTask();
 list.dynamicPopoverNav();
 timer.initialiseTimer();
 timer.stopwatch();
+timer.countdown15();

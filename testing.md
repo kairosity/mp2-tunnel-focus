@@ -3,15 +3,14 @@
 # Application Logic / Structure
 
 This task manager application is based on the principles of Object-Oriented Programming. Its logic is structured around 3 objects that interact: a Task object, a List object and a Timer object. 
-In its incipient stages I had sketched out functionality based on a series of functions and event listeners and I saw how quickly that structure becomes unwieldly. The classes I have used compartmentalize 
-the code and make it far easier to manage. I've noticed particularly how useful objects are for maintaining a clean global scope, with almost no variables.
+In its incipient stages I had sketched out functionality based on a series of functions and event listeners and I saw how quickly that structure becomes unwieldly. The classes I have used compartmentalize the code and make it far easier to manage. I've noticed particularly how useful objects are for maintaining a clean global scope, with almost no variables.
 
 
 
 # JavaScript
 
 ## Unit Testing
-Unit testing with Jasmine for this project was nothing short of exasperating. As the project is Object Oriented, writing simple functional unit tests was near impossible. I tried setting up an empty SpecRunner.html file as instructed in the Jasmine docs, but I could not get the tests to read the necessary html in order for them to run successfully. I then used Jasmine-jQuery to attempt to avail of fixtures, and while the fixtures did seem to render, the tests would only function if run against my complete page. Finally the only way I was able to avail of unit testing was to duplicate my rough draft html in SpecRunner.html and then to run appSpec.js against that. My reasoning being that I can run the unit tests in SpecRunner.html and still have a clean index.html to view and undertake the manual testing. This is undoubtedly not the correct way of doing things, but it was the only way I could find to integrate the testing into my project.
+Unit testing with Jasmine for this project was nothing short of exasperating. As the project is Object Oriented, I found writing simple functional unit tests nearly impossible. I tried setting up an empty SpecRunner.html file as instructed in the Jasmine docs, but I could not get the tests to read the necessary html in order for them to run successfully. I then used Jasmine-jQuery to attempt to avail of fixtures, and while the fixtures did seem to render, the tests would only function if run against my complete page. Finally the only way I was able to avail of unit testing was to duplicate my rough draft html in SpecRunner.html and then to run appSpec.js against that. My reasoning being that I can run the unit tests in SpecRunner.html and still have a clean index.html to view and undertake the manual testing. This is undoubtedly not the correct way of doing things, but it was the only way I could find to integrate the testing into my project.
 
 ## **Timer Class**
 
@@ -25,8 +24,6 @@ Unit testing with Jasmine for this project was nothing short of exasperating. As
 This method encapsulates the Stopwatch or "open timer" functionality. The idea being that a user might want to start timing 
 their work on a particular task and then manually stop it when they are finished. It includes a series of functions that make the 
 stopwatch work correctly. It intialises three local variables in which to store the passage of time.
-
-
 
 - ## startStopwatch() 
 
@@ -78,13 +75,28 @@ So the program was just running the seconds logic first and pushing them to 0 an
 
 Changing the code to two IF statements as above, fixed the issue. 
 
-__ISSUE 4:__ There are two separate routes to starting the stopwatch timer. A user can click on the stopwatch icon, and this will always be the first method, as until they click here, the timer box will not be visible. But once the timer is visible, there are two ways to start the timer: the stopwatch icon *and* the play button that appears if the timer has is paused. This caused a bug that meant two or more Interval timers (based on the stopWatchPlay function) could be triggered to run at the same time. This causes the timer to increase the speed at which the seconds and minutes increase, and it ceased being a reliable timer. 
+- ## stopWatchMethods()
 
-__FIX 4:__ The fix was to add a boolean variable called "playing" that I use anytime the timer is stopped or started. And then to add a small conditional in the stopwatch icon click event handler, that checks whether "playing" is false and if so, it is allowed trigger the stopwatch start function.  
+__FUNCTION SUMMARY:__ My stopwatch functionality all falls under this function. It is structured as follows:
+1. A click event listener on the stopwatch icons attached to each task in the task list. When clicked it starts the stopWatch timer *on that task* as long as certain conditions are met. This event listener also invokes stopWatchPause(), resetStopWatch() & stopWatchPlayOnClick() to access those functions from within its remit.
+
+2. stopWatchPlay() - calls the startStopwatch function every second to update the time variables and the html time representation elements.
+
+3. stopWatchPause() - listens for clicks on the pause button and stops the timer.
+
+4. stopWatchPlayOnClick() - calls the stopWatchPlay() function when the play button is clicked and if it's not already playing.
+
+5. resetStopWatch() - listens for clicks on the reset button and resets all time variables to 0 as well as stopping the timer. 
+
+__ISSUE 1:__ There are two separate routes to starting the stopwatch timer. A user can click on the stopwatch icon, and this will always be the first method, as until they click here, the timer box will not be visible. But once the timer is visible, there are two ways to start the timer: the stopwatch icon *and* the play button that appears if the timer has is paused. This caused a bug that meant two or more Interval timers (based on the stopWatchPlay function) could be triggered to run at the same time. This causes the timer to increase the speed at which the seconds and minutes increase, and it ceased being a reliable timer. 
+
+__FIX 1:__ The fix was to add a boolean variable called "playing" that I use anytime the timer is stopped or started. And then to add a small conditional in the stopwatch icon click event handler, that checks whether "playing" is false and if so, it is allowed trigger the stopwatch start function.  
 
                         if (!playing){
                             stopWatchPlay();
                         }
+
+
 
 ### __Unit Testing__
 

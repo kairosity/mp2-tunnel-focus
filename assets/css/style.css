@@ -79,6 +79,7 @@
 
 #play {
     display: none;
+    cursor: pointer;
 }
 /*----------------------------------------------------------- Popover Options Box  */
 

@@ -1,5 +1,5 @@
 
-
+//purpose of all methods is to store the time timed in these timer props which are then used to add to time on tasks. e.g. timer.seconds = 56 
 class Timer {
     constructor(){
         this.seconds = 0;
@@ -19,15 +19,24 @@ class Timer {
         hoursHtml.innerHTML = `0${this.hours}`;
     }
 
+    addTimeToTask(taskId, timeToAdd){
+        //get time to add from a timeSegment temp variable or object. 
+
+        //get the task the time was timing via the task id number. 
+
+        //add the time to that tasks totalTimeFocusedOnTask property.
+    }
+
     stopwatch(){
         let seconds = 0;
         let minutes = 0;
         let hours = 0;
-
+        // - have to initialise 'play' because clearInterval() needs a variable.
         var play;
         var playing = false;
         let pauseButton = document.querySelector('#pause');
         let playButton = document.querySelector('#play');
+        let resetButton = document.querySelector('#reset');
 
         let startStopwatchButtonArray = document.querySelectorAll('.start-stopwatch');
 
@@ -46,12 +55,10 @@ class Timer {
             }
             //should I add an end point to hours?
 
-
             let secondsHtml = document.getElementById('seconds');
             let minutesHtml = document.getElementById('minutes');
             let hoursHtml = document.getElementById('hours');
             
-
             //Formatting the timer correctly. 
             if(seconds <= 9){
                 secondsHtml.innerHTML = `0${seconds}`;
@@ -70,76 +77,76 @@ class Timer {
             } else {
                 hoursHtml.innerHTML = hours;
             }
-        }
-        
+        }        
         function stopWatchMethods(){
-        //Event listener on each task's stopwatch icon - have to initialise 'play' because clearInterval needs a variable.
+                //Event listener on each task's stopwatch icon
                 startStopwatchButtonArray.forEach(function(stopwatchButton){
                     stopwatchButton.addEventListener('click', function(){
                         console.log("stopwatch button clicked");
-
-                        //timer display appears - displaying only pause button as the timer is playing. 
-
-                        
-
-                        //timer-controls parent div
-                        let timerControls = document.querySelector('.timer-controls');
+                        console.log(playing);
 
                         //if the stopwatch isn't already playing then... automatically run StopWatchPlay
-                        if (!playing){
+                        if ((!playing) && (seconds == 0) && (minutes == 0) && (hours==0) && (playButton.style.display == '')) {
                             stopWatchPlay();
-                        }
-                        
+                        } else {
+                            console.log("We cannot play the timer because one of these things is true: 1-playing==true 2-seconds, minutes or hours are not at 0 or the play button is visible.");
+                        }             
                         stopWatchPause();
-
+                        resetStopwatch();
+                        stopWatchPlayOnClick();
+                    });
                 });
-                });
-
         //function to update seconds, minutes & hours every second. is called immediately when stopwatch is clicked.
         function stopWatchPlay(){
-            playing = true;
             //calls startStopwatch every second.
             play = setInterval(function(){ 
                 startStopwatch(); 
                 }, 1000);
+            return playing = true;
         }
-
         //called immediately but waits to hear a click on pause button.
         function stopWatchPause(){
-
             pauseButton.addEventListener('click', function(){
-                playing = false;
                 //stop interval timer counting.
                 clearInterval(play);   
                 //pause button removed and play button replaces it. 
                 pauseButton.style.display = "none";
                 playButton.style.display = "inline-block";
-                
+                return playing = false;  
             })
         }
-        playButton.addEventListener('click', function(){
-            playing = true;
-            play = setInterval(function(){ 
-                startStopwatch(); 
-                }, 1000);
-            pauseButton.style.display = "inline-block";
-            playButton.style.display = "none";
-        });
-
+        function stopWatchPlayOnClick(){
+            playButton.addEventListener('click', function(){ 
+                if(!playing){
+                    stopWatchPlay();
+                    pauseButton.style.display = "inline-block";
+                    playButton.style.display = "none";
+                }   
+            });
+        };
+        function resetStopwatch(){
+            resetButton.addEventListener('click', function(){
+                clearInterval(play);
+                pauseButton.style.display = "none";
+                playButton.style.display = "inline-block";
+                seconds = 0;
+                minutes = 0;
+                hours = 0;
+                timer.buildTimer();
+                return playing = false;
+            })
+        }
     }
         
 
-        // resetStopwatch(){
-        //     //reset function goes here. 
-
-
-        // }
+        
 
         // saveStopwatchTimeToTask(){
         //     //user will be prompted and asked whether they want to save the time to the associated task. 
         //     //This allows them to make errors or forget that the timer was running. 
         // }
         stopWatchMethods();
+
 
     }   
 }

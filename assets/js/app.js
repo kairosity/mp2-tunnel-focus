@@ -8,7 +8,7 @@ class Timer {
     }
 
     buildTimer(){
-        //set an interval timer that runs a function every second. 
+        //resets / starts the seconds count etc..
     
         let secondsHtml = document.getElementById('seconds');
         let minutesHtml = document.getElementById('minutes');
@@ -19,26 +19,25 @@ class Timer {
         hoursHtml.innerHTML = `0${this.hours}`;
     }
 
-    addTimeToTask(taskId, timeToAdd){
-        //get time to add from a timeSegment temp variable or object. 
-
-        //get the task the time was timing via the task id number. 
-
-        //add the time to that tasks totalTimeFocusedOnTask property.
-    }
 
     stopwatch(){
         let seconds = 0;
         let minutes = 0;
         let hours = 0;
         // - have to initialise 'play' because clearInterval() needs a variable.
+
         var play;
         var playing = false;
         let pauseButton = document.querySelector('#pause');
         let playButton = document.querySelector('#play');
         let resetButton = document.querySelector('#reset');
-
         let startStopwatchButtonArray = document.querySelectorAll('.start-stopwatch');
+        let saveButton = document.getElementById('save-time-to-task');
+        let timer = document.querySelector('.timer-container');
+
+        let secondsHtml = document.getElementById('seconds');
+        let minutesHtml = document.getElementById('minutes');
+        let hoursHtml = document.getElementById('hours');
 
         function startStopwatch(){
 
@@ -53,11 +52,6 @@ class Timer {
                 minutes = 0;
                 hours = hours + 1;
             }
-            //should I add an end point to hours?
-
-            let secondsHtml = document.getElementById('seconds');
-            let minutesHtml = document.getElementById('minutes');
-            let hoursHtml = document.getElementById('hours');
             
             //Formatting the timer correctly. 
             if(seconds <= 9){
@@ -81,13 +75,21 @@ class Timer {
         function stopWatchMethods(){
                 //Event listener on each task's stopwatch icon
                 startStopwatchButtonArray.forEach(function(stopwatchButton){
-                    stopwatchButton.addEventListener('click', function(){
-                        console.log("stopwatch button clicked");
-                        console.log(playing);
+                    stopwatchButton.addEventListener('click', function(event){
 
                         //if the stopwatch isn't already playing then... automatically run StopWatchPlay
                         if ((!playing) && (seconds == 0) && (minutes == 0) && (hours==0) && (playButton.style.display == '')) {
+                            timer.style.display = 'flex'; //show timer when stopwatch clicked.
                             stopWatchPlay();
+                            //take id of task clicked on and add it to h2 id? 
+                            let id = event.target.parentElement.previousElementSibling.id;
+                            //take task description and add is as h2 description.
+                            let description = event.target.parentElement.previousElementSibling.textContent;
+                            //get the h2
+                            let timerTitle = document.querySelector('.timer-task-description');
+                            timerTitle.id = id;
+                            timerTitle.textContent = description;
+
                         } else {
                             console.log("We cannot play the timer because one of these things is true: 1-playing==true 2-seconds, minutes or hours are not at 0 or the play button is visible.");
                         }             
@@ -98,18 +100,15 @@ class Timer {
                 });
         //function to update seconds, minutes & hours every second. is called immediately when stopwatch is clicked.
         function stopWatchPlay(){
-            //calls startStopwatch every second.
             play = setInterval(function(){ 
                 startStopwatch(); 
                 }, 1000);
             return playing = true;
         }
-        //called immediately but waits to hear a click on pause button.
         function stopWatchPause(){
             pauseButton.addEventListener('click', function(){
                 //stop interval timer counting.
                 clearInterval(play);   
-                //pause button removed and play button replaces it. 
                 pauseButton.style.display = "none";
                 playButton.style.display = "inline-block";
                 return playing = false;  
@@ -127,25 +126,83 @@ class Timer {
         function resetStopwatch(){
             resetButton.addEventListener('click', function(){
                 clearInterval(play);
+                console.log(play)
                 pauseButton.style.display = "none";
                 playButton.style.display = "inline-block";
-                seconds = 0;
-                minutes = 0;
-                hours = 0;
-                timer.buildTimer();
+                resetTimes();
                 return playing = false;
             })
         }
+        function resetTimes(){
+            seconds = 0;
+            minutes = 0;
+            hours = 0;
+
+            let secondsHtml = document.getElementById('seconds');
+            let minutesHtml = document.getElementById('minutes');
+            let hoursHtml = document.getElementById('hours');
+
+            secondsHtml.innerHTML = `0${seconds}`;
+            minutesHtml.innerHTML = `0${minutes}`;
+            hoursHtml.innerHTML = `0${hours}`;
+        }
     }
-        
+    function saveTimeToTask(id){
+        //get time to add from a timeSegment temp variable or object. 
+        //take in minutes, hours and seconds and convert to seconds:
+        let minutesInSeconds = minutes * 60;
+        let hoursInSeconds = hours * 3600;
+        let timeToAdd = seconds + minutesInSeconds + hoursInSeconds;
 
-        
+        //Find the task object with that taskId and add the timeToAdd to its timeFocusedOnTask prop.
+        list.taskList[id].totalTimeFocusedOnTask += timeToAdd;
 
-        // saveStopwatchTimeToTask(){
-        //     //user will be prompted and asked whether they want to save the time to the associated task. 
-        //     //This allows them to make errors or forget that the timer was running. 
-        // }
+    }
+
+    function saveTimeButton(){
+        saveButton.addEventListener('click', function(){
+            if (playing){
+                clearInterval(play);
+                pauseButton.style.display = "none";
+                playButton.style.display = "inline-block";
+                 
+            }
+            //alert asking if the user definitely want to add {seconds} to their total time on that task.
+            let timerTitle = document.querySelector('.timer-task-description');
+            
+            if(confirm("Are you sure you want to save [time] to [task]?")){
+                saveTimeToTask(timerTitle.id);
+                list.setDataToLocalStorage()
+                //needs to update the time spent display on task list.
+                let idForSavingTime = timerTitle.id;
+                let taskTimeDisplay1 = document.querySelectorAll('.task-description'); //with the same id as the timertitle id.
+                
+                for (let i=0; i<taskTimeDisplay1.length; i++){
+                    if(taskTimeDisplay1[i].id == idForSavingTime){
+                        let timeDisplay = taskTimeDisplay1[i].parentElement.firstElementChild;
+                        timeDisplay.textContent = list.taskList[timerTitle.id].totalTimeFocusedOnTask;
+                    }
+                }
+
+                //hide timer completely.
+                timer.style.display = "none";
+                playButton.style.display = "";
+                pauseButton.style.display = "inline-block";
+                seconds = 0;
+                minutes = 0;
+                hours = 0;
+                secondsHtml.innerHTML = `0${seconds}`
+                minutesHtml.innerHTML = `0${minutes}`
+                hoursHtml.innerHTML = `0${hours}`
+                playing = false;
+            } 
+            return playing = false; 
+
+        })
+    }
         stopWatchMethods();
+        saveTimeButton();
+
 
 
     }   
@@ -159,7 +216,7 @@ class Task {
         this.id = null;
         this.completed = false; 
         this.order = -1; //order of priority in list - will use to structure list order
-        this.totalTimeFocusedOnTask = null; //running total of time focused on a specific task
+        this.totalTimeFocusedOnTask = 0; //running total of time focused on a specific task saved in seconds. 
     }
 
 }
@@ -218,7 +275,7 @@ class List {
             if((newTaskInput !== null) && (newTaskInput !== "")){
                 let newTask = new Task(newTaskInput); //creates a new Task obj. & sets its props.
                 newTask.id = list.taskList.length; //it will always be 1to1.
-                newTask.totalTimeFocusedOnTask = "00h00m00s";
+                newTask.totalTimeFocusedOnTask = 0;
                 list.taskList.push(newTask); //adds the new task into the taskList array.
 
                 //adds the task to the list in html  

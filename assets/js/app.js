@@ -2,7 +2,7 @@
 //purpose of all methods is to store the time timed in these timer props which are then used to add to time on tasks. e.g. timer.seconds = 56 
 class Timer {
     constructor(){
-        //am I using these at all? 
+      
         this.seconds = 0;
         this.minutes = 0;
         this.hours = 0;
@@ -23,6 +23,8 @@ class Timer {
         let timerToPlay;
 
         var stopwatch;
+        var countdown15;
+        var countdown25;
         var playing = false;
         let pauseButton = document.querySelector('#pause');
         let playButton = document.querySelector('#play');
@@ -67,40 +69,54 @@ class Timer {
             } else {
                 hoursHtml.innerHTML = hours;
             }
-        }  
-        function countDown(){
+        }
 
-            seconds = seconds - 1;
+        function countDown15Play(){
 
-            if(seconds >= 60){
-                seconds = 0;
-                minutes = minutes + 1;
+            seconds = 0;
+            minutes = 15;
+            hours = 0;
+
+        countdown()
+
+        function countdown(){
+            countdown15 = setInterval(function(){ 
+                countDown15(); 
+                }, 1000);
+                return playing = true;
             }
 
-            if(minutes >= 60){
-                minutes = 0;
-                hours = hours + 1;
-            }
+            function countDown15(){
+                seconds = seconds - 1;
+
+                if((seconds < 0) && (minutes >= 1)){
+                    seconds = 59;
+                    minutes = minutes - 1;
+                } 
+
+        
+                //Formatting the timer correctly. 
+                if(seconds <= 9){
+                    secondsHtml.innerHTML = `0${seconds}`;
+                } else {
+                    secondsHtml.innerHTML = seconds;
+                }
+
+                if(minutes <= 9){
+                    minutesHtml.innerHTML = `0${minutes}`;
+                } else {
+                    minutesHtml.innerHTML = minutes;
+                }
+
+                if(hours <= 9){
+                    hoursHtml.innerHTML = `0${hours}`;
+                } else {
+                    hoursHtml.innerHTML = hours;
+                }
+            }              
+
+    }
             
-            //Formatting the timer correctly. 
-            if(seconds <= 9){
-                secondsHtml.innerHTML = `0${seconds}`;
-            } else {
-                secondsHtml.innerHTML = seconds;
-            }
-
-            if(minutes <= 9){
-                minutesHtml.innerHTML = `0${minutes}`;
-            } else {
-                minutesHtml.innerHTML = minutes;
-            }
-
-             if(hours <= 9){
-                hoursHtml.innerHTML = `0${hours}`;
-            } else {
-                hoursHtml.innerHTML = hours;
-            }
-        }              
         function stopWatchClickStart(){
                 //Event listener on each task's stopwatch icon
                 startStopwatchButtonArray.forEach(function(stopwatchButton){
@@ -108,17 +124,26 @@ class Timer {
 
                         //if there are no timers playing then... automatically run StopWatchPlay
                         if ((!playing) && (seconds == 0) && (minutes == 0) && (hours==0) && (playButton.style.display == '')) {
-                            timerContainer.style.display = 'flex'; //show timer when stopwatch clicked.
-                            stopWatchPlay(); // starts playing the stopwatch automatically.
-                            //take id of task clicked on and add it to h2 id? 
+                            
+                            //show timer when stopwatch clicked.
+                            timerContainer.style.display = 'flex'; 
+
+                            // starts playing the stopwatch automatically.
+                            stopWatchPlay();
+
+                            //Finf the id of the task clicked on.
                             let id = event.target.parentElement.previousElementSibling.id;
-                            //take task description and add is as h2 description.
+
+                            //Find the task description and add is as a h2 description in the timer.
                             let description = event.target.parentElement.previousElementSibling.textContent;
-                            //get the h2
+                            //Select the area where the title will go
                             let timerTitle = document.querySelector('.timer-task-description');
+                            //Give it an id to match the task's id.
                             timerTitle.id = id;
+                            //give it a description to match task description.
                             timerTitle.textContent = description;
 
+                            //create the timer title
                             let timerTypeTitle = document.createElement('h2');
                             timerTypeTitle.textContent = "Stopwatch";
                             timerTypeTitle.setAttribute('id', 'stopwatch-timer-title');
@@ -136,16 +161,76 @@ class Timer {
                     });
                 });
     }
+            
+
+
+                    //hide popover box when countdown15 button is clicked. 
+
+                    // set an interval timer that decreases the numbers each second. 
+
+                    //timer has to have the name of the task it was called on same as stopwatch.
+
+                    // should be able to call the pause, reset & play methods on this. refactor if not. 
+
+                    // when ready to save have to minus the amount from 15. E.g. if number left is 00:11:00 The time to save 
+                    //would be 15-11 = 4minutes. (in Seconds.) 4*60 etc.. 
+                    
+                    //if timer gets to zero call on another function (still to write) that plays an alarm both sound and flashing lights. 
+
+                    //a pop-up saying "you've finished your 15 minutes would you like to add that to your task time. "
+
+                    //call on the save functions if yes. Or reset if no. 
+
+    function countDown15ClickStart(){
+
+                //when the button is clicked
+                // const arrayOfCountdown15Icons = document.querySelectorAll('.countdown15-task-option');
+                const ellipsisArray = document.querySelectorAll('.task-options');
+                ellipsisArray.forEach(function(ellipsis){    
+                    ellipsis.addEventListener('click', function(){
+                        const countdown15Button = document.querySelector('.countdown15-task-option');
+                        countdown15Button.addEventListener('click', function(event){
+                            let seconds = 0;
+                            let minutes = 15;
+                            let hours = 0;
+
+                            let secondsHtml = document.getElementById('seconds');
+                            let minutesHtml = document.getElementById('minutes');
+                            let hoursHtml = document.getElementById('hours');
+
+                            secondsHtml.innerHTML = `0${seconds}`;
+                            minutesHtml.innerHTML = `${minutes}`;
+                            hoursHtml.innerHTML = `0${hours}`;
+    
+                            //Find the id of the task clicked on.
+                            let parentDiv = event.target.closest('.task');
+                            let taskToTargetId = parentDiv.children[2].id;
+                            let taskToTargetDescription = parentDiv.children[2].textContent;
+                            console.log(taskToTargetDescription);
+                            console.log(taskToTargetId);
+                        
+                             //if there are no timers playing then... automatically run CountDown15
+                            if ((!playing) && (seconds == 0) && (minutes == 15) && (hours==0) && (playButton.style.display == '')) {
+                                //show timer when stopwatch clicked.
+                                timerContainer.style.display = 'flex'; 
+
+                                //Select the area where the title will go
+                                let timerTitle = document.querySelector('.timer-task-description');
+                                //Give it an id to match the task's id.
+                                timerTitle.id = taskToTargetId;
+                                //give it a description to match task description.
+                                timerTitle.textContent = taskToTargetDescription;
+                                // starts playing the countdown automatically.
+                                countDown15Play()   
+                            }
+                })
+            })
+        })
+    }
+                          
     function stopWatchPlay(){
         stopwatch = setInterval(function(){ 
             countUp(); 
-            }, 1000);
-            return playing = true;
-        }
-
-    function countdown15Play(){
-        countdown15 = setInterval(function(){ 
-            countDown(); 
             }, 1000);
             return playing = true;
         }
@@ -162,6 +247,8 @@ class Timer {
                 //if stopwatch is written in dom then timerToPlay = stopwatchPlay
                 if (timerTitleDOM.textContent == 'Stopwatch'){
                     stopWatchPlay();
+                    resetStopwatch(stopwatch);
+                    pauseOnClick(stopwatch);
                 } else if (timerTitleDOM.textContent == 'Countdown 15'){
                     countdown15Play();
                 } else if (timerTitleDOM.textContent == 'Countdown 25'){
@@ -170,9 +257,7 @@ class Timer {
                 
                 pauseButton.style.display = "inline-block";
                 playButton.style.display = "none";
-            }
-            pauseOnClick(stopwatch);
-            resetStopwatch(stopwatch);    
+            }       
         });
     };
     function pauseOnClick(intervalToPause){
@@ -239,7 +324,6 @@ class Timer {
                     hoursHtml.innerHTML = `0${hours}`;
                 }       
         }      
-        
     function saveTimeToTask(id){
         //get time to add from a timeSegment temp variable or object. 
         //take in minutes, hours and seconds and convert to seconds:
@@ -292,6 +376,7 @@ class Timer {
             return playing = false; 
         })
     }
+        countDown15ClickStart()    
         stopWatchClickStart(); 
         saveTimeButton();
         playOnClick();
@@ -306,57 +391,6 @@ class Timer {
         return `${hoursConverted}hrs ${minutesConverted}mins ${secondsConverted}secs`;
     }
     
-    countdown15(){
-        //when the button is clicked
-        // const arrayOfCountdown15Icons = document.querySelectorAll('.countdown15-task-option');
-        let timerContainer = document.querySelector('.timer-container');
-        const ellipsisArray = document.querySelectorAll('.task-options');
-        
-        let seconds = 0;
-        let minutes = 15;
-        let hours = 0;
-
-        let secondsHtml = document.getElementById('seconds');
-        let minutesHtml = document.getElementById('minutes');
-        let hoursHtml = document.getElementById('hours');
-
-        secondsHtml.innerHTML = `0${seconds}`;
-        minutesHtml.innerHTML = `${minutes}`;
-        hoursHtml.innerHTML = `0${hours}`;
-       
-        ellipsisArray.forEach(function(ellipsis){    
-            ellipsis.addEventListener('click', function(){
-
-                const countdown15Button = document.querySelector('.countdown15-task-option');
-                countdown15Button.addEventListener('click', function(event){
-
-                    console.log(event.target);
-                    //open the timer and have it start by showing 00:15:00
-                    timerContainer.style.display = 'flex'; 
-
-                    //hide popover box when countdown15 button is clicked. 
-
-                    // set an interval timer that decreases the numbers each second. 
-
-                    //timer has to have the name of the task it was called on same as stopwatch.
-
-                    // should be able to call the pause, reset & play methods on this. refactor if not. 
-
-                    // when ready to save have to minus the amount from 15. E.g. if number left is 00:11:00 The time to save 
-                    //would be 15-11 = 4minutes. (in Seconds.) 4*60 etc.. 
-                    
-                    //if timer gets to zero call on another function (still to write) that plays an alarm both sound and flashing lights. 
-
-                    //a pop-up saying "you've finished your 15 minutes would you like to add that to your task time. "
-
-                    //call on the save functions if yes. Or reset if no. 
-
-                })
-            })
-        })
-
-        
-    }
     
 }
 
@@ -619,4 +653,3 @@ list.editTask();
 list.dynamicPopoverNav();
 timer.initialiseTimer();
 timer.timers();
-timer.countdown15();

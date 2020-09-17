@@ -81,6 +81,10 @@
     display: none;
     cursor: pointer;
 }
+
+#stopWatchTimerTitle {
+    display: flex;
+}
 /*----------------------------------------------------------- Popover Options Box  */
 
 

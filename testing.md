@@ -32,15 +32,13 @@ This method is called on page load and all it does is ensure that we don't see "
 ![timer-init](misc-images/timer-initialisation.png)
 
 
-## Timer.stopwatch():
-This method encapsulates the Stopwatch or "open timer" functionality. The idea being that a user might want to start timing their work on a particular task and then manually stop it when they are finished. It includes a series of functions that make the 
-stopwatch work correctly. It intialises three local variables in which to store the passage of time.
+## Timer.timers():
+This method encapsulates all the timer functions. It it not meant to be called on the object as a method per se, more it acts as a convenient storage facility for the group of functions that power the timers. It intialises three local variables in which to store the passage of time.
 
-- ## startStopwatch() 
+- ## countUp() 
 
-    __FUNCTION SUMMARY:__ This function starts the stopwatch. When it is called, the seconds variable is incremented by 1, if the seconds variable is at 60, it is reset to 0. The same
-    logic is applied to minutes. The hours variable increases ad infinitum. Three DOM variables are used to represent this logic in the DOM. This function is then passed 
-    to a setInterval function, and called once every second, thus updating the timer.
+    __FUNCTION SUMMARY:__ This function starts counting up from wherever the seconds, minutes and hours variables are at. When it is called, the seconds variable is incremented by 1, if the seconds variable is at 60, it is reset to 0. The same
+    logic is applied to minutes. The hours variable increases ad infinitum. Three DOM variables are used to represent this logic in the DOM. This function is then called within a setInterval function within a function called StopWatchPlay() and it is called once every second, thus updating the timer.
 
     ### __*Manual Testing*__
 
@@ -86,18 +84,25 @@ So the program was just running the seconds logic first and pushing them to 0 an
 
 Changing the code to two IF statements as above, fixed the issue. 
 
-- ## stopWatchMethods()
+- ## stopWatchClickStart()
 
-__FUNCTION SUMMARY:__ My stopwatch functionality all falls under this function. It is structured as follows:
-1. A click event listener on the stopwatch icons attached to each task in the task list. When clicked it starts the stopWatch timer *on that task* as long as certain conditions are met. This event listener also invokes stopWatchPause(), resetStopWatch() & stopWatchPlayOnClick() to access those functions from within its remit.
+__FUNCTION SUMMARY:__ This is a click event listener on the stopwatch icons attached to each task in the task list. When clicked it starts the stopWatch timer *on that task* as long as certain conditions are met. The function is also responsible for taking the associated task description and playing it above the timer, so the user always has a reference of what task is being timed. This event listener also invokes stopWatchPause(), resetStopWatch() & playOnClick(stopWatchPlay) to access those functions from within its remit.
 
-2. __*stopWatchPlay()*__ Calls the startStopwatch function every second to update the time variables and the html time representation elements.
+- ## stopWatchPlay()
 
-3. __*stopWatchPause()*__ Listens for clicks on the pause button and stops the timer.
+ __FUNCTION SUMMARY:__ Uses a setInterval to calls the countUp() function every second to update the time variables and the html time representation elements.
 
-4. __*stopWatchPlayOnClick()*__ Calls the stopWatchPlay() function when the play button is clicked and if it's not already playing.
+- ## playOnClick(timerToPlay) 
 
-5. __*resetStopWatch()*__ Listens for clicks on the reset button and resets all time variables to 0 as well as stopping the timer. 
+__FUNCTION SUMMARY:__ Listens for the play button to be clicked and then plays whichever timer (countUp or countDown) it is passed. 
+
+- ## pauseOnClick(intervalToPause) 
+
+__FUNCTION SUMMARY:__ Listens for clicks on the pause button and stops whichever interval timer is passed into the function.
+
+- ## resetStopWatch()
+
+__FUNCTION SUMMARY:__ Listens for clicks on the reset button and resets all time variables to 0 as well as stopping the timer. 
 
 6. __*resetTimes()*__ Used in conjunction with resetStopWatch() to clear the time variables and reset the DOM as well. 
 

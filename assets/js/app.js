@@ -7,7 +7,6 @@ class Timer {
         this.minutes = 0;
         this.hours = 0;
     }
-
     initialiseTimer(){
         let secondsHtml = document.getElementById('seconds');
         let minutesHtml = document.getElementById('minutes');
@@ -68,7 +67,40 @@ class Timer {
             } else {
                 hoursHtml.innerHTML = hours;
             }
-        }        
+        }  
+        function countDown(){
+
+            seconds = seconds - 1;
+
+            if(seconds >= 60){
+                seconds = 0;
+                minutes = minutes + 1;
+            }
+
+            if(minutes >= 60){
+                minutes = 0;
+                hours = hours + 1;
+            }
+            
+            //Formatting the timer correctly. 
+            if(seconds <= 9){
+                secondsHtml.innerHTML = `0${seconds}`;
+            } else {
+                secondsHtml.innerHTML = seconds;
+            }
+
+            if(minutes <= 9){
+                minutesHtml.innerHTML = `0${minutes}`;
+            } else {
+                minutesHtml.innerHTML = minutes;
+            }
+
+             if(hours <= 9){
+                hoursHtml.innerHTML = `0${hours}`;
+            } else {
+                hoursHtml.innerHTML = hours;
+            }
+        }              
         function stopWatchClickStart(){
                 //Event listener on each task's stopwatch icon
                 startStopwatchButtonArray.forEach(function(stopwatchButton){
@@ -77,7 +109,7 @@ class Timer {
                         //if there are no timers playing then... automatically run StopWatchPlay
                         if ((!playing) && (seconds == 0) && (minutes == 0) && (hours==0) && (playButton.style.display == '')) {
                             timerContainer.style.display = 'flex'; //show timer when stopwatch clicked.
-                            stopWatchPlay();
+                            stopWatchPlay(); // starts playing the stopwatch automatically.
                             //take id of task clicked on and add it to h2 id? 
                             let id = event.target.parentElement.previousElementSibling.id;
                             //take task description and add is as h2 description.
@@ -91,7 +123,7 @@ class Timer {
                             timerTypeTitle.textContent = "Stopwatch";
                             timerTypeTitle.setAttribute('id', 'stopwatch-timer-title');
                             timerTypeTitle.setAttribute('class', 'timer-title');
-                            timerTypeTitle.setAttribute('display', 'flex');
+                            timerTypeTitle.style.display = 'flex';
                             timerContainer.insertAdjacentElement('afterbegin', timerTypeTitle);
 
                         } else {
@@ -99,7 +131,8 @@ class Timer {
                         }             
                         pauseOnClick(stopwatch); 
                         resetStopwatch(stopwatch);
-                        playOnClick(stopWatchPlay);
+                        playOnClick();
+                        timer.initialiseTimer();
                     });
                 });
     }
@@ -109,10 +142,32 @@ class Timer {
             }, 1000);
             return playing = true;
         }
-    function playOnClick(timerToPlay){
+
+    function countdown15Play(){
+        countdown15 = setInterval(function(){ 
+            countDown(); 
+            }, 1000);
+            return playing = true;
+        }
+    function countdown25Play(){
+        countdown25 = setInterval(function(){ 
+            countDown(); 
+            }, 1000);
+            return playing = true;
+        }
+    function playOnClick(){
         playButton.addEventListener('click', function(){ 
+            let timerTitleDOM = document.querySelector('.timer-title');
             if(!playing){
-                timerToPlay();
+                //if stopwatch is written in dom then timerToPlay = stopwatchPlay
+                if (timerTitleDOM.textContent == 'Stopwatch'){
+                    stopWatchPlay();
+                } else if (timerTitleDOM.textContent == 'Countdown 15'){
+                    countdown15Play();
+                } else if (timerTitleDOM.textContent == 'Countdown 25'){
+                    countdown25Play();
+                }
+                
                 pauseButton.style.display = "inline-block";
                 playButton.style.display = "none";
             }
@@ -139,54 +194,52 @@ class Timer {
         })
     }
     function resetTimes(){
-        let stopWatchTimerVisible = document.getElementById('stopwatch-timer-title');
-        let timer15Visible = document.getElementById('stopwatch-timer-title');
-        let timer25Visible = document.getElementById('stopwatch-timer-title');
+         let timerTitleDOM = document.querySelector('.timer-title');
+        // let stopWatchTimerVisible = document.getElementById('stopwatch-timer-title');
+        // let timer15Visible = document.getElementById('stopwatch-timer-title');
+        // let timer25Visible = document.getElementById('stopwatch-timer-title');
         //could make this conditional i.e. if stopwatch function then reset to 0 - if countdown 15 then reset to 00:15:00 etc...
-            if(stopWatchTimerVisible.id == 'stopwatch-timer-title'){
-                seconds = 0;
-                minutes = 0;
-                hours = 0;
+             if (timerTitleDOM.textContent == 'Stopwatch'){
+                    seconds = 0;
+                    minutes = 0;
+                    hours = 0;
 
-                let secondsHtml = document.getElementById('seconds');
-                let minutesHtml = document.getElementById('minutes');
-                let hoursHtml = document.getElementById('hours');
+                    let secondsHtml = document.getElementById('seconds');
+                    let minutesHtml = document.getElementById('minutes');
+                    let hoursHtml = document.getElementById('hours');
 
-                secondsHtml.innerHTML = `0${seconds}`;
-                minutesHtml.innerHTML = `0${minutes}`;
-                hoursHtml.innerHTML = `0${hours}`;
+                    secondsHtml.innerHTML = `0${seconds}`;
+                    minutesHtml.innerHTML = `0${minutes}`;
+                    hoursHtml.innerHTML = `0${hours}`;
 
-            } else if (timer15Visible.style.display == 'flex'){
+                } else if (timerTitleDOM.textContent == 'Countdown 15'){
+                    seconds = 0;
+                    minutes = 15;
+                    hours = 0;
 
-                seconds = 0;
-                minutes = 15;
-                hours = 0;
+                    let secondsHtml = document.getElementById('seconds');
+                    let minutesHtml = document.getElementById('minutes');
+                    let hoursHtml = document.getElementById('hours');
 
-                let secondsHtml = document.getElementById('seconds');
-                let minutesHtml = document.getElementById('minutes');
-                let hoursHtml = document.getElementById('hours');
+                    secondsHtml.innerHTML = `0${seconds}`;
+                    minutesHtml.innerHTML = `${minutes}`;
+                    hoursHtml.innerHTML = `0${hours}`;
 
-                secondsHtml.innerHTML = `0${seconds}`;
-                minutesHtml.innerHTML = `${minutes}`;
-                hoursHtml.innerHTML = `0${hours}`;
+                } else if (timerTitleDOM.textContent == 'Countdown 25'){
+                    seconds = 0;
+                    minutes = 25;
+                    hours = 0;
 
-        } else if (timer25Visible.style.display == 'flex') {
+                    let secondsHtml = document.getElementById('seconds');
+                    let minutesHtml = document.getElementById('minutes');
+                    let hoursHtml = document.getElementById('hours');
 
-                seconds = 0;
-                minutes = 25;
-                hours = 0;
-
-                let secondsHtml = document.getElementById('seconds');
-                let minutesHtml = document.getElementById('minutes');
-                let hoursHtml = document.getElementById('hours');
-
-                secondsHtml.innerHTML = `0${seconds}`;
-                minutesHtml.innerHTML = `${minutes}`;
-                hoursHtml.innerHTML = `0${hours}`;
-        }
-
+                    secondsHtml.innerHTML = `0${seconds}`;
+                    minutesHtml.innerHTML = `${minutes}`;
+                    hoursHtml.innerHTML = `0${hours}`;
+                }       
+        }      
         
-    }
     function saveTimeToTask(id){
         //get time to add from a timeSegment temp variable or object. 
         //take in minutes, hours and seconds and convert to seconds:

@@ -328,6 +328,9 @@ overwhelming the user with colour and charts.
 - ### **[Audio Object](https://www.w3schools.com/JSREF/dom_obj_audio.asp)
     w3schools Audio Object information.
 
+- ### **[JavaScript Refactoring](https://www.testim.io/blog/javascript-refactoring-5-plays-to-improve-code-quality/)**
+    JavaScript Refactoring: 5 Plays to Improve Code Quality - By Testim
+
 ## 4. General
 
 - ### **[How to Write a Git Commit Message - Chris Beams](https://chris.beams.io/posts/git-commit/)**

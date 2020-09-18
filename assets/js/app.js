@@ -67,8 +67,6 @@ class Timer {
                 let intervalToPause;
                 let typeOfTimer = document.querySelector('.timer-title').textContent;
 
-                console.log(typeOfTimer);
-
                 if(typeOfTimer == "Stopwatch"){
                     intervalToPause = stopwatch;
                 } else if (typeOfTimer == "Countdown 15"){
@@ -81,6 +79,7 @@ class Timer {
                     clearInterval(intervalToPause);
                 }
                  
+                //Removes the timer : REFACTOR: this should be a function? 
                 let timerTitleInDOM = document.querySelector('.timer-title');
                 timerContainer.removeChild(timerTitleInDOM);
                 timerContainer.style.display = "none";
@@ -94,7 +93,8 @@ class Timer {
                 hoursHtml.innerHTML = `0${hours}`
                 playing = false;
                 console.log(`${seconds}s ${minutes}m ${hours}h ${playing}`);
-                //show all the stopwatch buttons
+
+                //Shows all the stopwatch buttons: REFACTOR - function?
                 startStopwatchButtonArray.forEach(function(stopwatchButton){
                 stopwatchButton.style.visibility = "visible";
             })
@@ -105,20 +105,17 @@ class Timer {
     }
 
         function countUp(){
-
             seconds = seconds + 1;
 
             if(seconds >= 60){
                 seconds = 0;
                 minutes = minutes + 1;
             }
-
             if(minutes >= 60){
                 minutes = 0;
                 hours = hours + 1;
-            }
-            
-            //Formatting the timer correctly. 
+            }    
+            //Formats the timer correctly. REFACTOR - function?
             if(seconds <= 9){
                 secondsHtml.innerHTML = `0${seconds}`;
             } else {
@@ -145,7 +142,7 @@ class Timer {
             hours = 0;
 
             countdown();
-
+        }
         function countdown(){
             countdown15 = setInterval(function(){ 
                 countDown15(); 
@@ -165,7 +162,7 @@ class Timer {
                 }
                 //stops a bug that kept printing seconds as 900
                 if (seconds < 61) {
-                    //Formats the timer display.
+                    
                     if(seconds <= 9){
                         secondsHtml.innerHTML = `0${seconds}`;
                     } else {
@@ -184,8 +181,8 @@ class Timer {
                         hoursHtml.innerHTML = hours;
                     }
                 }          
-            }    
-    }
+            }   
+        
 
     function countdownEnded(){
         
@@ -197,7 +194,7 @@ class Timer {
                 //calls save time function which will save seconds and long form time on the associated task object.
                 saveTimeToTask(timerTitle.id, seconds);
                  
-                //hide timer completely.
+                //Hides the timer REFACTOR to a function 2X
                 let timerTitleInDOM = document.querySelector('.timer-title');
                 timerContainer.removeChild(timerTitleInDOM);
                 timerContainer.style.display = "none";
@@ -215,7 +212,6 @@ class Timer {
                 //Updates the time worked display for the task on the task list.
                 //task id is...
                 let idForSavingTime = timerTitle.id;
-                
                 //shows all the tasks in the list.
                 let taskTimeDisplay1 = document.querySelectorAll('.task-description'); 
                
@@ -258,7 +254,7 @@ class Timer {
                             //Find the id of the task clicked on.
                             let id = event.target.parentElement.previousElementSibling.id;
 
-                            //Find the task description and add is as a h2 description in the timer.
+                            //Find the task description and add it as a h2 in the timer.
                             let description = event.target.parentElement.previousElementSibling.textContent;
                             //Select the area where the title will go
                             let timerTitle = document.querySelector('.timer-task-description');
@@ -275,7 +271,7 @@ class Timer {
                             timerTypeTitle.style.display = 'flex';
                             timerContainer.insertAdjacentElement('afterbegin', timerTypeTitle);
 
-                            //hide all the stopwatch buttons
+                            //hide all the stopwatch buttons REFACTOR - function?
                             startStopwatchButtonArray.forEach(function(stopwatchButton){
                                 stopwatchButton.style.visibility = "hidden";
                             })
@@ -288,7 +284,7 @@ class Timer {
                             console.log("We cannot play the timer because one of these things is true: 1-playing==true 2-seconds, minutes or hours are not at 0 or the play button is visible.");
                         }             
                         pauseOnClick(stopwatch); 
-                        resetStopwatch(stopwatch);
+                        resetTime(stopwatch);
                         playOnClick();
                         closeTimer();
                         timer.initialiseTimer();
@@ -307,7 +303,7 @@ class Timer {
                         const countdown15Button = document.querySelector('.countdown15-task-option');
                         countdown15Button.addEventListener('click', function(event){
 
-                            //hide all the stopwatch buttons
+                            //hide all the stopwatch buttons REFACTOR function.
                             startStopwatchButtonArray.forEach(function(stopwatchButton){
                                 stopwatchButton.style.visibility = "hidden";
                             })
@@ -316,6 +312,7 @@ class Timer {
                             let minutes = 15;
                             let hours = 0;
 
+                            //REFACTOR - could a func work here? would those vars be available? 
                             let secondsHtml = document.getElementById('seconds');
                             let minutesHtml = document.getElementById('minutes');
                             let hoursHtml = document.getElementById('hours');
@@ -334,14 +331,15 @@ class Timer {
                                 //show timer when stopwatch clicked.
                                 timerContainer.style.display = 'flex'; 
 
-                                    //create the timer title
+                                //create the timer title: REFACTOR - func with params: textContent & id??
                                 let timerTypeTitle = document.createElement('h2');
                                 timerTypeTitle.textContent = "Countdown 15";
                                 timerTypeTitle.setAttribute('id', 'countdown15-timer-title');
                                 timerTypeTitle.setAttribute('class', 'timer-title');
                                 timerTypeTitle.style.display = 'flex';
                                 timerContainer.insertAdjacentElement('afterbegin', timerTypeTitle);
-
+                                
+                                //REFACTOR function.
                                 //Select the area where the title will go
                                 let timerTitle = document.querySelector('.timer-task-description');
                                 //Give it an id to match the task's id.
@@ -350,7 +348,8 @@ class Timer {
                                 timerTitle.textContent = taskToTargetDescription;
                                 // starts playing the countdown automatically.
                                 countDown15Play()
-                                pauseOnClick(countdown15);   
+                                pauseOnClick(countdown15); 
+                                resetTime(countdown15);  
                             }
                         closeTimer();
                 })
@@ -374,15 +373,19 @@ class Timer {
         playButton.addEventListener('click', function(){ 
             let timerTitleDOM = document.querySelector('.timer-title');
             if(!playing){
-                //if stopwatch is written in dom then timerToPlay = stopwatchPlay
+                
                 if (timerTitleDOM.textContent == 'Stopwatch'){
                     stopWatchPlay();
-                    resetStopwatch(stopwatch);
+                    resetTime(stopwatch);
                     pauseOnClick(stopwatch);
-                } else if (timerTitleDOM.textContent == 'Countdown 15'){
-                    countdown15Play();
+                } else if (timerTitleDOM.textContent == 'Countdown 15'){ //bug keeps starting from beginning again. - resets when in countdown15play.
+                    countdown();
+                    pauseOnClick(countdown15);
+                    resetTime(countdown15);
                 } else if (timerTitleDOM.textContent == 'Countdown 25'){
                     countdown25Play();
+                    pauseOnClick(countdown25);
+                    resetTime(countdown25);
                 }
                 
                 pauseButton.style.display = "inline-block";
@@ -399,9 +402,11 @@ class Timer {
             return playing = false;  
         })
     }
-    function resetStopwatch(intervalToReset,){
+    function resetTime(intervalToReset,){
         resetButton.addEventListener('click', function(){
+            console.log('clicked')
             clearInterval(intervalToReset);
+            console.log(intervalToReset);
             pauseButton.style.display = "none";
             playButton.style.display = "inline-block";
             resetTimes();
@@ -419,10 +424,11 @@ class Timer {
                     minutes = 0;
                     hours = 0;
 
+                    //REFACTOR
                     let secondsHtml = document.getElementById('seconds');
                     let minutesHtml = document.getElementById('minutes');
                     let hoursHtml = document.getElementById('hours');
-
+                    //REFACTOR
                     secondsHtml.innerHTML = `0${seconds}`;
                     minutesHtml.innerHTML = `0${minutes}`;
                     hoursHtml.innerHTML = `0${hours}`;
@@ -431,11 +437,11 @@ class Timer {
                     seconds = 0;
                     minutes = 15;
                     hours = 0;
-
+                    //REFACTOR
                     let secondsHtml = document.getElementById('seconds');
                     let minutesHtml = document.getElementById('minutes');
                     let hoursHtml = document.getElementById('hours');
-
+                    //REFACTOR
                     secondsHtml.innerHTML = `0${seconds}`;
                     minutesHtml.innerHTML = `${minutes}`;
                     hoursHtml.innerHTML = `0${hours}`;
@@ -444,11 +450,11 @@ class Timer {
                     seconds = 0;
                     minutes = 25;
                     hours = 0;
-
+                    //REFACTOR
                     let secondsHtml = document.getElementById('seconds');
                     let minutesHtml = document.getElementById('minutes');
                     let hoursHtml = document.getElementById('hours');
-
+                    //REFACTOR
                     secondsHtml.innerHTML = `0${seconds}`;
                     minutesHtml.innerHTML = `${minutes}`;
                     hoursHtml.innerHTML = `0${hours}`;
@@ -457,8 +463,6 @@ class Timer {
     function saveTimeToTask(id, seconds){
 
         //select the timer titles to use to determine which timer is being played.
-            // let countdown15Title = document.querySelector('#countdown15-timer-title');
-            // let countdown25Title = document.querySelector('#countdown25-timer-title');
             var minutesInSeconds;
             
              let typeOfTimer = document.querySelector('.timer-title');
@@ -472,7 +476,7 @@ class Timer {
                     } else {
                        var timeToAdd = 900 - (minutesInSeconds + seconds);
                     }
-                    clearInterval(countdown15); 
+                    clearInterval(countdown15); //necessary??
 
                 } else if (typeOfTimer.textContent == "Countdown 25"){
                     minutesInSeconds = minutes * 60
@@ -482,7 +486,7 @@ class Timer {
                     } else {
                         var timeToAdd = 1500 - (minutesInSeconds + seconds);
                     }
-                    clearInterval(countdown25);
+                    clearInterval(countdown25); //necessary??
                 } else if (typeOfTimer.textContent == "Stopwatch"){
                     minutesInSeconds = minutes * 60;
                     let hoursInSeconds = hours * 3600;

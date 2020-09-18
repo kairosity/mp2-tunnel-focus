@@ -17,8 +17,6 @@ The application was tested on all major browsers with the exception of Internet 
 This task manager application is based on the principles of Object-Oriented Programming. Its logic is structured around 3 objects that interact: a Task object, a List object and a Timer object. 
 In its incipient stages I had sketched out functionality based on a series of functions and event listeners and I saw how quickly that structure becomes unwieldly. The classes I have used compartmentalize the code and make it far easier to manage. I've noticed particularly how useful objects are for maintaining a clean global scope, with almost no variables.
 
-
-
 # JavaScript
 
 ## Unit Testing with Jasmine
@@ -41,6 +39,8 @@ This method encapsulates all the timer functions. It it not meant to be called o
     logic is applied to minutes. The hours variable increases ad infinitum. Three DOM variables are used to represent this logic in the DOM. This function is then called within a setInterval function within a function called StopWatchPlay() and it is called once every second, thus updating the timer.
 
     ### __*Manual Testing*__
+
+    ### __*Issues encountered through testing*__
 
     __ISSUE 1:__ When creating my Timer object, I tried initialising the times to 00:00:00 and discovered that ```"Octal literals are not allowed in strict mode."``` 
     This refers to prefixing numbers with 0. 
@@ -84,6 +84,15 @@ So the program was just running the seconds logic first and pushing them to 0 an
 
 Changing the code to two IF statements as above, fixed the issue. 
 
+- ## countDown15Play()
+
+__FUNCTION SUMMARY:__ This is an umbrella function that houses two other functions that work in concert to countdown from 15 minutes. 
+
+__ISSUE 1:__ As the seconds, minutes and hours are initialised to 0, I had difficulty arranging these functions so that minutes could initialise to 15. Initialising minutes within the countDown15 function which is called by countdown() every second, just kept the minutes at 15.
+
+__FIX 1:__ I had to nest the functions within countDown15Play() in order to use *that* as the local scope in which to initialise minutes to 15.  
+
+
 - ## stopWatchClickStart()
 
 __FUNCTION SUMMARY:__ This is a click event listener on the stopwatch icons attached to each task in the task list. When clicked it starts the stopWatch timer *on that task* as long as certain conditions are met. The function is also responsible for taking the associated task description and playing it above the timer, so the user always has a reference of what task is being timed. This event listener also invokes stopWatchPause(), resetStopWatch() & playOnClick(stopWatchPlay) to access those functions from within its remit.
@@ -106,6 +115,7 @@ __FUNCTION SUMMARY:__ Listens for clicks on the reset button and resets all time
 
 6. __*resetTimes()*__ Used in conjunction with resetStopWatch() to clear the time variables and reset the DOM as well. 
 
+  ### __*Issues encountered through testing*__
 
 __ISSUE 1:__ There are two separate routes to starting the stopwatch timer. A user can click on the stopwatch icon (and this will always be the first method, as until they click here, the timer box will not be visible). Once the timer is visible, there are two ways to start the timer: the stopwatch icon *and* the play button that appears if the timer has is paused. This caused a bug that meant two or more Interval timers (based on the stopWatchPlay function) could be triggered to run at the same time. This causes the timer to increase the speed at which the seconds and minutes increase, and it ceased being a reliable timer. 
 
@@ -131,9 +141,10 @@ __FIX 1:__ The fix was to add a boolean variable called "playing" that I use any
     The saveTimeToTask() function then saves those changes to localStorage. And the saveTimeButton() function goes on to change the DOM time elements with updated task time data. 
 
 - ## Timer.convertSecondsToTime(seconds)
+
 __FUNCTION SUMMARY:__ Takes in seconds and converts them into hours, minutes and seconds in a human readable format. The code was taken from a Stack Overflow question and is referenced in the attribution section of this README. 
 
-__ISSUE 1:__ I could not call this method from within other functions in this class. timer.convertSecondsToTime just was not working. I kept getting a ```"Uncaught ReferenceError: convertSecondsToTime is not defined"```
+__ISSUE 1:__ I could not call this method from within other functions in this class. timer.convertSecondsToTime would not work. I kept getting a ```"Uncaught ReferenceError: convertSecondsToTime is not defined"```
 
 __FIX 1:__ I had instantiated a local variable called timer and used it to refer to the timer container in the DOM. So calling timer.convertSecondsToTime() when trying to refer to an instance of the Timer Object called timer, was not actually doing that and was indeed not defined. Changing the variable name to timerContainer fixed the issue. 
 

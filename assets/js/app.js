@@ -32,6 +32,9 @@ class Timer {
         let startStopwatchButtonArray = document.querySelectorAll('.start-stopwatch');
         let saveButton = document.getElementById('save-time-to-task');
         let timerContainer = document.querySelector('.timer-container');
+        
+        const alarm = document.createElement('AUDIO');
+        alarm.setAttribute('src', 'assets/audio/alarm1.mp3');
 
         let secondsHtml = document.getElementById('seconds');
         let minutesHtml = document.getElementById('minutes');
@@ -77,24 +80,30 @@ class Timer {
             minutes = 15;
             hours = 0;
 
-        countdown()
+            countdown();
 
         function countdown(){
             countdown15 = setInterval(function(){ 
                 countDown15(); 
                 }, 1000);
+                console.log(playing);
                 return playing = true;
             }
-
             function countDown15(){
                 seconds = seconds - 1;
+                
+                console.log(playing);
 
                 if((seconds < 0) && (minutes >= 1)){
                     seconds = 59;
                     minutes = minutes - 1;
                 } 
-
-        
+                if((seconds==0) && (minutes==0)){
+                   clearInterval(countdown15);
+                   playing = false;
+                   alarm.play();
+                   //and flash the visual cues alarm.   
+                }
                 //Formatting the timer correctly. 
                 if(seconds <= 9){
                     secondsHtml.innerHTML = `0${seconds}`;
@@ -114,7 +123,6 @@ class Timer {
                     hoursHtml.innerHTML = hours;
                 }
             }              
-
     }
             
         function stopWatchClickStart(){
@@ -221,7 +229,8 @@ class Timer {
                                 //give it a description to match task description.
                                 timerTitle.textContent = taskToTargetDescription;
                                 // starts playing the countdown automatically.
-                                countDown15Play()   
+                                countDown15Play()
+                                pauseOnClick(countdown15);   
                             }
                 })
             })
@@ -376,7 +385,7 @@ class Timer {
             return playing = false; 
         })
     }
-        countDown15ClickStart()    
+        countDown15ClickStart();    
         stopWatchClickStart(); 
         saveTimeButton();
         playOnClick();

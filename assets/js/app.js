@@ -8,6 +8,7 @@ class Timer {
         this.hours = 0;
     }
     initialiseTimer(){
+
         let secondsHtml = document.getElementById('seconds');
         let minutesHtml = document.getElementById('minutes');
         let hoursHtml = document.getElementById('hours');
@@ -16,6 +17,21 @@ class Timer {
         minutesHtml.innerHTML = `0${this.minutes}`;
         hoursHtml.innerHTML = `0${this.hours}`;
     } 
+
+    zeroOutTimer(){
+        let seconds = 0;
+        let minutes = 0;
+        let hours = 0;
+
+        let secondsHtml = document.getElementById('seconds');
+        let minutesHtml = document.getElementById('minutes');
+        let hoursHtml = document.getElementById('hours');
+
+        secondsHtml.innerHTML = `0${seconds}`;
+        minutesHtml.innerHTML = `0${minutes}`;
+        hoursHtml.innerHTML = `0${hours}`;
+    }
+
     timers(){
         let seconds = 0;
         let minutes = 0;
@@ -32,6 +48,7 @@ class Timer {
         let startStopwatchButtonArray = document.querySelectorAll('.start-stopwatch');
         let saveButton = document.getElementById('save-time-to-task');
         let timerContainer = document.querySelector('.timer-container');
+        let timerTitle = document.querySelector('.timer-task-description');
         
         const alarm = document.createElement('AUDIO');
         alarm.setAttribute('src', 'assets/audio/alarm1.mp3');
@@ -39,6 +56,53 @@ class Timer {
         let secondsHtml = document.getElementById('seconds');
         let minutesHtml = document.getElementById('minutes');
         let hoursHtml = document.getElementById('hours');
+
+
+        function closeTimer(){
+            let xButton = document.querySelector('.close-timer-x');
+            
+            xButton.addEventListener('click', function(event){
+
+                //if user clicks X in the middle of timer playing then I need to pause it first
+                let intervalToPause;
+                let typeOfTimer = document.querySelector('.timer-title').textContent;
+
+                console.log(typeOfTimer);
+
+                if(typeOfTimer == "Stopwatch"){
+                    intervalToPause = stopwatch;
+                } else if (typeOfTimer == "Countdown 15"){
+                    intervalToPause = countdown15;
+                } else if (typeOfTimer == "Countdown 25"){
+                    intervalToPause = countdown25;
+                }
+
+                if (playing){
+                    clearInterval(intervalToPause);
+                }
+                 
+                let timerTitleInDOM = document.querySelector('.timer-title');
+                timerContainer.removeChild(timerTitleInDOM);
+                timerContainer.style.display = "none";
+                playButton.style.display = "";
+                pauseButton.style.display = "inline-block";
+                seconds = 0;
+                minutes = 0;
+                hours = 0;
+                secondsHtml.innerHTML = `0${seconds}`
+                minutesHtml.innerHTML = `0${minutes}`
+                hoursHtml.innerHTML = `0${hours}`
+                playing = false;
+                console.log(`${seconds}s ${minutes}m ${hours}h ${playing}`);
+                //show all the stopwatch buttons
+                startStopwatchButtonArray.forEach(function(stopwatchButton){
+                stopwatchButton.style.visibility = "visible";
+            })
+                
+        })
+
+            
+    }
 
         function countUp(){
 
@@ -76,8 +140,8 @@ class Timer {
 
         function countDown15Play(){
 
-            seconds = 0;
-            minutes = 15;
+            seconds = 10;
+            minutes = 0;
             hours = 0;
 
             countdown();
@@ -86,49 +150,131 @@ class Timer {
             countdown15 = setInterval(function(){ 
                 countDown15(); 
                 }, 1000);
-                console.log(playing);
                 return playing = true;
             }
             function countDown15(){
                 seconds = seconds - 1;
-                
-                console.log(playing);
 
                 if((seconds < 0) && (minutes >= 1)){
                     seconds = 59;
                     minutes = minutes - 1;
                 } 
-                if((seconds==0) && (minutes==0)){
-                   clearInterval(countdown15);
-                   playing = false;
-                   alarm.play();
-                   //and flash the visual cues alarm.   
+                if((seconds<0) && (minutes==0)){
+                    alarm.play()
+                    countdownEnded();
                 }
-                //Formatting the timer correctly. 
-                if(seconds <= 9){
-                    secondsHtml.innerHTML = `0${seconds}`;
-                } else {
-                    secondsHtml.innerHTML = seconds;
-                }
+                //stops a bug that kept printing seconds as 900
+                if (seconds < 61) {
+                    //Formats the timer display.
+                    if(seconds <= 9){
+                        secondsHtml.innerHTML = `0${seconds}`;
+                    } else {
+                        secondsHtml.innerHTML = seconds;
+                    }
 
-                if(minutes <= 9){
-                    minutesHtml.innerHTML = `0${minutes}`;
-                } else {
-                    minutesHtml.innerHTML = minutes;
-                }
+                    if(minutes <= 9){
+                        minutesHtml.innerHTML = `0${minutes}`;
+                    } else {
+                        minutesHtml.innerHTML = minutes;
+                    }
 
-                if(hours <= 9){
-                    hoursHtml.innerHTML = `0${hours}`;
-                } else {
-                    hoursHtml.innerHTML = hours;
+                    if(hours <= 9){
+                        hoursHtml.innerHTML = `0${hours}`;
+                    } else {
+                        hoursHtml.innerHTML = hours;
+                    }
+                }          
+            }    
+    }
+
+    function countdownEnded(){
+        
+        playing = false;
+        
+        //!FIX: change this to a well styled modal.
+        if(confirm("Do you want to save this time to this task?")){
+
+            //select the timer titles to use to determine which timer is being played.
+            let countdown15Title = document.querySelector('#countdown15-timer-title');
+            let countdown25Title = document.querySelector('#countdown25-timer-title');
+            var minutesInSeconds;
+            
+                //for countdown 15 timer
+                if (countdown15Title.style.display == "flex") {
+                    minutesInSeconds = minutes * 60
+                    
+
+                    //!FIX - whereby seconds was returning 901 & 1501
+                    if ( (seconds == -1) && (minutesInSeconds == 0) ){
+                       var timeToAdd = 900
+                    } else {
+                       var timeToAdd = 900 - (minutesInSeconds + seconds);
+                    }
+                    clearInterval(countdown15); 
+
+                } else if (countdown25Title.style.display == "flex"){
+                    minutesInSeconds = minutes * 60
+
+                    if ( (seconds == -1) && (minutesInSeconds == 0) ){
+                        var timeToAdd = 1500
+                    } else {
+                        var timeToAdd = 1500 - (minutesInSeconds + seconds);
+                    }
+                    clearInterval(countdown25);
                 }
-            }              
+                seconds = timeToAdd;
+
+                //calls save time function which will save seconds and long form time on the associated task object.
+                saveTimeToTask(timerTitle.id, seconds);
+                 
+                //hide timer completely.
+                let timerTitleInDOM = document.querySelector('.timer-title');
+                timerContainer.removeChild(timerTitleInDOM);
+                timerContainer.style.display = "none";
+                playButton.style.display = "";
+                pauseButton.style.display = "inline-block";
+                seconds = 0;
+                minutes = 0;
+                hours = 0;
+                secondsHtml.innerHTML = `0${seconds}`
+                minutesHtml.innerHTML = `0${minutes}`
+                hoursHtml.innerHTML = `0${hours}`
+                playing = false;
+
+
+                //Updates the time worked display for the task on the task list.
+                //task id is...
+                let idForSavingTime = timerTitle.id;
+                
+                //shows all the tasks in the list.
+                let taskTimeDisplay1 = document.querySelectorAll('.task-description'); 
+               
+                
+                //for each task in list, if the the task id is the same as the task id in the timer then 
+                // select the task's timedisplay element (where the total task time is displayed)
+                // and change it to the task object's long form task time property which has been updated by the saveTimeToTask() function.
+                for (let i=0; i<taskTimeDisplay1.length; i++){
+                    if(taskTimeDisplay1[i].id == idForSavingTime){
+                        let timeDisplay = taskTimeDisplay1[i].parentElement.firstElementChild; 
+                        timeDisplay.textContent = list.taskList[timerTitle.id].totalTimeFocusedOnTaskLongForm;
+                    }       
+                }
+                playing = false;
+                seconds = 0;
+                minutes = 0;
+                hours = 0;
+                console.log(`${seconds}s ${minutes}m ${hours}h ${playing} `);
+         } else {
+             console.log('do something here');
+         }
+         
     }
             
         function stopWatchClickStart(){
                 //Event listener on each task's stopwatch icon
                 startStopwatchButtonArray.forEach(function(stopwatchButton){
                     stopwatchButton.addEventListener('click', function(event){
+
 
                         //if there are no timers playing then... automatically run StopWatchPlay
                         if ((!playing) && (seconds == 0) && (minutes == 0) && (hours==0) && (playButton.style.display == '')) {
@@ -139,7 +285,7 @@ class Timer {
                             // starts playing the stopwatch automatically.
                             stopWatchPlay();
 
-                            //Finf the id of the task clicked on.
+                            //Find the id of the task clicked on.
                             let id = event.target.parentElement.previousElementSibling.id;
 
                             //Find the task description and add is as a h2 description in the timer.
@@ -159,42 +305,34 @@ class Timer {
                             timerTypeTitle.style.display = 'flex';
                             timerContainer.insertAdjacentElement('afterbegin', timerTypeTitle);
 
+                            //hide all the stopwatch buttons
+                            startStopwatchButtonArray.forEach(function(stopwatchButton){
+                                stopwatchButton.style.visibility = "hidden";
+                            })
+
+
                         } else {
+                            startStopwatchButtonArray.forEach(function(stopwatchButton){
+                                   event.preventDefault();
+                            })
                             console.log("We cannot play the timer because one of these things is true: 1-playing==true 2-seconds, minutes or hours are not at 0 or the play button is visible.");
                         }             
                         pauseOnClick(stopwatch); 
                         resetStopwatch(stopwatch);
                         playOnClick();
+                        closeTimer();
                         timer.initialiseTimer();
                     });
                 });
-    }
-            
-
-
-                    //hide popover box when countdown15 button is clicked. 
-
-                    // set an interval timer that decreases the numbers each second. 
-
-                    //timer has to have the name of the task it was called on same as stopwatch.
-
-                    // should be able to call the pause, reset & play methods on this. refactor if not. 
-
-                    // when ready to save have to minus the amount from 15. E.g. if number left is 00:11:00 The time to save 
-                    //would be 15-11 = 4minutes. (in Seconds.) 4*60 etc.. 
-                    
-                    //if timer gets to zero call on another function (still to write) that plays an alarm both sound and flashing lights. 
-
-                    //a pop-up saying "you've finished your 15 minutes would you like to add that to your task time. "
-
-                    //call on the save functions if yes. Or reset if no. 
+    } 
 
     function countDown15ClickStart(){
 
                 //when the button is clicked
                 // const arrayOfCountdown15Icons = document.querySelectorAll('.countdown15-task-option');
                 const ellipsisArray = document.querySelectorAll('.task-options');
-                ellipsisArray.forEach(function(ellipsis){    
+                ellipsisArray.forEach(function(ellipsis){  
+
                     ellipsis.addEventListener('click', function(){
                         const countdown15Button = document.querySelector('.countdown15-task-option');
                         countdown15Button.addEventListener('click', function(event){
@@ -214,13 +352,19 @@ class Timer {
                             let parentDiv = event.target.closest('.task');
                             let taskToTargetId = parentDiv.children[2].id;
                             let taskToTargetDescription = parentDiv.children[2].textContent;
-                            console.log(taskToTargetDescription);
-                            console.log(taskToTargetId);
                         
                              //if there are no timers playing then... automatically run CountDown15
                             if ((!playing) && (seconds == 0) && (minutes == 15) && (hours==0) && (playButton.style.display == '')) {
                                 //show timer when stopwatch clicked.
                                 timerContainer.style.display = 'flex'; 
+
+                                    //create the timer title
+                                let timerTypeTitle = document.createElement('h2');
+                                timerTypeTitle.textContent = "Countdown 15";
+                                timerTypeTitle.setAttribute('id', 'countdown15-timer-title');
+                                timerTypeTitle.setAttribute('class', 'timer-title');
+                                timerTypeTitle.style.display = 'flex';
+                                timerContainer.insertAdjacentElement('afterbegin', timerTypeTitle);
 
                                 //Select the area where the title will go
                                 let timerTitle = document.querySelector('.timer-task-description');
@@ -232,6 +376,7 @@ class Timer {
                                 countDown15Play()
                                 pauseOnClick(countdown15);   
                             }
+                        closeTimer();
                 })
             })
         })
@@ -333,7 +478,7 @@ class Timer {
                     hoursHtml.innerHTML = `0${hours}`;
                 }       
         }      
-    function saveTimeToTask(id){
+    function saveTimeToTask(id, seconds){
         //get time to add from a timeSegment temp variable or object. 
         //take in minutes, hours and seconds and convert to seconds:
         let minutesInSeconds = minutes * 60;
@@ -355,8 +500,8 @@ class Timer {
             //alert asking if the user definitely want to add {seconds} to their total time on that task.
             let timerTitle = document.querySelector('.timer-task-description');
             
-            if(confirm("Are you sure you want to save [time] to [task]?")){
-                saveTimeToTask(timerTitle.id);
+            if(confirm("Do you want to save this time to this task?")){
+                saveTimeToTask(timerTitle.id, seconds);
                 //needs to update the time spent display on task list.
                 let idForSavingTime = timerTitle.id;
                 let taskTimeDisplay1 = document.querySelectorAll('.task-description'); //with the same id as the timertitle id.
@@ -368,6 +513,12 @@ class Timer {
                         // timeDisplay.textContent = list.taskList[timerTitle.id].totalTimeFocusedOnTask;
                     }       
                 }
+
+                //show all the stopwatch buttons
+                startStopwatchButtonArray.forEach(function(stopwatchButton){
+                    stopwatchButton.style.visibility = "visible";
+                })
+
                 //hide timer completely.
                 let timerTitleInDOM = document.querySelector('.timer-title');
                 timerContainer.removeChild(timerTitleInDOM);
@@ -518,7 +669,6 @@ class List {
                     let parentDiv = event.target.closest('.task');
                     let liToReplace = parentDiv.children[2];
                     let textToEdit = parentDiv.children[2].textContent;
-                    console.log(liToReplace);
 
                     if (!document.querySelector('.save-button')){  //stops the situation whereby a user can open 2 or more input edit boxes.
                     

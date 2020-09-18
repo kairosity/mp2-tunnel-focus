@@ -323,7 +323,10 @@ overwhelming the user with colour and charts.
     Fabulous video tutorial that goes into good detail into various Jasmine methods.
 
 - ### **[clearInterval() Method](https://www.w3schools.com/jsref/met_win_clearinterval.asp)**
-    w3schools clearInterval() information
+    w3schools clearInterval() information.
+
+- ### **[Audio Object](https://www.w3schools.com/JSREF/dom_obj_audio.asp)
+    w3schools Audio Object information.
 
 ## 4. General
 

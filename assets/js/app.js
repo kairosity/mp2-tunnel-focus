@@ -1,5 +1,4 @@
-
-//purpose of all methods is to store the time timed in these timer props which are then used to add to time on tasks. e.g. timer.seconds = 56 
+ 
 class Timer {
     constructor(){
       
@@ -7,8 +6,7 @@ class Timer {
         this.minutes = 0;
         this.hours = 0;
     }
-    initialiseTimer(){ //is this used? yes once at beginning.
-        
+    initialiseTimer(){
         let secondsHtml = document.getElementById('seconds');
         let minutesHtml = document.getElementById('minutes');
         let hoursHtml = document.getElementById('hours');
@@ -17,8 +15,6 @@ class Timer {
         minutesHtml.innerHTML = `0${this.minutes}`;
         hoursHtml.innerHTML = `0${this.hours}`;
     } 
-
-
     timers(){
 
         // --------------------------------------GLOBAL TIMER VARIABLES-------------------------------//
@@ -26,7 +22,7 @@ class Timer {
         let seconds = 0;
         let minutes = 0;
         let hours = 0;
-        let timerToPlay;
+        // let timerToPlay;
 
         var stopwatch;
         var countdown15;
@@ -111,6 +107,7 @@ class Timer {
 
     // --------------------------------------TIMING FUNCTIONS-------------------------------//
 
+    // Stopwatch countup
         function countUp(){
             seconds = seconds + 1;
 
@@ -124,7 +121,13 @@ class Timer {
             }    
             formatTime(seconds, minutes, hours);
         }
-
+        function stopWatchPlay(){
+        stopwatch = setInterval(function(){ 
+            countUp(); 
+            }, 1000);
+            return playing = true;
+        }
+//Countdown 15 Play
         function countDown15Play(){
 
             seconds = 0;
@@ -135,55 +138,58 @@ class Timer {
         }
         function countdown(){
             countdown15 = setInterval(function(){ 
-                countDown15(); 
+                countDownFunction(); 
                 }, 1000);
                 return playing = true;
             }
-            function countDown15(){
-                seconds = seconds - 1;
+        function countDownFunction(){
+            seconds = seconds - 1;
 
-                if((seconds < 0) && (minutes >= 1)){
-                    seconds = 59;
-                    minutes = minutes - 1;
-                } 
-                if((seconds<0) && (minutes==0)){
-                    alarm.play()
-                    countdownEnded();
-                }
-                //stops a bug that kept printing seconds as 900
-                if (seconds < 61) {
-                    
-                    if(seconds <= 9){
-                        secondsHtml.innerHTML = `0${seconds}`;
-                    } else {
-                        secondsHtml.innerHTML = seconds;
-                    }
-
-                    if(minutes <= 9){
-                        minutesHtml.innerHTML = `0${minutes}`;
-                    } else {
-                        minutesHtml.innerHTML = minutes;
-                    }
-
-                    if(hours <= 9){
-                        hoursHtml.innerHTML = `0${hours}`;
-                    } else {
-                        hoursHtml.innerHTML = hours;
-                    }
-                }          
+            if((seconds < 0) && (minutes >= 1)){
+                seconds = 59;
+                minutes = minutes - 1;
             } 
-        function stopWatchPlay(){
-        stopwatch = setInterval(function(){ 
-            countUp(); 
-            }, 1000);
-            return playing = true;
+            if((seconds<0) && (minutes==0)){
+                alarm.play()
+                countdownEnded();
+            }
+            //stops a bug that kept printing seconds as 900
+            if (seconds < 61) {
+                
+                if(seconds <= 9){
+                    secondsHtml.innerHTML = `0${seconds}`;
+                } else {
+                    secondsHtml.innerHTML = seconds;
+                }
+
+                if(minutes <= 9){
+                    minutesHtml.innerHTML = `0${minutes}`;
+                } else {
+                    minutesHtml.innerHTML = minutes;
+                }
+
+                if(hours <= 9){
+                    hoursHtml.innerHTML = `0${hours}`;
+                } else {
+                    hoursHtml.innerHTML = hours;
+                }
+            }          
         }
-        function countdown25Play(){
+        //Countdown 25 Play
+        function countDown25Play(){
+
+            seconds = 0;
+            minutes = 25;
+            hours = 0;
+
+            countdown25SetInterval();
+        }
+        function countdown25SetInterval(){
             countdown25 = setInterval(function(){ 
-                countDown(); 
+                countDownFunction(); 
                 }, 1000);
                 return playing = true;
-            }  
+            }
 
 // --------------------------------------STRUCTURAL FUNCTIONS-------------------------------// 
 
@@ -273,7 +279,6 @@ class Timer {
                         //give it a description to match task description.
                         timerTitle.textContent = taskToTargetDescription;
 
-                        // starts playing the countdown automatically.
                         countDown15Play()
                         pauseOnClick(countdown15); 
                         resetTime(countdown15);  
@@ -282,7 +287,57 @@ class Timer {
                 })
             })
         })
-    }                         
+    } 
+    function countDown25ClickStart(){
+        const ellipsisArray = document.querySelectorAll('.task-options');
+        ellipsisArray.forEach(function(ellipsis){  
+
+            ellipsis.addEventListener('click', function(){
+                const countdown15Button = document.querySelector('.countdown25-task-option');
+                
+                countdown15Button.addEventListener('click', function(event){
+                    
+                    hideStopwatchButtons();
+
+                    let seconds = 0;
+                    let minutes = 25;
+                    let hours = 0;
+
+                    secondsHtml.innerHTML = `0${seconds}`;
+                    minutesHtml.innerHTML = `${minutes}`;
+                    hoursHtml.innerHTML = `0${hours}`;
+
+                    //Find the id of the task clicked on.
+                    let parentDiv = event.target.closest('.task');
+                    let taskToTargetId = parentDiv.children[2].id;
+                    let taskToTargetDescription = parentDiv.children[2].textContent;
+                
+                        //if there are no timers playing then... automatically run CountDown25
+                    if ((!playing) && (seconds == 0) && (minutes == 25) && (hours==0) && (playButton.style.display == '')) {
+                        //show timer when stopwatch clicked.
+                        timerContainer.style.display = 'flex'; 
+                        
+                        let timerContainerTitle = "Countdown 25";
+                        let timerId = "countdown25-timer-title";
+                        createTimerTitle(timerContainerTitle, timerId)
+                        
+                        //Select the area where the title will go
+                        let timerTitle = document.querySelector('.timer-task-description');
+                        //Give it an id to match the task's id.
+                        timerTitle.id = taskToTargetId;
+                        //give it a description to match task description.
+                        timerTitle.textContent = taskToTargetDescription;
+
+                        // starts playing the countdown automatically.
+                        countDown25Play()
+                        pauseOnClick(countdown25); 
+                        resetTime(countdown25);  
+                    }
+                closeTimer();
+                })
+            })
+        })
+    }                                               
     function playOnClick(){
         playButton.addEventListener('click', function(){ 
             let timerTitleDOM = document.querySelector('.timer-title');
@@ -297,7 +352,7 @@ class Timer {
                     pauseOnClick(countdown15);
                     resetTime(countdown15);
                 } else if (timerTitleDOM.textContent == 'Countdown 25'){
-                    countdown25Play();
+                    countdown25SetInterval();
                     pauseOnClick(countdown25);
                     resetTime(countdown25);
                 }    
@@ -317,9 +372,7 @@ class Timer {
     }
     function resetTime(intervalToReset,){
         resetButton.addEventListener('click', function(){
-            console.log('clicked')
             clearInterval(intervalToReset);
-            console.log(intervalToReset);
             pauseButton.style.display = "none";
             playButton.style.display = "inline-block";
             resetTimes();
@@ -488,7 +541,8 @@ class Timer {
         list.taskList[id].totalTimeFocusedOnTaskLongForm = timer.convertSecondsToTime(list.taskList[id].totalTimeFocusedOnTask);
         list.setDataToLocalStorage(); 
     }
-        countDown15ClickStart();    
+        countDown15ClickStart(); 
+        countDown25ClickStart();   
         stopWatchClickStart(); 
         saveTimeButton();
         playOnClick();
@@ -501,11 +555,8 @@ convertSecondsToTime(seconds){
     let secondsConverted = Math.floor(seconds % 3600 % 60);
 
     return `${hoursConverted}hrs ${minutesConverted}mins ${secondsConverted}secs`;
+}   
 }
-    
-    
-}
-
 // A Task Class that has all the properties and methods associated with a task
 
 class Task {

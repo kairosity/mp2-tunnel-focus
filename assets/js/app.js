@@ -150,8 +150,15 @@ class Timer {
                 minutes = minutes - 1;
             } 
             if((seconds<0) && (minutes==0)){
+                if (alarmButton.innerHTML == `<i class="fas fa-bell-slash" aria-hidden="true"></i>`){
+                alarm.muted == true;
+                countdownEnded();
+            } else {
                 alarm.play()
                 countdownEnded();
+            }
+                
+                
             }
             //stops a bug that kept printing seconds as 900
             if (seconds < 61) {
@@ -541,11 +548,26 @@ class Timer {
         list.taskList[id].totalTimeFocusedOnTaskLongForm = timer.convertSecondsToTime(list.taskList[id].totalTimeFocusedOnTask);
         list.setDataToLocalStorage(); 
     }
+    function alarmToggle(){
+        let alarmButton = document.querySelector('.alarm');
+
+        //on click if alarm button has the id #alarm-off then turn it on, else turn it off. and switch icons. 
+
+        alarmButton.addEventListener('click', function(){
+            if (alarmButton.innerHTML == `<i class="fas fa-bell" aria-hidden="true"></i>`){
+                alarmButton.innerHTML = `<i class="fas fa-bell-slash" aria-hidden="true"></i>`;
+            } else {
+                alarmButton.innerHTML = `<i class="fas fa-bell" aria-hidden="true"></i>`;
+            }
+        })
+
+    }
         countDown15ClickStart(); 
         countDown25ClickStart();   
         stopWatchClickStart(); 
         saveTimeButton();
         playOnClick();
+        alarmToggle();
 }
 // Thank you to Wilson Lee on Stack Overflow for this code - attributed in README. 
 convertSecondsToTime(seconds){

@@ -85,6 +85,14 @@
 #stopWatchTimerTitle {
     display: flex;
 }
+
+#alarm-on {
+    display: inline-block;
+}
+
+#alarm-off {
+    display: none;
+}
 /*----------------------------------------------------------- Popover Options Box  */
 
 

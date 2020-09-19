@@ -331,6 +331,9 @@ overwhelming the user with colour and charts.
 - ### **[JavaScript Refactoring](https://www.testim.io/blog/javascript-refactoring-5-plays-to-improve-code-quality/)**
     JavaScript Refactoring: 5 Plays to Improve Code Quality - By Testim
 
+- ### **[Stack Overflow: how to mute audio in JS](https://stackoverflow.com/questions/39041960/how-to-unmute-html5-video-with-a-muted-prop)
+    Various responses to a question on muting and unmuting audio in JavaScript.
+    
 ## 4. General
 
 - ### **[How to Write a Git Commit Message - Chris Beams](https://chris.beams.io/posts/git-commit/)**

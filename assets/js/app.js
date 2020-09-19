@@ -595,7 +595,23 @@ class Timer {
                     let minutesToEdit = timeArray[1];
                     let secondsToEdit = timeArray[2];
 
+                    //Remove icons for when edit time is open so user can't go clicking around places.
+                    
+                    parentDiv.children[1].classList.add('hidden');
+                    parentDiv.children[3].classList.add('hidden');
+                    parentDiv.children[4].classList.add('hidden');
+                    parentDiv.children[5].classList.add('hidden');
+
+                    
+
                     if (!document.querySelector('.edit-time-save-button')){ //stops being able to open two edits at a time. doesn't work currently.
+
+                        //adding overlay to focus user on editing the time and not doing anything else. 
+                        addOverlay();
+                        parentDiv.style.zIndex = 1001;
+                        let elip = parentDiv.querySelector('.task-options');
+                        
+
                         parentDiv.classList.add('edit-time-task');
                         const newHoursLabel = document.createElement('LABEL');
                         newHoursLabel.setAttribute("for", "editHours");
@@ -692,6 +708,13 @@ class Timer {
                             parentDiv.removeChild(newHours);
                             parentDiv.removeChild(newHoursLabel);
 
+                            parentDiv.children[1].classList.remove('hidden');
+                            parentDiv.children[3].classList.remove('hidden');
+                            parentDiv.children[4].classList.remove('hidden');
+                            parentDiv.children[5].classList.remove('hidden');
+
+                            removeOverlay();
+
 
                         })
                     }
@@ -710,6 +733,19 @@ class Timer {
         })
 
         
+    }
+    function addOverlay(){
+        let pageBody = document.getElementsByTagName('BODY')[0]
+        let overlayEl = document.createElement("DIV");
+        overlayEl.setAttribute("class", "overlay");
+        let overlay = document.querySelector('.overlay');
+
+        pageBody.appendChild(overlayEl);
+    }
+    function removeOverlay(){
+        let overlay = document.querySelector('.overlay');
+        let pageBody = document.getElementsByTagName('BODY')[0];
+        pageBody.removeChild(overlay);
     }
         countDown15ClickStart(); 
         countDown25ClickStart();   

@@ -577,15 +577,12 @@ class Timer {
                 //2. select associated task
                     //Find the id of the task clicked on.
                     let parentDiv = event.target.closest('.task');
-                    parentDiv.classList.add('edit-time-task');
+                    
                     let taskToTargetId = parentDiv.children[2].id;
                     let pElementToTarget = parentDiv.firstElementChild;
                     let timeToEdit = pElementToTarget.textContent.split(" ");
                     let timeArray = []
 
-                    
-
-                    
                     //transform each of the string time numbers into numbers.
                     timeToEdit.forEach(function(item){
                         if (item.length>4){
@@ -594,13 +591,12 @@ class Timer {
                             timeArray.push(parseInt(item.slice(0,1)));
                         }
                     });
-                    console.log(timeArray);
                     let hoursToEdit = timeArray[0];
                     let minutesToEdit = timeArray[1];
                     let secondsToEdit = timeArray[2];
 
-                    if (!document.querySelector('.edit-time-save-button')){ //stops being able to open two edits at a time.
-                        
+                    if (!document.querySelector('.edit-time-save-button')){ //stops being able to open two edits at a time. doesn't work currently.
+                        parentDiv.classList.add('edit-time-task');
                         const newHoursLabel = document.createElement('LABEL');
                         newHoursLabel.setAttribute("for", "editHours");
                         newHoursLabel.textContent = "Hours:";
@@ -620,7 +616,7 @@ class Timer {
                         newMinutes.setAttribute("type", "number")
                         newMinutes.setAttribute("value", `${minutesToEdit}`);
                         newMinutes.setAttribute("id", "editMinutes")
-                        newMinutes.setAttribute("id", "editTime")
+                        newMinutes.setAttribute("class", "editTime")
                         pElementToTarget.parentNode.insertBefore(newMinutes, pElementToTarget);
 
                         const newSecondsLabel = document.createElement('LABEL');
@@ -631,20 +627,75 @@ class Timer {
                         newSeconds.setAttribute("type", "number")
                         newSeconds.setAttribute("value", `${secondsToEdit}`);
                         newSeconds.setAttribute("id", "editSeconds")
-                        newSeconds.setAttribute("id", "editTime")
+                        newSeconds.setAttribute("class", "editTime")
                         pElementToTarget.parentNode.insertBefore(newSeconds, pElementToTarget);
 
                         //remove the time in longform.
                         parentDiv.removeChild(pElementToTarget);
 
                         const saveButton = document.createElement('BUTTON');
-                        saveButton.setAttribute("class", "save-button");
+                        saveButton.setAttribute("class", "edit-time-save-button");
                         saveButton.setAttribute("type", "submit");
                         saveButton.textContent = "Save New Total Time";
                         newSeconds.after(saveButton);
+
+                        let saveBtn = document.querySelector('.edit-time-save-button');
+                        saveBtn.addEventListener('click', function(){
+
+                            //take the value in each of the time segments. 
+                            let hoursToSave = document.getElementById('editHours');
+                            let minutesToSave = document.getElementById('editMinutes');
+                            let secondsToSave = document.getElementById('editSeconds');
+
+                            let hoursToAdd = hoursToSave.value;
+                            let minutesToAdd = minutesToSave.value;
+                            let secondsToAdd = secondsToSave.value;
+         
+                            //translate that time to seconds
+                            let minutesInSeconds = minutesToAdd * 60;
+                            let hoursInSeconds = hoursToAdd * 3600;
+                            let timeToAdd = parseInt(secondsToAdd) + minutesInSeconds + hoursInSeconds;
+
+                            //translate those seconds to long form
+
+                            let longFormTimeToAdd = timer.convertSecondsToTime(timeToAdd);
+
+                            //find id number of the task in ques.
+                            console.log(timeToAdd);
+                            console.log(longFormTimeToAdd);
+
+                            //id matching loop - updates the totalTimeFocusedOnTask.
+                            for (let i=0; i<list.taskList.length; i++){
+                                if (list.taskList[i].id == taskToTargetId){
+                                    list.taskList[i].totalTimeFocusedOnTask = timeToAdd;
+                                    list.taskList[i].totalTimeFocusedOnTaskLongForm = longFormTimeToAdd; 
+                                }
+                            }
+
+                            //bring back the updated longform time <p>
+
+                            let insertBeforeNode = document.getElementById('editHours');
+
+                            let updatedTime = document.createElement('P');
+                            updatedTime.setAttribute('class', 'total-task-time');
+                            updatedTime.textContent = `${longFormTimeToAdd}`;
+                            let newTime = parentDiv.insertBefore(updatedTime, insertBeforeNode);
+
+                            //remove the save button
+                            parentDiv.removeChild(saveBtn);
+                            parentDiv.classList.remove('edit-time-task');
+                            //remove / destroy all the new elements 
+                            parentDiv.removeChild(newSeconds);
+                            parentDiv.removeChild(newSecondsLabel);
+                            parentDiv.removeChild(newMinutes);
+                            parentDiv.removeChild(newMinutesLabel);
+                            parentDiv.removeChild(newHours);
+                            parentDiv.removeChild(newHoursLabel);
+
+
+                        })
                     }
 
-                //3. Create an input element. - maybe a dropdown menu of numbers for seconds/minutes & hours?  
 
                 //4 Connect the results of that input with:
 
@@ -652,7 +703,6 @@ class Timer {
                     //4.2 task.totalTimeFocusedOnTaskLongForm
                     //4.3 Dom representation of 4.2 
                 
-                //5. Need a save button for confirming the changes. 
 
                 //6. Needs to create new element to display changes again.
                 })

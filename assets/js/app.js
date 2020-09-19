@@ -38,6 +38,7 @@ class Timer {
         
         const alarm = document.createElement('AUDIO');
         alarm.setAttribute('src', 'assets/audio/alarm1.mp3');
+        let alarmButton = document.querySelector('.alarm');
 
         let secondsHtml = document.getElementById('seconds');
         let minutesHtml = document.getElementById('minutes');
@@ -565,20 +566,100 @@ class Timer {
 
     function manualTaskTimeEdit(){
         //1 Event Listener for clicks on edit time button in popover.
+        const ellipsisArray = document.querySelectorAll('.task-options');
+        ellipsisArray.forEach(function(ellipsis){  
 
-        //2. select associated task
+            ellipsis.addEventListener('click', function(){
+                const manuallyEditTimeButton = document.querySelector('.edit-task-time-task-option');
+                
+                manuallyEditTimeButton.addEventListener('click', function(event){
+                    
+                //2. select associated task
+                    //Find the id of the task clicked on.
+                    let parentDiv = event.target.closest('.task');
+                    parentDiv.classList.add('edit-time-task');
+                    let taskToTargetId = parentDiv.children[2].id;
+                    let pElementToTarget = parentDiv.firstElementChild;
+                    let timeToEdit = pElementToTarget.textContent.split(" ");
+                    let timeArray = []
 
-        //3. Create an input element. - maybe a dropdown menu of numbers for seconds/minutes & hours?  
+                    
 
-        //4 Connect the results of that input with:
+                    
+                    //transform each of the string time numbers into numbers.
+                    timeToEdit.forEach(function(item){
+                        if (item.length>4){
+                            timeArray.push(parseInt(item.slice(0,2)));
+                        } else {
+                            timeArray.push(parseInt(item.slice(0,1)));
+                        }
+                    });
+                    console.log(timeArray);
+                    let hoursToEdit = timeArray[0];
+                    let minutesToEdit = timeArray[1];
+                    let secondsToEdit = timeArray[2];
 
-            //4.1 task.totalTimeFocusedOnTask
-            //4.2 task.totalTimeFocusedOnTaskLongForm
-            //4.3 Dom representation of 4.2 
+                    if (!document.querySelector('.edit-time-save-button')){ //stops being able to open two edits at a time.
+                        
+                        const newHoursLabel = document.createElement('LABEL');
+                        newHoursLabel.setAttribute("for", "editHours");
+                        newHoursLabel.textContent = "Hours:";
+                        pElementToTarget.parentNode.insertBefore(newHoursLabel, pElementToTarget);
+                        const newHours = document.createElement("INPUT");
+                        newHours.setAttribute("type", "number")
+                        newHours.setAttribute("value", `${hoursToEdit}`);
+                        newHours.setAttribute("id", "editHours")
+                        newHours.setAttribute("class", "editTime")
+                        pElementToTarget.parentNode.insertBefore(newHours, pElementToTarget);
+
+                        const newMinutesLabel = document.createElement('LABEL');
+                        newMinutesLabel.setAttribute("for", "editMinutes");
+                        newMinutesLabel.textContent = "Minutes:";
+                        pElementToTarget.parentNode.insertBefore(newMinutesLabel, pElementToTarget);
+                        const newMinutes = document.createElement("INPUT");
+                        newMinutes.setAttribute("type", "number")
+                        newMinutes.setAttribute("value", `${minutesToEdit}`);
+                        newMinutes.setAttribute("id", "editMinutes")
+                        newMinutes.setAttribute("id", "editTime")
+                        pElementToTarget.parentNode.insertBefore(newMinutes, pElementToTarget);
+
+                        const newSecondsLabel = document.createElement('LABEL');
+                        newSecondsLabel.setAttribute("for", "editSeconds");
+                        newSecondsLabel.textContent = "Seconds:";
+                        pElementToTarget.parentNode.insertBefore(newSecondsLabel, pElementToTarget);
+                        const newSeconds = document.createElement("INPUT");
+                        newSeconds.setAttribute("type", "number")
+                        newSeconds.setAttribute("value", `${secondsToEdit}`);
+                        newSeconds.setAttribute("id", "editSeconds")
+                        newSeconds.setAttribute("id", "editTime")
+                        pElementToTarget.parentNode.insertBefore(newSeconds, pElementToTarget);
+
+                        //remove the time in longform.
+                        parentDiv.removeChild(pElementToTarget);
+
+                        const saveButton = document.createElement('BUTTON');
+                        saveButton.setAttribute("class", "save-button");
+                        saveButton.setAttribute("type", "submit");
+                        saveButton.textContent = "Save New Total Time";
+                        newSeconds.after(saveButton);
+                    }
+
+                //3. Create an input element. - maybe a dropdown menu of numbers for seconds/minutes & hours?  
+
+                //4 Connect the results of that input with:
+
+                    //4.1 task.totalTimeFocusedOnTask
+                    //4.2 task.totalTimeFocusedOnTaskLongForm
+                    //4.3 Dom representation of 4.2 
+                
+                //5. Need a save button for confirming the changes. 
+
+                //6. Needs to create new element to display changes again.
+                })
+            })
+        })
+
         
-        //5. Need a save button for confirming the changes. 
-
-        //6. Needs to create new element to display changes again.
     }
         countDown15ClickStart(); 
         countDown25ClickStart();   
@@ -586,6 +667,7 @@ class Timer {
         saveTimeButton();
         playOnClick();
         alarmToggle();
+        manualTaskTimeEdit();
 }
 // Thank you to Wilson Lee on Stack Overflow for this code - attributed in README. 
 convertSecondsToTime(seconds){

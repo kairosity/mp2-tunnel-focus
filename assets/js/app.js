@@ -50,7 +50,6 @@ class Timer {
     // --------------------------------------HELPER FUNCTIONS-------------------------------//
 
     function removeTimerFromDom(){
-        //Removes the timer 
         let timerTitleInDOM = document.querySelector('.timer-title');
         timerContainer.removeChild(timerTitleInDOM);
         timerContainer.style.display = "none";
@@ -63,9 +62,7 @@ class Timer {
         minutesHtml.innerHTML = `0${minutes}`
         hoursHtml.innerHTML = `0${hours}`
         playing = false;
-        console.log(`${seconds}s ${minutes}m ${hours}h ${playing}`);
     }
-
     function hideStopwatchButtons(){
         startStopwatchButtonArray.forEach(function(stopwatchButton){
             stopwatchButton.style.visibility = "hidden";
@@ -447,19 +444,7 @@ class Timer {
                     stopwatchButton.style.visibility = "visible";
                 })
 
-                //hide timer completely.
-                let timerTitleInDOM = document.querySelector('.timer-title');
-                timerContainer.removeChild(timerTitleInDOM);
-                timerContainer.style.display = "none";
-                playButton.style.display = "";
-                pauseButton.style.display = "inline-block";
-                seconds = 0;
-                minutes = 0;
-                hours = 0;
-                secondsHtml.innerHTML = `0${seconds}`
-                minutesHtml.innerHTML = `0${minutes}`
-                hoursHtml.innerHTML = `0${hours}`
-                playing = false;
+                removeTimerFromDom();
             } 
             return playing = false; 
         })
@@ -617,9 +602,7 @@ class List {
             
         })
     }
-
     editTask(){
-
         const ellipsisArray = document.querySelectorAll('.task-options');
 
         ellipsisArray.forEach(function(ellipsis){    
@@ -658,7 +641,6 @@ class List {
                     newLi.textContent = inputBox.value; //set the value of the li to the edited task value.
                     inputBox.parentNode.replaceChild(newLi, inputBox); //confusing AF but basically replace the input box with the Li in the most awkward way possible. 
                     
-                    //remove the save button
                     saveButton.remove();
 
                     list.taskList.forEach(task => {
@@ -675,7 +657,6 @@ class List {
     })
 })
 }
-
     toggleTaskComplete(){
         //listen for checkbox clicks on specific task.
         const arrayOfCheckboxes = document.querySelectorAll('.taskCheckbox');

@@ -562,6 +562,24 @@ class Timer {
         })
 
     }
+
+    function manualTaskTimeEdit(){
+        //1 Event Listener for clicks on edit time button in popover.
+
+        //2. select associated task
+
+        //3. Create an input element. - maybe a dropdown menu of numbers for seconds/minutes & hours?  
+
+        //4 Connect the results of that input with:
+
+            //4.1 task.totalTimeFocusedOnTask
+            //4.2 task.totalTimeFocusedOnTaskLongForm
+            //4.3 Dom representation of 4.2 
+        
+        //5. Need a save button for confirming the changes. 
+
+        //6. Needs to create new element to display changes again.
+    }
         countDown15ClickStart(); 
         countDown25ClickStart();   
         stopWatchClickStart(); 

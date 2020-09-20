@@ -157,9 +157,7 @@ class Timer {
             } else {
                 alarm.play()
                 countdownEnded();
-            }
-                
-                
+            }      
             }
             //stops a bug that kept printing seconds as 900
             if (seconds < 61) {
@@ -221,6 +219,41 @@ class Timer {
                         //bring the timer container above the overlay
                          timerContainer.style.zIndex = 1001;
 
+                        //change tabindex from 0 to -1 on all tabbable elements outside of the timer container. 
+                        const addNewTaskButton = document.querySelector('#add-new-task');
+                        const newTaskInput = document.querySelector('#new-task-input');
+                        const arrayOfCheckboxes = document.querySelectorAll('.taskCheckbox');
+                        const arrayOfStopwatchIcons = document.querySelectorAll('.task-stopwatch');
+                        const arrayOfSortIcons = document.querySelectorAll('.task-sort');
+                        const arrayOfOptionIcons = document.querySelectorAll('.task-options');
+
+                        //add new task input
+                        newTaskInput.setAttribute("tabindex", "-1");
+
+                        //the add task button
+                        addNewTaskButton.setAttribute("tabindex", "-1");
+
+                        //all the checkboxes
+                        arrayOfCheckboxes.forEach(function(checkbox){
+                            checkbox.setAttribute("tabindex", "-1")
+                        });  
+
+                         // all the stopwatches
+                         arrayOfStopwatchIcons.forEach(function(stopwatch){
+                            stopwatch.setAttribute("tabindex", "-1")
+                        });   
+
+                         // all the sort icons
+                         arrayOfSortIcons.forEach(function(sorticon){
+                            sorticon.setAttribute("tabindex", "-1")
+                        });
+
+                         // all the ellipses. 
+                        arrayOfOptionIcons.forEach(function(optionicon){
+                            optionicon.setAttribute("tabindex", "-1")
+                        });
+
+
                         //Find the id of the task clicked on.
                         let id = event.target.parentElement.previousElementSibling.id;
 
@@ -268,7 +301,39 @@ class Timer {
                     //bring the timer container above the overlay
                     timerContainer.style.zIndex = 1001;
 
-                    // hideStopwatchButtons();
+                    //change tabindex from 0 to -1 on all tabbable elements outside of the timer container. 
+                        const addNewTaskButton = document.querySelector('#add-new-task');
+                        const newTaskInput = document.querySelector('#new-task-input');
+                        const arrayOfCheckboxes = document.querySelectorAll('.taskCheckbox');
+                        const arrayOfStopwatchIcons = document.querySelectorAll('.task-stopwatch');
+                        const arrayOfSortIcons = document.querySelectorAll('.task-sort');
+                        const arrayOfOptionIcons = document.querySelectorAll('.task-options');
+
+                        //add new task input
+                        newTaskInput.setAttribute("tabindex", "-1");
+
+                        //the add task button
+                        addNewTaskButton.setAttribute("tabindex", "-1");
+
+                        //all the checkboxes
+                        arrayOfCheckboxes.forEach(function(checkbox){
+                            checkbox.setAttribute("tabindex", "-1")
+                        });  
+
+                         // all the stopwatches
+                         arrayOfStopwatchIcons.forEach(function(stopwatch){
+                            stopwatch.setAttribute("tabindex", "-1")
+                        });   
+
+                         // all the sort icons
+                         arrayOfSortIcons.forEach(function(sorticon){
+                            sorticon.setAttribute("tabindex", "-1")
+                        });
+
+                         // all the ellipses. 
+                        arrayOfOptionIcons.forEach(function(optionicon){
+                            optionicon.setAttribute("tabindex", "-1")
+                        });
 
                     let seconds = 0;
                     let minutes = 15;
@@ -471,6 +536,13 @@ class Timer {
     }
      function closeTimer(){
             let xButton = document.querySelector('.close-timer-x');
+
+            xButton.addEventListener('keyup', function(event){
+                if(event.keyCode === 13){
+                    event.preventDefault();
+                    xButton.click();
+                }
+            })
             
             xButton.addEventListener('click', function(){
 
@@ -524,11 +596,6 @@ class Timer {
                         // timeDisplay.textContent = list.taskList[timerTitle.id].totalTimeFocusedOnTask;
                     }       
                 }
-
-                // //show all the stopwatch buttons
-                // startStopwatchButtonArray.forEach(function(stopwatchButton){
-                //     stopwatchButton.style.visibility = "visible";
-                // })
 
                 removeTimerFromDom();
                 removeOverlay();
@@ -626,6 +693,7 @@ class Timer {
                     let secondsToEdit = timeArray[2];
 
                     //Hide icons for when edit time is open so user can't go clicking around places.
+                   
                     parentDiv.children[1].classList.add('hidden');
                     parentDiv.children[3].classList.add('hidden');
                     parentDiv.children[4].classList.add('hidden');
@@ -640,6 +708,40 @@ class Timer {
 
                         //bring the task above the overlay so the user can access the edit boxes.
                         parentDiv.style.zIndex = 1001;
+
+                        //change tabindex from 0 to -1 on all tabbable elements outside of the timer container. 
+                        const addNewTaskButton = document.querySelector('#add-new-task');
+                        const newTaskInput = document.querySelector('#new-task-input');
+                        const arrayOfCheckboxes = document.querySelectorAll('.taskCheckbox');
+                        const arrayOfStopwatchIcons = document.querySelectorAll('.task-stopwatch');
+                        const arrayOfSortIcons = document.querySelectorAll('.task-sort');
+                        const arrayOfOptionIcons = document.querySelectorAll('.task-options');
+
+                        //add new task input
+                        newTaskInput.setAttribute("tabindex", "-1");
+
+                        //the add task button
+                        addNewTaskButton.setAttribute("tabindex", "-1");
+
+                        //all the checkboxes
+                        arrayOfCheckboxes.forEach(function(checkbox){
+                            checkbox.setAttribute("tabindex", "-1")
+                        });  
+
+                         // all the stopwatches
+                         arrayOfStopwatchIcons.forEach(function(stopwatch){
+                            stopwatch.setAttribute("tabindex", "-1")
+                        });   
+
+                         // all the sort icons
+                         arrayOfSortIcons.forEach(function(sorticon){
+                            sorticon.setAttribute("tabindex", "-1")
+                        });
+
+                         // all the ellipses. 
+                        arrayOfOptionIcons.forEach(function(optionicon){
+                            optionicon.setAttribute("tabindex", "-1")
+                        });
                         
                         //add the class for this layout
                         parentDiv.classList.add('edit-time-task');
@@ -743,35 +845,42 @@ class Timer {
                                     list.taskList[i].totalTimeFocusedOnTaskLongForm = longFormTimeToAdd; 
                                 }
                             }
-
-                            //bring back the updated longform time <p>
-
-                            let insertBeforeNode = document.getElementById('editHours');
-
-                            let updatedTime = document.createElement('P');
-                            updatedTime.setAttribute('class', 'total-task-time');
-                            updatedTime.textContent = `${longFormTimeToAdd}`;
-                            let newTime = parentDiv.insertBefore(updatedTime, insertBeforeNode);
-
                             //remove the save button
                             parentDiv.removeChild(saveBtn);
                             parentDiv.classList.remove('edit-time-task');
+
+                            //remove the cancel button
+                            parentDiv.removeChild(cancelButton);
+
                             //remove / destroy all the new elements 
                             parentDiv.removeChild(newSeconds);
                             parentDiv.removeChild(newSecondsLabel);
                             parentDiv.removeChild(newMinutes);
                             parentDiv.removeChild(newMinutesLabel);
                             parentDiv.removeChild(newHours);
-                            parentDiv.removeChild(newHoursLabel);
+                            parentDiv.removeChild(newHoursLabel);     
 
+                            //bring back all the required elements in correct order
+                            
+                            //bring back the updated longform time <p>  
+                            let insertBeforeNode = parentDiv.children[0];
+
+                            let updatedTime = document.createElement('P');
+                            updatedTime.setAttribute('class', 'total-task-time');
+                            updatedTime.textContent = `${longFormTimeToAdd}`;
+                            let newTime = parentDiv.insertBefore(updatedTime, insertBeforeNode);
+
+                            //bring back checkbox
                             parentDiv.children[1].classList.remove('hidden');
+                            console.log(parentDiv.children[1]);
+                            //remove special class from description
+                            parentDiv.children[2].classList.remove('edit-time-task-description');
+                            //bring back the icons
                             parentDiv.children[3].classList.remove('hidden');
                             parentDiv.children[4].classList.remove('hidden');
                             parentDiv.children[5].classList.remove('hidden');
 
                             removeOverlay();
-
-
                         })
                     }
                 })
@@ -839,7 +948,7 @@ class List {
                     <p class="total-task-time">${taskList[i].totalTimeFocusedOnTaskLongForm}</p>
                     <input class="taskCheckbox" type="checkbox" checked>
                     <li class="task-description completed" id="${taskList[i].id}">${taskList[i].taskDescription}</li>
-                    <a><i class="fas fa-stopwatch start-stopwatch"></i></i></a>
+                    <a class="task-stopwatch" tabindex=0><i class="fas fa-stopwatch start-stopwatch"></i></i></a>
                     <a class="task-sort" tabindex=0><i class="fas fa-sort sort-tasks-icon"></i></a>
                     <a class="task-options" aria-label="task-options-ellipsis" tabindex=0><i class="fas fa-ellipsis-v task-options-icon"></i></a>
                 </div>`;
@@ -850,7 +959,7 @@ class List {
                     <p class="total-task-time">${taskList[i].totalTimeFocusedOnTaskLongForm}</p>
                     <input class="taskCheckbox" type="checkbox">
                     <li class="task-description" id="${taskList[i].id}">${taskList[i].taskDescription}</li>
-                    <a><i class="fas fa-stopwatch start-stopwatch"></i></i></a>
+                    <a class="task-stopwatch" tabindex=0><i class="fas fa-stopwatch start-stopwatch" ></i></i></a>
                     <a class="task-sort" tabindex=0><i class="fas fa-sort sort-tasks-icon"></i></a>
                     <a class="task-options" tabindex=0><i class="fas fa-ellipsis-v task-options-icon"></i></a>
                 </div>`;
@@ -891,7 +1000,7 @@ class List {
                     <p class="total-task-time">${newTask.totalTimeFocusedOnTaskLongForm}</p>
                     <input class="taskCheckbox" type="checkbox">
                     <li class="task-description" id="${newTask.id}">${newTask.taskDescription}</li>
-                    <a><i class="fas fa-stopwatch start-stopwatch"></i></i></a>
+                    <a class="task-stopwatch" tabindex=0><i class="fas fa-stopwatch start-stopwatch" ></i></i></a>
                     <a class="task-sort" tabindex=0><i class="fas fa-sort sort-tasks-icon"></i></a>
                     <a class="task-options" tabindex=0><i class="fas fa-ellipsis-v task-options-icon"></i></a>
                 </div>`;

@@ -215,6 +215,12 @@ class Timer {
                         // starts playing the stopwatch automatically.
                         stopWatchPlay();
 
+                        //Add the overlay
+                        addOverlay();
+
+                        //bring the timer container above the overlay
+                         timerContainer.style.zIndex = 1001;
+
                         //Find the id of the task clicked on.
                         let id = event.target.parentElement.previousElementSibling.id;
 
@@ -232,7 +238,7 @@ class Timer {
                         let timerId = "stopwatch-timer-title";
                         createTimerTitle(timerContainerTitle, timerId);
 
-                        hideStopwatchButtons();
+                        // hideStopwatchButtons();
 
                     } else {
                         startStopwatchButtonArray.forEach(function(stopwatchButton){
@@ -256,7 +262,13 @@ class Timer {
                 const countdown15Button = document.querySelector('.countdown15-task-option');
                 countdown15Button.addEventListener('click', function(event){
 
-                    hideStopwatchButtons();
+                    //Add the overlay
+                    addOverlay();
+
+                    //bring the timer container above the overlay
+                    timerContainer.style.zIndex = 1001;
+
+                    // hideStopwatchButtons();
 
                     let seconds = 0;
                     let minutes = 15;
@@ -305,7 +317,14 @@ class Timer {
                 
                 countdown15Button.addEventListener('click', function(event){
                     
-                    hideStopwatchButtons();
+                    // hideStopwatchButtons();
+
+                    //Add the overlay
+                    addOverlay();
+
+                    //bring the timer container above the overlay
+                    timerContainer.style.zIndex = 1001;
+                    
 
                     let seconds = 0;
                     let minutes = 25;
@@ -413,6 +432,11 @@ class Timer {
     }      
     function countdownEnded(){ 
         playing = false;  
+        
+        
+        //need something here to stop the timer immediately.
+
+
         //!FIX: change this to a well styled modal.
         if(confirm("Do you want to save this time to this task?")){
 
@@ -464,8 +488,9 @@ class Timer {
                 if (playing){
                     clearInterval(intervalToPause);
                 }     
-                removeTimerFromDom()
-                showStopwatchButtons()          
+                removeTimerFromDom();
+                removeOverlay();
+                // showStopwatchButtons();          
         })       
     }
     function saveTimeButton(){
@@ -500,12 +525,13 @@ class Timer {
                     }       
                 }
 
-                //show all the stopwatch buttons
-                startStopwatchButtonArray.forEach(function(stopwatchButton){
-                    stopwatchButton.style.visibility = "visible";
-                })
+                // //show all the stopwatch buttons
+                // startStopwatchButtonArray.forEach(function(stopwatchButton){
+                //     stopwatchButton.style.visibility = "visible";
+                // })
 
                 removeTimerFromDom();
+                removeOverlay();
             } 
             return playing = false; 
         })
@@ -565,7 +591,7 @@ class Timer {
     }
 
     function manualTaskTimeEdit(){
-        //1 Event Listener for clicks on edit time button in popover.
+        // Event Listener for clicks on edit time button in popover.
         const ellipsisArray = document.querySelectorAll('.task-options');
         ellipsisArray.forEach(function(ellipsis){  
 
@@ -574,16 +600,20 @@ class Timer {
                 
                 manuallyEditTimeButton.addEventListener('click', function(event){
                     
-                //2. select associated task
-                    //Find the id of the task clicked on.
+                    //Find the task clicked on and save in parentDiv.
                     let parentDiv = event.target.closest('.task');
-                    
+
+                    //get the id of that task
                     let taskToTargetId = parentDiv.children[2].id;
+
+                    //get the <p> where the time is described long form.
                     let pElementToTarget = parentDiv.firstElementChild;
+
+                    //take that <p> string</p> and divide it on the spaces to isolate the numbers.
                     let timeToEdit = pElementToTarget.textContent.split(" ");
                     let timeArray = []
 
-                    //transform each of the string time numbers into numbers.
+                    //transform each of the string time numbers into numbers and push them to timeArray
                     timeToEdit.forEach(function(item){
                         if (item.length>4){
                             timeArray.push(parseInt(item.slice(0,2)));
@@ -595,66 +625,92 @@ class Timer {
                     let minutesToEdit = timeArray[1];
                     let secondsToEdit = timeArray[2];
 
-                    //Remove icons for when edit time is open so user can't go clicking around places.
-                    
+                    //Hide icons for when edit time is open so user can't go clicking around places.
                     parentDiv.children[1].classList.add('hidden');
                     parentDiv.children[3].classList.add('hidden');
                     parentDiv.children[4].classList.add('hidden');
                     parentDiv.children[5].classList.add('hidden');
 
                     
-
-                    if (!document.querySelector('.edit-time-save-button')){ //stops being able to open two edits at a time. doesn't work currently.
+                    //if there's no save time button already there then ....
+                    if (!document.querySelector('.edit-time-save-button')){ 
 
                         //adding overlay to focus user on editing the time and not doing anything else. 
                         addOverlay();
-                        parentDiv.style.zIndex = 1001;
-                        let elip = parentDiv.querySelector('.task-options');
-                        
 
+                        //bring the task above the overlay so the user can access the edit boxes.
+                        parentDiv.style.zIndex = 1001;
+                        
+                        //add the class for this layout
                         parentDiv.classList.add('edit-time-task');
+
+                        //select the task description
+                        let taskToTarget = parentDiv.children[2];
+                        taskToTarget.classList.add('edit-time-task-description');
+                        taskToTarget.classList.remove('task');
+
+                        //Create the hours input and label REFACTOR
                         const newHoursLabel = document.createElement('LABEL');
                         newHoursLabel.setAttribute("for", "editHours");
                         newHoursLabel.textContent = "Hours:";
+                        newHoursLabel.setAttribute("class", "editTime edit-time-hours-label")
                         pElementToTarget.parentNode.insertBefore(newHoursLabel, pElementToTarget);
                         const newHours = document.createElement("INPUT");
                         newHours.setAttribute("type", "number")
                         newHours.setAttribute("value", `${hoursToEdit}`);
                         newHours.setAttribute("id", "editHours")
-                        newHours.setAttribute("class", "editTime")
+                        newHours.setAttribute("class", "editTime edit-time-hours")
                         pElementToTarget.parentNode.insertBefore(newHours, pElementToTarget);
 
+                        //create the minutes input and label REFACTOR
                         const newMinutesLabel = document.createElement('LABEL');
                         newMinutesLabel.setAttribute("for", "editMinutes");
                         newMinutesLabel.textContent = "Minutes:";
+                        newMinutesLabel.setAttribute("class", "editTime edit-time-minutes-label")
                         pElementToTarget.parentNode.insertBefore(newMinutesLabel, pElementToTarget);
                         const newMinutes = document.createElement("INPUT");
                         newMinutes.setAttribute("type", "number")
                         newMinutes.setAttribute("value", `${minutesToEdit}`);
                         newMinutes.setAttribute("id", "editMinutes")
-                        newMinutes.setAttribute("class", "editTime")
+                        newMinutes.setAttribute("class", "editTime edit-time-minutes")
                         pElementToTarget.parentNode.insertBefore(newMinutes, pElementToTarget);
 
+                        //create the seconds input and label REFACTOR
                         const newSecondsLabel = document.createElement('LABEL');
                         newSecondsLabel.setAttribute("for", "editSeconds");
                         newSecondsLabel.textContent = "Seconds:";
+                        newSecondsLabel.setAttribute("class", "editTime edit-time-seconds-label")
                         pElementToTarget.parentNode.insertBefore(newSecondsLabel, pElementToTarget);
                         const newSeconds = document.createElement("INPUT");
                         newSeconds.setAttribute("type", "number")
                         newSeconds.setAttribute("value", `${secondsToEdit}`);
                         newSeconds.setAttribute("id", "editSeconds")
-                        newSeconds.setAttribute("class", "editTime")
+                        newSeconds.setAttribute("class", "editTime edit-time-seconds")
                         pElementToTarget.parentNode.insertBefore(newSeconds, pElementToTarget);
 
-                        //remove the time in longform.
+                        //remove the <p></p> time in longform.
                         parentDiv.removeChild(pElementToTarget);
 
+                        //create the save button. REFACTOR
                         const saveButton = document.createElement('BUTTON');
                         saveButton.setAttribute("class", "edit-time-save-button");
                         saveButton.setAttribute("type", "submit");
                         saveButton.textContent = "Save New Total Time";
+
+                        //add the save button after the seconds input.
                         newSeconds.after(saveButton);
 
+                        //create the cancel button. REFACTOR
+                        const cancelButton = document.createElement('BUTTON');
+                        cancelButton.setAttribute("class", "edit-time-cancel-button");
+                        cancelButton.setAttribute("type", "submit");
+                        cancelButton.textContent = "Cancel Changes & Exit";
+
+                        //add the cancel button after the save button.
+                        saveButton.after(cancelButton);
+                        
+
+                        //click event listener on the save button.
                         let saveBtn = document.querySelector('.edit-time-save-button');
                         saveBtn.addEventListener('click', function(){
 
@@ -718,21 +774,9 @@ class Timer {
 
                         })
                     }
-
-
-                //4 Connect the results of that input with:
-
-                    //4.1 task.totalTimeFocusedOnTask
-                    //4.2 task.totalTimeFocusedOnTaskLongForm
-                    //4.3 Dom representation of 4.2 
-                
-
-                //6. Needs to create new element to display changes again.
                 })
             })
-        })
-
-        
+        })     
     }
     function addOverlay(){
         let pageBody = document.getElementsByTagName('BODY')[0]
@@ -822,13 +866,21 @@ class List {
     */
     addNewTask(){
         const addNewTaskButton = document.querySelector('#add-new-task');
+        const newTaskInput = document.querySelector('#new-task-input');
+
+        newTaskInput.addEventListener('keyup', function(event){
+            if(event.keyCode === 13){
+                event.preventDefault();
+                addNewTaskButton.click();
+            }
+        })
 
         addNewTaskButton.addEventListener('click', function(){ //event listener working. 
         
-            const newTaskInput = document.querySelector('#new-task-input').value;
-            
-            if((newTaskInput !== null) && (newTaskInput !== "")){
-                let newTask = new Task(newTaskInput); //creates a new Task obj. & sets its props.
+            let newTaskInputValue = newTaskInput.value;
+
+            if((newTaskInputValue !== null) && (newTaskInputValue !== "")){
+                let newTask = new Task(newTaskInputValue); //creates a new Task obj. & sets its props.
                 newTask.id = list.taskList.length; //it will always be 1to1.
                 newTask.totalTimeFocusedOnTask = 0;
                 list.taskList.push(newTask); //adds the new task into the taskList array.
@@ -855,7 +907,7 @@ class List {
                 list.dynamicPopoverNav();
                 timer.timers();
 
-            } else if ((newTaskInput === "") || (newTaskInput === null)){ //this doesn't fire with spaces - look into that. 
+            } else if ((newTaskInputValue === "") || (newTaskInputValue === null)){ //this doesn't fire with spaces - look into that. 
                 alert("Please add a task."); 
             }
             

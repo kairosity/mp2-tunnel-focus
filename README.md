@@ -333,6 +333,9 @@ overwhelming the user with colour and charts.
 
 - ### **[Stack Overflow: how to mute audio in JS](https://stackoverflow.com/questions/39041960/how-to-unmute-html5-video-with-a-muted-prop)
     Various responses to a question on muting and unmuting audio in JavaScript.
+
+- ### **[How to Trigger a Button Click on Enter](https://www.w3schools.com/howto/howto_js_trigger_button_enter.asp)**
+    w3schools information on triggering on keyup. Used for increasing keyboard accessibility.
     
 ## 4. General
 

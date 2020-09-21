@@ -22,7 +22,6 @@ class Timer {
         let seconds = 0;
         let minutes = 0;
         let hours = 0;
-        // let timerToPlay;
 
         var stopwatch;
         var countdown15;
@@ -35,6 +34,13 @@ class Timer {
         let saveButton = document.getElementById('save-time-to-task');
         let timerContainer = document.querySelector('.timer-container');
         let timerTitle = document.querySelector('.timer-task-description');
+
+        const addNewTaskButton = document.querySelector('#add-new-task');
+        const newTaskInput = document.querySelector('#new-task-input');
+        const arrayOfCheckboxes = document.querySelectorAll('.taskCheckbox');
+        const arrayOfStopwatchIcons = document.querySelectorAll('.task-stopwatch');
+        const arrayOfSortIcons = document.querySelectorAll('.task-sort');
+        const arrayOfOptionIcons = document.querySelectorAll('.task-options');
         
         const alarm = document.createElement('AUDIO');
         alarm.setAttribute('src', 'assets/audio/alarm1.mp3');
@@ -44,7 +50,7 @@ class Timer {
         let minutesHtml = document.getElementById('minutes');
         let hoursHtml = document.getElementById('hours');
 
-    // --------------------------------------HELPER FUNCTIONS-------------------------------//
+// --------------------------------------HELPER FUNCTIONS-------------------------------//
 
     function removeTimerFromDom(){
         let timerTitleInDOM = document.querySelector('.timer-title');
@@ -60,16 +66,63 @@ class Timer {
         hoursHtml.innerHTML = `0${hours}`
         playing = false;
     }
-    function hideStopwatchButtons(){
-        startStopwatchButtonArray.forEach(function(stopwatchButton){
-            stopwatchButton.style.visibility = "hidden";
-        })
+    function makeElementsNotKeyboardTabbable(){
+
+        //add new task input
+        newTaskInput.setAttribute("tabindex", "-1");
+
+        //the add task button
+        addNewTaskButton.setAttribute("tabindex", "-1");
+
+        //all the checkboxes
+        arrayOfCheckboxes.forEach(function(checkbox){
+            checkbox.setAttribute("tabindex", "-1")
+        });  
+
+            // all the stopwatches
+            arrayOfStopwatchIcons.forEach(function(stopwatch){
+            stopwatch.setAttribute("tabindex", "-1")
+        });   
+
+            // all the sort icons
+            arrayOfSortIcons.forEach(function(sorticon){
+            sorticon.setAttribute("tabindex", "-1")
+        });
+
+            // all the ellipses. 
+        arrayOfOptionIcons.forEach(function(optionicon){
+            optionicon.setAttribute("tabindex", "-1")
+        });
+
     }
 
-    function showStopwatchButtons(){
-         startStopwatchButtonArray.forEach(function(stopwatchButton){
-            stopwatchButton.style.visibility = "visible";
-        })
+    function makeElementsKeyboardTabbableAgain(){
+
+        //add new task input
+        newTaskInput.setAttribute("tabindex", "0");
+
+        //the add task button
+        addNewTaskButton.setAttribute("tabindex", "0");
+
+        //all the checkboxes
+        arrayOfCheckboxes.forEach(function(checkbox){
+            checkbox.setAttribute("tabindex", "0")
+        });  
+
+            // all the stopwatches
+            arrayOfStopwatchIcons.forEach(function(stopwatch){
+            stopwatch.setAttribute("tabindex", "0")
+        });   
+
+            // all the sort icons
+            arrayOfSortIcons.forEach(function(sorticon){
+            sorticon.setAttribute("tabindex", "0")
+        });
+
+            // all the ellipses. 
+        arrayOfOptionIcons.forEach(function(optionicon){
+            optionicon.setAttribute("tabindex", "0")
+        });          
     }
 
     function createTimerTitle(timerType, timerId){
@@ -204,7 +257,7 @@ class Timer {
             startStopwatchButtonArray.forEach(function(stopwatchButton){
                 stopwatchButton.addEventListener('click', function(event){
 
-                    //if there are no timers playing then... automatically run StopWatchPlay
+                    //if there are no timers playing then... automatically run StopWatchPlay - may not need this anymore??
                     if ((!playing) && (seconds == 0) && (minutes == 0) && (hours==0) && (playButton.style.display == '')) {
                         
                         //show timer when stopwatch clicked.
@@ -213,46 +266,12 @@ class Timer {
                         // starts playing the stopwatch automatically.
                         stopWatchPlay();
 
-                        //Add the overlay
                         addOverlay();
 
                         //bring the timer container above the overlay
                          timerContainer.style.zIndex = 1001;
 
-                        //change tabindex from 0 to -1 on all tabbable elements outside of the timer container. 
-                        const addNewTaskButton = document.querySelector('#add-new-task');
-                        const newTaskInput = document.querySelector('#new-task-input');
-                        const arrayOfCheckboxes = document.querySelectorAll('.taskCheckbox');
-                        const arrayOfStopwatchIcons = document.querySelectorAll('.task-stopwatch');
-                        const arrayOfSortIcons = document.querySelectorAll('.task-sort');
-                        const arrayOfOptionIcons = document.querySelectorAll('.task-options');
-
-                        //add new task input
-                        newTaskInput.setAttribute("tabindex", "-1");
-
-                        //the add task button
-                        addNewTaskButton.setAttribute("tabindex", "-1");
-
-                        //all the checkboxes
-                        arrayOfCheckboxes.forEach(function(checkbox){
-                            checkbox.setAttribute("tabindex", "-1")
-                        });  
-
-                         // all the stopwatches
-                         arrayOfStopwatchIcons.forEach(function(stopwatch){
-                            stopwatch.setAttribute("tabindex", "-1")
-                        });   
-
-                         // all the sort icons
-                         arrayOfSortIcons.forEach(function(sorticon){
-                            sorticon.setAttribute("tabindex", "-1")
-                        });
-
-                         // all the ellipses. 
-                        arrayOfOptionIcons.forEach(function(optionicon){
-                            optionicon.setAttribute("tabindex", "-1")
-                        });
-
+                        makeElementsNotKeyboardTabbable();
 
                         //Find the id of the task clicked on.
                         let id = event.target.parentElement.previousElementSibling.id;
@@ -271,12 +290,10 @@ class Timer {
                         let timerId = "stopwatch-timer-title";
                         createTimerTitle(timerContainerTitle, timerId);
 
-                        // hideStopwatchButtons();
-
                     } else {
                         startStopwatchButtonArray.forEach(function(stopwatchButton){
                                 event.preventDefault();
-                        })
+                        }) //may not need any of this? 
                         console.log("We cannot play the timer because one of these things is true: 1-playing==true 2-seconds, minutes or hours are not at 0 or the play button is visible.");
                     }             
                     pauseOnClick(stopwatch); 
@@ -301,39 +318,7 @@ class Timer {
                     //bring the timer container above the overlay
                     timerContainer.style.zIndex = 1001;
 
-                    //change tabindex from 0 to -1 on all tabbable elements outside of the timer container. 
-                        const addNewTaskButton = document.querySelector('#add-new-task');
-                        const newTaskInput = document.querySelector('#new-task-input');
-                        const arrayOfCheckboxes = document.querySelectorAll('.taskCheckbox');
-                        const arrayOfStopwatchIcons = document.querySelectorAll('.task-stopwatch');
-                        const arrayOfSortIcons = document.querySelectorAll('.task-sort');
-                        const arrayOfOptionIcons = document.querySelectorAll('.task-options');
-
-                        //add new task input
-                        newTaskInput.setAttribute("tabindex", "-1");
-
-                        //the add task button
-                        addNewTaskButton.setAttribute("tabindex", "-1");
-
-                        //all the checkboxes
-                        arrayOfCheckboxes.forEach(function(checkbox){
-                            checkbox.setAttribute("tabindex", "-1")
-                        });  
-
-                         // all the stopwatches
-                         arrayOfStopwatchIcons.forEach(function(stopwatch){
-                            stopwatch.setAttribute("tabindex", "-1")
-                        });   
-
-                         // all the sort icons
-                         arrayOfSortIcons.forEach(function(sorticon){
-                            sorticon.setAttribute("tabindex", "-1")
-                        });
-
-                         // all the ellipses. 
-                        arrayOfOptionIcons.forEach(function(optionicon){
-                            optionicon.setAttribute("tabindex", "-1")
-                        });
+                    makeElementsNotKeyboardTabbable();
 
                     let seconds = 0;
                     let minutes = 15;
@@ -378,11 +363,11 @@ class Timer {
         ellipsisArray.forEach(function(ellipsis){  
 
             ellipsis.addEventListener('click', function(){
-                const countdown15Button = document.querySelector('.countdown25-task-option');
+                const countdown25Button = document.querySelector('.countdown25-task-option');
                 
-                countdown15Button.addEventListener('click', function(event){
+                countdown25Button.addEventListener('click', function(event){
                     
-                    // hideStopwatchButtons();
+                    makeElementsNotKeyboardTabbable();
 
                     //Add the overlay
                     addOverlay();
@@ -498,9 +483,7 @@ class Timer {
     function countdownEnded(){ 
         playing = false;  
         
-        
         //need something here to stop the timer immediately.
-
 
         //!FIX: change this to a well styled modal.
         if(confirm("Do you want to save this time to this task?")){
@@ -509,6 +492,8 @@ class Timer {
                 saveTimeToTask(timerTitle.id, seconds);
                  
                 removeTimerFromDom(); //test this when get chance.
+
+                removeOverlay();
 
                 //Updates the time worked display for the task on the task list.
                 //task id is...
@@ -559,10 +544,11 @@ class Timer {
                 }
                 if (playing){
                     clearInterval(intervalToPause);
-                }     
+                } 
+                
                 removeTimerFromDom();
                 removeOverlay();
-                // showStopwatchButtons();          
+                makeElementsKeyboardTabbableAgain();        
         })       
     }
     function saveTimeButton(){
@@ -596,9 +582,10 @@ class Timer {
                         // timeDisplay.textContent = list.taskList[timerTitle.id].totalTimeFocusedOnTask;
                     }       
                 }
-
                 removeTimerFromDom();
                 removeOverlay();
+                makeElementsKeyboardTabbableAgain();
+         
             } 
             return playing = false; 
         })
@@ -635,8 +622,7 @@ class Timer {
                     let hoursInSeconds = hours * 3600;
                     var timeToAdd = seconds + minutesInSeconds + hoursInSeconds;
                 }
-                seconds = timeToAdd;
-        
+                
         //Find the task object with that taskId and add the timeToAdd to its timeFocusedOnTask prop.
         list.taskList[id].totalTimeFocusedOnTask += timeToAdd;
         list.taskList[id].totalTimeFocusedOnTaskLongForm = timer.convertSecondsToTime(list.taskList[id].totalTimeFocusedOnTask);
@@ -709,39 +695,7 @@ class Timer {
                         //bring the task above the overlay so the user can access the edit boxes.
                         parentDiv.style.zIndex = 1001;
 
-                        //change tabindex from 0 to -1 on all tabbable elements outside of the timer container. 
-                        const addNewTaskButton = document.querySelector('#add-new-task');
-                        const newTaskInput = document.querySelector('#new-task-input');
-                        const arrayOfCheckboxes = document.querySelectorAll('.taskCheckbox');
-                        const arrayOfStopwatchIcons = document.querySelectorAll('.task-stopwatch');
-                        const arrayOfSortIcons = document.querySelectorAll('.task-sort');
-                        const arrayOfOptionIcons = document.querySelectorAll('.task-options');
-
-                        //add new task input
-                        newTaskInput.setAttribute("tabindex", "-1");
-
-                        //the add task button
-                        addNewTaskButton.setAttribute("tabindex", "-1");
-
-                        //all the checkboxes
-                        arrayOfCheckboxes.forEach(function(checkbox){
-                            checkbox.setAttribute("tabindex", "-1")
-                        });  
-
-                         // all the stopwatches
-                         arrayOfStopwatchIcons.forEach(function(stopwatch){
-                            stopwatch.setAttribute("tabindex", "-1")
-                        });   
-
-                         // all the sort icons
-                         arrayOfSortIcons.forEach(function(sorticon){
-                            sorticon.setAttribute("tabindex", "-1")
-                        });
-
-                         // all the ellipses. 
-                        arrayOfOptionIcons.forEach(function(optionicon){
-                            optionicon.setAttribute("tabindex", "-1")
-                        });
+                        makeElementsNotKeyboardTabbable();
                         
                         //add the class for this layout
                         parentDiv.classList.add('edit-time-task');
@@ -880,6 +834,7 @@ class Timer {
                             parentDiv.children[4].classList.remove('hidden');
                             parentDiv.children[5].classList.remove('hidden');
 
+                            makeElementsKeyboardTabbableAgain();
                             removeOverlay();
                         })
                     }
@@ -891,7 +846,7 @@ class Timer {
         let pageBody = document.getElementsByTagName('BODY')[0]
         let overlayEl = document.createElement("DIV");
         overlayEl.setAttribute("class", "overlay");
-        let overlay = document.querySelector('.overlay');
+        // let overlay = document.querySelector('.overlay');
 
         pageBody.appendChild(overlayEl);
     }
@@ -1144,8 +1099,29 @@ class List {
         })
     }
         dynamicPopoverNav(){
-            // const ellipsisArray = document.querySelectorAll('.task-options');
+            
+            // This code is all taken exactly as written from the tippy.js documentation including the hideOnPopperBlur plugin directly below 
+
             const popover = document.getElementById('popover');
+            const hideOnPopperBlur = {
+                            name: 'hideOnPopperBlur',
+                            defaultValue: true,
+                            fn(instance) {
+                                return {
+                                onCreate() {
+                                    instance.popper.addEventListener('focusout', (event) => {
+                                    if (
+                                        instance.props.hideOnPopperBlur &&
+                                        event.relatedTarget &&
+                                        !instance.popper.contains(event.relatedTarget)
+                                    ) {
+                                        instance.hide();
+                                    }
+                                    });
+                                },
+                                };
+                            },
+                            };
 
             tippy('.task-options', {
                 allowHTML: true, 
@@ -1160,7 +1136,10 @@ class List {
                 trigger: 'click focus',
                 theme: 'blueish',
                 sticky: true,
+                plugins: [hideOnPopperBlur],
             });
+
+            
             
         }
         setDataToLocalStorage(){

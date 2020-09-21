@@ -249,6 +249,9 @@ overwhelming the user with colour and charts.
 - ### **[Code to Convert Seconds into Hours, Minutes & Seconds](https://stackoverflow.com/questions/37096367/how-to-convert-seconds-to-minutes-and-hours-in-javascript)**
     Thank you to Wilson Lee on Stack Overflow for this solution.
 
+- ### **[hideOnPopperBlur tippy.js Plugin](https://atomiks.github.io/tippyjs/v6/plugins/#hideonpopperblur)**
+    I used this code to solve a keyboard accessibility issue referenced in testing. 
+    
 # Deployment
 
 # Tools & Other Resources Used 
@@ -325,17 +328,20 @@ overwhelming the user with colour and charts.
 - ### **[clearInterval() Method](https://www.w3schools.com/jsref/met_win_clearinterval.asp)**
     w3schools clearInterval() information.
 
-- ### **[Audio Object](https://www.w3schools.com/JSREF/dom_obj_audio.asp)
+- ### **[Audio Object](https://www.w3schools.com/JSREF/dom_obj_audio.asp)**
     w3schools Audio Object information.
 
 - ### **[JavaScript Refactoring](https://www.testim.io/blog/javascript-refactoring-5-plays-to-improve-code-quality/)**
     JavaScript Refactoring: 5 Plays to Improve Code Quality - By Testim
 
-- ### **[Stack Overflow: how to mute audio in JS](https://stackoverflow.com/questions/39041960/how-to-unmute-html5-video-with-a-muted-prop)
+- ### **[Stack Overflow: how to mute audio in JS](https://stackoverflow.com/questions/39041960/how-to-unmute-html5-video-with-a-muted-prop)**
     Various responses to a question on muting and unmuting audio in JavaScript.
 
 - ### **[How to Trigger a Button Click on Enter](https://www.w3schools.com/howto/howto_js_trigger_button_enter.asp)**
     w3schools information on triggering on keyup. Used for increasing keyboard accessibility.
+
+- ### **[Solution to the interactive tippy.js keyboard issues](https://github.com/atomiks/tippyjs/issues/744#issuecomment-603631934)**
+    Keyboard accessibility issue (referenced in testing.md file) with the default behaviour of the tippy.js popovers when used interactively by keyboard users. This plugin solution worked a treat.
     
 ## 4. General
 

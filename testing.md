@@ -31,14 +31,38 @@ This method is called on page load and all it does is ensure that we don't see "
 
 
 ## Timer.timers():
-This method encapsulates all the timer functions. It it not meant to be called on the object as a method per se, more it acts as a convenient storage facility for the group of functions that power the timers. It intialises three local variables in which to store the passage of time.
+This method encapsulates all the timer functions. It it not meant to be called on the object as a method per se, more it acts as a convenient storage facility for the group of functions that power the timers. 
+
+### **Helper functions**
+These are a series of functions that I've used to make the code more modular and easier to read by sectioning off code used more than once into smaller functions. 
+
+- ## removeTimerFromDom()
+
+
+__FUNCTION SUMMARY:__ This removes the timer from the DOM when the user is finished using it. It is called when a user saves a recently timed time to a task, or when a user presses the X button on the timer. 
+
+- ## makeElementsNotKeyboardTabbable() & makeElementsKeyboardTabbableAgain()
+
+__FUNCTION SUMMARY:__ These functions stop keyboard accessibility to a selection of elements. An addOverlay() function is used to stop users being able to click on elements when they are timing, or manually editing the time on a task. This works well for mouse users, but keyboard users were still able to tab and interact with various elements, hence the need for these two functions. 
+
+- ## createTimerTitle()
+
+__FUNCTION SUMMARY:__ This function was used because the steps it contains were repeated for each of the types of timers (countdown15, countdown25 and stopwatch). It adds the type of timer as a ```<h2>``` and it adds a type specific id that is used by various functions to identify which of the three timer types is being used. 
+
+- ## formatTime()
+
+__FUNCTION SUMMARY:__ This formats the time displayed by the timer into the 00:00:00 format. If the time in hours, minutes or seconds is less than 10 it adds a leading 0.
+
+- ## resetCountdownHtml()
+
+__FUNCTION SUMMARY:__ This resets the countdown timer display to either 15 or 25, it is different from the stopwatch reset, for obvious reasons. 
+
+### **Timing functions**
+These are a series of functions that take care of the timing logic. 
 
 - ## countUp() 
 
-    __FUNCTION SUMMARY:__ This function starts counting up from wherever the seconds, minutes and hours variables are at. When it is called, the seconds variable is incremented by 1, if the seconds variable is at 60, it is reset to 0. The same
-    logic is applied to minutes. The hours variable increases ad infinitum. Three DOM variables are used to represent this logic in the DOM. This function is then called within a setInterval function within a function called StopWatchPlay() and it is called once every second, thus updating the timer.
-
-    ### __*Manual Testing*__
+    __FUNCTION SUMMARY:__ This function starts counting up from wherever the seconds, minutes and hours variables are at, be that 00:00:00 or after having been paused in the middle of a timing segment. When it is called, the seconds variable is incremented by 1, if the seconds variable is at 60, it is reset to 0. The same logic is applied to minutes. The hours variable increases ad infinitum. Three DOM variables are used to represent this logic in the DOM. This function is then called within a setInterval function within a function called StopWatchPlay() and it is called once every second, thus updating the timer.
 
     ### __*Issues encountered through testing*__
 
@@ -82,40 +106,27 @@ So the program was just running the seconds logic first and pushing them to 0 an
                 hours = hours + 1;
             }
 
-Changing the code to two IF statements as above, fixed the issue. 
-
-- ## countDown15Play()
-
-__FUNCTION SUMMARY:__ This is an umbrella function that houses two other functions that work in concert to countdown from 15 minutes. 
-
-__ISSUE 1:__ As the seconds, minutes and hours are initialised to 0, I had difficulty arranging these functions so that minutes could initialise to 15. Initialising minutes within the countDown15 function which is called by countdown() every second, just kept the minutes at 15.
-
-__FIX 1:__ I had to nest the functions within countDown15Play() in order to use *that* as the local scope in which to initialise minutes to 15.  
-
-
-- ## stopWatchClickStart()
-
-__FUNCTION SUMMARY:__ This is a click event listener on the stopwatch icons attached to each task in the task list. When clicked it starts the stopWatch timer *on that task* as long as certain conditions are met. The function is also responsible for taking the associated task description and playing it above the timer, so the user always has a reference of what task is being timed. This event listener also invokes stopWatchPause(), resetStopWatch() & playOnClick(stopWatchPlay) to access those functions from within its remit.
+Changing the code to two IF statements as above, fixed the issue.
 
 - ## stopWatchPlay()
 
  __FUNCTION SUMMARY:__ Uses a setInterval to calls the countUp() function every second to update the time variables and the html time representation elements.
 
-- ## playOnClick(timerToPlay) 
+- ## countDown15Play() & countDown25Play()
 
-__FUNCTION SUMMARY:__ Listens for the play button to be clicked and then plays whichever timer (countUp or countDown) it is passed. 
+__FUNCTION SUMMARY:__ These are the functions that call the interval timing functions (countdown() & countdown25SetInterval()) that work in concert to countdown from 15 & 25 minutes. When the seconds and minutes get to less than 0, the alarm plays, with or without sound, depending on the user's choice, and the countdownEnded() function is called.  
 
-- ## pauseOnClick(intervalToPause) 
+__ISSUE 1:__ As the seconds, minutes and hours are initialised to 0, I had difficulty arranging these functions so that minutes could initialise to 15 & 25. Initialising minutes within the countDown functions which are called by countdown() & countdown25SetInterval() every second, just kept the minutes at 15.
 
-__FUNCTION SUMMARY:__ Listens for clicks on the pause button and stops whichever interval timer is passed into the function.
+__FIX 1:__ I had to nest the functions within countDown15Play() & countDown25Play() in order to use *that* as the local scope in which to initialise minutes to 15 & 25 respectively. 
 
-- ## resetStopWatch()
 
-__FUNCTION SUMMARY:__ Listens for clicks on the reset button and resets all time variables to 0 as well as stopping the timer. 
+### **Structural functions**
+These are the functions that take care of the foundations of the timing code. 
 
-6. __*resetTimes()*__ Used in conjunction with resetStopWatch() to clear the time variables and reset the DOM as well. 
+- ## stopWatchClickStart()
 
-  ### __*Issues encountered through testing*__
+__FUNCTION SUMMARY:__ This is a click event listener on the stopwatch icons attached to each task in the task list. When clicked it starts the stopWatch timer *on that task* as long as certain conditions are met. The function is also responsible for taking the associated task description and playing it above the timer, so the user always has a reference of what task is being timed. This event listener also invokes stopWatchPause(), resetStopWatch() & playOnClick(stopWatchPlay) to access those functions from within its remit.
 
 __ISSUE 1:__ There are two separate routes to starting the stopwatch timer. A user can click on the stopwatch icon (and this will always be the first method, as until they click here, the timer box will not be visible). Once the timer is visible, there are two ways to start the timer: the stopwatch icon *and* the play button that appears if the timer has is paused. This caused a bug that meant two or more Interval timers (based on the stopWatchPlay function) could be triggered to run at the same time. This causes the timer to increase the speed at which the seconds and minutes increase, and it ceased being a reliable timer. 
 
@@ -128,8 +139,44 @@ __FIX 1:__ The fix was to add a boolean variable called "playing" that I use any
 
  __FIX 2:__ I added the same conditional just before the function call to stopWatchPlay() within stopWatchPlayOnClick(): ```if(!playing){```
 
+ __FIX 3:__ These issues and others were rendered obsolete when I included addOverlay() to the program, which effectively makes it impossible for a user to click on any other timer functions while the timer is running.
 
-### __Unit Testing__
+- ## countDown15ClickStart() & countDown25ClickStart()
+
+__FUNCTION SUMMARY:__ These functions are click event listeners on the countdown timer icons in each task's popover menu box. When clicked the countdown timer is automatically started for 15 or 25 minutes. The countDownPlay(), pauseOnClick(), resetTime() & closeTimer() functions are available from within these functions. 
+
+- ## playOnClick() 
+
+__FUNCTION SUMMARY:__ Listens for the play button to be clicked and then I use the timer titles to determine which timer is sitting ready to be played. I then pass all associated necessary functions into the if/else if statement so that the correct countdown, pause and reset functions are available from within the playing state. When the play button is clicked this function also removes the play button and shows the pause one. 
+
+- ## pauseOnClick(intervalToPause) 
+
+__FUNCTION SUMMARY:__ Listens for clicks on the pause button and stops whichever interval timer is passed into the function.
+
+- ## resetTime()
+
+__FUNCTION SUMMARY:__ Listens for clicks on the reset button and clears whatever time interval function is passed into it. It also calls resetTimes() which resets all time variables to either 0, 15 minutes or 25 minutes, as well as stopping the timer. 
+
+- ## resetTimes() 
+
+__FUNCTION SUMMARY:__ Used in conjunction with resetStopWatch() to clear the time variables and reset the DOM timer representation as well. It uses the timer title to determine what number to reset the timers to. The countdown timer reset futher calls on resetCountdownHtml().
+
+- ## countdownEnded() 
+
+__FUNCTION SUMMARY:__ When either of the countdown timers reach 0 seconds and 0 minutes, this function is invoked. A modal pops up asking the user if they would like to save the full time to their task. If they click ok - it saves, otherwise it does not.
+
+  __ISSUE 1:__ When left on another web page or minimised as the timer is running, the timer ticks over for some reason and starts into minus times, as illustrated below: 
+
+ __FIX 1:__ ??? 
+
+- ## closeTimer() 
+
+__FUNCTION SUMMARY:__ This closes down the timer and removes it from sight when the X button is clicked. 
+
+__ISSUE 1:__ If the user clicks the close button and the timer was in the middle of timing, the time would continue adding up. 
+
+ __FIX 1:__ I instituted an if/else if statement that would pause the particular interval being used before the timer container is removed from the DOM.
+
 
 - ## saveTimeButton() & saveTimeToTask()
     __FUNCTION(S) SUMMARY:__ The saveTimeButton first listens for a click event on the saveButton to save the currently timed time into two different task object properties as well as updating the time based elements in the DOM. 
@@ -139,6 +186,22 @@ __FIX 1:__ The fix was to add a boolean variable called "playing" that I use any
     An alert then asks whether the user is sure that they want to stop timing and save the time. If they confirm that they do, this function calls on the saveTimeToTask() function, passing in the id connected with the title of the task currently sitting in the timer seat. As the DOM ids are perfectly synced with the task ids - this allows me to pass that time data directly into the two task time properties: totalTimeFocusedOnTask & totalTimeFocusedOnTaskLongForm. It uses a Timer method: Timer.convertSecondsToTime to create the data that goes into the totalTimeFocusedOnTaskLongForm property.
 
     The saveTimeToTask() function then saves those changes to localStorage. And the saveTimeButton() function goes on to change the DOM time elements with updated task time data. 
+
+    The saveTimeToTask function also performs different time saving calculations depending on which timer is being used. For the timers it minuses the full amount of time passed in seconds from either 900 or 1500, otherwise it calculates the stopwatch time in seconds. 
+
+    When it has determined the amount of time in seconds to add to the task, it then uses timer.convertSecondsToTime to convert that to a long form time that is stored on the task object and displayed before each task in the task list. 
+
+- ## alarmToggle() 
+
+__FUNCTION SUMMARY:__ This function changes the alarm icon on click and associated on/off classes.
+
+- ## manualTaskTimeEdit() 
+
+__FUNCTION SUMMARY:__ This function allows the user to manually input or completely alter the amount of time spent working on a particular task. It listens for clicks on its associated icon and then uses the long form time that is displayed next to the task and splits it up into its integer components, creating new inputs to display these for alteration. When the user is ready to save the new time input they can click on  the save button and the function translates the new time first to seconds to save on the task and then into the long form again to save to the task as well.  
+
+- ## addOverlay() & removeOverlay(); 
+
+__FUNCTION SUMMARY:__ This function appends a div with the class 'overlay' to the body of the page. This overlay sits on top of the page at z-index: 1000 effectively disabling the page contents. removeOverlay() reverses the function.
 
 - ## Timer.convertSecondsToTime(seconds)
 
@@ -315,6 +378,12 @@ __FIX 1:__ I added an amount of px to the top and left of this, but that didn't 
 up the page, the location of the popover shifted dramatically. I needed to make it relative to the ellipsis itself **and** responsive to scroll events. I started 
 playing around with the x & y offsets on the page, and then in an angry burst of stack overflowing, I happened upon tippy.js, which enabled me to implement the exact 
 functionality I wanted in less than 15 minutes. Long live tippy.js
+
+__ISSUE 2:__ While tippy.js is wonderful, I found that the keyboard accessibility would not automatically close the popover from the previous task before opening a new task item further down the list. This led to the following untidy situation, which would be quite irritating for keyboard users: 
+
+![tippy-keyboard-access](misc-images/tippy-keyboard-access.png)
+
+__FIX 2:__ As you can see above, I started trying to fix this issue by creating an X close button, that was clickable and keyboard tabbable, while this worked (sort of) using visibility and z-index, I then found a less hacky way in the closed issues on the developer's github repo using an object plugin that was actually in the documentation. The plugin is called hideOnPopperBlur and is attributed in the code and README.md file. 
 
 ### __*Unit Testing*__
 

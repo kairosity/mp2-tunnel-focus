@@ -158,6 +158,7 @@ class Timer {
         minutesHtml.innerHTML = `${minutes}`;
         hoursHtml.innerHTML = `0${hours}`;
     }
+    
 
     // --------------------------------------TIMING FUNCTIONS-------------------------------//
 
@@ -705,44 +706,23 @@ class Timer {
                         taskToTarget.classList.add('edit-time-task-description');
                         taskToTarget.classList.remove('task');
 
-                        //Create the hours input and label REFACTOR
-                        const newHoursLabel = document.createElement('LABEL');
-                        newHoursLabel.setAttribute("for", "editHours");
-                        newHoursLabel.textContent = "Hours:";
-                        newHoursLabel.setAttribute("class", "editTime edit-time-hours-label")
-                        pElementToTarget.parentNode.insertBefore(newHoursLabel, pElementToTarget);
-                        const newHours = document.createElement("INPUT");
-                        newHours.setAttribute("type", "number")
-                        newHours.setAttribute("value", `${hoursToEdit}`);
-                        newHours.setAttribute("id", "editHours")
-                        newHours.setAttribute("class", "editTime edit-time-hours")
-                        pElementToTarget.parentNode.insertBefore(newHours, pElementToTarget);
+                        function createNewInputsForManualTimeEdit(timeMeasure, timeToEdit){
+                            const newLabel = document.createElement('LABEL');
+                            newLabel.setAttribute("for", "edit"+timeMeasure);
+                            newLabel.textContent = timeMeasure+":";
+                            newLabel.setAttribute("class", "editTime edit-time-"+timeMeasure.toLowerCase()+"-label");
+                            pElementToTarget.parentNode.insertBefore(newLabel, pElementToTarget);
+                            const newTime = document.createElement("INPUT");
+                            newTime.setAttribute("type", "number")
+                            newTime.setAttribute("value", `${timeToEdit}`);
+                            newTime.setAttribute("id", "edit"+timeMeasure)
+                            newTime.setAttribute("class", "editTime edit-time-"+timeMeasure.toLowerCase())
+                            pElementToTarget.parentNode.insertBefore(newTime, pElementToTarget);
+                        }
 
-                        //create the minutes input and label REFACTOR
-                        const newMinutesLabel = document.createElement('LABEL');
-                        newMinutesLabel.setAttribute("for", "editMinutes");
-                        newMinutesLabel.textContent = "Minutes:";
-                        newMinutesLabel.setAttribute("class", "editTime edit-time-minutes-label")
-                        pElementToTarget.parentNode.insertBefore(newMinutesLabel, pElementToTarget);
-                        const newMinutes = document.createElement("INPUT");
-                        newMinutes.setAttribute("type", "number")
-                        newMinutes.setAttribute("value", `${minutesToEdit}`);
-                        newMinutes.setAttribute("id", "editMinutes")
-                        newMinutes.setAttribute("class", "editTime edit-time-minutes")
-                        pElementToTarget.parentNode.insertBefore(newMinutes, pElementToTarget);
-
-                        //create the seconds input and label REFACTOR
-                        const newSecondsLabel = document.createElement('LABEL');
-                        newSecondsLabel.setAttribute("for", "editSeconds");
-                        newSecondsLabel.textContent = "Seconds:";
-                        newSecondsLabel.setAttribute("class", "editTime edit-time-seconds-label")
-                        pElementToTarget.parentNode.insertBefore(newSecondsLabel, pElementToTarget);
-                        const newSeconds = document.createElement("INPUT");
-                        newSeconds.setAttribute("type", "number")
-                        newSeconds.setAttribute("value", `${secondsToEdit}`);
-                        newSeconds.setAttribute("id", "editSeconds")
-                        newSeconds.setAttribute("class", "editTime edit-time-seconds")
-                        pElementToTarget.parentNode.insertBefore(newSeconds, pElementToTarget);
+                        createNewInputsForManualTimeEdit("Hours", hoursToEdit);
+                        createNewInputsForManualTimeEdit("Minutes", minutesToEdit);
+                        createNewInputsForManualTimeEdit("Seconds", secondsToEdit);
 
                         //remove the <p></p> time in longform.
                         parentDiv.removeChild(pElementToTarget);
@@ -754,7 +734,7 @@ class Timer {
                         saveButton.textContent = "Save New Total Time";
 
                         //add the save button after the seconds input.
-                        newSeconds.after(saveButton);
+                        document.getElementById('editSeconds').after(saveButton);
 
                         //create the cancel button. REFACTOR
                         const cancelButton = document.createElement('BUTTON');
@@ -807,12 +787,12 @@ class Timer {
                             parentDiv.removeChild(cancelButton);
 
                             //remove / destroy all the new elements 
-                            parentDiv.removeChild(newSeconds);
-                            parentDiv.removeChild(newSecondsLabel);
-                            parentDiv.removeChild(newMinutes);
-                            parentDiv.removeChild(newMinutesLabel);
-                            parentDiv.removeChild(newHours);
-                            parentDiv.removeChild(newHoursLabel);     
+                            parentDiv.removeChild(document.getElementById('editSeconds'));
+                            parentDiv.removeChild(document.querySelector('.edit-time-seconds-label'));
+                            parentDiv.removeChild(document.getElementById('editMinutes'));
+                            parentDiv.removeChild(document.querySelector('.edit-time-minutes-label'));
+                            parentDiv.removeChild(document.getElementById('editHours'));
+                            parentDiv.removeChild(document.querySelector('.edit-time-hours-label'));     
 
                             //bring back all the required elements in correct order
                             
@@ -1135,7 +1115,7 @@ class List {
                 placement: 'auto',
                 trigger: 'click focus',
                 theme: 'blueish',
-                sticky: true,
+                // sticky: true,
                 plugins: [hideOnPopperBlur],
             });
 

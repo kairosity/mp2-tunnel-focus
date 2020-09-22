@@ -187,9 +187,9 @@ __*Page top*__
 
 ### Website Flow
 
-As I've just outlined, most of this application takes place on one main page, with the exception of the timer on mobile and ipad-sized screens which opens a separate view. The idea is that when a user starts the timer, they will be initiating a burst of productivity that does not require them to use their mobile phone or ipad. The only information available to them from the mobile should be the time spent on that particular task. 
+As I've just outlined, most of this application takes place on one main page, with the exception of the timer on mobile and ipad-sized screens which opens a separate view that covers the screen. The idea is that when a user starts the timer, they will be initiating a burst of productivity that does not require them to use their mobile phone or ipad. The only information available to them from the mobile should be the time spent on that particular task. 
 
-For desktop, I though a separate page for the timer, would be unnecessary navigation, as the user will likely minimise the page anyway, while they work on the task at hand. 
+For desktop, I thought that a separate page for the timer, would be unnecessary navigation, as the user will likely minimise the page anyway, while they work on the task at hand. 
 
 The flow is very much focused around the task list and the timer. The charts are a point of interest and reference, but they are scrolled down to, as they need not take center stage. 
 

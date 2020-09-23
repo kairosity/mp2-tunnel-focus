@@ -80,7 +80,6 @@ class Timer {
 
             // all the stopwatches
             startStopwatchButtonArray.forEach(function(stopwatch){
-                console.log(stopwatch)
             stopwatch.setAttribute("tabindex", "-1")
         });   
 
@@ -318,61 +317,75 @@ class Timer {
 } //main func.
     function countDown15ClickStart(){
 
-
-
         const ellipsisArray = document.querySelectorAll('.task-options');
-        ellipsisArray.forEach(function(ellipsis){  
-
-            ellipsis.addEventListener('click', function(){
-                const countdown15Button = document.querySelector('.countdown15-task-option');
-                countdown15Button.addEventListener('click', function(event){
-
-                    //Add the overlay
-                    addOverlay();
-
-                    //bring the timer container above the overlay
-                    timerContainer.style.zIndex = 1001;
-
-                    makeElementsNotKeyboardTabbable();
-
-                    let seconds = 0;
-                    let minutes = 15;
-                    let hours = 0;
-
-                    secondsHtml.innerHTML = `0${seconds}`;
-                    minutesHtml.innerHTML = `${minutes}`;
-                    hoursHtml.innerHTML = `0${hours}`;
-
-                    //Find the id of the task clicked on.
-                    let parentDiv = event.target.closest('.task');
-                    let taskToTargetId = parentDiv.children[2].id;
-                    let taskToTargetDescription = parentDiv.children[2].textContent;
+        
+        ellipsisArray.forEach(function(ellipsis){
+            
+            ['click','keyup'].forEach(function(evt){
                 
-                        //if there are no timers playing then... automatically run CountDown15
-                    if ((!playing) && (seconds == 0) && (minutes == 15) && (hours==0) && (playButton.style.display == '')) {
-                        //show timer when stopwatch clicked.
-                        timerContainer.style.display = 'flex'; 
-                        
-                        let timerContainerTitle = "Countdown 15";
-                        let timerId = "countdown15-timer-title";
-                        createTimerTitle(timerContainerTitle, timerId)
-                        
-                        //Select the area where the title will go
-                        let timerTitle = document.querySelector('.timer-task-description');
-                        //Give it an id to match the task's id.
-                        timerTitle.id = taskToTargetId;
-                        //give it a description to match task description.
-                        timerTitle.textContent = taskToTargetDescription;
+                ellipsis.addEventListener(evt, function(elipEvent){
 
-                        countDown15Play()
-                        pauseOnClick(countdown15); 
-                        resetTime(countdown15);  
-                    }
-                closeTimer();
+                    if((evt === 'click') || (elipEvent.keyCode === 9)) {
+
+                        const countdown15Button = document.querySelector('.countdown15-task-option');
+
+                        ['click','keyup'].forEach(function(e){
+                            countdown15Button.addEventListener(e, function(event){
+                                if((e === 'click') || (event.keyCode === 13)) {
+
+                                    addOverlay();
+
+                                    //bring the timer container above the overlay
+                                    timerContainer.style.zIndex = 1001;
+
+                                    makeElementsNotKeyboardTabbable();
+
+                                    let seconds = 0;
+                                    let minutes = 15;
+                                    let hours = 0;
+
+                                    secondsHtml.innerHTML = `0${seconds}`;
+                                    minutesHtml.innerHTML = `${minutes}`;
+                                    hoursHtml.innerHTML = `0${hours}`;
+
+                                    //Find the id of the task clicked on.
+                                    let parentDiv = event.target.closest('.task');
+                                    let taskToTargetId = parentDiv.children[2].id;
+                                    let taskToTargetDescription = parentDiv.children[2].textContent;
+                                
+                                        //if there are no timers playing then... automatically run CountDown15
+                                    if ((!playing) && (seconds == 0) && (minutes == 15) && (hours==0) && (playButton.style.display == '')) {
+                                        //show timer when stopwatch clicked.
+                                        timerContainer.style.display = 'flex'; 
+                                        
+                                        let timerContainerTitle = "Countdown 15";
+                                        let timerId = "countdown15-timer-title";
+                                        createTimerTitle(timerContainerTitle, timerId)
+                                        
+                                        //Select the area where the title will go
+                                        let timerTitle = document.querySelector('.timer-task-description');
+                                        //Give it an id to match the task's id.
+                                        timerTitle.id = taskToTargetId;
+                                        //give it a description to match task description.
+                                        timerTitle.textContent = taskToTargetDescription;
+
+                                        countDown15Play()
+                                        pauseOnClick(countdown15); 
+                                        resetTime(countdown15);  
+                                    }
+                                closeTimer();
+                                }
+                    }) 
+                 })
+                }
+
                 })
+
             })
-        })
-    } 
+
+        }); 
+    }
+
     function countDown25ClickStart(){
         const ellipsisArray = document.querySelectorAll('.task-options');
         ellipsisArray.forEach(function(ellipsis){  
@@ -567,6 +580,14 @@ class Timer {
         })       
     }
     function saveTimeButton(){
+
+        saveButton.addEventListener('keyup', function(event){
+                if(event.keyCode === 13){
+                    event.preventDefault();
+                    saveButton.click();
+                }
+            })
+
         saveButton.addEventListener('click', function(){
             let typeOfTimer = document.querySelector('.timer-title');
             if (playing){

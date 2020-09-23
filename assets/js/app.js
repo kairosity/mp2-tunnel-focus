@@ -680,185 +680,190 @@ class Timer {
         })
 
     }
-
     function manualTaskTimeEdit(){
         // Event Listener for clicks on edit time button in popover.
         const ellipsisArray = document.querySelectorAll('.task-options');
-        ellipsisArray.forEach(function(ellipsis){  
 
-            ellipsis.addEventListener('click', function(){
-                const manuallyEditTimeButton = document.querySelector('.edit-task-time-task-option');
-                
-                manuallyEditTimeButton.addEventListener('click', function(event){
-                    
-                    //Find the task clicked on and save in parentDiv.
-                    let parentDiv = event.target.closest('.task');
+        ellipsisArray.forEach(function(ellipsis){
+            ['click','keyup'].forEach(function(evt){
+                ellipsis.addEventListener(evt, function(elipEvent){
+                    if((evt === 'click') || (elipEvent.keyCode === 9)) {
+                        const manuallyEditTimeButton = document.querySelector('.edit-task-time-task-option');
+                        ['click','keyup'].forEach(function(e){
+                            manuallyEditTimeButton.addEventListener(e, function(event){
+                                if((e === 'click') || (event.keyCode === 13)) {
+                                //Find the task clicked on and save in parentDiv.
+                                let parentDiv = event.target.closest('.task');
 
-                    //get the id of that task
-                    let taskToTargetId = parentDiv.children[2].id;
+                                //get the id of that task
+                                let taskToTargetId = parentDiv.children[2].id;
 
-                    //get the <p> where the time is described long form.
-                    let pElementToTarget = parentDiv.firstElementChild;
+                                //get the <p> where the time is described long form.
+                                let pElementToTarget = parentDiv.firstElementChild;
 
-                    //take that <p> string</p> and divide it on the spaces to isolate the numbers.
-                    let timeToEdit = pElementToTarget.textContent.split(" ");
-                    let timeArray = []
+                                //take that <p> string</p> and divide it on the spaces to isolate the numbers.
+                                let timeToEdit = pElementToTarget.textContent.split(" ");
+                                let timeArray = []
 
-                    //transform each of the string time numbers into numbers and push them to timeArray
-                    timeToEdit.forEach(function(item){
-                        if (item.length>4){
-                            timeArray.push(parseInt(item.slice(0,2)));
-                        } else {
-                            timeArray.push(parseInt(item.slice(0,1)));
-                        }
-                    });
-                    let hoursToEdit = timeArray[0];
-                    let minutesToEdit = timeArray[1];
-                    let secondsToEdit = timeArray[2];
+                                //transform each of the string time numbers into numbers and push them to timeArray
+                                timeToEdit.forEach(function(item){
+                                    if (item.length>4){
+                                        timeArray.push(parseInt(item.slice(0,2)));
+                                    } else {
+                                        timeArray.push(parseInt(item.slice(0,1)));
+                                    }
+                                });
+                                let hoursToEdit = timeArray[0];
+                                let minutesToEdit = timeArray[1];
+                                let secondsToEdit = timeArray[2];
 
-                    //Hide icons for when edit time is open so user can't go clicking around places.
-                   
-                    parentDiv.children[1].classList.add('hidden');
-                    parentDiv.children[3].classList.add('hidden');
-                    parentDiv.children[4].classList.add('hidden');
-                    parentDiv.children[5].classList.add('hidden');
-
-                    
-                    //if there's no save time button already there then ....
-                    if (!document.querySelector('.edit-time-save-button')){ 
-
-                        //adding overlay to focus user on editing the time and not doing anything else. 
-                        addOverlay();
-
-                        //bring the task above the overlay so the user can access the edit boxes.
-                        parentDiv.style.zIndex = 1001;
-
-                        makeElementsNotKeyboardTabbable();
-                        
-                        //add the class for this layout
-                        parentDiv.classList.add('edit-time-task');
-
-                        //select the task description
-                        let taskToTarget = parentDiv.children[2];
-                        taskToTarget.classList.add('edit-time-task-description');
-                        taskToTarget.classList.remove('task');
-
-                        function createNewInputsForManualTimeEdit(timeMeasure, timeToEdit){
-                            const newLabel = document.createElement('LABEL');
-                            newLabel.setAttribute("for", "edit"+timeMeasure);
-                            newLabel.textContent = timeMeasure+":";
-                            newLabel.setAttribute("class", "editTime edit-time-"+timeMeasure.toLowerCase()+"-label");
-                            pElementToTarget.parentNode.insertBefore(newLabel, pElementToTarget);
-                            const newTime = document.createElement("INPUT");
-                            newTime.setAttribute("type", "number")
-                            newTime.setAttribute("value", `${timeToEdit}`);
-                            newTime.setAttribute("id", "edit"+timeMeasure)
-                            newTime.setAttribute("class", "editTime edit-time-"+timeMeasure.toLowerCase())
-                            pElementToTarget.parentNode.insertBefore(newTime, pElementToTarget);
-                        }
-
-                        createNewInputsForManualTimeEdit("Hours", hoursToEdit);
-                        createNewInputsForManualTimeEdit("Minutes", minutesToEdit);
-                        createNewInputsForManualTimeEdit("Seconds", secondsToEdit);
-
-                        //remove the <p></p> time in longform.
-                        parentDiv.removeChild(pElementToTarget);
-
-                        //create the save button. REFACTOR
-                        const saveButton = document.createElement('BUTTON');
-                        saveButton.setAttribute("class", "edit-time-save-button");
-                        saveButton.setAttribute("type", "submit");
-                        saveButton.textContent = "Save New Total Time";
-
-                        //add the save button after the seconds input.
-                        document.getElementById('editSeconds').after(saveButton);
-
-                        //create the cancel button. REFACTOR
-                        const cancelButton = document.createElement('BUTTON');
-                        cancelButton.setAttribute("class", "edit-time-cancel-button");
-                        cancelButton.setAttribute("type", "submit");
-                        cancelButton.textContent = "Cancel Changes & Exit";
-
-                        //add the cancel button after the save button.
-                        saveButton.after(cancelButton);
-                        
-
-                        //click event listener on the save button.
-                        let saveBtn = document.querySelector('.edit-time-save-button');
-                        saveBtn.addEventListener('click', function(){
-
-                            //take the value in each of the time segments. 
-                            let hoursToSave = document.getElementById('editHours');
-                            let minutesToSave = document.getElementById('editMinutes');
-                            let secondsToSave = document.getElementById('editSeconds');
-
-                            let hoursToAdd = hoursToSave.value;
-                            let minutesToAdd = minutesToSave.value;
-                            let secondsToAdd = secondsToSave.value;
-         
-                            //translate that time to seconds
-                            let minutesInSeconds = minutesToAdd * 60;
-                            let hoursInSeconds = hoursToAdd * 3600;
-                            let timeToAdd = parseInt(secondsToAdd) + minutesInSeconds + hoursInSeconds;
-
-                            //translate those seconds to long form
-
-                            let longFormTimeToAdd = timer.convertSecondsToTime(timeToAdd);
-
-                            //find id number of the task in ques.
-                            console.log(timeToAdd);
-                            console.log(longFormTimeToAdd);
-
-                            //id matching loop - updates the totalTimeFocusedOnTask.
-                            for (let i=0; i<list.taskList.length; i++){
-                                if (list.taskList[i].id == taskToTargetId){
-                                    list.taskList[i].totalTimeFocusedOnTask = timeToAdd;
-                                    list.taskList[i].totalTimeFocusedOnTaskLongForm = longFormTimeToAdd; 
-                                }
-                            }
-                            //remove the save button
-                            parentDiv.removeChild(saveBtn);
-                            parentDiv.classList.remove('edit-time-task');
-
-                            //remove the cancel button
-                            parentDiv.removeChild(cancelButton);
-
-                            //remove / destroy all the new elements 
-                            parentDiv.removeChild(document.getElementById('editSeconds'));
-                            parentDiv.removeChild(document.querySelector('.edit-time-seconds-label'));
-                            parentDiv.removeChild(document.getElementById('editMinutes'));
-                            parentDiv.removeChild(document.querySelector('.edit-time-minutes-label'));
-                            parentDiv.removeChild(document.getElementById('editHours'));
-                            parentDiv.removeChild(document.querySelector('.edit-time-hours-label'));     
-
-                            //bring back all the required elements in correct order
+                                //Hide icons for when edit time is open so user can't go clicking around places.
                             
-                            //bring back the updated longform time <p>  
-                            let insertBeforeNode = parentDiv.children[0];
+                                parentDiv.children[1].classList.add('hidden');
+                                parentDiv.children[3].classList.add('hidden');
+                                parentDiv.children[4].classList.add('hidden');
+                                parentDiv.children[5].classList.add('hidden');
 
-                            let updatedTime = document.createElement('P');
-                            updatedTime.setAttribute('class', 'total-task-time');
-                            updatedTime.textContent = `${longFormTimeToAdd}`;
-                            let newTime = parentDiv.insertBefore(updatedTime, insertBeforeNode);
+                                
+                                //if there's no save time button already there then ....
+                                if (!document.querySelector('.edit-time-save-button')){ 
 
-                            //bring back checkbox
-                            parentDiv.children[1].classList.remove('hidden');
-                            console.log(parentDiv.children[1]);
-                            //remove special class from description
-                            parentDiv.children[2].classList.remove('edit-time-task-description');
-                            //bring back the icons
-                            parentDiv.children[3].classList.remove('hidden');
-                            parentDiv.children[4].classList.remove('hidden');
-                            parentDiv.children[5].classList.remove('hidden');
+                                    //adding overlay to focus user on editing the time and not doing anything else. 
+                                    addOverlay();
 
-                            makeElementsKeyboardTabbableAgain();
-                            removeOverlay();
-                        })
+                                    //bring the task above the overlay so the user can access the edit boxes.
+                                    parentDiv.style.zIndex = 1001;
+
+                                    makeElementsNotKeyboardTabbable();
+                                    
+                                    //add the class for this layout
+                                    parentDiv.classList.add('edit-time-task');
+
+                                    //select the task description
+                                    let taskToTarget = parentDiv.children[2];
+                                    taskToTarget.classList.add('edit-time-task-description');
+                                    taskToTarget.classList.remove('task');
+
+                                    function createNewInputsForManualTimeEdit(timeMeasure, timeToEdit){
+                                        const newLabel = document.createElement('LABEL');
+                                        newLabel.setAttribute("for", "edit"+timeMeasure);
+                                        newLabel.textContent = timeMeasure+":";
+                                        newLabel.setAttribute("class", "editTime edit-time-"+timeMeasure.toLowerCase()+"-label");
+                                        pElementToTarget.parentNode.insertBefore(newLabel, pElementToTarget);
+                                        const newTime = document.createElement("INPUT");
+                                        newTime.setAttribute("type", "number")
+                                        newTime.setAttribute("value", `${timeToEdit}`);
+                                        newTime.setAttribute("id", "edit"+timeMeasure)
+                                        newTime.setAttribute("class", "editTime edit-time-"+timeMeasure.toLowerCase())
+                                        pElementToTarget.parentNode.insertBefore(newTime, pElementToTarget);
+                                    }
+
+                                    createNewInputsForManualTimeEdit("Hours", hoursToEdit);
+                                    createNewInputsForManualTimeEdit("Minutes", minutesToEdit);
+                                    createNewInputsForManualTimeEdit("Seconds", secondsToEdit);
+
+                                    //remove the <p></p> time in longform.
+                                    parentDiv.removeChild(pElementToTarget);
+
+                                    //create the save button. REFACTOR
+                                    const saveButton = document.createElement('BUTTON');
+                                    saveButton.setAttribute("class", "edit-time-save-button");
+                                    saveButton.setAttribute("type", "submit");
+                                    saveButton.textContent = "Save New Total Time";
+
+                                    //add the save button after the seconds input.
+                                    document.getElementById('editSeconds').after(saveButton);
+
+                                    //create the cancel button. REFACTOR
+                                    const cancelButton = document.createElement('BUTTON');
+                                    cancelButton.setAttribute("class", "edit-time-cancel-button");
+                                    cancelButton.setAttribute("type", "submit");
+                                    cancelButton.textContent = "Cancel Changes & Exit";
+
+                                    //add the cancel button after the save button.
+                                    saveButton.after(cancelButton);
+                                    
+
+                                    //click event listener on the save button.
+                                    let saveBtn = document.querySelector('.edit-time-save-button');
+                                    saveBtn.addEventListener('click', function(){
+
+                                        //take the value in each of the time segments. 
+                                        let hoursToSave = document.getElementById('editHours');
+                                        let minutesToSave = document.getElementById('editMinutes');
+                                        let secondsToSave = document.getElementById('editSeconds');
+
+                                        let hoursToAdd = hoursToSave.value;
+                                        let minutesToAdd = minutesToSave.value;
+                                        let secondsToAdd = secondsToSave.value;
+                    
+                                        //translate that time to seconds
+                                        let minutesInSeconds = minutesToAdd * 60;
+                                        let hoursInSeconds = hoursToAdd * 3600;
+                                        let timeToAdd = parseInt(secondsToAdd) + minutesInSeconds + hoursInSeconds;
+
+                                        //translate those seconds to long form
+
+                                        let longFormTimeToAdd = timer.convertSecondsToTime(timeToAdd);
+
+                                        //find id number of the task in ques.
+                                        console.log(timeToAdd);
+                                        console.log(longFormTimeToAdd);
+
+                                        //id matching loop - updates the totalTimeFocusedOnTask.
+                                        for (let i=0; i<list.taskList.length; i++){
+                                            if (list.taskList[i].id == taskToTargetId){
+                                                list.taskList[i].totalTimeFocusedOnTask = timeToAdd;
+                                                list.taskList[i].totalTimeFocusedOnTaskLongForm = longFormTimeToAdd; 
+                                            }
+                                        }
+                                        //remove the save button
+                                        parentDiv.removeChild(saveBtn);
+                                        parentDiv.classList.remove('edit-time-task');
+
+                                        //remove the cancel button
+                                        parentDiv.removeChild(cancelButton);
+
+                                        //remove / destroy all the new elements 
+                                        parentDiv.removeChild(document.getElementById('editSeconds'));
+                                        parentDiv.removeChild(document.querySelector('.edit-time-seconds-label'));
+                                        parentDiv.removeChild(document.getElementById('editMinutes'));
+                                        parentDiv.removeChild(document.querySelector('.edit-time-minutes-label'));
+                                        parentDiv.removeChild(document.getElementById('editHours'));
+                                        parentDiv.removeChild(document.querySelector('.edit-time-hours-label'));     
+
+                                        //bring back all the required elements in correct order
+                                        
+                                        //bring back the updated longform time <p>  
+                                        let insertBeforeNode = parentDiv.children[0];
+
+                                        let updatedTime = document.createElement('P');
+                                        updatedTime.setAttribute('class', 'total-task-time');
+                                        updatedTime.textContent = `${longFormTimeToAdd}`;
+                                        let newTime = parentDiv.insertBefore(updatedTime, insertBeforeNode);
+
+                                        //bring back checkbox
+                                        parentDiv.children[1].classList.remove('hidden');
+                                        console.log(parentDiv.children[1]);
+                                        //remove special class from description
+                                        parentDiv.children[2].classList.remove('edit-time-task-description');
+                                        //bring back the icons
+                                        parentDiv.children[3].classList.remove('hidden');
+                                        parentDiv.children[4].classList.remove('hidden');
+                                        parentDiv.children[5].classList.remove('hidden');
+
+                                        makeElementsKeyboardTabbableAgain();
+                                        removeOverlay();
+                            })
+                        }
                     }
                 })
             })
-        })     
-    }
+        }
+    })
+    })
+})
+}
     function addOverlay(){
         let pageBody = document.getElementsByTagName('BODY')[0]
         let overlayEl = document.createElement("DIV");

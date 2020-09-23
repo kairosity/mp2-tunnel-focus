@@ -1002,58 +1002,66 @@ class List {
     editTask(){
         const ellipsisArray = document.querySelectorAll('.task-options');
 
-        ellipsisArray.forEach(function(ellipsis){    
-            ellipsis.addEventListener('click', function(){
+        ellipsisArray.forEach(function(ellipsis){
+            ['click','keyup'].forEach(function(evt){
+                ellipsis.addEventListener(evt, function(elipEvent){
+                    if((evt === 'click') || (elipEvent.keyCode === 9)) {
+                         const editTaskButton = document.querySelector('.edit-task-option');
+                        ['click','keyup'].forEach(function(e){
+                            editTaskButton.addEventListener(e, function(event){
+                                if((e === 'click') || (event.keyCode === 13)) {
+                                    let parentDiv = event.target.closest('.task');
+                                    let liToReplace = parentDiv.children[2];
+                                    let textToEdit = parentDiv.children[2].textContent;
 
-                const editTaskButton = document.querySelector('.edit-task-option');
-                editTaskButton.addEventListener('click', function(event){
+                                    if (!document.querySelector('.save-button')){  //stops the situation whereby a user can open 2 or more input edit boxes.
+                                    
+                                        const newInput = document.createElement("INPUT");
+                                        newInput.setAttribute("type", "text")
+                                        newInput.setAttribute("value", `${textToEdit}`);
+                                        newInput.setAttribute("class", "editedTask")
+                                        liToReplace.parentNode.replaceChild(newInput, liToReplace);//works
 
-                    let parentDiv = event.target.closest('.task');
-                    let liToReplace = parentDiv.children[2];
-                    let textToEdit = parentDiv.children[2].textContent;
+                                        const saveButton = document.createElement('BUTTON');
+                                        saveButton.setAttribute("class", "save-button");
+                                        saveButton.setAttribute("type", "submit");
+                                        saveButton.textContent = "Save Changes";
+                                        newInput.after(saveButton);
+                                    }
 
-                    if (!document.querySelector('.save-button')){  //stops the situation whereby a user can open 2 or more input edit boxes.
-                    
-                        const newInput = document.createElement("INPUT");
-                        newInput.setAttribute("type", "text")
-                        newInput.setAttribute("value", `${textToEdit}`);
-                        newInput.setAttribute("class", "editedTask")
-                        liToReplace.parentNode.replaceChild(newInput, liToReplace);//works
+                                const saveButton = document.querySelector('.save-button');
+                                const inputBox = document.querySelector('.editedTask')
+                                
+                                saveButton.addEventListener('click', function(){
+                                    //create a new list element to put the edited task into
+                                    const newLi = document.createElement('LI');
+                                    newLi.setAttribute("class", "task-description");
+                                    newLi.setAttribute("id", `${liToReplace.id}` ); //because it's still available in memory.
+                                    newLi.textContent = inputBox.value; //set the value of the li to the edited task value.
+                                    inputBox.parentNode.replaceChild(newLi, inputBox); //confusing AF but basically replace the input box with the Li in the most awkward way possible. 
+                                    
+                                    saveButton.remove();
 
-                        const saveButton = document.createElement('BUTTON');
-                        saveButton.setAttribute("class", "save-button");
-                        saveButton.setAttribute("type", "submit");
-                        saveButton.textContent = "Save Changes";
-                        newInput.after(saveButton);
-                     }
+                                    list.taskList.forEach(task => {
+                                        if(task.id == newLi.id){
+                                            task.taskDescription = newLi.textContent;
+                                        }
+                                        if((task.id == newLi.id) && (task.completed == true)){
+                                            newLi.classList.add('completed');
+                                        }
+                                    })
+                                list.setDataToLocalStorage()
+                            })
 
-                const saveButton = document.querySelector('.save-button');
-                const inputBox = document.querySelector('.editedTask')
-                
-                saveButton.addEventListener('click', function(){
-                    //create a new list element to put the edited task into
-                    const newLi = document.createElement('LI');
-                    newLi.setAttribute("class", "task-description");
-                    newLi.setAttribute("id", `${liToReplace.id}` ); //because it's still available in memory.
-                    newLi.textContent = inputBox.value; //set the value of the li to the edited task value.
-                    inputBox.parentNode.replaceChild(newLi, inputBox); //confusing AF but basically replace the input box with the Li in the most awkward way possible. 
-                    
-                    saveButton.remove();
-
-                    list.taskList.forEach(task => {
-                        if(task.id == newLi.id){
-                            task.taskDescription = newLi.textContent;
-                        }
-                        if((task.id == newLi.id) && (task.completed == true)){
-                            newLi.classList.add('completed');
-                        }
-                    })
-                  list.setDataToLocalStorage()
+                                }
+                            })
+                        })
+                    }
+                })
             })
         })
-    })
-})
-}
+
+    }
     toggleTaskComplete(){
         //listen for checkbox clicks on specific task.
         const arrayOfCheckboxes = document.querySelectorAll('.taskCheckbox');
@@ -1089,37 +1097,42 @@ class List {
 
     deleteTask(){
         const ellipsisArray = document.querySelectorAll('.task-options');
-
         ellipsisArray.forEach(function(ellipsis){
-                
-            ellipsis.addEventListener('click', function(){
-                const deleteTask = document.querySelector('.delete-task-option');
-                deleteTask.addEventListener('click', function(event){
-                    
-                    let taskToDelete = event.target.closest('.task');
-                    let taskToDeleteId = taskToDelete.children[2].id;
+            ['click','keyup'].forEach(function(evt){
+                ellipsis.addEventListener(evt, function(elipEvent){
+                    if((evt === 'click') || (elipEvent.keyCode === 9)) {
+                         const deleteTaskButton = document.querySelector('.delete-task-option');
+                        ['click','keyup'].forEach(function(e){
+                            deleteTaskButton.addEventListener(e, function(event){
+                                if((e === 'click') || (event.keyCode === 13)) {
+                                    let taskToDelete = event.target.closest('.task');
+                                    let taskToDeleteId = taskToDelete.children[2].id;
 
-                    //Removes the task from the DOM
-                    taskToDelete.remove();
+                                    //Removes the task from the DOM
+                                    taskToDelete.remove();
 
-                    //Removes the Task from the taskList array.
-                    list.taskList.splice(list.taskList.findIndex(task => task.id == taskToDeleteId), 1);
+                                    //Removes the Task from the taskList array.
+                                    list.taskList.splice(list.taskList.findIndex(task => task.id == taskToDeleteId), 1);
 
-                    //resets the Task object ids to run from 0 upwards.
-                    let tList = list.taskList;
-                    for (let i=0; i<tList.length; i++){
-                        tList[i].id = i;
+                                    //resets the Task object ids to run from 0 upwards.
+                                    let tList = list.taskList;
+                                    for (let i=0; i<tList.length; i++){
+                                        tList[i].id = i;
+                                    }
+                                    let arrOfDomTasks = document.querySelectorAll('.task-description');
+                                    for (let i=0; i<arrOfDomTasks.length; i++){
+                                        arrOfDomTasks[i].id = i.toString();
+                                    }
+
+                                    list.setDataToLocalStorage();
+                                }
+                            })
+                        })
                     }
-                    let arrOfDomTasks = document.querySelectorAll('.task-description');
-                    for (let i=0; i<arrOfDomTasks.length; i++){
-                        arrOfDomTasks[i].id = i.toString();
-                    }
-
-                    list.setDataToLocalStorage();
-                })  
-            })     
-        })
-    }
+                })
+            })
+        }) 
+    } 
         dynamicPopoverNav(){
             
             // This code is all taken exactly as written from the tippy.js documentation including the hideOnPopperBlur plugin directly below 

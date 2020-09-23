@@ -234,6 +234,19 @@ One particular roadblock I encountered when doing so was working out how to code
 
 I eventually found [this](https://stackoverflow.com/questions/11845678/adding-multiple-event-listeners-to-one-element) code online that helped me craft that functionality, which removed a huge amount of duplication. 
 
+This got extra complex when I needed to nest two of these event arrays within each other in order to access items in the options menu popover. It eventually worked like this: 
+
+            ellipsisArray.forEach(function(ellipsis){
+            ['click','keyup'].forEach(function(evt){
+                ellipsis.addEventListener(evt, function(elipEvent){
+                    if((evt === 'click') || (elipEvent.keyCode === 9)) {
+                        const countdown15Button = document.querySelector('.countdown15-task-option');
+                        ['click','keyup'].forEach(function(e){
+                            countdown15Button.addEventListener(e, function(event){
+                                if((e === 'click') || (event.keyCode === 13)) { 
+                                    REST OF LOGIC HERE }
+While verbose and winding, this was definitely preferable to writing out the exact same logic twice, once for click events and once for keyup events. 
+
 # Future Release Features
 
 1. Connecting to a database and creating user accounts with proper storage and retrieval of data. 

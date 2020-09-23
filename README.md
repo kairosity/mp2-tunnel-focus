@@ -228,6 +228,12 @@ overwhelming the user with colour and charts.
 
 # Accessibility
 
+Ensuring that the entire application is keyboard accessible was very important from the outset and each function and section of the application was coded with full keyboard functionality in mind. 
+
+One particular roadblock I encountered when doing so was working out how to code behaviour based on two event listeners without having to duplicate large amounts of code.
+
+I eventually found [this](https://stackoverflow.com/questions/11845678/adding-multiple-event-listeners-to-one-element) code online that helped me craft that functionality, which removed a huge amount of duplication. 
+
 # Future Release Features
 
 1. Connecting to a database and creating user accounts with proper storage and retrieval of data. 
@@ -251,6 +257,9 @@ overwhelming the user with colour and charts.
 
 - ### **[hideOnPopperBlur tippy.js Plugin](https://atomiks.github.io/tippyjs/v6/plugins/#hideonpopperblur)**
     I used this code to solve a keyboard accessibility issue referenced in testing. 
+
+- ### **[Allan Nienhuis's Stack Overflow Solution to coding for two event listeners at once.](https://stackoverflow.com/questions/11845678/adding-multiple-event-listeners-to-one-element)**
+    This was used to enable me to write behaviour for both click and keyup event listeners within the same code block. 
     
 # Deployment
 

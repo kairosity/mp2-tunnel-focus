@@ -38,7 +38,6 @@ class Timer {
         const addNewTaskButton = document.querySelector('#add-new-task');
         const newTaskInput = document.querySelector('#new-task-input');
         const arrayOfCheckboxes = document.querySelectorAll('.taskCheckbox');
-        const arrayOfStopwatchIcons = document.querySelectorAll('.task-stopwatch');
         const arrayOfSortIcons = document.querySelectorAll('.task-sort');
         const arrayOfOptionIcons = document.querySelectorAll('.task-options');
         
@@ -80,7 +79,8 @@ class Timer {
         });  
 
             // all the stopwatches
-            arrayOfStopwatchIcons.forEach(function(stopwatch){
+            startStopwatchButtonArray.forEach(function(stopwatch){
+                console.log(stopwatch)
             stopwatch.setAttribute("tabindex", "-1")
         });   
 
@@ -110,7 +110,7 @@ class Timer {
         });  
 
             // all the stopwatches
-            arrayOfStopwatchIcons.forEach(function(stopwatch){
+            startStopwatchButtonArray.forEach(function(stopwatch){
             stopwatch.setAttribute("tabindex", "0")
         });   
 
@@ -254,58 +254,72 @@ class Timer {
 // --------------------------------------STRUCTURAL FUNCTIONS-------------------------------// 
 
         function stopWatchClickStart(){
+        
             //Event listener on each task's stopwatch icon
             startStopwatchButtonArray.forEach(function(stopwatchButton){
-                stopwatchButton.addEventListener('click', function(event){
 
-                    //if there are no timers playing then... automatically run StopWatchPlay - may not need this anymore??
-                    if ((!playing) && (seconds == 0) && (minutes == 0) && (hours==0) && (playButton.style.display == '')) {
-                        
-                        //show timer when stopwatch clicked.
-                        timerContainer.style.display = 'flex'; 
+                ['click','keyup'].forEach(function(e){
 
-                        // starts playing the stopwatch automatically.
-                        stopWatchPlay();
+                    stopwatchButton.addEventListener(e, function(event){
+                        if((e === 'click') || (event.keyCode === 13)) {
 
-                        addOverlay();
+                           
+                            //if there are no timers playing then... automatically run StopWatchPlay - may not need this anymore??
+                            if ((!playing) && (seconds == 0) && (minutes == 0) && (hours==0) && (playButton.style.display == '')) {
 
-                        //bring the timer container above the overlay
-                         timerContainer.style.zIndex = 1001;
+                            //show timer when stopwatch clicked.
+                            timerContainer.style.display = 'flex'; 
 
-                        makeElementsNotKeyboardTabbable();
+                            // starts playing the stopwatch automatically.
+                            stopWatchPlay();
 
-                        //Find the id of the task clicked on.
-                        let id = event.target.parentElement.previousElementSibling.id;
+                            addOverlay();
 
-                        //Find the task description and add it as a h2 in the timer.
-                        let description = event.target.parentElement.previousElementSibling.textContent;
-                        
-                        //Select the area where the title will go
-                        let timerTitle = document.querySelector('.timer-task-description');
-                        //Give it an id to match the task's id.
-                        timerTitle.id = id;
-                        //give it a description to match task description.
-                        timerTitle.textContent = description;
+                            //bring the timer container above the overlay
+                            timerContainer.style.zIndex = 1001;
 
-                        let timerContainerTitle = "Stopwatch";
-                        let timerId = "stopwatch-timer-title";
-                        createTimerTitle(timerContainerTitle, timerId);
+                            console.log(event.target.parentElement.previousElementSibling.id);
+                            //Find the id of the task clicked on.
+                            let id = event.target.parentElement.previousElementSibling.id;
 
-                    } else {
-                        startStopwatchButtonArray.forEach(function(stopwatchButton){
-                                event.preventDefault();
-                        }) //may not need any of this? 
-                        console.log("We cannot play the timer because one of these things is true: 1-playing==true 2-seconds, minutes or hours are not at 0 or the play button is visible.");
-                    }             
+                            //Find the task description and add it as a h2 in the timer.
+                            let description = event.target.parentElement.previousElementSibling.textContent;
+                            
+                            //Select the area where the title will go
+                            let timerTitle = document.querySelector('.timer-task-description');
+                            //Give it an id to match the task's id.
+                            timerTitle.id = id;
+                            //give it a description to match task description.
+                            timerTitle.textContent = description;
+
+                            let timerContainerTitle = "Stopwatch";
+                            let timerId = "stopwatch-timer-title";
+                            createTimerTitle(timerContainerTitle, timerId);
+
+                            makeElementsNotKeyboardTabbable();
+
+                        } else {
+                            startStopwatchButtonArray.forEach(function(stopwatchButton){
+                                    event.preventDefault();
+                            }) //may not need any of this? 
+                            console.log("We cannot play the timer because one of these things is true: 1-playing==true 2-seconds, minutes or hours are not at 0 or the play button is visible.");
+                        }             
                     pauseOnClick(stopwatch); 
                     resetTime(stopwatch);
                     playOnClick();
                     closeTimer();
                     timer.initialiseTimer();
-                });
-            });
-        } 
+                } //if statement
+            }, false) //stopwatch button event listener.
+      
+            }); //event arr forEach  
+    }); //start stopwatch button array
+                        
+} //main func.
     function countDown15ClickStart(){
+
+
+
         const ellipsisArray = document.querySelectorAll('.task-options');
         ellipsisArray.forEach(function(ellipsis){  
 
@@ -623,6 +637,7 @@ class Timer {
                     let hoursInSeconds = hours * 3600;
                     var timeToAdd = seconds + minutesInSeconds + hoursInSeconds;
                 }
+                // timeToAdd = seconds;
                 
         //Find the task object with that taskId and add the timeToAdd to its timeFocusedOnTask prop.
         list.taskList[id].totalTimeFocusedOnTask += timeToAdd;
@@ -851,7 +866,7 @@ convertSecondsToTime(seconds){
     let secondsConverted = Math.floor(seconds % 3600 % 60);
 
     return `${hoursConverted}hrs ${minutesConverted}mins ${secondsConverted}secs`;
-}   
+}  
 }
 // A Task Class that has all the properties and methods associated with a task
 
@@ -883,7 +898,7 @@ class List {
                     <p class="total-task-time">${taskList[i].totalTimeFocusedOnTaskLongForm}</p>
                     <input class="taskCheckbox" type="checkbox" checked>
                     <li class="task-description completed" id="${taskList[i].id}">${taskList[i].taskDescription}</li>
-                    <a class="task-stopwatch" tabindex=0><i class="fas fa-stopwatch start-stopwatch"></i></i></a>
+                    <a class="task-stopwatch" ><i class="fas fa-stopwatch start-stopwatch" tabindex=0></i></i></a>
                     <a class="task-sort" tabindex=0><i class="fas fa-sort sort-tasks-icon"></i></a>
                     <a class="task-options" aria-label="task-options-ellipsis" tabindex=0><i class="fas fa-ellipsis-v task-options-icon"></i></a>
                 </div>`;
@@ -894,7 +909,7 @@ class List {
                     <p class="total-task-time">${taskList[i].totalTimeFocusedOnTaskLongForm}</p>
                     <input class="taskCheckbox" type="checkbox">
                     <li class="task-description" id="${taskList[i].id}">${taskList[i].taskDescription}</li>
-                    <a class="task-stopwatch" tabindex=0><i class="fas fa-stopwatch start-stopwatch" ></i></i></a>
+                    <a class="task-stopwatch"><i class="fas fa-stopwatch start-stopwatch"  tabindex=0 ></i></i></a>
                     <a class="task-sort" tabindex=0><i class="fas fa-sort sort-tasks-icon"></i></a>
                     <a class="task-options" tabindex=0><i class="fas fa-ellipsis-v task-options-icon"></i></a>
                 </div>`;
@@ -935,7 +950,7 @@ class List {
                     <p class="total-task-time">${newTask.totalTimeFocusedOnTaskLongForm}</p>
                     <input class="taskCheckbox" type="checkbox">
                     <li class="task-description" id="${newTask.id}">${newTask.taskDescription}</li>
-                    <a class="task-stopwatch" tabindex=0><i class="fas fa-stopwatch start-stopwatch" ></i></i></a>
+                    <a class="task-stopwatch" ><i class="fas fa-stopwatch start-stopwatch" tabindex=0 ></i></i></a>
                     <a class="task-sort" tabindex=0><i class="fas fa-sort sort-tasks-icon"></i></a>
                     <a class="task-options" tabindex=0><i class="fas fa-ellipsis-v task-options-icon"></i></a>
                 </div>`;

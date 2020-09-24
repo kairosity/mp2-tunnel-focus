@@ -211,6 +211,23 @@ __ISSUE 1:__ I could not call this method from within other functions in this cl
 
 __FIX 1:__ I had instantiated a local variable called timer and used it to refer to the timer container in the DOM. So calling timer.convertSecondsToTime() when trying to refer to an instance of the Timer Object called timer, was not actually doing that and was indeed not defined. Changing the variable name to timerContainer fixed the issue. 
 
+__ISSUE 2:__ The manual edit time function was working the first time you clicked or pressed enter on it, but then the second time it was running through the function fully and then running through it again, which was causing all sorts of issues. Below is how it worked on the first click (successfully displaying the elements it is meant to):
+
+![success](misc-images/howitshouldlook.png)
+
+But this is what was happening: 
+
+![manualtasktimebug](misc-images/issue2manualtasktimeedit.png)
+
+__FIX 2:__ The issue was that the click event handlers for the manual time edit button were adding up each time a user clicked on the button without refreshing the page. I eventually discovered this by examining the event listeners on that button at various stages of the function (as seen below): 
+
+![1stround](misc-images/1st-round.png)
+![2ndround](misc-images/2nd-round.png)
+
+Then Haley from tutor support sent me [this](https://stackoverflow.com/questions/209029/best-way-to-remove-an-event-handler-in-jquery)useful information about using jQuery to effect a bind and unbind function on event listeners, in order to cancel or remove the event listeners of click and / or keyup. This worked a treat, as below:
+
+                    $(this).unbind('click', arguments.callee);
+                    $(this).unbind('keyup', arguments.callee);
 
 
 ## Task Class

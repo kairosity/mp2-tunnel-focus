@@ -364,6 +364,10 @@ While verbose and winding, this was definitely preferable to writing out the exa
 
 - ### **[Solution to the interactive tippy.js keyboard issues](https://github.com/atomiks/tippyjs/issues/744#issuecomment-603631934)**
     Keyboard accessibility issue (referenced in testing.md file) with the default behaviour of the tippy.js popovers when used interactively by keyboard users. This plugin solution worked a treat.
+
+- ### **[Information about removing event listeners using jQuery](https://stackoverflow.com/questions/209029/best-way-to-remove-an-event-handler-in-jquery)**
+
+    Used to fix an infuriating bug on my manual time edit function. Referenced further in testing.md
     
 ## 4. General
 
@@ -392,3 +396,6 @@ While verbose and winding, this was definitely preferable to writing out the exa
 - GitPod
 
 # Acknowledgements
+
+Thanks To Haley from Tutor Support who helped me crack a particularly stubborn bug in the Manual Time Edit Function. 
+Thanks to Igor from Tutor Support who gave me some great direction v-a-v Jasmine Testing. 

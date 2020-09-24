@@ -681,17 +681,32 @@ class Timer {
 
     }
     function manualTaskTimeEdit(){
-        // Event Listener for clicks on edit time button in popover.
+        
         const ellipsisArray = document.querySelectorAll('.task-options');
-
         ellipsisArray.forEach(function(ellipsis){
+             //for each of these event types do the following:
             ['click','keyup'].forEach(function(evt){
+                 //listen for either of the above on ind. elipsises. passing on the specific elip in elipEvent
                 ellipsis.addEventListener(evt, function(elipEvent){
+                     //if the evt is click or the keyup event is a tab...
                     if((evt === 'click') || (elipEvent.keyCode === 9)) {
-                        const manuallyEditTimeButton = document.querySelector('.edit-task-time-task-option');
-                        ['click','keyup'].forEach(function(e){
-                            manuallyEditTimeButton.addEventListener(e, function(event){
-                                if((e === 'click') || (event.keyCode === 13)) {
+        
+                const manuallyEditTimeButton = document.querySelector('.edit-task-time-task-option');
+                console.log("Elip array clicked");
+                console.log(ellipsis); //working
+                
+                console.log(manuallyEditTimeButton);
+                      
+                // manuallyEditTimeButton.addEventListener('click', function(event){
+                    $(manuallyEditTimeButton).bind('click keyup', function(event){
+
+                        console.log(event.type);
+                        console.log(event.keyCode);
+
+                        if((event.type === 'click') || (event.type === 'keyup') && (event.keyCode === 13)) {
+                        
+
+                                    
                                 //Find the task clicked on and save in parentDiv.
                                 let parentDiv = event.target.closest('.task');
 
@@ -724,7 +739,6 @@ class Timer {
                                 parentDiv.children[4].classList.add('hidden');
                                 parentDiv.children[5].classList.add('hidden');
 
-                                
                                 //if there's no save time button already there then ....
                                 if (!document.querySelector('.edit-time-save-button')){ 
 
@@ -741,6 +755,7 @@ class Timer {
 
                                     //select the task description
                                     let taskToTarget = parentDiv.children[2];
+                                   
                                     taskToTarget.classList.add('edit-time-task-description');
                                     taskToTarget.classList.remove('task');
 
@@ -782,9 +797,8 @@ class Timer {
 
                                     //add the cancel button after the save button.
                                     saveButton.after(cancelButton);
-                                    
 
-                                    //click event listener on the save button.
+                                    //click event listener on the save button. //no need for both save button vars.
                                     let saveBtn = document.querySelector('.edit-time-save-button');
                                     saveBtn.addEventListener('click', function(){
 
@@ -806,9 +820,6 @@ class Timer {
 
                                         let longFormTimeToAdd = timer.convertSecondsToTime(timeToAdd);
 
-                                        //find id number of the task in ques.
-                                        console.log(timeToAdd);
-                                        console.log(longFormTimeToAdd);
 
                                         //id matching loop - updates the totalTimeFocusedOnTask.
                                         for (let i=0; i<list.taskList.length; i++){
@@ -817,6 +828,7 @@ class Timer {
                                                 list.taskList[i].totalTimeFocusedOnTaskLongForm = longFormTimeToAdd; 
                                             }
                                         }
+                                        
                                         //remove the save button
                                         parentDiv.removeChild(saveBtn);
                                         parentDiv.classList.remove('edit-time-task');
@@ -830,7 +842,9 @@ class Timer {
                                         parentDiv.removeChild(document.getElementById('editMinutes'));
                                         parentDiv.removeChild(document.querySelector('.edit-time-minutes-label'));
                                         parentDiv.removeChild(document.getElementById('editHours'));
-                                        parentDiv.removeChild(document.querySelector('.edit-time-hours-label'));     
+                                        parentDiv.removeChild(document.querySelector('.edit-time-hours-label'));    
+                                        
+                                        parentDiv.style.zIndex = 0;
 
                                         //bring back all the required elements in correct order
                                         
@@ -840,11 +854,12 @@ class Timer {
                                         let updatedTime = document.createElement('P');
                                         updatedTime.setAttribute('class', 'total-task-time');
                                         updatedTime.textContent = `${longFormTimeToAdd}`;
-                                        let newTime = parentDiv.insertBefore(updatedTime, insertBeforeNode);
+                                        // let newTime = 
+                                        parentDiv.insertBefore(updatedTime, insertBeforeNode);
 
                                         //bring back checkbox
                                         parentDiv.children[1].classList.remove('hidden');
-                                        console.log(parentDiv.children[1]);
+                                     
                                         //remove special class from description
                                         parentDiv.children[2].classList.remove('edit-time-task-description');
                                         //bring back the icons
@@ -854,16 +869,20 @@ class Timer {
 
                                         makeElementsKeyboardTabbableAgain();
                                         removeOverlay();
-                            })
+                                        list.setDataToLocalStorage();
+                                    })
+                                }
+
+                                $(this).unbind('click', arguments.callee);
+                                $(this).unbind('keyup', arguments.callee);
+                            }
+                            });
                         }
-                    }
+                    })
                 })
             })
         }
-    })
-    })
-})
-}
+  
     function addOverlay(){
         let pageBody = document.getElementsByTagName('BODY')[0]
         let overlayEl = document.createElement("DIV");

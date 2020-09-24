@@ -215,7 +215,7 @@ __ISSUE 2:__ The manual edit time function was working the first time you clicke
 
 ![success](misc-images/howitshouldlook.png)
 
-But this is what was happening: 
+But this is what was happening on the second click without refreshing the page: 
 
 ![manualtasktimebug](misc-images/issue2manualtasktimeedit.png)
 
@@ -224,7 +224,7 @@ __FIX 2:__ The issue was that the click event handlers for the manual time edit 
 ![1stround](misc-images/1st-round.png)
 ![2ndround](misc-images/2nd-round.png)
 
-Then Haley from tutor support sent me [this](https://stackoverflow.com/questions/209029/best-way-to-remove-an-event-handler-in-jquery)useful information about using jQuery to effect a bind and unbind function on event listeners, in order to cancel or remove the event listeners of click and / or keyup. This worked a treat, as below:
+Then Haley from tutor support sent me [this](https://stackoverflow.com/questions/209029/best-way-to-remove-an-event-handler-in-jquery) useful information about using jQuery to effect a bind and unbind function on event listeners, in order to cancel or remove the event listeners of click and / or keyup. This worked a treat, as below:
 
                     $(this).unbind('click', arguments.callee);
                     $(this).unbind('keyup', arguments.callee);

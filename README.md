@@ -276,6 +276,25 @@ While verbose and winding, this was definitely preferable to writing out the exa
     
 # Deployment
 
+This website was developed using GitPod in a Chrome browser and commits were pushed to a GitHub repository. This site is currently hosted on GitHub pages.
+
+## How I Published to GitHub Pages:
+
+1. I went to the main page of my GitHub repository.
+2. I clicked on the "Settings" tab on the main horizontal tab bar.
+
+![settings](misc-images/deployment0.png)
+
+3. I scrolled down to the "GitHub Pages" section of settings.
+
+![githubpages](misc-images/deployment1.png)
+
+4. I selected "Branch: Master" and the "Root" Directory and then clicked "Save".
+
+![branch](misc-images/deployment2.png)
+
+5. Site Published.
+
 # Tools & Other Resources Used 
 
 ## 1. Design 

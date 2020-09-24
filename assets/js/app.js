@@ -692,21 +692,12 @@ class Timer {
                     if((evt === 'click') || (elipEvent.keyCode === 9)) {
         
                 const manuallyEditTimeButton = document.querySelector('.edit-task-time-task-option');
-                console.log("Elip array clicked");
-                console.log(ellipsis); //working
-                
-                console.log(manuallyEditTimeButton);
                       
                 // manuallyEditTimeButton.addEventListener('click', function(event){
                     $(manuallyEditTimeButton).bind('click keyup', function(event){
 
-                        console.log(event.type);
-                        console.log(event.keyCode);
-
                         if((event.type === 'click') || (event.type === 'keyup') && (event.keyCode === 13)) {
-                        
-
-                                    
+                              
                                 //Find the task clicked on and save in parentDiv.
                                 let parentDiv = event.target.closest('.task');
 
@@ -870,6 +861,54 @@ class Timer {
                                         makeElementsKeyboardTabbableAgain();
                                         removeOverlay();
                                         list.setDataToLocalStorage();
+                                    })
+
+                                    let cancelBtn = document.querySelector('.edit-time-cancel-button');
+                                    cancelBtn.addEventListener('click', function(){
+
+                                        let longFormTimeToAdd = list.taskList[taskToTargetId].totalTimeFocusedOnTaskLongForm;
+                                        
+                                        //remove the save button
+                                        parentDiv.removeChild(saveBtn);
+                                        parentDiv.classList.remove('edit-time-task');
+
+                                        //remove the cancel button
+                                        parentDiv.removeChild(cancelButton);
+
+                                        //remove / destroy all the new elements 
+                                        parentDiv.removeChild(document.getElementById('editSeconds'));
+                                        parentDiv.removeChild(document.querySelector('.edit-time-seconds-label'));
+                                        parentDiv.removeChild(document.getElementById('editMinutes'));
+                                        parentDiv.removeChild(document.querySelector('.edit-time-minutes-label'));
+                                        parentDiv.removeChild(document.getElementById('editHours'));
+                                        parentDiv.removeChild(document.querySelector('.edit-time-hours-label'));    
+                                        
+                                        parentDiv.style.zIndex = 0;
+
+                                        //bring back all the required elements in correct order
+                                        
+                                        //bring back the updated longform time <p>  
+                                        let insertBeforeNode = parentDiv.children[0];
+
+                                        let updatedTime = document.createElement('P');
+                                        updatedTime.setAttribute('class', 'total-task-time');
+                                        updatedTime.textContent = `${longFormTimeToAdd}`;
+                                        // let newTime = 
+                                        parentDiv.insertBefore(updatedTime, insertBeforeNode);
+
+                                        //bring back checkbox
+                                        parentDiv.children[1].classList.remove('hidden');
+                                     
+                                        //remove special class from description
+                                        parentDiv.children[2].classList.remove('edit-time-task-description');
+                                        //bring back the icons
+                                        parentDiv.children[3].classList.remove('hidden');
+                                        parentDiv.children[4].classList.remove('hidden');
+                                        parentDiv.children[5].classList.remove('hidden');
+
+                                        makeElementsKeyboardTabbableAgain();
+                                        removeOverlay();
+                                        
                                     })
                                 }
 

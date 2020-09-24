@@ -273,6 +273,9 @@ While verbose and winding, this was definitely preferable to writing out the exa
 
 - ### **[Allan Nienhuis's Stack Overflow Solution to coding for two event listeners at once.](https://stackoverflow.com/questions/11845678/adding-multiple-event-listeners-to-one-element)**
     This was used to enable me to write behaviour for both click and keyup event listeners within the same code block. 
+
+- ### **[Mikel Rychliski's Stack Overflow Solution to preventing negative numbers being allowed in inputs.](https://stackoverflow.com/questions/31575496/prevent-negative-inputs-in-form-input-type-number)**
+    This was used in my manual task time edit function to stop people being able to input negative time. 
     
 # Deployment
 

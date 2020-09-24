@@ -230,6 +230,10 @@ Then Haley from tutor support sent me [this](https://stackoverflow.com/questions
                     $(this).unbind('keyup', arguments.callee);
 
 
+__ISSUE 3:__ The new inputs created by the manualTaskTimeEdit() function allowed users to input negative numbers as time to add to a task. This is a logical impossibility, so I needed to find a way to make it impossible for a user to do this. 
+
+__FIX 3:__ I found [this](https://stackoverflow.com/questions/31575496/prevent-negative-inputs-in-form-input-type-number) code on Stack Overflow which I added to the input construction as an attribute/value pair. 
+
 ## Task Class
 
 ### *Properties*: 

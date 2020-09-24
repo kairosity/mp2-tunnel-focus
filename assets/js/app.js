@@ -605,8 +605,11 @@ class Timer {
              
             //alert asking if the user definitely want to add {seconds} to their total time on that task.
             let timerTitle = document.querySelector('.timer-task-description');
+
             
-            if(confirm("Do you want to save this time to this task?")){
+            let thisTask = timerTitle.textContent;
+            
+            if(confirm(`Do you want to save this time to ${thisTask}?`)){
                 saveTimeToTask(timerTitle.id, seconds);
                 //needs to update the time spent display on task list.
                 let idForSavingTime = timerTitle.id;
@@ -759,8 +762,9 @@ class Timer {
                                         const newTime = document.createElement("INPUT");
                                         newTime.setAttribute("type", "number")
                                         newTime.setAttribute("value", `${timeToEdit}`);
-                                        newTime.setAttribute("id", "edit"+timeMeasure)
-                                        newTime.setAttribute("class", "editTime edit-time-"+timeMeasure.toLowerCase())
+                                        newTime.setAttribute("id", "edit"+timeMeasure);
+                                        newTime.setAttribute("class", "editTime edit-time-"+timeMeasure.toLowerCase());
+                                        newTime.setAttribute("oninput", "validity.valid||(value='')");
                                         pElementToTarget.parentNode.insertBefore(newTime, pElementToTarget);
                                     }
 

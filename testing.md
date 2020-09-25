@@ -234,6 +234,10 @@ __ISSUE 3:__ The new inputs created by the manualTaskTimeEdit() function allowed
 
 __FIX 3:__ I found [this](https://stackoverflow.com/questions/31575496/prevent-negative-inputs-in-form-input-type-number) code on Stack Overflow which I added to the input construction as an attribute/value pair. 
 
+__ISSUE 4:__ This worked for manual inputs of time, but users could still input negative numbers by using the down arrows in the number input section. 
+
+__FIX 4:__ 
+
 ## Task Class
 
 ### *Properties*: 

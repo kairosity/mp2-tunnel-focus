@@ -206,9 +206,14 @@ class Timer {
             if((seconds<0) && (minutes==0)){
                 if (alarmButton.innerHTML == `<i class="fas fa-bell-slash" aria-hidden="true"></i>`){
                 alarm.muted == true;
+                clearInterval(countdown15);
+                clearInterval(countdown25);
                 countdownEnded();
+                
             } else {
                 alarm.play()
+                clearInterval(countdown15);
+                clearInterval(countdown25);
                 countdownEnded();
             }      
             }
@@ -511,9 +516,21 @@ class Timer {
     }      
     function countdownEnded(){ 
         playing = false;  
-        
-        //need something here to stop the timer immediately.
 
+        // let countdownType = document.getElementById('countdown15-timer-title').textContent;
+
+        // if (countdownType === "Countdown 15"){
+        //     clearInterval(countdown15);
+        // } else if (countdownType === "Countdown 25"){
+        //     clearInterval(countdown25); 
+        // }
+
+        //cant clear interval here. It will save 15 minutes. 
+          
+        // pauseButton.style.display = "none";
+        // playButton.style.display = "inline-block";
+        
+        
         //!FIX: change this to a well styled modal.
         if(confirm("Do you want to save this time to this task?")){
 
@@ -716,9 +733,21 @@ class Timer {
 
                                 //transform each of the string time numbers into numbers and push them to timeArray
                                 timeToEdit.forEach(function(item){
-                                    if (item.length>4){
+                                    if (item.length === 5){
                                         timeArray.push(parseInt(item.slice(0,2)));
-                                    } else {
+                                    } else if(item.length === 6){
+                                        timeArray.push(parseInt(item.slice(0,3)));
+                                    } else if(item.length === 7){
+                                        timeArray.push(parseInt(item.slice(0,4)));
+                                    } else if(item.length === 8){
+                                        timeArray.push(parseInt(item.slice(0,5)));
+                                    } else if(item.length === 9){
+                                        timeArray.push(parseInt(item.slice(0,6)));
+                                    } else if(item.length === 10){
+                                        timeArray.push(parseInt(item.slice(0,7)));
+                                    } else if(item.length === 11){
+                                        timeArray.push(parseInt(item.slice(0,8)));
+                                    }else {
                                         timeArray.push(parseInt(item.slice(0,1)));
                                     }
                                 });
@@ -765,6 +794,8 @@ class Timer {
                                         newTime.setAttribute("id", "edit"+timeMeasure);
                                         newTime.setAttribute("class", "editTime edit-time-"+timeMeasure.toLowerCase());
                                         newTime.setAttribute("oninput", "validity.valid||(value='')");
+                                        newTime.setAttribute("min", "0");
+                                        
                                         pElementToTarget.parentNode.insertBefore(newTime, pElementToTarget);
                                     }
 
@@ -1251,3 +1282,46 @@ list.editTask();
 list.dynamicPopoverNav();
 timer.initialiseTimer();
 timer.timers();
+
+//This data will be an array of times?
+
+var data = [2, 4, 8, 10];
+
+// define the size of the svg chart area.
+//calculate the radius - chooses whichever of the width and height is the minimum value. 
+//then g.... appends a group el to our svg to group all the pie els together. 
+ var svg = d3.select("svg"),
+        width = svg.attr("width"),
+        height = svg.attr("height"),
+        radius = Math.min(width, height) / 2,
+        g = svg.append("g").attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+
+        //select colours
+var color = d3.scaleOrdinal(['#4daf4a','#000000','#ff7f00','#984ea3','#e41a1c']);
+
+// Generate the pie - // 
+    var pie = d3.pie()
+            //tells it where to get the data. 
+            .value(function(data){
+                return data.totalTimeFocusedOnTask;
+            });
+
+    // Generate the arcs
+    var arc = d3.arc()
+                .innerRadius(0)
+                .outerRadius(radius);
+
+    //Generate groups for each of our data values. This group el holds our individual paths or wedges. 
+    var arcs = g.selectAll("arc")
+                .data(pie(list.taskList))
+                .enter()
+                .append("g")
+                .attr("class", "arc")
+
+    //Draw arc paths
+    arcs.append("path")
+        .attr("fill", function(d, i) {
+            return color(i);
+        })
+        .attr("d", arc);
+

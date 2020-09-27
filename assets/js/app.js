@@ -282,7 +282,6 @@ class Timer {
                             //bring the timer container above the overlay
                             timerContainer.style.zIndex = 1001;
 
-                            console.log(event.target.parentElement.previousElementSibling.id);
                             //Find the id of the task clicked on.
                             let id = event.target.parentElement.previousElementSibling.id;
 
@@ -1283,45 +1282,96 @@ list.dynamicPopoverNav();
 timer.initialiseTimer();
 timer.timers();
 
-//This data will be an array of times?
+// .text(function(d){
+    //     return d.totalTimeFocusedOnTask;
+    //   });
 
-var data = [2, 4, 8, 10];
+const data = list.taskList;
 
-// define the size of the svg chart area.
-//calculate the radius - chooses whichever of the width and height is the minimum value. 
-//then g.... appends a group el to our svg to group all the pie els together. 
- var svg = d3.select("svg"),
-        width = svg.attr("width"),
-        height = svg.attr("height"),
-        radius = Math.min(width, height) / 2,
-        g = svg.append("g").attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+   var w = 1000;
+   var h = 1000;
 
-        //select colours
-var color = d3.scaleOrdinal(['#4daf4a','#000000','#ff7f00','#984ea3','#e41a1c']);
-
-// Generate the pie - // 
-    var pie = d3.pie()
-            //tells it where to get the data. 
-            .value(function(data){
-                return data.totalTimeFocusedOnTask;
-            });
-
-    // Generate the arcs
+    var radius = 100;
+    var color = d3.scaleOrdinal()
+        .range(["red", "orange", "yellow", "green", "blue", "indigo", "violet"]);
+    
+    var canvas = d3.select('#listy')
+        .append("svg")
+        .attr("width", w)
+        .attr("height", h);
+    
+    var group = canvas.append("g")
+        .attr("transform", "translate(500, 350)");
+    
     var arc = d3.arc()
-                .innerRadius(0)
-                .outerRadius(radius);
-
-    //Generate groups for each of our data values. This group el holds our individual paths or wedges. 
-    var arcs = g.selectAll("arc")
-                .data(pie(list.taskList))
-                .enter()
-                .append("g")
-                .attr("class", "arc")
-
-    //Draw arc paths
-    arcs.append("path")
-        .attr("fill", function(d, i) {
-            return color(i);
+        .innerRadius(250)
+        .outerRadius(radius);
+    
+    var pie = d3.pie()
+        .value(function(d){
+            return d.totalTimeFocusedOnTask
         })
-        .attr("d", arc);
+    var tooltip = canvas.append("g")
+            .attr("class", "tooltip")
+            .style("display", "none");
 
+        
+        tooltip.append("text")
+            .attr("x", 15)
+            .attr("dy", "1.2em")
+            .style("font-size", "1.25em")
+            .attr("font-weight", "bold")
+
+    var theArc = group.selectAll(".arc")
+        .data(pie(data))
+        .enter()
+        .append("g")
+        .attr("class", "arc")
+        .on("mouseover", function(d){
+            tooltip.style("display", null);
+        })
+        .on("mouseout", function(d){
+            tooltip.style("display", "none");
+        })
+        .on("mousemove", function(d){
+            var xPos = d3.mouse(this)[0] - 15;
+            var yPos = d3.mouse(this)[1] - 55;
+            tooltip.attr("transform", "translate(" + xPos + "," + yPos + ")");
+            tooltip.select("text").text(d.totalTimeFocusedOnTaskLongForm);
+        });
+
+        
+    
+
+        console.log(data)
+
+    theArc.append("path")
+        .attr("d", arc)
+        .attr("fill", function(d){
+            console.log(d)
+            return color(d.data.totalTimeFocusedOnTask);
+            
+        })
+    
+    theArc.append("text")
+        .attr("transform", function(d){
+            return "translate(" + arc.centroid(d) + ")"
+        })
+        .attr("dy", "0.15em")
+        .text(function(d){
+            return d.data.taskDescription
+        })
+
+    theArc.append("text")
+        .attr("transform", function(d){
+            return "translate(" + arc.centroid(d) + ")"
+        })
+        .attr("dy", "1.4em")
+        .text(function(d){
+            return d.data.totalTimeFocusedOnTaskLongForm
+        })
+
+   
+
+    
+        

@@ -277,7 +277,24 @@
 /*----------------------------------------------------------- Charts   */
 
 .focus-summary-container{
+    grid-row: 3 / 4;
+    grid-column: 1 / 13;
 }
+
+svg {
+    border: 2px solid #000000;
+}
+
+.arc text {
+   font: 12px arial, sans-serif;
+   text-anchor: middle;
+}
+
+.arc path {
+   stroke: #fff;
+}
+
+
 
 /*----------------------------------------------------------- MEDIA QUERIES: Small Screens   */
 @media screen and (min-width: 576px) {

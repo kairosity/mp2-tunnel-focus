@@ -390,6 +390,14 @@ This website was developed using GitPod in a Chrome browser and commits were pus
 - ### **[Information about removing event listeners using jQuery](https://stackoverflow.com/questions/209029/best-way-to-remove-an-event-handler-in-jquery)**
 
     Used to fix an infuriating bug on my manual time edit function. Referenced further in testing.md
+
+## 4. D3.js 
+
+- ### **[Let's learn D3.js](https://www.youtube.com/watch?v=C4t6qfHZ6Tw)**
+    freeCodeCamp tutorial on D3. 
+
+- ### **[D3.js Tutorials: Part 11 - Donut Charts](https://www.youtube.com/watch?v=0KB1tKCs7qE&list=PLEDbaVSIL58PGP65y3kkZse02s79BCbsp&index=12)**
+    Great online series on D3.js
     
 ## 4. General
 

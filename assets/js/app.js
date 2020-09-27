@@ -1288,20 +1288,20 @@ timer.timers();
 
 const data = list.taskList;
 
-   var w = 1000;
-   var h = 1000;
+   var w = 1200;
+   var h = 700;
 
     var radius = 100;
     var color = d3.scaleOrdinal()
-        .range(["red", "orange", "yellow", "green", "blue", "indigo", "violet"]);
+        .range(["#33A8C7", "#52E3E1", "#A0E426", "#FDF148", "#FFAB00", "#F77976", "#F050AE", "#D883FF", "#9336FD"]); //colours for slices/ arcs
     
-    var canvas = d3.select('#listy')
-        .append("svg")
+    var svg = d3.select('#charts') //select the charts div
+        .append("svg") //create an svg el
         .attr("width", w)
         .attr("height", h);
     
-    var group = canvas.append("g")
-        .attr("transform", "translate(500, 350)");
+    var group = svg.append("g") // create a group and append to svg (inside)
+        .attr('transform', 'translate(' + (350) + ',' + (h  / 2) + ')'); //where the chart sits in the svg box
     
     var arc = d3.arc()
         .innerRadius(250)
@@ -1309,67 +1309,60 @@ const data = list.taskList;
     
     var pie = d3.pie()
         .value(function(d){
-            return d.totalTimeFocusedOnTask
+            return d.totalTimeFocusedOnTask //what data will the chart use to create the slices.
         })
-    var tooltip = canvas.append("g")
-            .attr("class", "tooltip")
-            .style("display", "none");
+        .sort(null); //stops the chart sorting in order of size.
 
-        
-        tooltip.append("text")
-            .attr("x", 15)
-            .attr("dy", "1.2em")
-            .style("font-size", "1.25em")
-            .attr("font-weight", "bold")
-
-    var theArc = group.selectAll(".arc")
+    var path = group.selectAll("path")
         .data(pie(data))
         .enter()
-        .append("g")
-        .attr("class", "arc")
-        .on("mouseover", function(d){
-            tooltip.style("display", null);
-        })
-        .on("mouseout", function(d){
-            tooltip.style("display", "none");
-        })
-        .on("mousemove", function(d){
-            var xPos = d3.mouse(this)[0] - 15;
-            var yPos = d3.mouse(this)[1] - 55;
-            tooltip.attr("transform", "translate(" + xPos + "," + yPos + ")");
-            tooltip.select("text").text(d.totalTimeFocusedOnTaskLongForm);
-        });
-
-        
-    
-
-        console.log(data)
-
-    theArc.append("path")
+        .append("path")
         .attr("d", arc)
         .attr("fill", function(d){
-            console.log(d)
-            return color(d.data.totalTimeFocusedOnTask);
             
+            return color(d.data.totalTimeFocusedOnTask)
         })
     
-    theArc.append("text")
+    path.append("text")
         .attr("transform", function(d){
             return "translate(" + arc.centroid(d) + ")"
         })
         .attr("dy", "0.15em")
         .text(function(d){
-            return d.data.taskDescription
+            return "task"
+            
         })
 
-    theArc.append("text")
-        .attr("transform", function(d){
-            return "translate(" + arc.centroid(d) + ")"
-        })
-        .attr("dy", "1.4em")
-        .text(function(d){
-            return d.data.totalTimeFocusedOnTaskLongForm
-        })
+    var legendRectSize = 14;
+    var legendSpacing = 7;
+    var legend = svg.selectAll('.legend') //the legend and placement
+    .data(color.domain())
+    .enter()
+    .append('g')
+    .attr('class', 'circle-legend')
+    .attr('transform', function (d, i) {
+        var height = legendRectSize + legendSpacing;
+        var offset = height * color.domain().length / 2;
+        var horz = 50 * legendRectSize + 13;
+        var vert = i * height + 200;
+        return 'translate(' + horz + ',' + vert + ')';
+    });
+    
+    legend.append('circle') //keys
+    .style('fill', color)
+    .style('stroke', color)
+    .attr('cx', 0)
+    .attr('cy', 0)
+    .attr('r', '.5rem');
+    legend.append('text') //labels
+    .data(data)
+    .attr('x', legendRectSize + legendSpacing)
+    .attr('y', legendRectSize - legendSpacing)
+    .text(function (d) {
+        return d.taskDescription + ": " + d.totalTimeFocusedOnTaskLongForm;
+        
+        
+    });
 
    
 

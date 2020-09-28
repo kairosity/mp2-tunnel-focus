@@ -297,17 +297,17 @@ path text {
    stroke: #fff;
 }
 
-div.tooltip {	
+
+div.tooltip-donut {	
     position: absolute;			
-    text-align: center;			
-    width: 60px;					
-    height: 28px;					
-    padding: 2px;				
-    font: 12px sans-serif;		
-    background: lightsteelblue;	
-    border: 0px;		
+    text-align: center;								
+    padding: .5rem;				
+    background: #FFFFFF;
+    color: #313639;	
+    border: 1px solid #313639;		
     border-radius: 8px;			
-    pointer-events: none;			
+    pointer-events: none;
+    font-size: 1.3rem;			
 }
 
 

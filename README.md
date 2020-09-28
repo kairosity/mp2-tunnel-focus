@@ -276,6 +276,9 @@ While verbose and winding, this was definitely preferable to writing out the exa
 
 - ### **[Mikel Rychliski's Stack Overflow Solution to preventing negative numbers being allowed in inputs.](https://stackoverflow.com/questions/31575496/prevent-negative-inputs-in-form-input-type-number)**
     This was used in my manual task time edit function to stop people being able to input negative time. 
+
+- ### **[Show data on mouse-over with d3.js](https://medium.com/@kj_schmidt/show-data-on-mouse-over-with-d3-js-3bf598ff8fc2)**
+    My mouse over data display borrows *heavily* from this blog entry.
     
 # Deployment
 

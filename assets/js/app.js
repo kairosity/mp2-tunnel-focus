@@ -1284,9 +1284,6 @@ timer.timers();
 
 /************************************************ CHARTS & D3.js  **************************************************/
 
-// .text(function(d){
-    //     return d.totalTimeFocusedOnTask;
-    //   });
 
 const data = list.taskList;
 
@@ -1326,24 +1323,29 @@ const data = list.taskList;
         .enter()
         .append("path")
         .attr("d", arc)
-        .attr("fill", function(d){     
-            return color(d.data.totalTimeFocusedOnTask)
+        .attr("fill", function(d){   
+            return color(d.data.taskDescription)
+            
         })
-        // .attr('transform', 'translate(0, 0)')
+        .attr("stroke", "white")
+        .style("stroke-width", "4px")
+       
         .on('mouseover', function (event, d, i) {
         d3.select(this).transition()
             .duration('50')
             .attr('opacity', '.85');
+
         //Makes the new div appear on hover:
         div.transition()
             .duration(50)
             .style("opacity", 1);
         let task = d.data.taskDescription
         let longTime = d.data.totalTimeFocusedOnTaskLongForm
-        div.html(task + ": " + longTime ) //put label to display here
+        div.html(task + "<br>" + longTime ) //put label to display here
             .style("left", (event.pageX + 10) + "px")
             .style("top", (event.pageY - 15) + "px");        
      })
+
      .on('mouseout', function (event, d, i) {
         d3.select(this).transition()
             .duration('50')
@@ -1353,7 +1355,7 @@ const data = list.taskList;
             .duration('50')
             .style("opacity", 0);
      });
-    
+
     var legend = svg.selectAll('.legend') //the legend and placement
         .data(color.domain())
         .enter()
@@ -1361,18 +1363,18 @@ const data = list.taskList;
         .attr('class', 'circle-legend')
         .attr('transform', function (d, i) {
             var height = legendRectSize + legendSpacing;
-            // var offset = height * color.domain().length / 2;
+            var offset = height * color.domain().length / 2;
             var horz = 20 * legendRectSize + 13;
-            var vert = i * height;
+            var vert = i * height - offset;
             return 'translate(' + horz + ',' + vert + ')';
         });
     
     legend.append('circle') //keys
-    .style('fill', color)
-    .style('stroke', color)
-    .attr('cx', 0)
-    .attr('cy', 0)
-    .attr('r', '0.5rem'); //size of circles
+        .style('fill', color)
+        .style('stroke', color)
+        .attr('cx', 0)
+        .attr('cy', 0)
+        .attr('r', '0.5rem'); //size of circles
 
     legend.append('text') //labels
     .data(data)

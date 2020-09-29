@@ -18,12 +18,13 @@
     
         <header class="main-header">
             <h1 class="main-heading">Tunnel Focus</h1>
-            <h2 class="main-sub-heading">Time Your Tasks</h2>
         </header>
 
          <div class="timer-container"> <!--TIMER GOES HERE: THIS IS A GRID CHILD OF GRID-OVERLORD -->
 
             <h2 id="" class="timer-task-description"></h2>
+            
+            <div class="outer-timer-box">
             <div class="timer-box">
                 <h2 id="hours"></h2>
                 <h2>:</h2>
@@ -31,14 +32,18 @@
                 <h2>:</h2>
                 <h2 id="seconds"></h2>
             </div>
+                <div class="timer-controls">
+                    <a href="#" id="alarm-on" class="alarm"><i class="fas fa-bell"></i></a>
+                    <!-- <a href="#" id="alarm-off" class="alarm"><i class="fas fa-bell-slash"></i></a> -->
+                    <a href="#" id="pause"><i class="fas fa-pause"></i></a>
+                    <a href="#" id="play"><i class="fas fa-play"></i></a>
+                    <a href="#" id="reset"><i class="fas fa-history"></i></a>
+                </div>
 
-            <div class="timer-controls">
-                <a href="#" id="alarm-on" class="alarm"><i class="fas fa-bell"></i></a>
-                <!-- <a href="#" id="alarm-off" class="alarm"><i class="fas fa-bell-slash"></i></a> -->
-                <a href="#" id="pause"><i class="fas fa-pause"></i></a>
-                <a href="#" id="play"><i class="fas fa-play"></i></a>
-                <a href="#" id="reset"><i class="fas fa-history"></i></a>
+            
             </div>
+
+            
 
             <button id="save-time-to-task">Save Time To Task</button>
 
@@ -48,7 +53,7 @@
         <div class="list-container"> <!--TASK LIST GOES HERE: THIS IS A GRID CHILD OF GRID-OVERLORD-->
             
             <div class="add-new-task">
-                <input type="text" id="new-task-input" placeholder="Add new task...">
+                <input type="text" id="new-task-input" placeholder="Type to add a new task...">
                 <button id="add-new-task"><i class="fas fa-plus add-new-task-plus-icon"></i></button>
             </div>
 

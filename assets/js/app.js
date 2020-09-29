@@ -644,6 +644,7 @@ class Timer {
                 removeTimerFromDom();
                 removeOverlay();
                 makeElementsKeyboardTabbableAgain();
+                location.reload();
          
             } 
             return playing = false; 
@@ -1091,7 +1092,7 @@ class List {
                 list.setDataToLocalStorage();
                 list.dynamicPopoverNav();
                 timer.timers();
-                location.reload(); //to fix stopwatch click start bug on new tasks that are added.
+                location.reload(); //to fix stopwatch click start bug on new tasks that are added. ASK FEMI
                
 
             } else if ((newTaskInputValue === "") || (newTaskInputValue === null)){ //this doesn't fire with spaces - look into that. 

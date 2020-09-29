@@ -1,6 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Pontano+Sans&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Cute+Font&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Heebo:wght@100;200;300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Heebo:wght@100;200;300;400;500;600;700;800;900&family=Secular+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Heebo:wght@100;200;300;400;500;600;700;800;900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Secular+One&display=swap');
 
 * {
     box-sizing: border-box;
@@ -9,12 +12,26 @@
 }
 /*----------------------------------------------------------- Colours  */
 
+:root {
+	--pure-black: #000000;
+	--pure-white: #ffffff;
+	--dark-blue: #33A8C7;
+	--light-blue: #52E3E1;
+	--grass-green: #A0E426;
+	--sun-yellow: #FDF148;
+	--orange: #FFAB00;
+	--coral: #F77976;
+    --happy-pink: #F050AE;
+    --purple-blush: #D883FF;
+    --strong-lavendar: #9336FD;
+}
+
 .page-container {
     display: grid;
     justify-content: center;
-    background-color: #D5D9DE;
+    background-color: var(--pure-white);
     grid-template-columns: repeat(12, 1fr);
-    grid-template-rows: 200px 150px 1fr 1fr;
+    grid-template-rows: 200px auto auto 1fr;
     position: relative;
 }
 /*----------------------------------------------------------- Timer  */
@@ -29,30 +46,38 @@
 
 /*----------------------------------------------------------- Header  */
 .main-header{
-    background-color: white;
+    background-color: var(--sun-yellow);
     padding: 2rem;
     display: flex;
     flex-direction: column;
     align-items: center;
-    grid-column: 2 / 12;
+    grid-column: 1 / 13;
+    justify-content: center;
+    -webkit-box-shadow: 0px 14px 0px 0px rgba(0,0,0,1);
+    -moz-box-shadow: 0px 14px 0px 0px rgba(0,0,0,1);
+    box-shadow: 0px 14px 0px 0px rgba(0,0,0,1); 
 }
 
 .main-heading {
-    font-family: "IBM Plex Sans", sans-serif;
+    font-family: "Secular One", sans-serif;
     font-size: 3.3rem;
     font-weight: 300;
+    letter-spacing: 11px;
+    text-transform: uppercase;
 }
 
 .main-sub-heading{
-    font-family: "IBM Plex Sans", sans-serif;
+    font-family: "Secular One", sans-serif;
     font-size: 2.3rem;
     font-weight: 200;
+    letter-spacing: 8px;
+    text-transform: lowercase;
 }
 
 /*----------------------------------------------------------- Timer  */
 
 .timer-container{
-    background-color: white;
+    background-color: var(--light-blue);
     grid-column: 1 / 13;
     grid-row: 2 / 3;
     display: none;
@@ -60,7 +85,7 @@
     position: relative;
     justify-content: center;
     align-items: center;
-    padding: 1em;
+    padding: 2em;
     margin: 1em;
 }
 
@@ -68,13 +93,42 @@
     position: absolute;
     right: 12px;
     top: 5px;
-    font-size: 1.6rem;
+    font-size: 1.8rem;
     cursor: pointer;
+    color: var(--pure-white);
+    border: 3px solid var(--pure-white);
+    padding: 0.7em;
+    border-radius: 50%;
+}
 
+.outer-timer-box{
+    display: grid;
+    width: 200px;
+    height: 200px;
+    border: 5px solid var(--sun-yellow);
+    border-radius: 50%;
+    padding: 2em;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 50px;
 }
 .timer-box {
     display: flex;
     align-items: center;
+    justify-content: center;  
+}
+
+.timer-controls{
+    justify-self: center;
+}
+.timer-controls a{
+    color: var(--pure-white);
+    font-size: 2em;
+}
+.timer-box h2{
+    font-family: "Heebo", sans-serif;
+    font-size: 1.6em;
+    color: var(--pure-white);
 }
 
 #play {
@@ -93,6 +147,53 @@
 #alarm-off {
     display: none;
 }
+
+.timer-title {
+    color: var(--pure-black);
+    font-family: "Secular One", sans-serif;
+    letter-spacing: 11px;
+    text-transform: uppercase;
+}
+
+.timer-task-description{
+    color: var(--pure-white);
+    padding: 0.3em;
+    font-family: "Heebo", sans-serif;
+    letter-spacing: 2px;
+    font-weight: 300;
+    border-bottom: var(--pure-white) 2px solid;
+    margin-bottom: 20px;
+    
+}
+
+#save-time-to-task {
+    background-color: var(--sun-yellow);
+    padding: 1em;
+    color: var(--pure-black);
+    font-family: "Heebo", sans-serif;
+    font-size: 1.1em;
+    font-weight: 600;
+    border: 2px solid var(--pure-black);
+    border-radius: 8px;
+    -webkit-box-shadow: 3px 5px 0px 0px rgba(0,0,0,1);
+    -moz-box-shadow: 3px 5px 0px 0px rgba(0,0,0,1);
+    box-shadow: 3px 5px 0px 0px rgba(0,0,0,1);
+    transition: all 500ms;
+}
+#save-time-to-task:hover{
+    /* -webkit-box-shadow: 1px 2px 0px 0px rgba(0,0,0,1);
+    -moz-box-shadow: 1px 2px 0px 0px rgba(0,0,0,1);
+    box-shadow: 1px 2px 0px 0px rgba(0,0,0,1); */
+    background-color: var(--pure-white);
+    color: var(--pure-black);
+}
+#save-time-to-task:active{
+    -webkit-box-shadow: 0px 0px 0px 0px rgba(0,0,0,1);
+    -moz-box-shadow: 0px 0px 0px 0px rgba(0,0,0,1);
+    box-shadow: 0px 0px 0px 0px rgba(0,0,0,1);
+    outline: none;
+}
+
 /*----------------------------------------------------------- Popover Options Box  */
 
 
@@ -107,16 +208,16 @@
 
 .tippy-box[data-theme~='blueish'] {
   background-color: rgb(255, 254, 254);
-  color: rgb(47, 0, 255);
+  color: var(--pure-black);
   box-shadow:inset 0px 0px 0px 5px rgb(47, 0, 255);
   padding: 10px;
 }
 
 .tippy-box[data-theme~='blueish'][data-placement^='top'] > .tippy-arrow::before {
-  border-top-color: rgb(47, 0, 255);
+  border-top-color: #000000;
 }
 .tippy-box[data-theme~='blueish'][data-placement^='bottom'] > .tippy-arrow::before {
-  border-bottom-color: rgb(47, 0, 255);
+  border-bottom-color: rgb(0, 0, 0);
 }
 .tippy-box[data-theme~='blueish'][data-placement^='left'] > .tippy-arrow::before {
   border-left-color: rgb(47, 0, 255);
@@ -131,8 +232,6 @@
 }
 
 
-
-
 /*----------------------------------------------------------- Add New Task  */
 
 .add-new-task{
@@ -144,16 +243,32 @@
     width: 300px;
     font-size: 1.4rem;
     border: none;
-    border-bottom: 2px solid lightgray;
+    border-bottom: 5px solid var(--pure-black);
+}
+
+#new-task-input:focus{
+    outline: none;
 }
 /* Make the placeholder text larger */
 
 #new-task-input::placeholder{
     font-size: 1.4rem;
+    font-family: "Raleway", sans-serif;
 }
 .add-new-task-plus-icon {
     display: block;
     font-size: 2em;
+}
+
+/* Add New Task Button */
+#add-new-task {
+    border-radius: 50%;
+    background-color: var(--sun-yellow);
+    width: 50px;
+    height: 50px;
+    -webkit-box-shadow: 3px 5px 0px 0px rgba(0,0,0,1);
+    -moz-box-shadow: 3px 5px 0px 0px rgba(0,0,0,1);
+    box-shadow: 3px 5px 0px 0px rgba(0,0,0,1);
 }
 /*----------------------------------------------------------- Focus Overlay  */
 
@@ -178,8 +293,10 @@
     background-color: white;
     border-radius: 10px;
     grid-column: 3 / 11;
-    grid-row: 2 / 7;
-    padding: 1em;
+    grid-row: 3 / 7;
+    margin-top: 16px;
+    padding: 2em;
+    
 }
 
 #list {

@@ -267,12 +267,14 @@ class Timer {
                     stopwatchButton.addEventListener(e, function(event){
                         if((e === 'click') || (event.keyCode === 13)) {
 
+                            // && (seconds == 0) && (minutes == 0) && (hours==0)
                            
-                            //if there are no timers playing then... automatically run StopWatchPlay - may not need this anymore??
-                            if ((!playing) && (seconds == 0) && (minutes == 0) && (hours==0) && (playButton.style.display == '')) {
+                            //if there are no timers playing then... automatically run StopWatchPlay
+                            if ((!playing) && (playButton.style.display == '')) {
 
                             //show timer when stopwatch clicked.
                             timerContainer.style.display = 'flex'; 
+                            playing = true;
 
                             // starts playing the stopwatch automatically.
                             stopWatchPlay();
@@ -606,12 +608,14 @@ class Timer {
             })
 
         saveButton.addEventListener('click', function(){
+
             let typeOfTimer = document.querySelector('.timer-title');
-            if (playing){
+            if (playing == true){
                 pauseButton.style.display = "none";
                 playButton.style.display = "inline-block";
             }
             if (typeOfTimer.textContent == "Stopwatch"){
+
                 clearInterval(stopwatch);            
             } else if (typeOfTimer.textContent == "Countdown 15"){
                 clearInterval(countdown15);
@@ -622,7 +626,6 @@ class Timer {
             //alert asking if the user definitely want to add {seconds} to their total time on that task.
             let timerTitle = document.querySelector('.timer-task-description');
 
-            
             let thisTask = timerTitle.textContent;
             
             if(confirm(`Do you want to save this time to ${thisTask}?`)){
@@ -652,7 +655,7 @@ class Timer {
             var minutesInSeconds;
             
              let typeOfTimer = document.querySelector('.timer-title');
-                //for countdown 15 timer
+               
                 if (typeOfTimer.textContent == "Countdown 15") {
                     minutesInSeconds = minutes * 60
                     
@@ -674,15 +677,18 @@ class Timer {
                     }
                     clearInterval(countdown25); //necessary??
                 } else if (typeOfTimer.textContent == "Stopwatch"){
+
                     minutesInSeconds = minutes * 60;
                     let hoursInSeconds = hours * 3600;
                     var timeToAdd = seconds + minutesInSeconds + hoursInSeconds;
                 }
                 // timeToAdd = seconds;
-                
+                let date = new Date;
         //Find the task object with that taskId and add the timeToAdd to its timeFocusedOnTask prop.
         list.taskList[id].totalTimeFocusedOnTask += timeToAdd;
         list.taskList[id].totalTimeFocusedOnTaskLongForm = timer.convertSecondsToTime(list.taskList[id].totalTimeFocusedOnTask);
+        list.taskList[id].timeSegments.push({timeToAdd, date})
+        
         list.setDataToLocalStorage(); 
     }
     function alarmToggle(){
@@ -806,13 +812,13 @@ class Timer {
                                     parentDiv.removeChild(pElementToTarget);
 
                                     //create the save button. REFACTOR
-                                    const saveButton = document.createElement('BUTTON');
-                                    saveButton.setAttribute("class", "edit-time-save-button");
-                                    saveButton.setAttribute("type", "submit");
-                                    saveButton.textContent = "Save New Total Time";
+                                    const saveButton2 = document.createElement('BUTTON');
+                                    saveButton2.setAttribute("class", "edit-time-save-button");
+                                    saveButton2.setAttribute("type", "submit");
+                                    saveButton2.textContent = "Save New Total Time";
 
                                     //add the save button after the seconds input.
-                                    document.getElementById('editSeconds').after(saveButton);
+                                    document.getElementById('editSeconds').after(saveButton2);
 
                                     //create the cancel button. REFACTOR
                                     const cancelButton = document.createElement('BUTTON');
@@ -821,7 +827,7 @@ class Timer {
                                     cancelButton.textContent = "Cancel Changes & Exit";
 
                                     //add the cancel button after the save button.
-                                    saveButton.after(cancelButton);
+                                    saveButton2.after(cancelButton);
 
                                     //click event listener on the save button. //no need for both save button vars.
                                     let saveBtn = document.querySelector('.edit-time-save-button');
@@ -973,6 +979,7 @@ class Timer {
         countDown25ClickStart();   
         stopWatchClickStart(); 
         saveTimeButton();
+        
         playOnClick();
         alarmToggle();
         manualTaskTimeEdit();
@@ -997,6 +1004,7 @@ class Task {
         this.order = -1; //order of priority in list - will use to structure list order
         this.totalTimeFocusedOnTask = 0; //running total of time focused on a specific task saved in seconds. 
         this.totalTimeFocusedOnTaskLongForm = timer.convertSecondsToTime(this.totalTimeFocusedOnTask);
+        this.timeSegments = [];
     }
 }
 class List {
@@ -1084,6 +1092,7 @@ class List {
                 list.setDataToLocalStorage();
                 list.dynamicPopoverNav();
                 timer.timers();
+               
 
             } else if ((newTaskInputValue === "") || (newTaskInputValue === null)){ //this doesn't fire with spaces - look into that. 
                 alert("Please add a task."); 

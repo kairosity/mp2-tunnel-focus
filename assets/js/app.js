@@ -901,6 +901,7 @@ class Timer {
                                         makeElementsKeyboardTabbableAgain();
                                         removeOverlay();
                                         list.setDataToLocalStorage();
+                                        location.reload();//updates the charts with new times - ask FEMI
                                     })
 
                                     let cancelBtn = document.querySelector('.edit-time-cancel-button');
@@ -947,11 +948,9 @@ class Timer {
                                         parentDiv.children[5].classList.remove('hidden');
 
                                         makeElementsKeyboardTabbableAgain();
-                                        removeOverlay();
-                                        
+                                        removeOverlay();                   
                                     })
                                 }
-
                                 $(this).unbind('click', arguments.callee);
                                 $(this).unbind('keyup', arguments.callee);
                             }
@@ -1092,6 +1091,7 @@ class List {
                 list.setDataToLocalStorage();
                 list.dynamicPopoverNav();
                 timer.timers();
+                location.reload(); //to fix stopwatch click start bug on new tasks that are added.
                
 
             } else if ((newTaskInputValue === "") || (newTaskInputValue === null)){ //this doesn't fire with spaces - look into that. 

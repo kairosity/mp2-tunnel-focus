@@ -279,6 +279,10 @@ While verbose and winding, this was definitely preferable to writing out the exa
 
 - ### **[Show data on mouse-over with d3.js](https://medium.com/@kj_schmidt/show-data-on-mouse-over-with-d3-js-3bf598ff8fc2)**
     My mouse over data display borrows *heavily* from this blog entry.
+
+- ### **[Styling HTML Checkboxes Is Super Easy](https://dev.to/proticm/styling-html-checkboxes-is-super-easy-302o)**
+    Used this code by Milos Protic to custom style my checkboxes. 
+
     
 # Deployment
 

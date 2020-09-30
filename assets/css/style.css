@@ -106,6 +106,7 @@
     -webkit-box-shadow: 3px 5px 0px 0px rgba(0,0,0,1);
     -moz-box-shadow: 3px 5px 0px 0px rgba(0,0,0,1);
     box-shadow: 3px 5px 0px 0px rgba(0,0,0,1);
+    transition: all 500ms;
 }
 
 .outer-timer-box{
@@ -187,19 +188,31 @@
     box-shadow: 3px 5px 0px 0px rgba(0,0,0,1);
     transition: all 500ms;
 }
+
+/* Button behaviour when hovering & clicking */
+#add-new-task:hover,
+.close-timer-x:hover,
 #save-time-to-task:hover{
-    /* -webkit-box-shadow: 1px 2px 0px 0px rgba(0,0,0,1);
-    -moz-box-shadow: 1px 2px 0px 0px rgba(0,0,0,1);
-    box-shadow: 1px 2px 0px 0px rgba(0,0,0,1); */
-    background-color: var(--pure-white);
+    -webkit-box-shadow: 4px 7px 0px 0px rgba(0,0,0,1);
+    -moz-box-shadow: 4px 7px 0px 0px rgba(0,0,0,1);
+    box-shadow: 4px 7px 0px 0px rgba(0,0,0,1); 
     color: var(--pure-black);
 }
+#add-new-task:active,
+.close-timer-x:active,
 #save-time-to-task:active{
     -webkit-box-shadow: 0px 0px 0px 0px rgba(0,0,0,1);
     -moz-box-shadow: 0px 0px 0px 0px rgba(0,0,0,1);
     box-shadow: 0px 0px 0px 0px rgba(0,0,0,1);
     outline: none;
 }
+
+#add-new-task:focus,
+.close-timer-x:focus,
+#save-time-to-task:focus{
+    outline: none;
+}
+
 
 /*----------------------------------------------------------- Popover Options Box  */
 
@@ -216,8 +229,8 @@
 .tippy-box[data-theme~='blueish'] {
   background-color: rgb(255, 254, 254);
   color: var(--pure-black);
-  border: 2px solid var(--pure-black);
-  box-shadow: 1px 6px 0px 0px rgb(0, 0, 0);
+  
+  box-shadow: 0px 0px 0px 3px inset rgb(0, 0, 0);
   padding: 10px;
 }
 
@@ -302,6 +315,7 @@
 #new-task-input::placeholder{
     font-size: 1.4rem;
     font-family: "Raleway", sans-serif;
+    color: var(--pure-black);
 }
 .add-new-task-plus-icon {
     display: block;
@@ -317,6 +331,7 @@
     -webkit-box-shadow: 3px 5px 0px 0px rgba(0,0,0,1);
     -moz-box-shadow: 3px 5px 0px 0px rgba(0,0,0,1);
     box-shadow: 3px 5px 0px 0px rgba(0,0,0,1);
+    transition: all ease-in-out 500ms;
 }
 /*----------------------------------------------------------- Focus Overlay  */
 
@@ -401,6 +416,44 @@ li.task-description{
     font-weight: 500;
      text-shadow: 1px 1px #B8B8B8; 
 }
+
+/* Custom code to style checkboxes - code from Milos Protic's article on same */
+.taskCheckbox  {
+    height: 25px;
+    width: 25px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    -o-appearance: none;
+    appearance: none;
+    border: 1px solid var(--pure-black);
+    border-radius: 4px;
+    outline: none;
+    transition-duration: 0.3s;
+    background-color: var(--sun-yellow);
+    cursor: pointer;
+    position: relative;
+  }
+
+  .taskCheckbox:checked {
+    border: 1px solid var(--pure-black);
+    background-color: var(--sun-yellow);
+}
+
+.taskCheckbox:checked::before {
+    content: '\2713';
+    display: block;
+    text-align: center;
+    color: var(--pure-black);
+    position: absolute;
+    left: 0.45rem;
+    top: 0.2rem;
+}
+.taskCheckbox:active {
+    border: 2px solid var(--pure-black);
+}
+.completed {
+    text-decoration: line-through;
+}
 .start-stopwatch,
 .task-options-icon {
     cursor: pointer;
@@ -408,14 +461,6 @@ li.task-description{
 .sort-tasks-icon{
     cursor: grab;
 }
-.completed {
-    text-decoration: line-through;
-}
-.taskCheckbox{
-    width: 20px;
-    height: 20px;
-}
-
 .task:nth-of-type(9n+1){ 
     color: var(--dark-blue);
 }
@@ -570,6 +615,8 @@ div.tooltip-donut {
     pointer-events: none;
     font-size: 1.3rem;			
 }
+
+
 
 
 

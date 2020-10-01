@@ -400,6 +400,9 @@ This website was developed using GitPod in a Chrome browser and commits were pus
 - ### **[Working with timezones in JavaScript](https://stackoverflow.com/questions/15141762/how-to-initialize-a-javascript-date-to-a-particular-time-zone)**
     Information about UTC time and how to work with that. 
 
+- ### **[Article about the spread operator](https://medium.com/swlh/the-need-to-know-how-to-use-spread-operator-in-javascript-54d3eccb92d6)**
+    Used to solve a bug in the getTodayTasks() function (referenced in testing).
+
 ## 4. D3.js 
 
 - ### **[Let's learn D3.js](https://www.youtube.com/watch?v=C4t6qfHZ6Tw)**

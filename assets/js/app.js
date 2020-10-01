@@ -1463,8 +1463,7 @@ function getTodayTasks(){
     var temp = {};
     var task = null;
     for(var i=0; i < todaysTasks.length; i++) {
-        task = {...todaysTasks[i]}; //this is passing the ACTUAL obj in. so I need to pass in a copy instead. 
-        console.log(task);
+        task = {...todaysTasks[i]}; 
 
     
     //1. if there is nothing in temp with this id then put the whole task in there as an object.

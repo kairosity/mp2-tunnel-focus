@@ -429,11 +429,32 @@ __FIX__ 1: I made sure that the method was placed so as to save the entire list 
 
 getTodayTasks()
 
-__METHOD SUMMARY__: This function takes all the tasks in the taskList array of objects and then loops through each task's individual timeSegments array of objects and compares the timeSegment's local date to the current date at the time of calling the function. If the two dates are the same, i.e. if the task was saved 'today', then it pushes that timeSegment into a new array called todaysTasks. 
+__FUNCTION SUMMARY:__ This function takes all the tasks in the taskList array of objects and then loops through each task's individual timeSegments array of objects and compares the timeSegment's local date to the current date at the time of calling the function. If the two dates are the same, i.e. if the task was saved 'today', then it pushes that timeSegment into a new array called todaysTasks. 
 
-The function then loops through the todaysTasks array and pushes the tasks into a temporary object using their task Id as a key, and then merging tasks with the same id and summing their timeToAdd values. The idea being that each task will present a single amount of time spent on that task in the 'today' period of time. 
+The function then loops through the todaysTasks array and pushes the tasks into a temporary object using their task Id as a key, and then it merges tasks with the same id and sums their timeToAdd values. The idea being that we will be left with a single amount of time spent on that task in the 'today' timespan. 
 
-Another array is then created called todaysTasksFiltered amd the properties in the temp object are looped through and pushed into that array, so as to have the structure of an array of objects again to use for the charts.
+Another array is then created called todaysTasksFiltered and the properties in the temp object are looped through and pushed into that array, so as to have the structure of an array of objects which is need to create the associated d3.js chart.
 
-__ISSUE 1:__ 
+__ISSUE 1:__ This function introduced me to the concept of 'passing by reference' for JavaScript objects. Initially the following code meant that for multiple timeSegments on a task, on a particular day, the first timeSegments value in the original task object was changing to the fully summed value as undertaken by this function. This meant that each time the total time spent on a task "today" was calculated the result was artifically inflated because the summed result of previous calculations was being added to genuine time segments. This bug is easier to show than explain: 
 
+1. Three tasks are worked on "today" 
+2. The first task is worked on, on 3 separate occasions for 4seconds, 3 seconds & 4 seconds. 
+3. The other two tasks are just worked on once each. 
+![passbyref1](misc-images/passbyref1.png)
+
+4. getTodayTasks() is called to create a chart. 
+5. It successfully sums the first task into a single object displaying 11 seconds worked on the task. 
+
+![passbyref2](misc-images/passbyref2.png)
+6. The user adds another task and works on it for a number of seconds. 
+7. To update the chart, the user calls getTodayTasks again. 
+8. But now the first task is registering as having 18seconds of total time worked on it. And if we look at the original task object, to our *horror* we see that the function has mutated the original time segment as well. 
+![passbyref3](misc-images/passbyref3.png)
+![passbyref4](misc-images/passbyref4.png)
+
+__FIX 1:__ The fix was just to add a spread operator at the point where the object first gets passed into the function:
+
+            for(var i=0; i < todaysTasks.length; i++) {
+                task = {...todaysTasks[i]}; 
+
+This created a shallow copy of the original object, and thus left the original time segment alone, and stopped artificially inflating the task times. 

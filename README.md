@@ -283,6 +283,9 @@ While verbose and winding, this was definitely preferable to writing out the exa
 - ### **[Styling HTML Checkboxes Is Super Easy](https://dev.to/proticm/styling-html-checkboxes-is-super-easy-302o)**
     Used this code by Milos Protic to custom style my checkboxes. 
 
+- ### **[Sum javascript object propertyA values with same object propertyB in array of objects](https://stackoverflow.com/questions/19233283/sum-javascript-object-propertya-values-with-same-object-propertyb-in-array-of-ob)**
+    I used this code in its entirety (with one significant alteration) to merge objects by property values.
+
     
 # Deployment
 

@@ -687,11 +687,11 @@ class Timer {
                 let dateStamp = new Date();
                 let localTime = dateStamp.toLocaleTimeString();
                 let localDate = dateStamp.toLocaleDateString();
-                let description = list.taskList[id].taskDescription;
+                let taskDescription = list.taskList[id].taskDescription;
         //Find the task object with that taskId and add the timeToAdd to its timeFocusedOnTask prop.
         list.taskList[id].totalTimeFocusedOnTask += timeToAdd;
         list.taskList[id].totalTimeFocusedOnTaskLongForm = timer.convertSecondsToTime(list.taskList[id].totalTimeFocusedOnTask);
-        list.taskList[id].timeSegments.push({id, timeToAdd, dateStamp, description, localDate, localTime});
+        list.taskList[id].timeSegments.push({id, timeToAdd, dateStamp, taskDescription, localDate, localTime});
         
         list.setDataToLocalStorage(); 
     }
@@ -1413,9 +1413,9 @@ const data = list.taskList;
      .on("click", function () {
           change(data);
      })
-    d3.select("button#today")
+    d3.select("option#today-total-task-time")
         .on("click", function () {
-            change(today);
+            change(todaysTasksFiltered);
         })
 
 function change(dataToChange) {
@@ -1457,50 +1457,32 @@ function getTodayTasks(){
         }
     }
 
-    console.log(todaysTasks);
-
+    //The following code was written by user2736012 on Stack Overflow and altered (spread operator) by myself - link in Readme. 
+    //1. if there is nothing in temp with this id then put the whole task in there as an object.
+    //2 Puts the task in the temp object as an object with the key 0 i.e. {0:{id: "0", timeToAdd: 17}, 1:{Another obj}, 2: {Another Object} }
+    //3.if there is already a task in there with that id then add the current tasks[i] timeToAdd to it. 
+        //temp.0.timeToAdd + current task's time to Add. 
 
     var temp = {};
     var task = null;
     for(var i=0; i < todaysTasks.length; i++) {
         task = {...todaysTasks[i]}; 
-
-    
-    //1. if there is nothing in temp with this id then put the whole task in there as an object.
-    //2 Puts the task in the temp object as an object with the key 0 i.e. {0:{id: "0", timeToAdd: 17}, 1:{Another obj}, 2: {Another Object} }
-    //3.if there is already a task in there with that id then add the current tasks[i] time to add to it. 
-        //temp.0.timeToAdd + current task's time to Add. 
-
-
-    if(!temp[task.id]) { //1
-        temp[task.id] = task; //2
-    } else {
-        temp[task.id].timeToAdd += task.timeToAdd;//3
+        if(!temp[task.id]) { //1
+            temp[task.id] = task; //2
+        } else {
+            temp[task.id].timeToAdd += task.timeToAdd;//3
+        }
     }
-    }
-
-    console.log(temp[0]);
-
     var todaysTasksFiltered = [];
     for (var prop in temp){
-        console.log(prop);
         todaysTasksFiltered.push(temp[prop]);
     }
-    console.log(todaysTasksFiltered);
     console.log(todaysTasks);
+    console.log(todaysTasksFiltered[0]);    
+    
+    todaysTasksFiltered.forEach(task => task.totalTimeFocusedOnTask = task.timeToAdd );
+    todaysTasksFiltered.forEach(task => task.totalTimeFocusedOnTaskLongForm = timer.convertSecondsToTime(task.totalTimeFocusedOnTask));
 
-
-    //1. Remove all items with the same id from todaytasks and put in a temp. variable arr. 
-
-    //2. 
-
-
-            //adds together all time spend on tasks today.
-            var result = todaysTasks.reduce((prev, next) =>  prev + next.timeToAdd,0);
-
-           
-
-             
-
+    console.log(todaysTasksFiltered);
 }
 

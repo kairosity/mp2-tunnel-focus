@@ -684,11 +684,14 @@ class Timer {
                     var timeToAdd = seconds + minutesInSeconds + hoursInSeconds;
                 }
                 // timeToAdd = seconds;
-                let date = new Date;
+                let dateStamp = new Date();
+                let localTime = dateStamp.toLocaleTimeString();
+                let localDate = dateStamp.toLocaleDateString();
+                let description = list.taskList[id].taskDescription;
         //Find the task object with that taskId and add the timeToAdd to its timeFocusedOnTask prop.
         list.taskList[id].totalTimeFocusedOnTask += timeToAdd;
         list.taskList[id].totalTimeFocusedOnTaskLongForm = timer.convertSecondsToTime(list.taskList[id].totalTimeFocusedOnTask);
-        list.taskList[id].timeSegments.push({timeToAdd, date})
+        list.taskList[id].timeSegments.push({id, timeToAdd, dateStamp, description, localDate, localTime});
         
         list.setDataToLocalStorage(); 
     }
@@ -1294,13 +1297,14 @@ timer.timers();
 
 /************************************************ CHARTS & D3.js  **************************************************/
 
+// var radius = Math.min(width, height) / 2;
 
 const data = list.taskList;
 
     var width = 1200;
-    var height = 300;
-    var radius = Math.min(width, height) / 2;
-    var donutWidth = 175;
+    var height = 500;
+    var radius = 200;
+    var donutWidth = 110;
     var color = d3.scaleOrdinal()
         .range(["#33A8C7", "#52E3E1", "#A0E426", "#FDF148", "#FFAB00", "#F77976", "#F050AE", "#D883FF", "#9336FD"]); //colours for slices/ arcs
     
@@ -1309,10 +1313,10 @@ const data = list.taskList;
         .attr("width", width)
         .attr("height", height)
         .append("g")
-        .attr('transform', 'translate(' + (350) + ',' + (height  / 2) + ')'); //where the chart sits in the svg box
+        .attr('transform', 'translate(' + (250) + ',' + (height  / 2) + ')'); //where the chart sits in the svg box
         
     var arc = d3.arc()
-        .innerRadius(100)
+        .innerRadius(donutWidth)
         .outerRadius(radius);
     
     var pie = d3.pie()
@@ -1394,6 +1398,7 @@ const data = list.taskList;
         return  `${d.taskDescription} : ${d.totalTimeFocusedOnTaskLongForm}`; 
     });
 
+    //dummy data
     var today = [
         {taskDescription: "item 1", id: 0, completed: false, order: -1, totalTimeFocusedOnTask: 23, totalTimeFocusedOnTaskLongForm: "0hrs 0mins 23secs"},
         {taskDescription: "item 2", id: 1, completed: false, order: -1, totalTimeFocusedOnTask: 9, totalTimeFocusedOnTaskLongForm: "0hrs 0mins 9secs"},
@@ -1407,7 +1412,6 @@ const data = list.taskList;
     d3.select("button#total")
      .on("click", function () {
           change(data);
-          console.log(data)
      })
     d3.select("button#today")
         .on("click", function () {
@@ -1430,6 +1434,41 @@ function change(dataToChange) {
           .innerRadius(radius - donutWidth)
           .outerRadius(radius);
      path.transition().duration(500).attr("d", arc); // redrawing the path with a smooth transition
+}
+
+function getTodayTasks(){
+    //go to list.tasklist
+
+    let tasks = list.taskList;
+    let dateTimeNow = new Date();
+    let dateNow = dateTimeNow.toLocaleDateString();
+    let timeNow = dateTimeNow.toLocaleTimeString();
+
+    for (let i=0; i<tasks.length; i++){
+        console.log(tasks[i]);
+        
+        for (let j=0; j<tasks[i].timeSegments.length; j++){
+            let individualTimeSegment = tasks[i].timeSegments[j];
+            if(individualTimeSegment.localDate === dateNow){
+                console.log("this segment happened today");
+            }
+            console.log(tasks[i].timeSegments[j]);
+        }
+    }
+
+    //loop through each task.
+
+    //loop through each timeSegment in the timeSegment array for each task.
+
+    //for each timeSegment check if that segment was registered as done after 0:00 of that day. If so then put it in a temp array for that task 
+
+    //at end of loop add together all times in the temp. array for the task (in seconds)
+
+    //push that number to a "today" array together with the task id and description.
+    
+    //for each number in today array also work out that number in long form for legends. 
+
+
 }
 
    

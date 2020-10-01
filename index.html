@@ -75,13 +75,21 @@
        
 
         <div class="focus-summary-container"> <!--FOCUS SUMMARIES & CHARTS GO HERE : THIS IS A GRID CHILD OF GRID-OVERLORD -->
-            
-            <h1 id="chart-title">Total Time Focused on Each Task</h1>
+            <div class="chart-header">
+                <h1 id="chart-title">Total Time Focused on Each Task</h1>
+            </div>
+            <select name="chart-selections" id="chart-selections">
+                <option value="total-time-focused-on-each-task">Total Time Focused on Each Task</option>
+                <option value="total-time-focused-on-each-task-today">Total time Focused on Each Task Today</option>
+                <option value="tasks-completed-today">Tasks Completed Today</option>
+                <option value="tasks-completed">Tasks Completed</option>
+            </select>
+
                 <div id="charts"></div>
-                <div>
-                <button id="total">Total Time Focused on Each Task</button>
-                <button id="today">Total time Focused on Each Task Today</button>
-</div>
+                <div class="extra-buttons">
+                    <button id="total">Total Time Focused on Each Task</button>
+                    <button id="today">Total time Focused on Each Task Today</button>
+                </div>
         </div>
        
     </div>

@@ -410,12 +410,7 @@ li.task-description{
     font-size: 0.9em;
     font-weight: 400;
 }
-.total-task-time{
-    font-family: "Heebo", sans-serif;
-    font-size: 0.8em;
-    font-weight: 500;
-     text-shadow: 1px 1px #B8B8B8; 
-}
+
 
 /* Custom code to style checkboxes - code from Milos Protic's article on same */
 .taskCheckbox  {
@@ -489,6 +484,13 @@ li.task-description{
     color: var(--strong-lavendar);
 }
 li.task-description{
+    color: var(--pure-black);
+}
+
+.total-task-time{
+    font-family: "Heebo", sans-serif;
+    font-size: 0.8em;
+    font-weight: 500;
     color: var(--pure-black);
 }
 
@@ -587,11 +589,87 @@ li.task-description{
     grid-row: 7 / 8;
     grid-column: 1 / 13;
     text-align: center;
-    background-color: white;
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-template-rows: auto;
+    
 }
 
+.chart-header {
+    background-color: var(--sun-yellow); 
+    height: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    -webkit-box-shadow: 0px 6px 0px 0px rgba(0,0,0,1);
+    -moz-box-shadow: 0px 6px 0px 0px rgba(0,0,0,1);
+    box-shadow: 0px 6px 0px 0px rgba(0,0,0,1);
+    border-radius: 8px;
+    border: 2px solid var(--pure-black);
+    margin-bottom: 50px;
+    grid-row: 1 / 2;
+    grid-column: 2 / 12;
+    margin-top: 50px;
+}
+#chart-title{
+    font-family: "Secular One", sans-serif;
+    font-weight: 400;
+    font-size: 1.2em;
+    text-transform: uppercase;
+    letter-spacing: 5px;
+}
+
+#chart-selections{
+    width: 350px;
+    height: 70px;
+    padding: 1em;
+    background-color: var(--sun-yellow);
+    -webkit-box-shadow: 0px 6px 0px 0px rgba(0,0,0,1);
+    -moz-box-shadow: 0px 6px 0px 0px rgba(0,0,0,1);
+    box-shadow: 0px 6px 0px 0px rgba(0,0,0,1);
+    border-radius: 8px;
+    border: 2px solid var(--pure-black);
+    margin-bottom: 50px;
+    font-family: "Heebo", sans-serif;
+    font-size: 1em;
+    font-weight: 500;
+    grid-row: 2 / 3;
+    grid-column: 6 / 8;
+}
+#chart-selections:hover{
+    -webkit-box-shadow: 4px 7px 0px 0px rgba(0,0,0,1);
+    -moz-box-shadow: 4px 7px 0px 0px rgba(0,0,0,1);
+    box-shadow: 4px 7px 0px 0px rgba(0,0,0,1); 
+    color: var(--pure-black); 
+}
+
+#chart-selections:active{
+    -webkit-box-shadow: 0px 0px 0px 0px rgba(0,0,0,1);
+    -moz-box-shadow: 0px 0px 0px 0px rgba(0,0,0,1);
+    box-shadow: 0px 0px 0px 0px rgba(0,0,0,1); 
+    color: var(--pure-black);
+    outline: none;
+}
+
+#chart-selections:focus{
+    outline: none;
+}
+
+#charts{
+    grid-row: 3 / 4;
+    grid-column: 2 / 12;
+}
 svg {
     border: 2px solid #000000;
+    border-radius: 8px;
+    padding: 2em;
+    -webkit-box-shadow: 2px 6px 0px 0px rgba(0,0,0,1);
+    -moz-box-shadow: 2px 6px 0px 0px rgba(0,0,0,1);
+    box-shadow: 2px 6px 0px 0px rgba(0,0,0,1);
+    
+}
+.extra-buttons{
+    grid-row: 4 / 5;
 }
 
 path text {
@@ -608,12 +686,14 @@ div.tooltip-donut {
     position: absolute;			
     text-align: center;								
     padding: .5rem;				
-    background: #FFFFFF;
-    color: #313639;	
-    border: 1px solid #313639;		
+    background: var(--sun-yellow);
+    color: var(--pure-black);
+    border: 2px solid var(--pure-black);		
     border-radius: 8px;			
     pointer-events: none;
-    font-size: 1.3rem;			
+    font-size: 1.1rem;
+    font-family: "Heebo", sans-serif;
+    font-weight: 500;			
 }
 
 

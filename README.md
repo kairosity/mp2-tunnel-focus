@@ -395,8 +395,10 @@ This website was developed using GitPod in a Chrome browser and commits were pus
     Keyboard accessibility issue (referenced in testing.md file) with the default behaviour of the tippy.js popovers when used interactively by keyboard users. This plugin solution worked a treat.
 
 - ### **[Information about removing event listeners using jQuery](https://stackoverflow.com/questions/209029/best-way-to-remove-an-event-handler-in-jquery)**
-
     Used to fix an infuriating bug on my manual time edit function. Referenced further in testing.md
+
+- ### **[Working with timezones in JavaScript](https://stackoverflow.com/questions/15141762/how-to-initialize-a-javascript-date-to-a-particular-time-zone)**
+    Information about UTC time and how to work with that. 
 
 ## 4. D3.js 
 

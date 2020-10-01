@@ -1437,41 +1437,71 @@ function change(dataToChange) {
 }
 
 function getTodayTasks(){
-    //go to list.tasklist
-
+    
     let tasks = list.taskList;
     let dateTimeNow = new Date();
     let dateNow = dateTimeNow.toLocaleDateString();
     let timeNow = dateTimeNow.toLocaleTimeString();
+    let todaysTasks = [];
 
     for (let i=0; i<tasks.length; i++){
-        console.log(tasks[i]);
         
         for (let j=0; j<tasks[i].timeSegments.length; j++){
             let individualTimeSegment = tasks[i].timeSegments[j];
+
             if(individualTimeSegment.localDate === dateNow){
-                console.log("this segment happened today");
+                todaysTasks.push(individualTimeSegment);
+
             }
-            console.log(tasks[i].timeSegments[j]);
+                
         }
     }
 
-    //loop through each task.
+    console.log(todaysTasks);
 
-    //loop through each timeSegment in the timeSegment array for each task.
 
-    //for each timeSegment check if that segment was registered as done after 0:00 of that day. If so then put it in a temp array for that task 
+    var temp = {};
+    var task = null;
+    for(var i=0; i < todaysTasks.length; i++) {
+        task = {...todaysTasks[i]}; //this is passing the ACTUAL obj in. so I need to pass in a copy instead. 
+        console.log(task);
 
-    //at end of loop add together all times in the temp. array for the task (in seconds)
-
-    //push that number to a "today" array together with the task id and description.
     
-    //for each number in today array also work out that number in long form for legends. 
+    //1. if there is nothing in temp with this id then put the whole task in there as an object.
+    //2 Puts the task in the temp object as an object with the key 0 i.e. {0:{id: "0", timeToAdd: 17}, 1:{Another obj}, 2: {Another Object} }
+    //3.if there is already a task in there with that id then add the current tasks[i] time to add to it. 
+        //temp.0.timeToAdd + current task's time to Add. 
 
+
+    if(!temp[task.id]) { //1
+        temp[task.id] = task; //2
+    } else {
+        temp[task.id].timeToAdd += task.timeToAdd;//3
+    }
+    }
+
+    console.log(temp[0]);
+
+    var todaysTasksFiltered = [];
+    for (var prop in temp){
+        console.log(prop);
+        todaysTasksFiltered.push(temp[prop]);
+    }
+    console.log(todaysTasksFiltered);
+    console.log(todaysTasks);
+
+
+    //1. Remove all items with the same id from todaytasks and put in a temp. variable arr. 
+
+    //2. 
+
+
+            //adds together all time spend on tasks today.
+            var result = todaysTasks.reduce((prev, next) =>  prev + next.timeToAdd,0);
+
+           
+
+             
 
 }
 
-   
-
-    
-        

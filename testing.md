@@ -427,5 +427,13 @@ __FIX__ 1: I made sure that the method was placed so as to save the entire list 
 ### __*Unit Testing*__
 
 
+getTodayTasks()
 
+__METHOD SUMMARY__: This function takes all the tasks in the taskList array of objects and then loops through each task's individual timeSegments array of objects and compares the timeSegment's local date to the current date at the time of calling the function. If the two dates are the same, i.e. if the task was saved 'today', then it pushes that timeSegment into a new array called todaysTasks. 
+
+The function then loops through the todaysTasks array and pushes the tasks into a temporary object using their task Id as a key, and then merging tasks with the same id and summing their timeToAdd values. The idea being that each task will present a single amount of time spent on that task in the 'today' period of time. 
+
+Another array is then created called todaysTasksFiltered amd the properties in the temp object are looped through and pushed into that array, so as to have the structure of an array of objects again to use for the charts.
+
+__ISSUE 1:__ 
 

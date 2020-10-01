@@ -1413,9 +1413,9 @@ const data = list.taskList;
      .on("click", function () {
           change(data);
      })
-    d3.select("option#today-total-task-time")
+    d3.select("button#today")
         .on("click", function () {
-            change(todaysTasksFiltered);
+            change(getTodayTasks());
         })
 
 function change(dataToChange) {
@@ -1484,5 +1484,6 @@ function getTodayTasks(){
     todaysTasksFiltered.forEach(task => task.totalTimeFocusedOnTaskLongForm = timer.convertSecondsToTime(task.totalTimeFocusedOnTask));
 
     console.log(todaysTasksFiltered);
+    return todaysTasksFiltered;
 }
 

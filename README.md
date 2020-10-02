@@ -406,6 +406,9 @@ This website was developed using GitPod in a Chrome browser and commits were pus
 - ### **[Article about the spread operator](https://medium.com/swlh/the-need-to-know-how-to-use-spread-operator-in-javascript-54d3eccb92d6)**
     Used to solve a bug in the getTodayTasks() function (referenced in testing).
 
+- ### **[To Locale Time String](https://www.w3schools.com/jsref/jsref_tolocaletimestring.asp)**
+    Information on the toLocaleTimeString() Method from w3schools.
+    
 ## 4. D3.js 
 
 - ### **[Let's learn D3.js](https://www.youtube.com/watch?v=C4t6qfHZ6Tw)**

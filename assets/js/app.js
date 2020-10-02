@@ -274,8 +274,14 @@ class Timer {
 
                             //show timer when stopwatch clicked.
                             timerContainer.style.display = 'flex'; 
-                            playing = true;
+                            playing = true; 
 
+                            window.scrollTo({
+                                top: 0,
+                                behavior: "smooth"
+                            });
+                           
+                              
                             // starts playing the stopwatch automatically.
                             stopWatchPlay();
 
@@ -1277,10 +1283,7 @@ class List {
                 theme: 'blueish',
                 // sticky: true,
                 plugins: [hideOnPopperBlur],
-            });
-
-            
-            
+            });         
         }
         setDataToLocalStorage(){
             window.localStorage.setItem("taskList", JSON.stringify(list.taskList));
@@ -1298,7 +1301,7 @@ timer.timers();
 
 /************************************************ CHARTS & D3.js  **************************************************/
 
-// Need to refactor this to onchange 
+// Need to refactor this 
 
 // change(data);
 
@@ -1602,4 +1605,6 @@ function getTodayTasks(){
 
     return todaysTasksFiltered;
 }
+
+
 

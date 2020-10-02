@@ -1299,17 +1299,37 @@ timer.timers();
 
 // var radius = Math.min(width, height) / 2;
 
+// change(data);
+
+
+
+
+
+d3.select("button#total")
+     .on("click", function () {
+
+var chartSvg = document.querySelector('.chart-svg');
+
+console.log(chartSvg);
+
+    if(chartSvg){
+       d3.select(chartSvg).remove(); 
+    }
+
+    
+
 const data = list.taskList;
 
-    var width = 1200;
-    var height = 500;
-    var radius = 200;
-    var donutWidth = 110;
+    var width = 1350;
+    var height = 550;
+    var radius = 150;
+    var donutWidth = 75;
     var color = d3.scaleOrdinal()
         .range(["#33A8C7", "#52E3E1", "#A0E426", "#FDF148", "#FFAB00", "#F77976", "#F050AE", "#D883FF", "#9336FD"]); //colours for slices/ arcs
     
     var svg = d3.select('#charts') //select the charts div
         .append("svg") //create an svg el
+        .attr("class", "chart-svg")
         .attr("width", width)
         .attr("height", height)
         .append("g")
@@ -1398,24 +1418,122 @@ const data = list.taskList;
         return  `${d.taskDescription} : ${d.totalTimeFocusedOnTaskLongForm}`; 
     });
 
-    //dummy data
-    var today = [
-        {taskDescription: "item 1", id: 0, completed: false, order: -1, totalTimeFocusedOnTask: 23, totalTimeFocusedOnTaskLongForm: "0hrs 0mins 23secs"},
-        {taskDescription: "item 2", id: 1, completed: false, order: -1, totalTimeFocusedOnTask: 9, totalTimeFocusedOnTaskLongForm: "0hrs 0mins 9secs"},
-        {taskDescription: "item 33", id: 1, completed: false, order: -1, totalTimeFocusedOnTask: 45, totalTimeFocusedOnTaskLongForm: "0hrs 0mins 45secs"},
-        {taskDescription: "item 4", id: 1, completed: false, order: -1, totalTimeFocusedOnTask: 18, totalTimeFocusedOnTaskLongForm: "0hrs 0mins 18secs"},
-        {taskDescription: "item 5", id: 1, completed: false, order: -1, totalTimeFocusedOnTask: 23, totalTimeFocusedOnTaskLongForm: "0hrs 0mins 23secs"},
-        {taskDescription: "item 6", id: 1, completed: false, order: -1, totalTimeFocusedOnTask: 10, totalTimeFocusedOnTaskLongForm: "0hrs 0mins 10secs"},
-        {taskDescription: "item 7", id: 1, completed: false, order: -1, totalTimeFocusedOnTask: 11, totalTimeFocusedOnTaskLongForm: "0hrs 0mins 11secs"},
-    ]
+     });
 
-    d3.select("button#total")
-     .on("click", function () {
-          change(data);
-     })
+            // change(getTodayTasks());
+            // console.log(getTodayTasks())
+    
     d3.select("button#today")
         .on("click", function () {
-            change(getTodayTasks());
+
+            var chartSvg = document.querySelector('.chart-svg');
+
+            console.log(chartSvg);
+
+            if(chartSvg){
+            d3.select(chartSvg).remove(); 
+            }
+
+        const data = getTodayTasks();
+
+    var width = 1350;
+    var height = 550;
+    var radius = 150;
+    var donutWidth = 75;
+    var color = d3.scaleOrdinal()
+        .range(["#33A8C7", "#52E3E1", "#A0E426", "#FDF148", "#FFAB00", "#F77976", "#F050AE", "#D883FF", "#9336FD"]); //colours for slices/ arcs
+    
+    var svg = d3.select('#charts') //select the charts div
+        .append("svg") //create an svg el
+        .attr("width", width)
+        .attr("height", height)
+        .attr("class", "chart-svg")
+        .append("g")
+        .attr('transform', 'translate(' + (250) + ',' + (height  / 2) + ')'); //where the chart sits in the svg box
+        
+    var arc = d3.arc()
+        .innerRadius(donutWidth)
+        .outerRadius(radius);
+    
+    var pie = d3.pie()
+        .value(function(d){
+            return d.totalTimeFocusedOnTask //what data will the chart use to create the slices.
+        })
+        .sort(null); //stops the chart sorting in order of size.
+    
+    var legendRectSize = 14;
+    var legendSpacing = 7;
+    
+    var div = d3.select("body").append("div")
+     .attr("class", "tooltip-donut")
+     .style("opacity", 0);
+
+    var path = svg.selectAll("path") // the different slices as paths.
+        .data(pie(data))
+        .enter()
+        .append("path")
+        .attr("d", arc)
+        .attr("fill", function(d){   
+            return color(d.data.taskDescription)
+            
+        })
+        .attr("stroke", "white")
+        .style("stroke-width", "4px")
+       
+        .on('mouseover', function (event, d, i) {
+        d3.select(this).transition()
+            .duration('50')
+            .attr('opacity', '.85');
+
+        //Makes the new div appear on hover:
+        div.transition()
+            .duration(50)
+            .style("opacity", 1);
+        let task = d.data.taskDescription
+        let longTime = d.data.totalTimeFocusedOnTaskLongForm
+        div.html(task + "<br>" + longTime ) //put label to display here
+            .style("left", (event.pageX + 10) + "px")
+            .style("top", (event.pageY - 15) + "px");        
+     })
+
+     .on('mouseout', function (event, d, i) {
+        d3.select(this).transition()
+            .duration('50')
+            .attr('opacity', '1');  
+        //Makes the new div disappear:
+        div.transition()
+            .duration('50')
+            .style("opacity", 0);
+     });
+
+    var legend = svg.selectAll('.legend') //the legend and placement
+        .data(color.domain())
+        .enter()
+        .append('g')
+        .attr('class', 'circle-legend')
+        .attr('transform', function (d, i) {
+            var height = legendRectSize + legendSpacing;
+            var offset = height * color.domain().length / 2;
+            var horz = 20 * legendRectSize + 13;
+            var vert = i * height - offset;
+            return 'translate(' + horz + ',' + vert + ')';
+        });
+    
+    legend.append('circle') //keys
+        .style('fill', color)
+        .style('stroke', color)
+        .attr('cx', 0)
+        .attr('cy', 0)
+        .attr('r', '0.5rem'); //size of circles
+
+    legend.append('text') //labels
+    .data(data)
+    .attr('x', legendRectSize + legendSpacing)
+    .attr('y', legendRectSize - legendSpacing)
+    .text(function (d) {       
+        return  `${d.taskDescription} : ${d.totalTimeFocusedOnTaskLongForm}`; 
+    });
+            
         })
 
 function change(dataToChange) {
@@ -1434,6 +1552,15 @@ function change(dataToChange) {
           .innerRadius(radius - donutWidth)
           .outerRadius(radius);
      path.transition().duration(500).attr("d", arc); // redrawing the path with a smooth transition
+
+     var legend = svg.selectAll('.legend');
+     legend
+    .data(dataToChange)
+    .attr('x', legendRectSize + legendSpacing)
+    .attr('y', legendRectSize - legendSpacing)
+    .text(function (d) {       
+        return  `${d.taskDescription} : ${d.totalTimeFocusedOnTaskLongForm} : this should change`; 
+    });
 }
 
 function getTodayTasks(){
@@ -1477,13 +1604,11 @@ function getTodayTasks(){
     for (var prop in temp){
         todaysTasksFiltered.push(temp[prop]);
     }
-    console.log(todaysTasks);
-    console.log(todaysTasksFiltered[0]);    
+   
     
     todaysTasksFiltered.forEach(task => task.totalTimeFocusedOnTask = task.timeToAdd );
     todaysTasksFiltered.forEach(task => task.totalTimeFocusedOnTaskLongForm = timer.convertSecondsToTime(task.totalTimeFocusedOnTask));
 
-    console.log(todaysTasksFiltered);
     return todaysTasksFiltered;
 }
 

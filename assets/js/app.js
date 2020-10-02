@@ -1295,30 +1295,26 @@ list.dynamicPopoverNav();
 timer.initialiseTimer();
 timer.timers();
 
+
 /************************************************ CHARTS & D3.js  **************************************************/
 
-// var radius = Math.min(width, height) / 2;
+// Need to refactor this to onchange 
 
 // change(data);
 
+d3.select("#chart-selections")
+   .on("change", function(event){
+    var option = event.target.value;
+    if(option === "total-time-focused-on-each-task"){
+        
 
-
-
-
-d3.select("button#total")
-     .on("click", function () {
-
-var chartSvg = document.querySelector('.chart-svg');
-
-console.log(chartSvg);
+    var chartSvg = document.querySelector('.chart-svg');
 
     if(chartSvg){
        d3.select(chartSvg).remove(); 
     }
 
-    
-
-const data = list.taskList;
+    const data = list.taskList;
 
     var width = 1350;
     var height = 550;
@@ -1418,17 +1414,10 @@ const data = list.taskList;
         return  `${d.taskDescription} : ${d.totalTimeFocusedOnTaskLongForm}`; 
     });
 
-     });
 
-            // change(getTodayTasks());
-            // console.log(getTodayTasks())
-    
-    d3.select("button#today")
-        .on("click", function () {
-
-            var chartSvg = document.querySelector('.chart-svg');
-
-            console.log(chartSvg);
+    } else if (option === "total-time-focused-on-each-task-today"){
+        
+        var chartSvg = document.querySelector('.chart-svg');
 
             if(chartSvg){
             d3.select(chartSvg).remove(); 
@@ -1533,8 +1522,10 @@ const data = list.taskList;
     .text(function (d) {       
         return  `${d.taskDescription} : ${d.totalTimeFocusedOnTaskLongForm}`; 
     });
-            
-        })
+
+    }
+       
+   })
 
 function change(dataToChange) {
      var pie = d3.pie()

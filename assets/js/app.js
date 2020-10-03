@@ -255,6 +255,40 @@ class Timer {
                 return playing = true;
             }
 
+    function countdown15TimeToAdd(hours, minutes, seconds){
+        var minutesInSeconds = minutes * 60
+    
+            if ( (seconds == -1) && (minutesInSeconds == 0) ){
+                var timeToAdd = 900
+                return timeToAdd;
+            } else {
+                var timeToAdd = 900 - (minutesInSeconds + seconds);
+                return timeToAdd;
+            }
+            
+    }
+
+    function countdown25TimeToAdd(hours, minutes, seconds){
+        var minutesInSeconds = minutes * 60
+            if ( (seconds == -1) && (minutesInSeconds == 0) ){
+                var timeToAdd = 1500
+                return timeToAdd;
+            } else {
+                var timeToAdd = 1500 - (minutesInSeconds + seconds);
+                return timeToAdd;
+            }
+    }
+
+    function stopwatchTimeToAdd(hours, minutes, seconds){
+        let minutesInSeconds = minutes * 60;
+        let hoursInSeconds = hours * 3600;
+        var timeToAdd = seconds + minutesInSeconds + hoursInSeconds;
+        return timeToAdd;
+    }
+    
+
+        
+
 // --------------------------------------STRUCTURAL FUNCTIONS-------------------------------// 
 
         function stopWatchClickStart(){
@@ -591,6 +625,8 @@ class Timer {
                 let negateButton = document.querySelector('.negate-button');
 
                confirmButton.addEventListener('click', function(){
+                
+                closeTimerModal.style.display = "none";  
                   //if user clicks X in the middle of timer playing then I need to pause it first
                 let intervalToPause;
                 let typeOfTimer = document.querySelector('.timer-title').textContent;
@@ -609,11 +645,11 @@ class Timer {
                 removeTimerFromDom();
                 removeOverlay();
                 makeElementsKeyboardTabbableAgain();  
-                closeTimerModal.style.display = "none";  
+                
                })
 
                 negateButton.addEventListener('click', function(){
-                    
+
                     closeTimerModal.style.display = "none"; 
                 })
                      
@@ -630,26 +666,38 @@ class Timer {
 
         saveButton.addEventListener('click', function(){
 
+            //alert asking if the user definitely want to add {seconds} to their total time on that task.
+            let timerTitle = document.querySelector('.timer-task-description');
+
+            let thisTask = timerTitle.textContent;
+
+            let saveTimeToTaskModal = document.getElementById('save-time-to-task-modal');
+            saveTimeToTaskModal.style.display = "block";
+            let confirmButton = document.querySelector('.sttt-confirm-button');
+            let negateButton = document.querySelector('.sttt-negate-button');
+            let messageElement = document.querySelector('.sttt-modal-p');
             let typeOfTimer = document.querySelector('.timer-title');
+
             if (playing == true){
                 pauseButton.style.display = "none";
                 playButton.style.display = "inline-block";
             }
             if (typeOfTimer.textContent == "Stopwatch"){
-
+                messageElement.textContent = `Do you want to save ${hours} hours ${minutes} minutes & ${seconds} seconds to ${thisTask}? `
                 clearInterval(stopwatch);            
             } else if (typeOfTimer.textContent == "Countdown 15"){
+                let timeToAddInSecs = countdown15TimeToAdd(hours, minutes, seconds);
+                let timeInsert = timer.convertSecondsToTime(timeToAddInSecs);
+                messageElement.textContent = `Do you want to save ${timeInsert} to ${thisTask}? `
                 clearInterval(countdown15);
             } else if (typeOfTimer.textContent == "Countdown 25"){
+                let timeToAddInSecs = countdown25TimeToAdd(hours, minutes, seconds);
+                let timeInsert = timer.convertSecondsToTime(timeToAddInSecs);
+                messageElement.textContent = `Do you want to save ${timeInsert} to ${thisTask}? `
                 clearInterval(countdown25);
             }
-             
-            //alert asking if the user definitely want to add {seconds} to their total time on that task.
-            let timerTitle = document.querySelector('.timer-task-description');
 
-            let thisTask = timerTitle.textContent;
-            
-            if(confirm(`Do you want to save this time to ${thisTask}?`)){
+            confirmButton.addEventListener('click', function(){
                 saveTimeToTask(timerTitle.id, seconds);
                 //needs to update the time spent display on task list.
                 let idForSavingTime = timerTitle.id;
@@ -662,12 +710,37 @@ class Timer {
                         // timeDisplay.textContent = list.taskList[timerTitle.id].totalTimeFocusedOnTask;
                     }       
                 }
+                saveTimeToTaskModal.style.display = "none"; 
                 removeTimerFromDom();
                 removeOverlay();
                 makeElementsKeyboardTabbableAgain();
                 location.reload();
+            })
+
+            negateButton.addEventListener('click', function(){
+                 saveTimeToTaskModal.style.display = "none"; 
+            })
+
+            
+            // if(confirm(`Do you want to save this time to ${thisTask}?`)){
+            //     saveTimeToTask(timerTitle.id, seconds);
+            //     //needs to update the time spent display on task list.
+            //     let idForSavingTime = timerTitle.id;
+            //     let taskTimeDisplay1 = document.querySelectorAll('.task-description'); //with the same id as the timertitle id.
+                
+            //     for (let i=0; i<taskTimeDisplay1.length; i++){
+            //         if(taskTimeDisplay1[i].id == idForSavingTime){
+            //             let timeDisplay = taskTimeDisplay1[i].parentElement.firstElementChild; 
+            //             timeDisplay.textContent = list.taskList[timerTitle.id].totalTimeFocusedOnTaskLongForm;
+            //             // timeDisplay.textContent = list.taskList[timerTitle.id].totalTimeFocusedOnTask;
+            //         }       
+            //     }
+            //     removeTimerFromDom();
+            //     removeOverlay();
+            //     makeElementsKeyboardTabbableAgain();
+            //     location.reload();
          
-            } 
+            // } 
             return playing = false; 
         })
     }
@@ -677,32 +750,37 @@ class Timer {
             var minutesInSeconds;
             
              let typeOfTimer = document.querySelector('.timer-title');
+             let timeToAdd;
                
                 if (typeOfTimer.textContent == "Countdown 15") {
-                    minutesInSeconds = minutes * 60
+
+                    timeToAdd = countdown15TimeToAdd(hours, minutes, seconds);
+                    // minutesInSeconds = minutes * 60
                     
-                    //!FIX - whereby seconds was returning 901 & 1501
-                    if ( (seconds == -1) && (minutesInSeconds == 0) ){
-                       var timeToAdd = 900
-                    } else {
-                       var timeToAdd = 900 - (minutesInSeconds + seconds);
-                    }
+                    // //!FIX - whereby seconds was returning 901 & 1501
+                    // if ( (seconds == -1) && (minutesInSeconds == 0) ){
+                    //    var timeToAdd = 900
+                    // } else {
+                    //    var timeToAdd = 900 - (minutesInSeconds + seconds);
+                    // }
                     clearInterval(countdown15); //necessary??
 
                 } else if (typeOfTimer.textContent == "Countdown 25"){
-                    minutesInSeconds = minutes * 60
+                    timeToAdd = countdown25TimeToAdd(hours, minutes, seconds);
+                    // minutesInSeconds = minutes * 60
 
-                    if ( (seconds == -1) && (minutesInSeconds == 0) ){
-                        var timeToAdd = 1500
-                    } else {
-                        var timeToAdd = 1500 - (minutesInSeconds + seconds);
-                    }
+                    // if ( (seconds == -1) && (minutesInSeconds == 0) ){
+                    //     var timeToAdd = 1500
+                    // } else {
+                    //     var timeToAdd = 1500 - (minutesInSeconds + seconds);
+                    // }
                     clearInterval(countdown25); //necessary??
                 } else if (typeOfTimer.textContent == "Stopwatch"){
 
-                    minutesInSeconds = minutes * 60;
-                    let hoursInSeconds = hours * 3600;
-                    var timeToAdd = seconds + minutesInSeconds + hoursInSeconds;
+                    // minutesInSeconds = minutes * 60;
+                    // let hoursInSeconds = hours * 3600;
+                    // var timeToAdd = seconds + minutesInSeconds + hoursInSeconds;
+                    timeToAdd = stopwatchTimeToAdd(hours, minutes, seconds);
                 }
                 // timeToAdd = seconds;
                 let dateStamp = new Date();

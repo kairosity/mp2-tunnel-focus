@@ -583,7 +583,15 @@ class Timer {
             
             xButton.addEventListener('click', function(){
 
-                //if user clicks X in the middle of timer playing then I need to pause it first
+                //bring up close timer modal
+
+                let closeTimerModal = document.getElementById('close-timer-modal');
+                closeTimerModal.style.display = "block";
+                let confirmButton = document.querySelector('.confirm-button');
+                let negateButton = document.querySelector('.negate-button');
+
+               confirmButton.addEventListener('click', function(){
+                  //if user clicks X in the middle of timer playing then I need to pause it first
                 let intervalToPause;
                 let typeOfTimer = document.querySelector('.timer-title').textContent;
 
@@ -600,7 +608,15 @@ class Timer {
                 
                 removeTimerFromDom();
                 removeOverlay();
-                makeElementsKeyboardTabbableAgain();        
+                makeElementsKeyboardTabbableAgain();  
+                closeTimerModal.style.display = "none";  
+               })
+
+                negateButton.addEventListener('click', function(){
+                    
+                    closeTimerModal.style.display = "none"; 
+                })
+                     
         })       
     }
     function saveTimeButton(){

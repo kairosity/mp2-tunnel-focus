@@ -709,8 +709,72 @@ div.tooltip-donut {
     flex-direction: column;
 }
 
-circle {
-    
+/*----------------------------------------------------------- Modals  */
+
+/* Close Timer Without Saving Modal */
+.modal {
+  display: none; 
+  position: fixed; 
+  z-index: 1002; 
+  left: 0;
+  top: 0;
+  width: 100%; 
+  height: 100%; 
+  overflow: auto; 
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content/Box */
+.modal-content {
+  background-color: var(--sun-yellow);
+  margin: 15% auto;
+  padding: 20px;
+  border: 2px solid var(--pure-black);
+  border-radius: 8px;
+  width: 350px;
+  height: 150px;
+  font-family: "Heebo", sans-serif;
+  font-weight: 400;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  -webkit-box-shadow: 3px 5px 0px 0px rgba(0,0,0,1);
+    -moz-box-shadow: 3px 5px 0px 0px rgba(0,0,0,1);
+    box-shadow: 3px 5px 0px 0px rgba(0,0,0,1);
+}
+
+/* Modal Buttons */
+.close-timer-modal-btn{ 
+    width: 120px;   
+    padding: 5px 14px;
+    border-radius: 8px;
+    -webkit-box-shadow: 3px 5px 0px 0px rgba(0,0,0,1);
+    -moz-box-shadow: 3px 5px 0px 0px rgba(0,0,0,1);
+    box-shadow: 3px 5px 0px 0px rgba(0,0,0,1);
+    transition: all 500ms;
+    font-family: "Heebo", sans-serif;
+    font-size: 1em;
+    font-weight: 500;
+    margin: 8px 5px 0px;
+    cursor: pointer;
+}
+.close-timer-modal-btn:hover{
+    -webkit-box-shadow: 5px 9px 0px 0px rgba(0,0,0,1);
+    -moz-box-shadow: 5px 9px 0px 0px rgba(0,0,0,1);
+    box-shadow: 5px 9px 0px 0px rgba(0,0,0,1);
+}
+/* The 'Yes, Exit' Button */
+.confirm-button {
+    background-color: var(--pure-white);
+    color: var(--pure-black);
+    border: 2px solid var(--pure-black);
+}
+/* The 'No, Cancel' Button */
+.negate-button{
+    background-color: var(--pure-black);
+    color: var(--pure-white);
+    border: 2px solid var(--pure-white);
 }
 
 
@@ -723,6 +787,7 @@ footer {
     flex-direction: column;
     align-items: center;
     grid-column: 1 / 13;
+    grid-row: 8/9;
     justify-content: center;
     border-top: 5px solid var(--pure-black);
     border-radius: 8px;

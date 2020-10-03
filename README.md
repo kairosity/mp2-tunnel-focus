@@ -286,6 +286,8 @@ While verbose and winding, this was definitely preferable to writing out the exa
 - ### **[Sum javascript object propertyA values with same object propertyB in array of objects](https://stackoverflow.com/questions/19233283/sum-javascript-object-propertya-values-with-same-object-propertyb-in-array-of-ob)**
     I used this code in its entirety (with one significant alteration) to merge objects by property values.
 
+- ### **[Responsive D3.js](https://brendansudol.com/writing/responsive-d3)**
+    I used this function to make my charts fully responsive. 
     
 # Deployment
 
@@ -315,7 +317,6 @@ This website was developed using GitPod in a Chrome browser and commits were pus
 - ### **[Dribble](https://dribbble.com/)**
 
     Used for UX and design inspiration.
-
 
 - ### **[Awwwards](https://www.awwwards.com/)**
 
@@ -408,6 +409,12 @@ This website was developed using GitPod in a Chrome browser and commits were pus
 
 - ### **[To Locale Time String](https://www.w3schools.com/jsref/jsref_tolocaletimestring.asp)**
     Information on the toLocaleTimeString() Method from w3schools.
+
+- ### **[Javascript scrollintoview smooth scroll and offset](https://stackoverflow.com/questions/49820013/javascript-scrollintoview-smooth-scroll-and-offset)**
+    Information about using window.scrollTo & scrollIntoView()
+
+- ### **[Make any chart responsive with one function](https://benclinkinbeard.com/d3tips/make-any-chart-responsive-with-one-function/?utm_content=buffer976d6&utm_medium=social&utm_source=twitter.com&utm_campaign=buffer)**
+    The original source of information about how to make any D3.js chart responsive.
     
 ## 4. D3.js 
 

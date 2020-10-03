@@ -280,8 +280,7 @@ class Timer {
                                 top: 0,
                                 behavior: "smooth"
                             });
-                           
-                              
+                                
                             // starts playing the stopwatch automatically.
                             stopWatchPlay();
 
@@ -1311,11 +1310,16 @@ d3.select("#chart-selections")
     if(option === "total-time-focused-on-each-task"){
         
 
-    var chartSvg = document.querySelector('.chart-svg');
+    //remove any charts and legends already there, to make space for new ones.
+        var chartSvg = document.querySelector('.chart-svg');
+        var circleLeg = document.querySelectorAll('.circle-legend');
 
-    if(chartSvg){
-       d3.select(chartSvg).remove(); 
-    }
+            if(chartSvg){
+            d3.select(chartSvg).remove(); 
+            }
+            if(circleLeg){
+                circleLeg.forEach(leg => leg.remove())
+            }
 
     const data = list.taskList;
 
@@ -1331,6 +1335,7 @@ d3.select("#chart-selections")
         .attr("class", "chart-svg")
         .attr("width", width)
         .attr("height", height)
+        .call(responsivefy)
         .append("g")
         .attr('transform', 'translate(' + (250) + ',' + (height  / 2) + ')'); //where the chart sits in the svg box
         
@@ -1420,28 +1425,35 @@ d3.select("#chart-selections")
 
     } else if (option === "total-time-focused-on-each-task-today"){
         
+        //remove any charts and legends already there, to make space for new ones.
         var chartSvg = document.querySelector('.chart-svg');
+        var circleLeg = document.querySelectorAll('.circle-legend');
 
             if(chartSvg){
             d3.select(chartSvg).remove(); 
             }
+            if(circleLeg){
+                circleLeg.forEach(leg => leg.remove())
+            }
 
         const data = getTodayTasks();
 
-    var width = 1350;
-    var height = 550;
+    var width = 550;
+    var height = 320;
     var radius = 150;
     var donutWidth = 75;
     var color = d3.scaleOrdinal()
         .range(["#33A8C7", "#52E3E1", "#A0E426", "#FDF148", "#FFAB00", "#F77976", "#F050AE", "#D883FF", "#9336FD"]); //colours for slices/ arcs
+   
     
-    var svg = d3.select('#charts') //select the charts div
+    var svg = d3.select('.chart-area') //select the charts div
         .append("svg") //create an svg el
         .attr("width", width)
         .attr("height", height)
         .attr("class", "chart-svg")
+        .call(responsivefy)
         .append("g")
-        .attr('transform', 'translate(' + (250) + ',' + (height  / 2) + ')'); //where the chart sits in the svg box
+        .attr('transform', 'translate(' + (305) + ',' + (155) + ')'); //where the chart sits in the svg box - change this to center it
         
     var arc = d3.arc()
         .innerRadius(donutWidth)
@@ -1452,9 +1464,6 @@ d3.select("#chart-selections")
             return d.totalTimeFocusedOnTask //what data will the chart use to create the slices.
         })
         .sort(null); //stops the chart sorting in order of size.
-    
-    var legendRectSize = 14;
-    var legendSpacing = 7;
     
     var div = d3.select("body").append("div")
      .attr("class", "tooltip-donut")
@@ -1498,17 +1507,24 @@ d3.select("#chart-selections")
             .style("opacity", 0);
      });
 
-    var legend = svg.selectAll('.legend') //the legend and placement
+    var legendRectSize = 14;
+    var legendSpacing = 7;
+  
+    var svgLegend = d3.select('.legend-area');
+        
+    var legend = svgLegend.selectAll('.legend') //the legend and placement
         .data(color.domain())
         .enter()
         .append('g')
         .attr('class', 'circle-legend')
         .attr('transform', function (d, i) {
-            var height = legendRectSize + legendSpacing;
-            var offset = height * color.domain().length / 2;
-            var horz = 20 * legendRectSize + 13;
+            var height = legendRectSize + legendSpacing;   
+            var offset = -10;    
+            var horz = 25;
             var vert = i * height - offset;
             return 'translate(' + horz + ',' + vert + ')';
+            // var offset = height * color.domain().length / 2  //1800
+             
         });
     
     legend.append('circle') //keys
@@ -1526,36 +1542,45 @@ d3.select("#chart-selections")
         return  `${d.taskDescription} : ${d.totalTimeFocusedOnTaskLongForm}`; 
     });
 
+    var legendItems = document.querySelectorAll('.circle-legend');
+    console.log(legendItems.length)
+
+    //dynamically set the height of the legend box depending on how many items are added to it. 
+    svgLegend
+        .attr('height', function(){
+            return legendItems.length * 30;
+        })
+
     }
        
    })
 
-function change(dataToChange) {
-     var pie = d3.pie()
-     .value(function (d) {
-          return d.totalTimeFocusedOnTask;
-     }).sort(null)(dataToChange);
-     var width = 350;
-     var height = 350;
-     var radius = Math.min(width, height) / 2;
-     var donutWidth = 75;
-     path = d3.select("#charts")
-          .selectAll("path")
-          .data(pie); // Compute the new angles
-     var arc = d3.arc()
-          .innerRadius(radius - donutWidth)
-          .outerRadius(radius);
-     path.transition().duration(500).attr("d", arc); // redrawing the path with a smooth transition
+// function change(dataToChange) {
+//      var pie = d3.pie()
+//      .value(function (d) {
+//           return d.totalTimeFocusedOnTask;
+//      }).sort(null)(dataToChange);
+//      var width = 350;
+//      var height = 350;
+//      var radius = Math.min(width, height) / 2;
+//      var donutWidth = 75;
+//      path = d3.select("#charts")
+//           .selectAll("path")
+//           .data(pie); // Compute the new angles
+//      var arc = d3.arc()
+//           .innerRadius(radius - donutWidth)
+//           .outerRadius(radius);
+//      path.transition().duration(500).attr("d", arc); // redrawing the path with a smooth transition
 
-     var legend = svg.selectAll('.legend');
-     legend
-    .data(dataToChange)
-    .attr('x', legendRectSize + legendSpacing)
-    .attr('y', legendRectSize - legendSpacing)
-    .text(function (d) {       
-        return  `${d.taskDescription} : ${d.totalTimeFocusedOnTaskLongForm} : this should change`; 
-    });
-}
+//      var legend = svg.selectAll('.legend');
+//      legend
+//     .data(dataToChange)
+//     .attr('x', legendRectSize + legendSpacing)
+//     .attr('y', legendRectSize - legendSpacing)
+//     .text(function (d) {       
+//         return  `${d.taskDescription} : ${d.totalTimeFocusedOnTaskLongForm} : this should change`; 
+//     });
+// }
 
 function getTodayTasks(){
     
@@ -1606,5 +1631,38 @@ function getTodayTasks(){
     return todaysTasksFiltered;
 }
 
+/* The below function is taken from Ben Clinkenbeard's Blog Article and originally written by Brendan Sudol (attributed in README) */
 
+function responsivefy(svg) {
+  // container will be the DOM element
+  // that the svg is appended to
+  // we then measure the container
+  // and find its aspect ratio
+  const container = d3.select(svg.node().parentNode),
+      width = parseInt(svg.style('width'), 10),
+      height = parseInt(svg.style('height'), 10),
+      aspect = width / height;
+ 
+  // set viewBox attribute to the initial size
+  // control scaling with preserveAspectRatio
+  // resize svg on inital page load
+  svg.attr('viewBox', `0 0 ${width} ${height}`)
+      .attr('preserveAspectRatio', 'xMinYMid')
+      .call(resize);
+ 
+  // add a listener so the chart will be resized
+  // when the window resizes
+  // multiple listeners for the same event type
+  // requires a namespace, i.e., 'click.foo'
+  // api docs: https://goo.gl/F3ZCFr
+  d3.select(window).on(
+      'resize.' + container.attr('id'), 
+      resize
+  );
 
+  function resize() {
+      const w = parseInt(container.style('width'));
+      svg.attr('width', w);
+      svg.attr('height', Math.round(w / aspect));
+  }
+}

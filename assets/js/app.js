@@ -1323,21 +1323,21 @@ d3.select("#chart-selections")
 
     const data = list.taskList;
 
-    var width = 1350;
-    var height = 550;
+    var width = 550;
+    var height = 320;
     var radius = 150;
     var donutWidth = 75;
     var color = d3.scaleOrdinal()
         .range(["#33A8C7", "#52E3E1", "#A0E426", "#FDF148", "#FFAB00", "#F77976", "#F050AE", "#D883FF", "#9336FD"]); //colours for slices/ arcs
-    
-    var svg = d3.select('#charts') //select the charts div
+
+    var svg = d3.select('.chart-area') //select the charts div
         .append("svg") //create an svg el
         .attr("class", "chart-svg")
         .attr("width", width)
         .attr("height", height)
         .call(responsivefy)
         .append("g")
-        .attr('transform', 'translate(' + (250) + ',' + (height  / 2) + ')'); //where the chart sits in the svg box
+        .attr('transform', 'translate(' + (305) + ',' + (155) + ')'); //where the chart sits in the svg box
         
     var arc = d3.arc()
         .innerRadius(donutWidth)
@@ -1394,17 +1394,24 @@ d3.select("#chart-selections")
             .style("opacity", 0);
      });
 
-    var legend = svg.selectAll('.legend') //the legend and placement
+   var legendRectSize = 14;
+    var legendSpacing = 7;
+  
+    var svgLegend = d3.select('.legend-area');
+        
+    var legend = svgLegend.selectAll('.legend') //the legend and placement
         .data(color.domain())
         .enter()
         .append('g')
         .attr('class', 'circle-legend')
         .attr('transform', function (d, i) {
-            var height = legendRectSize + legendSpacing;
-            var offset = height * color.domain().length / 2;
-            var horz = 20 * legendRectSize + 13;
+            var height = legendRectSize + legendSpacing;   
+            var offset = -10;    
+            var horz = 25;
             var vert = i * height - offset;
             return 'translate(' + horz + ',' + vert + ')';
+            // var offset = height * color.domain().length / 2  //1800
+             
         });
     
     legend.append('circle') //keys
@@ -1421,6 +1428,15 @@ d3.select("#chart-selections")
     .text(function (d) {       
         return  `${d.taskDescription} : ${d.totalTimeFocusedOnTaskLongForm}`; 
     });
+
+    var legendItems = document.querySelectorAll('.circle-legend');
+    console.log(legendItems.length)
+
+    //dynamically set the height of the legend box depending on how many items are added to it. 
+    svgLegend
+        .attr('height', function(){
+            return legendItems.length * 30;
+        })
 
 
     } else if (option === "total-time-focused-on-each-task-today"){

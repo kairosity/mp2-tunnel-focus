@@ -255,7 +255,8 @@ While verbose and winding, this was definitely preferable to writing out the exa
 4. Adding project / category functionality. 
 5. Wage calculations for people who are paid per hour/ on a time basis. Very useful for freelancers who operate by time expended.
 6. Daily/weekly/monthly view of time spent working on each task/project. - Automated graphs with D3.js
-7. Speech to text functionality for adding tasks to the list. 
+7. Speech to text functionality for adding tasks to the list.
+8. Daily task time targets. So that the user can set a time goal on a task, and then work towards reaching it. 
 # Testing
 
 [Please click here to read all the testing documentation.](testing.md)

@@ -17,12 +17,11 @@ class Timer {
     } 
     timers(){
 
-        // --------------------------------------GLOBAL TIMER VARIABLES-------------------------------//
+// --------------------------------------GLOBAL VARIABLES-------------------------------//
 
         let seconds = 0;
         let minutes = 0;
         let hours = 0;
-
         var stopwatch;
         var countdown15;
         var countdown25;
@@ -66,67 +65,41 @@ class Timer {
         playing = false;
     }
     function makeElementsNotKeyboardTabbable(){
-        //add new task input
         newTaskInput.setAttribute("tabindex", "-1");
-        //the add task button
         addNewTaskButton.setAttribute("tabindex", "-1");
-
-        //all the checkboxes
         arrayOfCheckboxes.forEach(function(checkbox){
             checkbox.setAttribute("tabindex", "-1")
         });  
-
-            // all the stopwatches
             startStopwatchButtonArray.forEach(function(stopwatch){
             stopwatch.setAttribute("tabindex", "-1")
         });   
-
-            // all the sort icons
             arrayOfSortIcons.forEach(function(sorticon){
             sorticon.setAttribute("tabindex", "-1")
         });
-
-            // all the ellipses. 
         arrayOfOptionIcons.forEach(function(optionicon){
             optionicon.setAttribute("tabindex", "-1")
         });
-
         let chartsSelectBox = document.querySelector('#chart-selections');
         chartsSelectBox.setAttribute("tabindex", "-1");
-
     }
-
     function makeElementsKeyboardTabbableAgain(){
-
-        //add new task input
         newTaskInput.setAttribute("tabindex", "0");
-
-        //the add task button
         addNewTaskButton.setAttribute("tabindex", "0");
-
-        //all the checkboxes
         arrayOfCheckboxes.forEach(function(checkbox){
             checkbox.setAttribute("tabindex", "0")
         });  
-
-            // all the stopwatches
             startStopwatchButtonArray.forEach(function(stopwatch){
             stopwatch.setAttribute("tabindex", "0")
         });   
-
-            // all the sort icons
             arrayOfSortIcons.forEach(function(sorticon){
             sorticon.setAttribute("tabindex", "0")
         });
-
-            // all the ellipses. 
         arrayOfOptionIcons.forEach(function(optionicon){
             optionicon.setAttribute("tabindex", "0")
         });
         let chartsSelectBox = document.querySelector('#chart-selections');
         chartsSelectBox.setAttribute("tabindex", "0");          
     }
-
     function createTimerTitle(timerType, timerId){
         let timerTypeTitle = document.createElement('h2');
         timerTypeTitle.textContent = `${timerType}`; 
@@ -135,20 +108,17 @@ class Timer {
         timerTypeTitle.style.display = 'flex';
         timerContainer.insertAdjacentElement('afterbegin', timerTypeTitle);
     }
-
     function formatTime(seconds, minutes, hours){   
         if(seconds <= 9){
                 secondsHtml.innerHTML = `0${seconds}`;
             } else {
                 secondsHtml.innerHTML = seconds;
             }
-
             if(minutes <= 9){
                 minutesHtml.innerHTML = `0${minutes}`;
             } else {
                 minutesHtml.innerHTML = minutes;
             }
-
              if(hours <= 9){
                 hoursHtml.innerHTML = `0${hours}`;
             } else {
@@ -166,153 +136,126 @@ class Timer {
             behavior: "smooth"
         });
     }
-    
-
-    // --------------------------------------TIMING FUNCTIONS-------------------------------//
-
+// --------------------------------------TIMING FUNCTIONS-------------------------------//
     // Stopwatch countup
-        function countUp(){
-            seconds = seconds + 1;
-
-            if(seconds >= 60){
-                seconds = 0;
-                minutes = minutes + 1;
-            }
-            if(minutes >= 60){
-                minutes = 0;
-                hours = hours + 1;
-            }    
-            formatTime(seconds, minutes, hours);
+    function countUp(){
+        seconds = seconds + 1;
+        if(seconds >= 60){
+            seconds = 0;
+            minutes = minutes + 1;
         }
-        function stopWatchPlay(){
-        stopwatch = setInterval(function(){ 
-            countUp(); 
+        if(minutes >= 60){
+            minutes = 0;
+            hours = hours + 1;
+        }    
+        formatTime(seconds, minutes, hours);
+    }
+    function stopWatchPlay(){
+    stopwatch = setInterval(function(){ 
+        countUp(); 
+        }, 1000);
+        return playing = true;
+    }
+//Countdown 15 Play
+    function countDown15Play(){
+
+        seconds = 0;
+        minutes = 15;
+        hours = 0;
+
+        countdown();
+    }
+    function countdown(){
+        countdown15 = setInterval(function(){ 
+            countDownFunction(); 
             }, 1000);
             return playing = true;
         }
-//Countdown 15 Play
-        function countDown15Play(){
-
-            seconds = 0;
-            minutes = 15;
-            hours = 0;
-
-            countdown();
+    function countDownFunction(){
+        seconds = seconds - 1;
+        if((seconds < 0) && (minutes >= 1)){
+            seconds = 59;
+            minutes = minutes - 1;
+        } 
+        if((seconds<0) && (minutes==0)){
+            if (alarmButton.innerHTML == `<i class="fas fa-bell-slash" aria-hidden="true"></i>`){
+            alarm.muted == true;
+            clearInterval(countdown15);
+            clearInterval(countdown25);
+            countdownEnded();        
+        } else {
+            alarm.play()
+            clearInterval(countdown15);
+            clearInterval(countdown25);
+            countdownEnded();
+        }      
         }
-        function countdown(){
-            countdown15 = setInterval(function(){ 
-                countDownFunction(); 
-                }, 1000);
-                return playing = true;
-            }
-        function countDownFunction(){
-            seconds = seconds - 1;
-
-            if((seconds < 0) && (minutes >= 1)){
-                seconds = 59;
-                minutes = minutes - 1;
-            } 
-            if((seconds<0) && (minutes==0)){
-                if (alarmButton.innerHTML == `<i class="fas fa-bell-slash" aria-hidden="true"></i>`){
-                alarm.muted == true;
-                clearInterval(countdown15);
-                clearInterval(countdown25);
-                countdownEnded();
-                
+        //stops a bug that kept printing seconds as 900
+        if (seconds < 61) {           
+            if(seconds <= 9){
+                secondsHtml.innerHTML = `0${seconds}`;
             } else {
-                alarm.play()
-                clearInterval(countdown15);
-                clearInterval(countdown25);
-                countdownEnded();
-            }      
+                secondsHtml.innerHTML = seconds;
             }
-            //stops a bug that kept printing seconds as 900
-            if (seconds < 61) {
-                
-                if(seconds <= 9){
-                    secondsHtml.innerHTML = `0${seconds}`;
-                } else {
-                    secondsHtml.innerHTML = seconds;
-                }
-
-                if(minutes <= 9){
-                    minutesHtml.innerHTML = `0${minutes}`;
-                } else {
-                    minutesHtml.innerHTML = minutes;
-                }
-
-                if(hours <= 9){
-                    hoursHtml.innerHTML = `0${hours}`;
-                } else {
-                    hoursHtml.innerHTML = hours;
-                }
-            }          
-        }
-        //Countdown 25 Play
-        function countDown25Play(){
-
-            seconds = 0;
-            minutes = 25;
-            hours = 0;
-
-            countdown25SetInterval();
-        }
-        function countdown25SetInterval(){
-            countdown25 = setInterval(function(){ 
-                countDownFunction(); 
-                }, 1000);
-                return playing = true;
+            if(minutes <= 9){
+                minutesHtml.innerHTML = `0${minutes}`;
+            } else {
+                minutesHtml.innerHTML = minutes;
             }
+            if(hours <= 9){
+                hoursHtml.innerHTML = `0${hours}`;
+            } else {
+                hoursHtml.innerHTML = hours;
+            }
+        }          
+    }
+    //Countdown 25 Play
+    function countDown25Play(){
+        seconds = 0;
+        minutes = 25;
+        hours = 0;
 
+        countdown25SetInterval();
+    }
+    function countdown25SetInterval(){
+        countdown25 = setInterval(function(){ 
+            countDownFunction(); 
+            }, 1000);
+        return playing = true;
+    }
     function countdown15TimeToAdd(hours, minutes, seconds){
         var minutesInSeconds = minutes * 60
-    
-            if ( (seconds == -1) && (minutesInSeconds == 0) ){
-                var timeToAdd = 900
-                return timeToAdd;
-            } else {
-                var timeToAdd = 900 - (minutesInSeconds + seconds);
-                return timeToAdd;
-            }
-            
+        if ( (seconds == -1) && (minutesInSeconds == 0) ){
+            var timeToAdd = 900
+            return timeToAdd;
+        } else {
+            var timeToAdd = 900 - (minutesInSeconds + seconds);
+            return timeToAdd;
+        }          
     }
-
     function countdown25TimeToAdd(hours, minutes, seconds){
         var minutesInSeconds = minutes * 60
-            if ( (seconds == -1) && (minutesInSeconds == 0) ){
-                var timeToAdd = 1500
-                return timeToAdd;
-            } else {
-                var timeToAdd = 1500 - (minutesInSeconds + seconds);
-                return timeToAdd;
-            }
+        if ( (seconds == -1) && (minutesInSeconds == 0) ){
+            var timeToAdd = 1500
+            return timeToAdd;
+        } else {
+            var timeToAdd = 1500 - (minutesInSeconds + seconds);
+            return timeToAdd;
+        }
     }
-
     function stopwatchTimeToAdd(hours, minutes, seconds){
         let minutesInSeconds = minutes * 60;
         let hoursInSeconds = hours * 3600;
         var timeToAdd = seconds + minutesInSeconds + hoursInSeconds;
         return timeToAdd;
     }
-    
-
-        
-
 // --------------------------------------STRUCTURAL FUNCTIONS-------------------------------// 
 
         function stopWatchClickStart(){
-        
-            //Event listener on each task's stopwatch icon
             startStopwatchButtonArray.forEach(function(stopwatchButton){
-
                 ['click','keyup'].forEach(function(e){
-
                     stopwatchButton.addEventListener(e, function(event){
                         if((e === 'click') || (event.keyCode === 13)) {
-
-                            // && (seconds == 0) && (minutes == 0) && (hours==0)
-                           
-                            //if there are no timers playing then... automatically run StopWatchPlay
                             if ((!playing) && (playButton.style.display == '')) {
 
                             //show timer when stopwatch clicked.
@@ -320,9 +263,7 @@ class Timer {
                             playing = true; 
                             
                             scrollElementIntoView();  
-                            // starts playing the stopwatch automatically.
                             stopWatchPlay();
-
                             addOverlay();
 
                             //bring the timer container above the overlay
@@ -336,17 +277,17 @@ class Timer {
                             
                             //Select the area where the title will go
                             let timerTitle = document.querySelector('.timer-task-description');
+
                             //Give it an id to match the task's id.
                             timerTitle.id = id;
+
                             //give it a description to match task description.
                             timerTitle.textContent = description;
 
                             let timerContainerTitle = "Stopwatch";
                             let timerId = "stopwatch-timer-title";
                             createTimerTitle(timerContainerTitle, timerId);
-
                             makeElementsNotKeyboardTabbable();
-
                         } else {
                             startStopwatchButtonArray.forEach(function(stopwatchButton){
                                     event.preventDefault();
@@ -358,16 +299,13 @@ class Timer {
                     playOnClick();
                     closeTimer();
                     timer.initialiseTimer();
-                } //if statement
-            }, false) //stopwatch button event listener.
-      
-            }); //event arr forEach  
-    }); //start stopwatch button array
-                        
+                } 
+            }, false)
+            });
+    });                         
 } 
     function countDown15ClickStart(){
-        const ellipsisArray = document.querySelectorAll('.task-options');
-        
+        const ellipsisArray = document.querySelectorAll('.task-options');    
         ellipsisArray.forEach(function(ellipsis){
             ['click','keyup'].forEach(function(evt){
                 ellipsis.addEventListener(evt, function(elipEvent){
@@ -379,15 +317,12 @@ class Timer {
 
                                     addOverlay();
                                     scrollElementIntoView();
-                                    //bring the timer container above the overlay
                                     timerContainer.style.zIndex = 1001;
-
                                     makeElementsNotKeyboardTabbable();
 
                                     let seconds = 0;
                                     let minutes = 15;
                                     let hours = 0;
-
                                     secondsHtml.innerHTML = `0${seconds}`;
                                     minutesHtml.innerHTML = `${minutes}`;
                                     hoursHtml.innerHTML = `0${hours}`;
@@ -397,22 +332,17 @@ class Timer {
                                     let taskToTargetId = parentDiv.children[2].id;
                                     let taskToTargetDescription = parentDiv.children[2].textContent;
                                 
-                                        //if there are no timers playing then... automatically run CountDown15
-                                    if ((!playing) && (seconds == 0) && (minutes == 15) && (hours==0) && (playButton.style.display == '')) {
-                                        //show timer when stopwatch clicked.
-                                        timerContainer.style.display = 'flex'; 
-                                        
+                                    if ((!playing) && (seconds == 0) && (minutes == 15) && (hours==0) && (playButton.style.display == '')){
+                                        timerContainer.style.display = 'flex';      
                                         let timerContainerTitle = "Countdown 15";
                                         let timerId = "countdown15-timer-title";
-                                        createTimerTitle(timerContainerTitle, timerId)
-                                        
+                                        createTimerTitle(timerContainerTitle, timerId); 
                                         //Select the area where the title will go
                                         let timerTitle = document.querySelector('.timer-task-description');
                                         //Give it an id to match the task's id.
                                         timerTitle.id = taskToTargetId;
                                         //give it a description to match task description.
                                         timerTitle.textContent = taskToTargetDescription;
-
                                         countDown15Play()
                                         pauseOnClick(countdown15); 
                                         resetTime(countdown15);  
@@ -422,18 +352,12 @@ class Timer {
                     }) 
                  })
                 }
-
                 })
-
             })
-
         }); 
     }
-
     function countDown25ClickStart(){
-
         const ellipsisArray = document.querySelectorAll('.task-options');
-
         ellipsisArray.forEach(function(ellipsis){
             ['click','keyup'].forEach(function(evt){
                 ellipsis.addEventListener(evt, function(elipEvent){
@@ -443,14 +367,13 @@ class Timer {
                             countdown25Button.addEventListener(e, function(event){
                                 if((e === 'click') || (event.keyCode === 13)) {
                                     makeElementsNotKeyboardTabbable();
-
-                                    //Add the overlay
                                     addOverlay();
                                     scrollElementIntoView();
 
                                     //bring the timer container above the overlay
                                     timerContainer.style.zIndex = 1001;
                                     
+                                    //just testing new branch merging etc...
 
                                     let seconds = 0;
                                     let minutes = 25;

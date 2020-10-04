@@ -425,7 +425,7 @@ This website was developed using GitPod in a Chrome browser and commits were pus
 - ### **[D3.js Tutorials: Part 11 - Donut Charts](https://www.youtube.com/watch?v=0KB1tKCs7qE&list=PLEDbaVSIL58PGP65y3kkZse02s79BCbsp&index=12)**
     Great online series on D3.js
     
-## 4. General
+## 4. Git & GitHub
 
 - ### **[How to Write a Git Commit Message - Chris Beams](https://chris.beams.io/posts/git-commit/)**
     Great post about writing commits for Git.
@@ -433,13 +433,19 @@ This website was developed using GitPod in a Chrome browser and commits were pus
 - ### **[Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/)**
     More specifications about commits.
 
-- ### **[Debugging in Chrome](https://javascript.info/debugging-chrome)**
-    Information about Chrome Debugging tools. 
+- ## **[Working with Branches in Git and GitHub](https://thenewstack.io/dont-mess-with-the-master-working-with-branches-in-git-and-github/)**
+    An introduction to branches. 
 
 ## 5. Frameworks
 
 - ### **[tippy.js](https://atomiks.github.io/tippyjs/v6/getting-started/)**
     A wonderful JavaScript framework for tooltips, popovers, dropdowns & menus. Best thing since sliced bread.
+
+## 6. General
+
+- ### **[Debugging in Chrome](https://javascript.info/debugging-chrome)**
+    Information about Chrome Debugging tools. 
+
 # Technology Used
 
 - HTML

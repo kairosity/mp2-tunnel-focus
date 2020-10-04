@@ -23,8 +23,8 @@ class Timer {
         let minutes = 0;
         let hours = 0;
         var stopwatch;
-        var countdown15;
-        var countdown25;
+        var countdown15Int;
+        var countdown25Int;
         var playing = false;
         let pauseButton = document.querySelector('#pause');
         let playButton = document.querySelector('#play');
@@ -166,7 +166,7 @@ class Timer {
         countdown();
     }
     function countdown(){
-        countdown15 = setInterval(function(){ 
+        countdown15Int = setInterval(function(){ 
             countDownFunction(); 
             }, 1000);
             return playing = true;
@@ -180,13 +180,13 @@ class Timer {
         if((seconds<0) && (minutes==0)){
             if (alarmButton.innerHTML == `<i class="fas fa-bell-slash" aria-hidden="true"></i>`){
             alarm.muted == true;
-            clearInterval(countdown15);
-            clearInterval(countdown25);
+            clearInterval(countdown15Int);
+            clearInterval(countdown25Int);
             countdownEnded();        
         } else {
             alarm.play()
-            clearInterval(countdown15);
-            clearInterval(countdown25);
+            clearInterval(countdown15Int);
+            clearInterval(countdown25Int);
             countdownEnded();
         }      
         }
@@ -218,7 +218,7 @@ class Timer {
         countdown25SetInterval();
     }
     function countdown25SetInterval(){
-        countdown25 = setInterval(function(){ 
+        countdown25Int = setInterval(function(){ 
             countDownFunction(); 
             }, 1000);
         return playing = true;
@@ -344,8 +344,8 @@ class Timer {
                                         //give it a description to match task description.
                                         timerTitle.textContent = taskToTargetDescription;
                                         countDown15Play()
-                                        pauseOnClick(countdown15); 
-                                        resetTime(countdown15);  
+                                        pauseOnClick(countdown15Int); 
+                                        resetTime(countdown15Int);  
                                     }
                                 closeTimer();
                                 }
@@ -407,8 +407,8 @@ class Timer {
 
                                         // starts playing the countdown automatically.
                                         countDown25Play()
-                                        pauseOnClick(countdown25); 
-                                        resetTime(countdown25);  
+                                        pauseOnClick(countdown25Int); 
+                                        resetTime(countdown25Int);  
                                     }
                                 closeTimer();
                                 }
@@ -430,12 +430,12 @@ class Timer {
                     pauseOnClick(stopwatch);
                 } else if (timerTitleDOM.textContent == 'Countdown 15'){ //bug keeps starting from beginning again. - resets when in countdown15play.
                     countdown();
-                    pauseOnClick(countdown15);
-                    resetTime(countdown15);
+                    pauseOnClick(countdown15Int);
+                    resetTime(countdown15Int);
                 } else if (timerTitleDOM.textContent == 'Countdown 25'){
                     countdown25SetInterval();
-                    pauseOnClick(countdown25);
-                    resetTime(countdown25);
+                    pauseOnClick(countdown25Int);
+                    resetTime(countdown25Int);
                 }    
                 pauseButton.style.display = "inline-block";
                 playButton.style.display = "none";
@@ -492,7 +492,7 @@ class Timer {
         // if (countdownType === "Countdown 15"){
         //     clearInterval(countdown15);
         // } else if (countdownType === "Countdown 25"){
-        //     clearInterval(countdown25); 
+        //     clearInterval(countdown25Int); 
         // }
 
         //cant clear interval here. It will save 15 minutes. 
@@ -564,9 +564,9 @@ class Timer {
                 if(typeOfTimer == "Stopwatch"){
                     intervalToPause = stopwatch;
                 } else if (typeOfTimer == "Countdown 15"){
-                    intervalToPause = countdown15;
+                    intervalToPause = countdown15Int;
                 } else if (typeOfTimer == "Countdown 25"){
-                    intervalToPause = countdown25;
+                    intervalToPause = countdown25Int;
                 }
                 if (playing){
                     clearInterval(intervalToPause);
@@ -619,12 +619,12 @@ class Timer {
                 let timeToAddInSecs = countdown15TimeToAdd(hours, minutes, seconds);
                 let timeInsert = timer.convertSecondsToTime(timeToAddInSecs);
                 messageElement.textContent = `Do you want to save ${timeInsert} to to your task: "${thisTask}"? `
-                clearInterval(countdown15);
+                clearInterval(countdown15Int);
             } else if (typeOfTimer.textContent == "Countdown 25"){
                 let timeToAddInSecs = countdown25TimeToAdd(hours, minutes, seconds);
                 let timeInsert = timer.convertSecondsToTime(timeToAddInSecs);
                 messageElement.textContent = `Do you want to save ${timeInsert} to to to your task: "${thisTask}"? `
-                clearInterval(countdown25);
+                clearInterval(countdown25Int);
             }
 
             confirmButton.addEventListener('click', function(){
@@ -662,10 +662,10 @@ class Timer {
                
                 if (typeOfTimer.textContent == "Countdown 15") {
                     timeToAdd = countdown15TimeToAdd(hours, minutes, seconds);
-                    clearInterval(countdown15); //necessary??
+                    clearInterval(countdown15Int); //necessary??
                 } else if (typeOfTimer.textContent == "Countdown 25"){
                     timeToAdd = countdown25TimeToAdd(hours, minutes, seconds);
-                    clearInterval(countdown25); //necessary??
+                    clearInterval(countdown25Int); //necessary??
                 } else if (typeOfTimer.textContent == "Stopwatch"){
                     timeToAdd = stopwatchTimeToAdd(hours, minutes, seconds);
                 }

@@ -20,7 +20,7 @@
             <h1 class="main-heading">Tunnel Focus</h1>
         </header>
 
-         <div class="timer-container"> <!--TIMER GOES HERE: THIS IS A GRID CHILD OF GRID-OVERLORD -->
+         <div class="timer-container" role="dialog"> <!--TIMER GOES HERE: THIS IS A GRID CHILD OF GRID-OVERLORD -->
 
             <h2 id="" class="timer-task-description"></h2>
             
@@ -34,7 +34,6 @@
             </div>
                 <div class="timer-controls">
                     <a href="#" id="alarm-on" class="alarm"><i class="fas fa-bell"></i></a>
-                    <!-- <a href="#" id="alarm-off" class="alarm"><i class="fas fa-bell-slash"></i></a> -->
                     <a href="#" id="pause"><i class="fas fa-pause"></i></a>
                     <a href="#" id="play"><i class="fas fa-play"></i></a>
                     <a href="#" id="reset"><i class="fas fa-history"></i></a>
@@ -80,8 +79,8 @@
                    <!-- Modal content -->
                     <div class="sttt-modal-content">
                         <p class="sttt-modal-p">Do you want to save ${thistime} to ${thistask}?</p>
-                        <button class="sttt-confirm-button sttt-modal-btn">Yes, Save</button>
-                        <button class="sttt-negate-button sttt-modal-btn">No, Cancel</button>
+                        <button class="sttt-confirm-button sttt-modal-btn" tabindex="0">Yes, Save</button>
+                        <button class="sttt-negate-button sttt-modal-btn" tabindex="0">No, Cancel</button>
                     </div>
 
                 </div>
@@ -92,16 +91,16 @@
                     <!-- Modal content -->
                     <div class="modal-content">
                         <p class="close-timer-modal-p">Are you sure you want to exit the timer without saving?</p>
-                        <button class="confirm-button close-timer-modal-btn">Yes, Exit</button>
-                        <button class="negate-button close-timer-modal-btn">No, Cancel</button>
+                        <button class="confirm-button close-timer-modal-btn" tabindex="0">Yes, Exit</button>
+                        <button class="negate-button close-timer-modal-btn" tabindex="0">No, Cancel</button>
                     </div>
 
                 </div>
        
 
-        <div class="focus-summary-container"> <!--FOCUS SUMMARIES & CHARTS GO HERE : THIS IS A GRID CHILD OF GRID-OVERLORD -->
+        <div class="focus-summary-container" > <!--FOCUS SUMMARIES & CHARTS GO HERE : THIS IS A GRID CHILD OF GRID-OVERLORD -->
             <div class="custom-select">
-                <select name="chart-selections" id="chart-selections">
+                <select name="chart-selections" id="chart-selections" tabindex="0">
                     <option value="total-time-focused-on-each-task">Total Time Focused on Each Task</option>
                     <option value="total-time-focused-on-each-task-today">Total time Focused on Each Task Today</option>
                     <option value="tasks-completed-today">Tasks Completed Today</option>

@@ -91,6 +91,9 @@ class Timer {
             optionicon.setAttribute("tabindex", "-1")
         });
 
+        let chartsSelectBox = document.querySelector('#chart-selections');
+        chartsSelectBox.setAttribute("tabindex", "-1");
+
     }
 
     function makeElementsKeyboardTabbableAgain(){
@@ -119,7 +122,9 @@ class Timer {
             // all the ellipses. 
         arrayOfOptionIcons.forEach(function(optionicon){
             optionicon.setAttribute("tabindex", "0")
-        });          
+        });
+        let chartsSelectBox = document.querySelector('#chart-selections');
+        chartsSelectBox.setAttribute("tabindex", "0");          
     }
 
     function createTimerTitle(timerType, timerId){
@@ -783,7 +788,7 @@ class Timer {
                     $(manuallyEditTimeButton).bind('click keyup', function(event){
 
                         if((event.type === 'click') || (event.type === 'keyup') && (event.keyCode === 13)) {
-                              
+
                                 //Find the task clicked on and save in parentDiv.
                                 let parentDiv = event.target.closest('.task');
 
@@ -889,6 +894,11 @@ class Timer {
 
                                     //add the cancel button after the save button.
                                     saveButton2.after(cancelButton);
+
+                                   
+
+                                    let editTimeTitle = document.querySelector('.edit-time-task-description');
+                                    editTimeTitle.scrollIntoView();
 
                                     //click event listener on the save button. //no need for both save button vars.
                                     let saveBtn = document.querySelector('.edit-time-save-button');
@@ -1083,7 +1093,7 @@ class List {
                 document.getElementById('list').innerHTML +=
                 `<div class="task">
                     <p class="total-task-time">${taskList[i].totalTimeFocusedOnTaskLongForm}</p>
-                    <input class="taskCheckbox" type="checkbox" checked>
+                    <input class="taskCheckbox" type="checkbox" tabindex=0 checked>
                     <li class="task-description completed" id="${taskList[i].id}">${taskList[i].taskDescription}</li>
                     <a class="task-stopwatch task-list-icon" ><i class="fas fa-stopwatch start-stopwatch" tabindex=0></i></i></a>
                     <a class="task-sort task-list-icon" tabindex=0><i class="fas fa-sort sort-tasks-icon"></i></a>
@@ -1094,7 +1104,7 @@ class List {
                 document.getElementById('list').innerHTML +=
                 `<div class="task">
                     <p class="total-task-time">${taskList[i].totalTimeFocusedOnTaskLongForm}</p>
-                    <input class="taskCheckbox" type="checkbox">
+                    <input class="taskCheckbox" type="checkbox" tabindex=0>
                     <li class="task-description" id="${taskList[i].id}">${taskList[i].taskDescription}</li>
                     <a class="task-stopwatch task-list-icon"><i class="fas fa-stopwatch start-stopwatch"  tabindex=0 ></i></i></a>
                     <a class="task-sort task-list-icon" tabindex=0><i class="fas fa-sort sort-tasks-icon"></i></a>
@@ -1135,7 +1145,7 @@ class List {
                 document.getElementById('list').innerHTML +=
                 `<div class="task">
                     <p class="total-task-time">${newTask.totalTimeFocusedOnTaskLongForm}</p>
-                    <input class="taskCheckbox" type="checkbox">
+                    <input class="taskCheckbox" type="checkbox" tabindex=0>
                     <li class="task-description" id="${newTask.id}">${newTask.taskDescription}</li>
                     <a class="task-stopwatch task-list-icon" ><i class="fas fa-stopwatch start-stopwatch" tabindex=0 ></i></i></a>
                     <a class="task-sort task-list-icon" tabindex=0><i class="fas fa-sort sort-tasks-icon"></i></a>

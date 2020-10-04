@@ -425,6 +425,7 @@ li.task-description{
     background-color: var(--sun-yellow);
     cursor: pointer;
     position: relative;
+    transition: all 500ms ease-in-out;
   }
 
   .taskCheckbox:checked {
@@ -444,9 +445,19 @@ li.task-description{
 .taskCheckbox:active {
     border: 2px solid var(--pure-black);
 }
+
+.taskCheckbox:hover{
+    background: linear-gradient(110deg, var(--dark-blue), var(--light-blue), var(--grass-green), var(--sun-yellow), var(--orange), var(--coral), var(--happy-pink), var(--strong-lavendar), var(--purple-blush));
+    transform: scale(1.1);
+}
+
+
 .completed {
     text-decoration: line-through;
+    text-decoration-style: wavy;
+    text-decoration-color: var(--pure-black);
 }
+
 .start-stopwatch,
 .task-options-icon {
     cursor: pointer;
@@ -454,6 +465,7 @@ li.task-description{
 .sort-tasks-icon{
     cursor: grab;
 }
+
 .task:nth-of-type(9n+1){ 
     color: var(--dark-blue);
 }
@@ -483,6 +495,13 @@ li.task-description{
 }
 li.task-description{
     color: var(--pure-black);
+}
+
+.task-list-icon{
+    transition: all 300ms ease-in;
+}
+.task-list-icon:not(.task-sort):hover{
+   transform: rotate(45deg) scale(1.2);
 }
 
 .total-task-time{

@@ -66,10 +66,8 @@ class Timer {
         playing = false;
     }
     function makeElementsNotKeyboardTabbable(){
-
         //add new task input
         newTaskInput.setAttribute("tabindex", "-1");
-
         //the add task button
         addNewTaskButton.setAttribute("tabindex", "-1");
 
@@ -156,6 +154,12 @@ class Timer {
         secondsHtml.innerHTML = `0${seconds}`;
         minutesHtml.innerHTML = `${minutes}`;
         hoursHtml.innerHTML = `0${hours}`;
+    }
+    function scrollElementIntoView(){
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
     }
     
 
@@ -309,12 +313,8 @@ class Timer {
                             //show timer when stopwatch clicked.
                             timerContainer.style.display = 'flex'; 
                             playing = true; 
-
-                            window.scrollTo({
-                                top: 0,
-                                behavior: "smooth"
-                            });
-                                
+                            
+                            scrollElementIntoView();  
                             // starts playing the stopwatch automatically.
                             stopWatchPlay();
 
@@ -373,7 +373,7 @@ class Timer {
                                 if((e === 'click') || (event.keyCode === 13)) {
 
                                     addOverlay();
-
+                                    scrollElementIntoView();
                                     //bring the timer container above the overlay
                                     timerContainer.style.zIndex = 1001;
 
@@ -441,6 +441,7 @@ class Timer {
 
                                     //Add the overlay
                                     addOverlay();
+                                    scrollElementIntoView();
 
                                     //bring the timer container above the overlay
                                     timerContainer.style.zIndex = 1001;
@@ -683,17 +684,17 @@ class Timer {
                 playButton.style.display = "inline-block";
             }
             if (typeOfTimer.textContent == "Stopwatch"){
-                messageElement.textContent = `Do you want to save ${hours} hours ${minutes} minutes & ${seconds} seconds to ${thisTask}? `
+                messageElement.textContent = `Do you want to save ${hours} hours ${minutes} minutes & ${seconds} seconds to your task: "${thisTask}"? `
                 clearInterval(stopwatch);            
             } else if (typeOfTimer.textContent == "Countdown 15"){
                 let timeToAddInSecs = countdown15TimeToAdd(hours, minutes, seconds);
                 let timeInsert = timer.convertSecondsToTime(timeToAddInSecs);
-                messageElement.textContent = `Do you want to save ${timeInsert} to ${thisTask}? `
+                messageElement.textContent = `Do you want to save ${timeInsert} to to your task: "${thisTask}"? `
                 clearInterval(countdown15);
             } else if (typeOfTimer.textContent == "Countdown 25"){
                 let timeToAddInSecs = countdown25TimeToAdd(hours, minutes, seconds);
                 let timeInsert = timer.convertSecondsToTime(timeToAddInSecs);
-                messageElement.textContent = `Do you want to save ${timeInsert} to ${thisTask}? `
+                messageElement.textContent = `Do you want to save ${timeInsert} to to to your task: "${thisTask}"? `
                 clearInterval(countdown25);
             }
 
@@ -716,31 +717,9 @@ class Timer {
                 makeElementsKeyboardTabbableAgain();
                 location.reload();
             })
-
             negateButton.addEventListener('click', function(){
                  saveTimeToTaskModal.style.display = "none"; 
             })
-
-            
-            // if(confirm(`Do you want to save this time to ${thisTask}?`)){
-            //     saveTimeToTask(timerTitle.id, seconds);
-            //     //needs to update the time spent display on task list.
-            //     let idForSavingTime = timerTitle.id;
-            //     let taskTimeDisplay1 = document.querySelectorAll('.task-description'); //with the same id as the timertitle id.
-                
-            //     for (let i=0; i<taskTimeDisplay1.length; i++){
-            //         if(taskTimeDisplay1[i].id == idForSavingTime){
-            //             let timeDisplay = taskTimeDisplay1[i].parentElement.firstElementChild; 
-            //             timeDisplay.textContent = list.taskList[timerTitle.id].totalTimeFocusedOnTaskLongForm;
-            //             // timeDisplay.textContent = list.taskList[timerTitle.id].totalTimeFocusedOnTask;
-            //         }       
-            //     }
-            //     removeTimerFromDom();
-            //     removeOverlay();
-            //     makeElementsKeyboardTabbableAgain();
-            //     location.reload();
-         
-            // } 
             return playing = false; 
         })
     }
@@ -753,33 +732,12 @@ class Timer {
              let timeToAdd;
                
                 if (typeOfTimer.textContent == "Countdown 15") {
-
                     timeToAdd = countdown15TimeToAdd(hours, minutes, seconds);
-                    // minutesInSeconds = minutes * 60
-                    
-                    // //!FIX - whereby seconds was returning 901 & 1501
-                    // if ( (seconds == -1) && (minutesInSeconds == 0) ){
-                    //    var timeToAdd = 900
-                    // } else {
-                    //    var timeToAdd = 900 - (minutesInSeconds + seconds);
-                    // }
                     clearInterval(countdown15); //necessary??
-
                 } else if (typeOfTimer.textContent == "Countdown 25"){
                     timeToAdd = countdown25TimeToAdd(hours, minutes, seconds);
-                    // minutesInSeconds = minutes * 60
-
-                    // if ( (seconds == -1) && (minutesInSeconds == 0) ){
-                    //     var timeToAdd = 1500
-                    // } else {
-                    //     var timeToAdd = 1500 - (minutesInSeconds + seconds);
-                    // }
                     clearInterval(countdown25); //necessary??
                 } else if (typeOfTimer.textContent == "Stopwatch"){
-
-                    // minutesInSeconds = minutes * 60;
-                    // let hoursInSeconds = hours * 3600;
-                    // var timeToAdd = seconds + minutesInSeconds + hoursInSeconds;
                     timeToAdd = stopwatchTimeToAdd(hours, minutes, seconds);
                 }
                 // timeToAdd = seconds;
@@ -1127,9 +1085,9 @@ class List {
                     <p class="total-task-time">${taskList[i].totalTimeFocusedOnTaskLongForm}</p>
                     <input class="taskCheckbox" type="checkbox" checked>
                     <li class="task-description completed" id="${taskList[i].id}">${taskList[i].taskDescription}</li>
-                    <a class="task-stopwatch" ><i class="fas fa-stopwatch start-stopwatch" tabindex=0></i></i></a>
-                    <a class="task-sort" tabindex=0><i class="fas fa-sort sort-tasks-icon"></i></a>
-                    <a class="task-options" aria-label="task-options-ellipsis" tabindex=0><i class="fas fa-ellipsis-v task-options-icon"></i></a>
+                    <a class="task-stopwatch task-list-icon" ><i class="fas fa-stopwatch start-stopwatch" tabindex=0></i></i></a>
+                    <a class="task-sort task-list-icon" tabindex=0><i class="fas fa-sort sort-tasks-icon"></i></a>
+                    <a class="task-options task-list-icon" aria-label="task-options-ellipsis" tabindex=0><i class="fas fa-ellipsis-v task-options-icon"></i></a>
                 </div>`;
 
             } else if(taskList[i].completed === false) {
@@ -1138,9 +1096,9 @@ class List {
                     <p class="total-task-time">${taskList[i].totalTimeFocusedOnTaskLongForm}</p>
                     <input class="taskCheckbox" type="checkbox">
                     <li class="task-description" id="${taskList[i].id}">${taskList[i].taskDescription}</li>
-                    <a class="task-stopwatch"><i class="fas fa-stopwatch start-stopwatch"  tabindex=0 ></i></i></a>
-                    <a class="task-sort" tabindex=0><i class="fas fa-sort sort-tasks-icon"></i></a>
-                    <a class="task-options" tabindex=0><i class="fas fa-ellipsis-v task-options-icon"></i></a>
+                    <a class="task-stopwatch task-list-icon"><i class="fas fa-stopwatch start-stopwatch"  tabindex=0 ></i></i></a>
+                    <a class="task-sort task-list-icon" tabindex=0><i class="fas fa-sort sort-tasks-icon"></i></a>
+                    <a class="task-options task-list-icon" tabindex=0><i class="fas fa-ellipsis-v task-options-icon"></i></a>
                 </div>`;
             }
         }
@@ -1179,9 +1137,9 @@ class List {
                     <p class="total-task-time">${newTask.totalTimeFocusedOnTaskLongForm}</p>
                     <input class="taskCheckbox" type="checkbox">
                     <li class="task-description" id="${newTask.id}">${newTask.taskDescription}</li>
-                    <a class="task-stopwatch" ><i class="fas fa-stopwatch start-stopwatch" tabindex=0 ></i></i></a>
-                    <a class="task-sort" tabindex=0><i class="fas fa-sort sort-tasks-icon"></i></a>
-                    <a class="task-options" tabindex=0><i class="fas fa-ellipsis-v task-options-icon"></i></a>
+                    <a class="task-stopwatch task-list-icon" ><i class="fas fa-stopwatch start-stopwatch" tabindex=0 ></i></i></a>
+                    <a class="task-sort task-list-icon" tabindex=0><i class="fas fa-sort sort-tasks-icon"></i></a>
+                    <a class="task-options task-list-icon" tabindex=0><i class="fas fa-ellipsis-v task-options-icon"></i></a>
                 </div>`;
 
                 //clears the input value

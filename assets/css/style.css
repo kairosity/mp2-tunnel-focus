@@ -261,7 +261,7 @@
     color: var(--grass-green);
     margin-bottom: 5px;
 }
-.delete-task-option::after{
+.line-here::after{
     content:'';
     display:inline-block;
     width:100%; 
@@ -290,6 +290,7 @@
 .task-option:hover{
     background-color: var(--sun-yellow);
 }
+
 
 /*----------------------------------------------------------- Add New Task  */
 

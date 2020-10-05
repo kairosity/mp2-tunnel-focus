@@ -186,6 +186,7 @@ class Timer {
         } else {
             alarm.play()
             clearInterval(countdown15Int);
+            console.log(`Clear Int in Countdown Func: ${countdown15Int}`)
             clearInterval(countdown25Int);
             countdownEnded();
         }      
@@ -211,8 +212,8 @@ class Timer {
     }
     //Countdown 25 Play
     function countDown25Play(){
-        seconds = 0;
-        minutes = 25;
+        seconds = 4;
+        minutes = 0;
         hours = 0;
 
         countdown25SetInterval();
@@ -342,47 +343,49 @@ function countdownClickStartHelper(countdownType, countdownNumber){
             ['click','keyup'].forEach(function(evt){
                 ellipsis.addEventListener(evt, function(elipEvent){
                     if((evt === 'click') || (elipEvent.keyCode === 9)) {
+
                         const countdown15Button = document.querySelector('.countdown15-task-option');
-                        ['click','keyup'].forEach(function(e){
-                            countdown15Button.addEventListener(e, function(event){
-                                if((e === 'click') || (event.keyCode === 13)) {
+
+                            $(countdown15Button).bind('click keyup', function(event){
+                          
+                                if((event.type === 'click') || (event.keyCode === 13)) {
                                         countdownClickStartHelper("countdown15", 15);
                                         countDown15Play()
                                         pauseOnClick(countdown15Int); 
                                         resetTime(countdown15Int);  
                                     }
+                                $(this).unbind('click', arguments.callee);
+                                $(this).unbind('keyup', arguments.callee);
                                 closeTimer();
                                 })
-                    }) 
-                 }
+                    }
+                 })
                 })
                 })
-            })
-        } 
+            } 
     function countDown25ClickStart(){
-        const ellipsisArray = document.querySelectorAll('.task-options');
+        const ellipsisArray = document.querySelectorAll('.task-options');    
         ellipsisArray.forEach(function(ellipsis){
             ['click','keyup'].forEach(function(evt){
                 ellipsis.addEventListener(evt, function(elipEvent){
                     if((evt === 'click') || (elipEvent.keyCode === 9)) {
                         const countdown25Button = document.querySelector('.countdown25-task-option');
-                        ['click','keyup'].forEach(function(e){
-                            countdown25Button.addEventListener(e, function(event){
-                                if((e === 'click') || (event.keyCode === 13)) {
+                            $(countdown25Button).bind('click keyup', function(event){
+                                if((event.type === 'click') || (event.keyCode === 13)) {
                                         countdownClickStartHelper("countdown25", 25);
-                                        // starts playing the countdown automatically.
                                         countDown25Play()
                                         pauseOnClick(countdown25Int); 
                                         resetTime(countdown25Int);  
                                     }
+                                $(this).unbind('click', arguments.callee);
+                                $(this).unbind('keyup', arguments.callee);
                                 closeTimer();
                                 })
-                            })
-                        }
+                            }
+                        })
                     })
                 })
-            })
-        }                                           
+            }                                      
     function playOnClick(){
         playButton.addEventListener('click', function(){ 
             let timerTitleDOM = document.querySelector('.timer-title');
@@ -450,7 +453,6 @@ function countdownClickStartHelper(countdownType, countdownNumber){
 
         let countdownEndedModal = document.getElementById('countdown-ended-modal');
         
-
         countdownEndedModal.style.display = "block";
         let confirmButton = document.querySelector('.ce-confirm-button');
         let negateButton = document.querySelector('.ce-negate-button');
@@ -487,17 +489,28 @@ function countdownClickStartHelper(countdownType, countdownNumber){
                         timeDisplay.textContent = list.taskList[timerTitle.id].totalTimeFocusedOnTaskLongForm;
                     }       
                 }
+                clearInterval(countdown15Int);
                 removeTimerFromDom(); 
                 removeOverlay();
+                console.log(countdown15Int);
                 playing = false;
                 seconds = 0;
                 minutes = 0;
                 hours = 0;
+                console.log(countdown15Int);
             })
 
             negateButton.addEventListener('click', function(){
-            countdownEndedModal.style.display = "none"; 
-    });   
+                clearInterval(countdown15Int);
+                countdownEndedModal.style.display = "none";
+                removeTimerFromDom();
+                removeOverlay();
+                playing = false;
+                seconds = 0;
+                minutes = 0;
+                hours = 0; 
+                console.log(countdown15Int);
+            });   
          
     }
      function closeTimer(){

@@ -827,7 +827,8 @@ div.tooltip-donut {
 
 /* Close Timer Without Saving Modal */
 .modal,
-#save-time-to-task-modal {
+#save-time-to-task-modal,
+#countdown-ended-modal {
   display: none; 
   position: fixed; 
   z-index: 1002; 
@@ -842,7 +843,8 @@ div.tooltip-donut {
 
 /* Modal Content/Box */
 .modal-content,
-.sttt-modal-content {
+.sttt-modal-content,
+.countdown-ended-modal-content {
   background-color: var(--sun-yellow);
   margin: 15% auto;
   padding: 20px;
@@ -862,7 +864,8 @@ div.tooltip-donut {
 
 /* Modal Buttons */
 .close-timer-modal-btn,
-.sttt-modal-btn{ 
+.sttt-modal-btn,
+.ce-modal-btn{ 
     width: 120px;   
     padding: 5px 14px;
     border-radius: 8px;
@@ -884,14 +887,16 @@ div.tooltip-donut {
 }
 /* The 'Yes, Exit' Button */
 .confirm-button,
-.sttt-confirm-button {
+.sttt-confirm-button,
+.ce-confirm-button {
     background-color: var(--pure-white);
     color: var(--pure-black);
     border: 2px solid var(--pure-black);
 }
 /* The 'No, Cancel' Button */
 .negate-button,
-.sttt-negate-button{
+.sttt-negate-button,
+.ce-negate-button{
     background-color: var(--pure-black);
     color: var(--pure-white);
     border: 2px solid var(--pure-white);

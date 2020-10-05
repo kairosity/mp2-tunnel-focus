@@ -880,7 +880,8 @@ div.tooltip-donut {
     cursor: pointer;
 }
 .close-timer-modal-btn:hover,
-.sttt-modal-btn:hover {
+.sttt-modal-btn:hover,
+.ce-modal-btn:hover {
     -webkit-box-shadow: 5px 9px 0px 0px rgba(0,0,0,1);
     -moz-box-shadow: 5px 9px 0px 0px rgba(0,0,0,1);
     box-shadow: 5px 9px 0px 0px rgba(0,0,0,1);

@@ -159,8 +159,8 @@ class Timer {
 //Countdown 15 Play
     function countDown15Play(){
 
-        seconds = 4;
-        minutes = 0;
+        seconds = 0;
+        minutes = 15;
         hours = 0;
 
         countdown();
@@ -186,7 +186,6 @@ class Timer {
         } else {
             alarm.play()
             clearInterval(countdown15Int);
-            console.log(`Clear Int in Countdown Func: ${countdown15Int}`)
             clearInterval(countdown25Int);
             countdownEnded();
         }      
@@ -212,8 +211,8 @@ class Timer {
     }
     //Countdown 25 Play
     function countDown25Play(){
-        seconds = 4;
-        minutes = 0;
+        seconds = 0;
+        minutes = 25;
         hours = 0;
 
         countdown25SetInterval();
@@ -292,7 +291,7 @@ class Timer {
                         } else {
                             startStopwatchButtonArray.forEach(function(stopwatchButton){
                                     event.preventDefault();
-                            }) //may not need any of this? 
+                            }) 
                             console.log("We cannot play the timer because one of these things is true: 1-playing==true 2-seconds, minutes or hours are not at 0 or the play button is visible.");
                         }             
                     pauseOnClick(stopwatch); 
@@ -305,7 +304,6 @@ class Timer {
             });
     });                         
 } 
-
 function countdownClickStartHelper(countdownType, countdownNumber){
         addOverlay();
         scrollElementIntoView();
@@ -489,15 +487,13 @@ function countdownClickStartHelper(countdownType, countdownNumber){
                         timeDisplay.textContent = list.taskList[timerTitle.id].totalTimeFocusedOnTaskLongForm;
                     }       
                 }
-                clearInterval(countdown15Int);
+                clearInterval(countdown15Int); //also countdown 25
                 removeTimerFromDom(); 
-                removeOverlay();
-                console.log(countdown15Int);
+                removeOverlay();  
                 playing = false;
                 seconds = 0;
                 minutes = 0;
-                hours = 0;
-                console.log(countdown15Int);
+                hours = 0;     
             })
 
             negateButton.addEventListener('click', function(){
@@ -509,71 +505,66 @@ function countdownClickStartHelper(countdownType, countdownNumber){
                 seconds = 0;
                 minutes = 0;
                 hours = 0; 
-                console.log(countdown15Int);
-            });   
-         
+            });         
     }
-     function closeTimer(){
-            let xButton = document.querySelector('.close-timer-x');
+    function closeTimer(){
+        let xButton = document.querySelector('.close-timer-x');
 
-            xButton.addEventListener('keyup', function(event){
-                if(event.keyCode === 13){
-                    event.preventDefault();
-                    xButton.click();
-                }
-            })
+        xButton.addEventListener('keyup', function(event){
+            if(event.keyCode === 13){
+                event.preventDefault();
+                xButton.click();
+            }
+        })
             
-            xButton.addEventListener('click', function(){
+        xButton.addEventListener('click', function(){
 
-                //bring up close timer modal
+            //bring up close timer modal
 
-                let closeTimerModal = document.getElementById('close-timer-modal');
-                closeTimerModal.style.display = "block";
-                let confirmButton = document.querySelector('.confirm-button');
-                let negateButton = document.querySelector('.negate-button');
+            let closeTimerModal = document.getElementById('close-timer-modal');
+            closeTimerModal.style.display = "block";
+            let confirmButton = document.querySelector('.confirm-button');
+            let negateButton = document.querySelector('.negate-button');
 
-               confirmButton.addEventListener('click', function(){
-                
-                closeTimerModal.style.display = "none";  
-                  //if user clicks X in the middle of timer playing then I need to pause it first
-                let intervalToPause;
-                let typeOfTimer = document.querySelector('.timer-title').textContent;
+            confirmButton.addEventListener('click', function(){
+            
+            closeTimerModal.style.display = "none";  
+                //if user clicks X in the middle of timer playing then I need to pause it first
+            let intervalToPause;
+            let typeOfTimer = document.querySelector('.timer-title').textContent;
 
-                if(typeOfTimer == "Stopwatch"){
-                    intervalToPause = stopwatch;
-                } else if (typeOfTimer == "Countdown 15"){
-                    intervalToPause = countdown15Int;
-                } else if (typeOfTimer == "Countdown 25"){
-                    intervalToPause = countdown25Int;
-                }
-                if (playing){
-                    clearInterval(intervalToPause);
-                } 
-                
-                removeTimerFromDom();
-                removeOverlay();
-                makeElementsKeyboardTabbableAgain();  
-                
-               })
+            if(typeOfTimer == "Stopwatch"){
+                intervalToPause = stopwatch;
+            } else if (typeOfTimer == "Countdown 15"){
+                intervalToPause = countdown15Int;
+            } else if (typeOfTimer == "Countdown 25"){
+                intervalToPause = countdown25Int;
+            }
+            if (playing){
+                clearInterval(intervalToPause);
+            } 
+            
+            removeTimerFromDom();
+            removeOverlay();
+            makeElementsKeyboardTabbableAgain();  
+            
+            })
 
-                negateButton.addEventListener('click', function(){
+            negateButton.addEventListener('click', function(){
 
-                    closeTimerModal.style.display = "none"; 
-                })
+                closeTimerModal.style.display = "none"; 
+            })
                      
         })       
     }
     function saveTimeButton(){
-
         saveButton.addEventListener('keyup', function(event){
                 if(event.keyCode === 13){
                     event.preventDefault();
                     saveButton.click();
                 }
             })
-
         saveButton.addEventListener('click', function(){
-
             //alert asking if the user definitely want to add {seconds} to their total time on that task.
             let timerTitle = document.querySelector('.timer-task-description');
 
@@ -604,7 +595,6 @@ function countdownClickStartHelper(countdownType, countdownNumber){
                 messageElement.textContent = `Do you want to save ${timeInsert} to to to your task: "${thisTask}"? `
                 clearInterval(countdown25Int);
             }
-
             confirmButton.addEventListener('click', function(){
                 saveTimeToTask(timerTitle.id, seconds);
                 //needs to update the time spent display on task list.
@@ -615,7 +605,6 @@ function countdownClickStartHelper(countdownType, countdownNumber){
                     if(taskTimeDisplay1[i].id == idForSavingTime){
                         let timeDisplay = taskTimeDisplay1[i].parentElement.firstElementChild; 
                         timeDisplay.textContent = list.taskList[timerTitle.id].totalTimeFocusedOnTaskLongForm;
-                        // timeDisplay.textContent = list.taskList[timerTitle.id].totalTimeFocusedOnTask;
                     }       
                 }
                 saveTimeToTaskModal.style.display = "none"; 
@@ -673,8 +662,7 @@ function countdownClickStartHelper(countdownType, countdownNumber){
         })
 
     }
-    function manualTaskTimeEdit(){
-        
+    function manualTaskTimeEdit(){  
         const ellipsisArray = document.querySelectorAll('.task-options');
         ellipsisArray.forEach(function(ellipsis){
              //for each of these event types do the following:
@@ -684,12 +672,12 @@ function countdownClickStartHelper(countdownType, countdownNumber){
                      //if the evt is click or the keyup event is a tab...
                     if((evt === 'click') || (elipEvent.keyCode === 9)) {
         
-                const manuallyEditTimeButton = document.querySelector('.edit-task-time-task-option');
+                        const manuallyEditTimeButton = document.querySelector('.edit-task-time-task-option');
                       
-                // manuallyEditTimeButton.addEventListener('click', function(event){
-                    $(manuallyEditTimeButton).bind('click keyup', function(event){
+                        // manuallyEditTimeButton.addEventListener('click', function(event){
+                        $(manuallyEditTimeButton).bind('click keyup', function(event){
 
-                        if((event.type === 'click') || (event.type === 'keyup') && (event.keyCode === 13)) {
+                            if((event.type === 'click') || (event.type === 'keyup') && (event.keyCode === 13)) {
 
                                 //Find the task clicked on and save in parentDiv.
                                 let parentDiv = event.target.closest('.task');
@@ -796,9 +784,7 @@ function countdownClickStartHelper(countdownType, countdownNumber){
 
                                     //add the cancel button after the save button.
                                     saveButton2.after(cancelButton);
-
-                                   
-
+                              
                                     let editTimeTitle = document.querySelector('.edit-time-task-description');
                                     editTimeTitle.scrollIntoView();
 
@@ -824,15 +810,13 @@ function countdownClickStartHelper(countdownType, countdownNumber){
 
                                         let longFormTimeToAdd = timer.convertSecondsToTime(timeToAdd);
 
-
                                         //id matching loop - updates the totalTimeFocusedOnTask.
                                         for (let i=0; i<list.taskList.length; i++){
                                             if (list.taskList[i].id == taskToTargetId){
                                                 list.taskList[i].totalTimeFocusedOnTask = timeToAdd;
                                                 list.taskList[i].totalTimeFocusedOnTaskLongForm = longFormTimeToAdd; 
                                             }
-                                        }
-                                        
+                                        }          
                                         //remove the save button
                                         parentDiv.removeChild(saveBtn);
                                         parentDiv.classList.remove('edit-time-task');
@@ -876,7 +860,6 @@ function countdownClickStartHelper(countdownType, countdownNumber){
                                         list.setDataToLocalStorage();
                                         location.reload();//updates the charts with new times - ask FEMI
                                     })
-
                                     let cancelBtn = document.querySelector('.edit-time-cancel-button');
                                     cancelBtn.addEventListener('click', function(){
 
@@ -932,14 +915,11 @@ function countdownClickStartHelper(countdownType, countdownNumber){
                     })
                 })
             })
-        }
-  
+        }  
     function addOverlay(){
         let pageBody = document.getElementsByTagName('BODY')[0]
         let overlayEl = document.createElement("DIV");
         overlayEl.setAttribute("class", "overlay");
-        // let overlay = document.querySelector('.overlay');
-
         pageBody.appendChild(overlayEl);
     }
     function removeOverlay(){
@@ -950,24 +930,19 @@ function countdownClickStartHelper(countdownType, countdownNumber){
         countDown15ClickStart(); 
         countDown25ClickStart();   
         stopWatchClickStart(); 
-        saveTimeButton();
-        
+        saveTimeButton();   
         playOnClick();
         alarmToggle();
         manualTaskTimeEdit();
 }
 // Thank you to Wilson Lee on Stack Overflow for this code - attributed in README. 
-convertSecondsToTime(seconds){
-    
+convertSecondsToTime(seconds){ 
     let hoursConverted = Math.floor(seconds / 3600);
     let minutesConverted = Math.floor(seconds % 3600 / 60);
     let secondsConverted = Math.floor(seconds % 3600 % 60);
-
     return `${hoursConverted}hrs ${minutesConverted}mins ${secondsConverted}secs`;
 }  
 }
-// A Task Class that has all the properties and methods associated with a task
-
 class Task {
     constructor(taskDescription){
         this.taskDescription = taskDescription; //obvz - the only essential prop to create a new task obj.
@@ -989,7 +964,6 @@ class List {
     //takes all the tasks stored in taskList and adds them to HTML on page load.
     buildTaskList(){
         let taskList = this.taskList;
-        
         for (let i=0; i<taskList.length; i++){
             if (taskList[i].completed === true){
                 document.getElementById('list').innerHTML +=
@@ -1001,7 +975,6 @@ class List {
                     <a class="task-sort task-list-icon" tabindex=0><i class="fas fa-sort sort-tasks-icon"></i></a>
                     <a class="task-options task-list-icon" aria-label="task-options-ellipsis" tabindex=0><i class="fas fa-ellipsis-v task-options-icon"></i></a>
                 </div>`;
-
             } else if(taskList[i].completed === false) {
                 document.getElementById('list').innerHTML +=
                 `<div class="task">
@@ -1016,8 +989,6 @@ class List {
         }
         this.toggleTaskComplete();
     }
-
-
     /* listens for a click event on the add new task button and then adds the value of the input to both the taskList 
     AND it writes it to the HTML. As long as the value is not null or an empty string. It then clears the input box ready 
     for a new task.
@@ -1032,7 +1003,6 @@ class List {
                 addNewTaskButton.click();
             }
         })
-
         addNewTaskButton.addEventListener('click', function(){ //event listener working. 
         
             let newTaskInputValue = newTaskInput.value;
@@ -1042,7 +1012,6 @@ class List {
                 newTask.id = list.taskList.length; //it will always be 1to1.
                 newTask.totalTimeFocusedOnTask = 0;
                 list.taskList.push(newTask); //adds the new task into the taskList array.
-
                 //adds the task to the list in html  
                 document.getElementById('list').innerHTML +=
                 `<div class="task">
@@ -1054,7 +1023,7 @@ class List {
                     <a class="task-options task-list-icon" tabindex=0><i class="fas fa-ellipsis-v task-options-icon"></i></a>
                 </div>`;
 
-                //clears the input value
+               //clears the input value
                 document.querySelector('#new-task-input').value = "";
 
                 //calls these functions so they are operational on the new task.
@@ -1066,7 +1035,6 @@ class List {
                 timer.timers();
                 location.reload(); //to fix stopwatch click start bug on new tasks that are added. ASK FEMI
                
-
             } else if ((newTaskInputValue === "") || (newTaskInputValue === null)){ //this doesn't fire with spaces - look into that. 
                 alert("Please add a task."); 
             }
@@ -1075,7 +1043,6 @@ class List {
     }
     editTask(){
         const ellipsisArray = document.querySelectorAll('.task-options');
-
         ellipsisArray.forEach(function(ellipsis){
             ['click','keyup'].forEach(function(evt){
                 ellipsis.addEventListener(evt, function(elipEvent){
@@ -1134,12 +1101,10 @@ class List {
                 })
             })
         })
-
     }
     toggleTaskComplete(){
         //listen for checkbox clicks on specific task.
         const arrayOfCheckboxes = document.querySelectorAll('.taskCheckbox');
-
         arrayOfCheckboxes.forEach(function(checkbox){  
             
             let checkboxId = checkbox.nextElementSibling.id;
@@ -1168,7 +1133,6 @@ class List {
             })
             
         }
-
     deleteTask(){
         const ellipsisArray = document.querySelectorAll('.task-options');
         ellipsisArray.forEach(function(ellipsis){
@@ -1207,30 +1171,28 @@ class List {
             })
         }) 
     } 
-        dynamicPopoverNav(){
-            
+        dynamicPopoverNav(){   
             // This code is all taken exactly as written from the tippy.js documentation including the hideOnPopperBlur plugin directly below 
-
             const popover = document.getElementById('popover');
             const hideOnPopperBlur = {
-                            name: 'hideOnPopperBlur',
-                            defaultValue: true,
-                            fn(instance) {
-                                return {
-                                onCreate() {
-                                    instance.popper.addEventListener('focusout', (event) => {
-                                    if (
-                                        instance.props.hideOnPopperBlur &&
-                                        event.relatedTarget &&
-                                        !instance.popper.contains(event.relatedTarget)
-                                    ) {
-                                        instance.hide();
-                                    }
-                                    });
-                                },
-                                };
-                            },
-                            };
+                name: 'hideOnPopperBlur',
+                defaultValue: true,
+                fn(instance) {
+                    return {
+                    onCreate() {
+                        instance.popper.addEventListener('focusout', (event) => {
+                        if (
+                            instance.props.hideOnPopperBlur &&
+                            event.relatedTarget &&
+                            !instance.popper.contains(event.relatedTarget)
+                        ) {
+                            instance.hide();
+                        }
+                        });
+                    },
+                    };
+                },
+                };
 
             tippy('.task-options', {
                 allowHTML: true, 
@@ -1261,7 +1223,6 @@ list.dynamicPopoverNav();
 timer.initialiseTimer();
 timer.timers();
 
-
 /************************************************ CHARTS & D3.js  **************************************************/
 
 // Need to refactor this 
@@ -1273,7 +1234,6 @@ d3.select("#chart-selections")
     var option = event.target.value;
     if(option === "total-time-focused-on-each-task"){
         
-
     //remove any charts and legends already there, to make space for new ones.
         var chartSvg = document.querySelector('.chart-svg');
         var circleLeg = document.querySelectorAll('.circle-legend');
@@ -1284,16 +1244,13 @@ d3.select("#chart-selections")
             if(circleLeg){
                 circleLeg.forEach(leg => leg.remove())
             }
-
     const data = list.taskList;
-
     var width = 550;
     var height = 320;
     var radius = 150;
     var donutWidth = 75;
     var color = d3.scaleOrdinal()
         .range(["#33A8C7", "#52E3E1", "#A0E426", "#FDF148", "#FFAB00", "#F77976", "#F050AE", "#D883FF", "#9336FD"]); //colours for slices/ arcs
-
     var svg = d3.select('.chart-area') //select the charts div
         .append("svg") //create an svg el
         .attr("class", "chart-svg")
@@ -1302,20 +1259,16 @@ d3.select("#chart-selections")
         .call(responsivefy)
         .append("g")
         .attr('transform', 'translate(' + (305) + ',' + (155) + ')'); //where the chart sits in the svg box
-        
     var arc = d3.arc()
         .innerRadius(donutWidth)
         .outerRadius(radius);
-    
     var pie = d3.pie()
         .value(function(d){
             return d.totalTimeFocusedOnTask //what data will the chart use to create the slices.
         })
-        .sort(null); //stops the chart sorting in order of size.
-    
+        .sort(null); //stops the chart sorting in order of size. 
     var legendRectSize = 14;
     var legendSpacing = 7;
-    
     var div = d3.select("body").append("div")
      .attr("class", "tooltip-donut")
      .style("opacity", 0);
@@ -1358,7 +1311,7 @@ d3.select("#chart-selections")
             .style("opacity", 0);
      });
 
-   var legendRectSize = 14;
+    var legendRectSize = 14;
     var legendSpacing = 7;
   
     var svgLegend = d3.select('.legend-area');
@@ -1374,8 +1327,7 @@ d3.select("#chart-selections")
             var horz = 25;
             var vert = i * height - offset;
             return 'translate(' + horz + ',' + vert + ')';
-            // var offset = height * color.domain().length / 2  //1800
-             
+            // var offset = height * color.domain().length / 2  //1800        
         });
     
     legend.append('circle') //keys
@@ -1401,10 +1353,7 @@ d3.select("#chart-selections")
         .attr('height', function(){
             return legendItems.length * 30;
         })
-
-
-    } else if (option === "total-time-focused-on-each-task-today"){
-        
+    } else if (option === "total-time-focused-on-each-task-today"){     
         //remove any charts and legends already there, to make space for new ones.
         var chartSvg = document.querySelector('.chart-svg');
         var circleLeg = document.querySelectorAll('.circle-legend');
@@ -1423,9 +1372,7 @@ d3.select("#chart-selections")
     var radius = 150;
     var donutWidth = 75;
     var color = d3.scaleOrdinal()
-        .range(["#33A8C7", "#52E3E1", "#A0E426", "#FDF148", "#FFAB00", "#F77976", "#F050AE", "#D883FF", "#9336FD"]); //colours for slices/ arcs
-   
-    
+        .range(["#33A8C7", "#52E3E1", "#A0E426", "#FDF148", "#FFAB00", "#F77976", "#F050AE", "#D883FF", "#9336FD"]); //colours for slices/ arcs 
     var svg = d3.select('.chart-area') //select the charts div
         .append("svg") //create an svg el
         .attr("width", width)
@@ -1455,8 +1402,7 @@ d3.select("#chart-selections")
         .append("path")
         .attr("d", arc)
         .attr("fill", function(d){   
-            return color(d.data.taskDescription)
-            
+            return color(d.data.taskDescription)      
         })
         .attr("stroke", "white")
         .style("stroke-width", "4px")
@@ -1476,7 +1422,6 @@ d3.select("#chart-selections")
             .style("left", (event.pageX + 10) + "px")
             .style("top", (event.pageY - 15) + "px");        
      })
-
      .on('mouseout', function (event, d, i) {
         d3.select(this).transition()
             .duration('50')
@@ -1503,10 +1448,8 @@ d3.select("#chart-selections")
             var horz = 25;
             var vert = i * height - offset;
             return 'translate(' + horz + ',' + vert + ')';
-            // var offset = height * color.domain().length / 2  //1800
-             
-        });
-    
+            // var offset = height * color.domain().length / 2  //1800      
+        });  
     legend.append('circle') //keys
         .style('fill', color)
         .style('stroke', color)
@@ -1530,11 +1473,8 @@ d3.select("#chart-selections")
         .attr('height', function(){
             return legendItems.length * 30;
         })
-
-    }
-       
+    }     
    })
-
 // function change(dataToChange) {
 //      var pie = d3.pie()
 //      .value(function (d) {
@@ -1562,8 +1502,7 @@ d3.select("#chart-selections")
 //     });
 // }
 
-function getTodayTasks(){
-    
+function getTodayTasks(){ 
     let tasks = list.taskList;
     let dateTimeNow = new Date();
     let dateNow = dateTimeNow.toLocaleDateString();
@@ -1577,12 +1516,9 @@ function getTodayTasks(){
 
             if(individualTimeSegment.localDate === dateNow){
                 todaysTasks.push(individualTimeSegment);
-
             }
-                
         }
     }
-
     //The following code was written by user2736012 on Stack Overflow and altered (spread operator) by myself - link in Readme. 
     //1. if there is nothing in temp with this id then put the whole task in there as an object.
     //2 Puts the task in the temp object as an object with the key 0 i.e. {0:{id: "0", timeToAdd: 17}, 1:{Another obj}, 2: {Another Object} }
@@ -1603,14 +1539,11 @@ function getTodayTasks(){
     for (var prop in temp){
         todaysTasksFiltered.push(temp[prop]);
     }
-   
-    
+
     todaysTasksFiltered.forEach(task => task.totalTimeFocusedOnTask = task.timeToAdd );
     todaysTasksFiltered.forEach(task => task.totalTimeFocusedOnTaskLongForm = timer.convertSecondsToTime(task.totalTimeFocusedOnTask));
-
     return todaysTasksFiltered;
 }
-
 /* The below function is taken from Ben Clinkenbeard's Blog Article and originally written by Brendan Sudol (attributed in README) */
 
 function responsivefy(svg) {

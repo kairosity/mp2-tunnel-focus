@@ -23,6 +23,7 @@ class Timer {
         let minutes = 0;
         let hours = 0;
         var stopwatch;
+        var countdownInt;
         var countdown15Int;
         var countdown25Int;
         var playing = false;
@@ -162,11 +163,10 @@ class Timer {
         seconds = 0;
         minutes = 15;
         hours = 0;
-
         countdown();
     }
     function countdown(){
-        countdown15Int = setInterval(function(){ 
+        countdownInt = setInterval(function(){ 
             countDownFunction(); 
             }, 1000);
             return playing = true;
@@ -180,13 +180,11 @@ class Timer {
         if((seconds<0) && (minutes==0)){
             if (alarmButton.innerHTML == `<i class="fas fa-bell-slash" aria-hidden="true"></i>`){
             alarm.muted == true;
-            clearInterval(countdown15Int);
-            clearInterval(countdown25Int);
+            clearInterval(countdownInt);
             countdownEnded();        
         } else {
             alarm.play()
-            clearInterval(countdown15Int);
-            clearInterval(countdown25Int);
+            clearInterval(countdownInt);
             countdownEnded();
         }      
         }
@@ -215,14 +213,14 @@ class Timer {
         minutes = 25;
         hours = 0;
 
-        countdown25SetInterval();
+        countdown();
     }
-    function countdown25SetInterval(){
-        countdown25Int = setInterval(function(){ 
-            countDownFunction(); 
-            }, 1000);
-        return playing = true;
-    }
+    // function countdown25SetInterval(){
+    //     countdown25Int = setInterval(function(){ 
+    //         countDownFunction(); 
+    //         }, 1000);
+    //     return playing = true;
+    // }
     function countdown15TimeToAdd(hours, minutes, seconds){
         var minutesInSeconds = minutes * 60
         if ( (seconds == -1) && (minutesInSeconds == 0) ){
@@ -349,12 +347,12 @@ function countdownClickStartHelper(countdownType, countdownNumber){
                                 if((event.type === 'click') || (event.keyCode === 13)) {
                                         countdownClickStartHelper("countdown15", 15);
                                         countDown15Play()
-                                        pauseOnClick(countdown15Int); 
-                                        resetTime(countdown15Int);  
+                                        pauseOnClick(countdownInt); 
+                                        resetTime(countdownInt);
+                                        closeTimer();  
                                     }
                                 $(this).unbind('click', arguments.callee);
-                                $(this).unbind('keyup', arguments.callee);
-                                closeTimer();
+                                $(this).unbind('keyup', arguments.callee);          
                                 })
                     }
                  })
@@ -372,12 +370,12 @@ function countdownClickStartHelper(countdownType, countdownNumber){
                                 if((event.type === 'click') || (event.keyCode === 13)) {
                                         countdownClickStartHelper("countdown25", 25);
                                         countDown25Play()
-                                        pauseOnClick(countdown25Int); 
-                                        resetTime(countdown25Int);  
+                                        pauseOnClick(countdownInt); 
+                                        resetTime(countdownInt);
+                                        closeTimer();  
                                     }
                                 $(this).unbind('click', arguments.callee);
                                 $(this).unbind('keyup', arguments.callee);
-                                closeTimer();
                                 })
                             }
                         })
@@ -393,15 +391,11 @@ function countdownClickStartHelper(countdownType, countdownNumber){
                     stopWatchPlay();
                     resetTime(stopwatch);
                     pauseOnClick(stopwatch);
-                } else if (timerTitleDOM.textContent == 'Countdown 15'){ //bug keeps starting from beginning again. - resets when in countdown15play.
+                } else if ((timerTitleDOM.textContent == 'Countdown 15') || (timerTitleDOM.textContent == 'Countdown 25') ){ 
                     countdown();
-                    pauseOnClick(countdown15Int);
-                    resetTime(countdown15Int);
-                } else if (timerTitleDOM.textContent == 'Countdown 25'){
-                    countdown25SetInterval();
-                    pauseOnClick(countdown25Int);
-                    resetTime(countdown25Int);
-                }    
+                    pauseOnClick(countdownInt);
+                    resetTime(countdownInt);
+                } 
                 pauseButton.style.display = "inline-block";
                 playButton.style.display = "none";
             }       
@@ -460,10 +454,10 @@ function countdownClickStartHelper(countdownType, countdownNumber){
 
         if (typeOfTimer.textContent == "Countdown 15"){
             messageElement.textContent = `Congrats! You've worked for the full 15 minutes! Do you want to save 15 minutes to the task: ${thisTask}?`
-            clearInterval(countdown15Int);
+            clearInterval(countdownInt);
         } else if (typeOfTimer.textContent == "Countdown 25"){
             messageElement.textContent = `Congrats! You've worked for the full 25 minutes! Do you want to save 25 minutes to the task: ${thisTask}?`;
-            clearInterval(countdown25Int);
+            clearInterval(countdownInt);
         }
       
             confirmButton.addEventListener('click', function(){
@@ -487,7 +481,7 @@ function countdownClickStartHelper(countdownType, countdownNumber){
                         timeDisplay.textContent = list.taskList[timerTitle.id].totalTimeFocusedOnTaskLongForm;
                     }       
                 }
-                clearInterval(countdown15Int); //also countdown 25
+                clearInterval(countdownInt); 
                 removeTimerFromDom(); 
                 removeOverlay();  
                 playing = false;
@@ -497,7 +491,7 @@ function countdownClickStartHelper(countdownType, countdownNumber){
             })
 
             negateButton.addEventListener('click', function(){
-                clearInterval(countdown15Int);
+                clearInterval(countdownInt);
                 countdownEndedModal.style.display = "none";
                 removeTimerFromDom();
                 removeOverlay();
@@ -515,12 +509,9 @@ function countdownClickStartHelper(countdownType, countdownNumber){
                 event.preventDefault();
                 xButton.click();
             }
-        })
-            
+        })     
         xButton.addEventListener('click', function(){
-
             //bring up close timer modal
-
             let closeTimerModal = document.getElementById('close-timer-modal');
             closeTimerModal.style.display = "block";
             let confirmButton = document.querySelector('.confirm-button');
@@ -535,23 +526,18 @@ function countdownClickStartHelper(countdownType, countdownNumber){
 
             if(typeOfTimer == "Stopwatch"){
                 intervalToPause = stopwatch;
-            } else if (typeOfTimer == "Countdown 15"){
-                intervalToPause = countdown15Int;
-            } else if (typeOfTimer == "Countdown 25"){
-                intervalToPause = countdown25Int;
+            } else if ((typeOfTimer == "Countdown 15") || (typeOfTimer == "Countdown 25")){
+                intervalToPause = countdownInt;
             }
             if (playing){
                 clearInterval(intervalToPause);
-            } 
-            
+            }      
             removeTimerFromDom();
             removeOverlay();
             makeElementsKeyboardTabbableAgain();  
             
             })
-
             negateButton.addEventListener('click', function(){
-
                 closeTimerModal.style.display = "none"; 
             })
                      
@@ -588,12 +574,12 @@ function countdownClickStartHelper(countdownType, countdownNumber){
                 let timeToAddInSecs = countdown15TimeToAdd(hours, minutes, seconds);
                 let timeInsert = timer.convertSecondsToTime(timeToAddInSecs);
                 messageElement.textContent = `Do you want to save ${timeInsert} to to your task: "${thisTask}"? `
-                clearInterval(countdown15Int);
+                clearInterval(countdownInt);
             } else if (typeOfTimer.textContent == "Countdown 25"){
                 let timeToAddInSecs = countdown25TimeToAdd(hours, minutes, seconds);
                 let timeInsert = timer.convertSecondsToTime(timeToAddInSecs);
                 messageElement.textContent = `Do you want to save ${timeInsert} to to to your task: "${thisTask}"? `
-                clearInterval(countdown25Int);
+                clearInterval(countdownInt);
             }
             confirmButton.addEventListener('click', function(){
                 saveTimeToTask(timerTitle.id, seconds);
@@ -629,10 +615,10 @@ function countdownClickStartHelper(countdownType, countdownNumber){
                
                 if (typeOfTimer.textContent == "Countdown 15") {
                     timeToAdd = countdown15TimeToAdd(hours, minutes, seconds);
-                    clearInterval(countdown15Int); //necessary??
+                    clearInterval(countdownInt); //necessary??
                 } else if (typeOfTimer.textContent == "Countdown 25"){
                     timeToAdd = countdown25TimeToAdd(hours, minutes, seconds);
-                    clearInterval(countdown25Int); //necessary??
+                    clearInterval(countdownInt); //necessary??
                 } else if (typeOfTimer.textContent == "Stopwatch"){
                     timeToAdd = stopwatchTimeToAdd(hours, minutes, seconds);
                 }
@@ -650,9 +636,6 @@ function countdownClickStartHelper(countdownType, countdownNumber){
     }
     function alarmToggle(){
         let alarmButton = document.querySelector('.alarm');
-
-        //on click if alarm button has the id #alarm-off then turn it on, else turn it off. and switch icons. 
-
         alarmButton.addEventListener('click', function(){
             if (alarmButton.innerHTML == `<i class="fas fa-bell" aria-hidden="true"></i>`){
                 alarmButton.innerHTML = `<i class="fas fa-bell-slash" aria-hidden="true"></i>`;
@@ -660,7 +643,6 @@ function countdownClickStartHelper(countdownType, countdownNumber){
                 alarmButton.innerHTML = `<i class="fas fa-bell" aria-hidden="true"></i>`;
             }
         })
-
     }
     function manualTaskTimeEdit(){  
         const ellipsisArray = document.querySelectorAll('.task-options');
@@ -671,7 +653,6 @@ function countdownClickStartHelper(countdownType, countdownNumber){
                 ellipsis.addEventListener(evt, function(elipEvent){
                      //if the evt is click or the keyup event is a tab...
                     if((evt === 'click') || (elipEvent.keyCode === 9)) {
-        
                         const manuallyEditTimeButton = document.querySelector('.edit-task-time-task-option');
                       
                         // manuallyEditTimeButton.addEventListener('click', function(event){
@@ -731,9 +712,7 @@ function countdownClickStartHelper(countdownType, countdownNumber){
 
                                     //bring the task above the overlay so the user can access the edit boxes.
                                     parentDiv.style.zIndex = 1001;
-
                                     makeElementsNotKeyboardTabbable();
-                                    
                                     //add the class for this layout
                                     parentDiv.classList.add('edit-time-task');
 
@@ -755,11 +734,9 @@ function countdownClickStartHelper(countdownType, countdownNumber){
                                         newTime.setAttribute("id", "edit"+timeMeasure);
                                         newTime.setAttribute("class", "editTime edit-time-"+timeMeasure.toLowerCase());
                                         newTime.setAttribute("oninput", "validity.valid||(value='')");
-                                        newTime.setAttribute("min", "0");
-                                        
+                                        newTime.setAttribute("min", "0");      
                                         pElementToTarget.parentNode.insertBefore(newTime, pElementToTarget);
                                     }
-
                                     createNewInputsForManualTimeEdit("Hours", hoursToEdit);
                                     createNewInputsForManualTimeEdit("Minutes", minutesToEdit);
                                     createNewInputsForManualTimeEdit("Seconds", secondsToEdit);
@@ -830,8 +807,7 @@ function countdownClickStartHelper(countdownType, countdownNumber){
                                         parentDiv.removeChild(document.getElementById('editMinutes'));
                                         parentDiv.removeChild(document.querySelector('.edit-time-minutes-label'));
                                         parentDiv.removeChild(document.getElementById('editHours'));
-                                        parentDiv.removeChild(document.querySelector('.edit-time-hours-label'));    
-                                        
+                                        parentDiv.removeChild(document.querySelector('.edit-time-hours-label'));         
                                         parentDiv.style.zIndex = 0;
 
                                         //bring back all the required elements in correct order

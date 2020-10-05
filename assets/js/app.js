@@ -159,8 +159,8 @@ class Timer {
 //Countdown 15 Play
     function countDown15Play(){
 
-        seconds = 0;
-        minutes = 15;
+        seconds = 4;
+        minutes = 0;
         hours = 0;
 
         countdown();
@@ -448,30 +448,30 @@ function countdownClickStartHelper(countdownType, countdownNumber){
     function countdownEnded(){ 
         playing = false;  
 
-        // let countdownType = document.getElementById('countdown15-timer-title').textContent;
-
-        // if (countdownType === "Countdown 15"){
-        //     clearInterval(countdown15);
-        // } else if (countdownType === "Countdown 25"){
-        //     clearInterval(countdown25Int); 
-        // }
-
-        //cant clear interval here. It will save 15 minutes. 
-          
-        // pauseButton.style.display = "none";
-        // playButton.style.display = "inline-block";
+        let countdownEndedModal = document.getElementById('countdown-ended-modal');
         
-        
-        //!FIX: change this to a well styled modal.
-        if(confirm("Do you want to save this time to this task?")){
+
+        countdownEndedModal.style.display = "block";
+        let confirmButton = document.querySelector('.ce-confirm-button');
+        let negateButton = document.querySelector('.ce-negate-button');
+        let messageElement = document.querySelector('.ce-modal-p');
+        let typeOfTimer = document.querySelector('.timer-title');
+        let thisTask = timerTitle.textContent;
+
+        if (typeOfTimer.textContent == "Countdown 15"){
+            messageElement.textContent = `Congrats! You've worked for the full 15 minutes! Do you want to save 15 minutes to the task: ${thisTask}?`
+            clearInterval(countdown15Int);
+        } else if (typeOfTimer.textContent == "Countdown 25"){
+            messageElement.textContent = `Congrats! You've worked for the full 25 minutes! Do you want to save 25 minutes to the task: ${thisTask}?`;
+            clearInterval(countdown25Int);
+        }
+      
+            confirmButton.addEventListener('click', function(){
+                countdownEndedModal.style.display = "none"; 
 
                 //calls save time function which will save seconds and long form time on the associated task object.
                 saveTimeToTask(timerTitle.id, seconds);
                  
-                removeTimerFromDom(); //test this when get chance.
-
-                removeOverlay();
-
                 //Updates the time worked display for the task on the task list.
                 //task id is...
                 let idForSavingTime = timerTitle.id;
@@ -487,13 +487,17 @@ function countdownClickStartHelper(countdownType, countdownNumber){
                         timeDisplay.textContent = list.taskList[timerTitle.id].totalTimeFocusedOnTaskLongForm;
                     }       
                 }
+                removeTimerFromDom(); 
+                removeOverlay();
                 playing = false;
                 seconds = 0;
                 minutes = 0;
                 hours = 0;
-         } else {
-             console.log('do something here');
-         }
+            })
+
+            negateButton.addEventListener('click', function(){
+            countdownEndedModal.style.display = "none"; 
+    });   
          
     }
      function closeTimer(){

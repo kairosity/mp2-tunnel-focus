@@ -318,10 +318,10 @@
 }
 #new-task-input{
     height: 40px;
-    width: 300px;
+    width: 550px;
     font-size: 1.4rem;
     border: none;
-    border-bottom: 5px solid var(--pure-black);
+    border-bottom: 3px solid var(--pure-black);
 }
 
 #new-task-input:focus{
@@ -331,7 +331,7 @@
 
 #new-task-input::placeholder{
     font-size: 1.4rem;
-    font-family: "Raleway", sans-serif;
+    font-family: "Heebo", sans-serif;
     color: var(--pure-black);
 }
 .add-new-task-plus-icon {
@@ -705,38 +705,46 @@ input.editTime{
     grid-template-columns: repeat(12, 1fr);
     grid-template-rows: auto;
     justify-content: center;
-    flex-direction: column;
-    
+    align-items: center;
+    flex-direction: column;    
+}
+
+#charts{
+    border: 2px solid var(--pure-black);
+    border-radius: 8px;
+    -webkit-box-shadow: 3px 5px 0px 0px rgba(0,0,0,1);
+    -moz-box-shadow: 3px 5px 0px 0px rgba(0,0,0,1);
+    box-shadow: 3px 5px 0px 0px rgba(0,0,0,1);
+    margin-bottom: 50px;
+    width: 70%;
 }
 
 .chart-header {
     background-color: var(--sun-yellow); 
     height: 150px;
+    width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
-    -webkit-box-shadow: 0px 6px 0px 0px rgba(0,0,0,1);
-    -moz-box-shadow: 0px 6px 0px 0px rgba(0,0,0,1);
-    box-shadow: 0px 6px 0px 0px rgba(0,0,0,1);
+    -webkit-box-shadow: 3px 5px 0px 0px rgba(0,0,0,1);
+    -moz-box-shadow: 3px 5px 0px 0px rgba(0,0,0,1);
+    box-shadow: 3px 5px 0px 0px rgba(0,0,0,1);
     border-radius: 8px;
     border: 2px solid var(--pure-black);
     margin-bottom: 50px;
-    grid-row: 1 / 2;
-    grid-column: 2 / 12;
     margin-top: 50px;
 }
-#chart-title{
+.chart-heading{
     font-family: "Secular One", sans-serif;
     font-weight: 400;
     font-size: 1.2em;
     text-transform: uppercase;
-    letter-spacing: 5px;
+    letter-spacing: 6px;
 }
 
-
 #chart-selections{
-    width: 750px;
-    height: 100px;
+    width: 450px;
+    height: 60px;
     padding: 1em;
     background-color: var(--sun-yellow);
     -webkit-box-shadow: 0px 6px 0px 0px rgba(0,0,0,1);
@@ -747,9 +755,9 @@ input.editTime{
     margin-bottom: 50px;
     font-family: "Secular One", sans-serif;
     text-transform: uppercase;
-    letter-spacing: 5px;
-    font-size: 1.4em;
-    font-weight: 600;
+    letter-spacing: 2px;
+    font-size: 0.9em;
+    font-weight: 500;
     justify-self: center;
     align-self: center;
     text-align: center;

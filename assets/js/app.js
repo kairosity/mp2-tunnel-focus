@@ -207,7 +207,6 @@ class Timer {
             }
         }          
     }
-    //Countdown 25 Play
     function countDown25Play(){
         seconds = 0;
         minutes = 25;
@@ -215,12 +214,6 @@ class Timer {
 
         countdown();
     }
-    // function countdown25SetInterval(){
-    //     countdown25Int = setInterval(function(){ 
-    //         countDownFunction(); 
-    //         }, 1000);
-    //     return playing = true;
-    // }
     function countdown15TimeToAdd(hours, minutes, seconds){
         var minutesInSeconds = minutes * 60
         if ( (seconds == -1) && (minutesInSeconds == 0) ){
@@ -442,9 +435,7 @@ function countdownClickStartHelper(countdownType, countdownNumber){
     }      
     function countdownEnded(){ 
         playing = false;  
-
         let countdownEndedModal = document.getElementById('countdown-ended-modal');
-        
         countdownEndedModal.style.display = "block";
         let confirmButton = document.querySelector('.ce-confirm-button');
         let negateButton = document.querySelector('.ce-negate-button');
@@ -459,7 +450,6 @@ function countdownClickStartHelper(countdownType, countdownNumber){
             messageElement.textContent = `Congrats! You've worked for the full 25 minutes! Do you want to save 25 minutes to the task: ${thisTask}?`;
             clearInterval(countdownInt);
         }
-      
             confirmButton.addEventListener('click', function(){
                 countdownEndedModal.style.display = "none"; 
 
@@ -489,7 +479,6 @@ function countdownClickStartHelper(countdownType, countdownNumber){
                 minutes = 0;
                 hours = 0;     
             })
-
             negateButton.addEventListener('click', function(){
                 clearInterval(countdownInt);
                 countdownEndedModal.style.display = "none";
@@ -539,8 +528,7 @@ function countdownClickStartHelper(countdownType, countdownNumber){
             })
             negateButton.addEventListener('click', function(){
                 closeTimerModal.style.display = "none"; 
-            })
-                     
+            })                
         })       
     }
     function saveTimeButton(){

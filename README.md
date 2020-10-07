@@ -155,8 +155,6 @@ __*Page top*__
 
 * These are links to subviews which will open in this location on the page, but replace the other charts. Only one chart or summary will be displayed at a time. 
 
-
-
 **View 2:**
 
 1. The timer. This will open based on the task that triggered it. It will have the name of the task above the time displayed. There will be an X to close the page and save the time to the task object. 
@@ -178,7 +176,6 @@ __*Page top*__
 3. The task list
 4. The task charts and task completion summaries laid out side by side, dashboard style.
 5. Footer
-
 
 - When the user clicks to start any of the timers, the timer will appear above the task list. 
 - When the user clicks to close the timer, the user will be asked whether or not to save the time into the task. This is designed as such to avoid situations whereby the user hits the timer accidentally, or starts the timer and then gets distracted and doesn't spend the time on the task.  
@@ -206,16 +203,62 @@ a scrolling interaction. It is more functional, therefore when you click on a ti
 for the timer. 
 
 
-[My full Figma workspace for this project can be viewed here](https://www.figma.com/file/3LBKUPc79uP1qAKMfSBXKs/Wireframes1?node-id=0%3A1)
+[My full Figma workspace for this project including wireframes, mockups, colour palette & typography, can be viewed here.](https://www.figma.com/file/3LBKUPc79uP1qAKMfSBXKs/Wireframes1?node-id=0%3A1)
 
-__*Alternatively here are the individual wireframes in pdf format:*__
+__*Alternatively here are the individual wireframes:*__
 
-If you choose to view them this way, please click download as the GitHub viewer expands the smaller wireframes to an uncomfortably large zoom ratio.
+1. [1st draft wireframes: pen on paper: A](wireframes/wireframe1.jpg)
+2. [1st draft wireframes: pen on paper: B](wireframes/wireframe2.jpg)
+3. [Mobile Wireframes 2nd Draft](wireframes/mobile-wireframes-2nd-draft.png)
+4. [Mobile Wireframes - Final Draft](wireframes/mobile-wireframes.png)
+5. [Tablet Wireframes - Final Draft](wireframes/tablet-wireframes.png)
+6. [Desktop Wireframes - Final Draft](wireframes/desktop-wireframes.png)
+
+If you choose to view them this way, please click download as the GitHub viewer can expand the smaller files to an uncomfortably large zoom ratio.
 
 ## Surface
-- Typography - Clean sans-serif
-- Design puts list front and center and because there are a number of elements in play, I want to keep it as minimal as possible, to avoid
-overwhelming the user with colour and charts. 
+
+### Design Considerations
+
+I designed the application to be bright and a little bit fun, as the concept of timing your tasks sits just on the edge of gamifying productivity. So I wanted to bring a hint of that idea into the design. I've designed everything around the task list, which is front and center on all devices.
+
+I used a recurring design theme of hard box shadows on almost all the component frame elements of the design. The modals, the task list, the headers, the chart frame and all the buttons. I liked the faux-retro look of the hard shadows, especially paired with soft 8px-15px border radiuses. 
+
+### Colour Palette 
+I wanted a bright, fresh and clean somewhat retro look, using bold and happy colours. The two main accent colours are bright yellow and a light bright blue/cyan, with the remaining colours used for small details and for the different charts slices. 
+![palette](misc-images/color-palette.png)
+
+### Typography 
+
+#### Headings:
+
+For the typography I wanted a slightly unusual heading font, but nothing with too much flourish. I chose a Google Font that is not used that much: "Secular One" and I modified it by only using uppercase and by increased the letter spacing substantially, thus giving it a distinctive look.
+
+#### Task List, instructions, modals, charts:
+
+For all other fonts, I used another Google Font called Heebo, which is a clean and elegant sans-serif that worked well to stay out of the way of the colourful design. Clear enough and simple enough to present information to the user, without overpowering the look of the application. 
+
+![typography](wireframes/typography.png)
+
+### Design Mockups 
+#### Main Mockups
+1. [Mobile Mockups](wireframes/mobile-mockups.png)
+2. [Tablet Mockups](wireframes/tablet-mockups.png)
+3. [Desktop Mockups](wireframes/desktop-mockups.png)
+
+#### Component Mockups
+1. [Components Mockups](wireframes/components-mockups.png)
+2. [Mobile Timer Mockup](wireframes/mobile-timer-mockup.png)
+3. [Task List Mockup](wireframes/task-list-mockup.png)
+4. [Desktop Charts Mockup](wireframes/desktop-charts-mockup.png)
+5. [Desktop Timer & List Detail Mockup](wireframes/desktop-timer-and-list-detail-mockup.png)
+6. [Desktop Timer Mockup](wireframes/desktop-timer-mockup.png)
+7. [Manual Task Time Edit Mockup](wireframes/manual-task-time-edit.png)
+8. [Modal Mockup](wireframes/modal-mockup.png)
+9. [Popover Mockup](wireframes/popover-design.png)
+10. [Select Options Mockup](wireframes/select-options-mockup.png)
+11. [Typography](wireframes/typography.png) 
+12. [Colour Palette](misc-images/color-palette.png)
 
 
 # Features

@@ -1223,7 +1223,126 @@ timer.timers();
 
 // Need to refactor this 
 
-// change(data);
+d3.select("#chart-selections>#total-time-focused")
+   .on("change", function(event){
+       console.log(event + "totals clicked")
+       update(totals)
+   })
+d3.select("#total-time-focused-today")
+   .on("change", function(event){
+       console.log("today clicked")
+       update(totals)
+   })
+
+const data = list.taskList;
+    var width = 550;
+    var height = 320;
+    var radius = 150;
+    var donutWidth = 75;
+    var color = d3.scaleOrdinal()
+        .range(["#33A8C7", "#52E3E1", "#A0E426", "#FDF148", "#FFAB00", "#F77976", "#F050AE", "#D883FF", "#9336FD"]); //colours for slices/ arcs
+    var svg = d3.select('.chart-area') //select the charts div
+        .append("svg") //create an svg el
+        .attr("class", "chart-svg")
+        .attr("width", width)
+        .attr("height", height)
+        .call(responsivefy)
+        .append("g")
+        .attr('transform', 'translate(' + (305) + ',' + (155) + ')'); //where the chart sits in the svg box
+    var arc = d3.arc()
+        .innerRadius(donutWidth)
+        .outerRadius(radius);
+    var pie = d3.pie()
+        .value(function(d){
+            return d.totalTimeFocusedOnTask //what data will the chart use to create the slices.
+        })
+        .sort(null); //stops the chart sorting in order of size. 
+    var legendRectSize = 14;
+    var legendSpacing = 7;
+    var div = d3.select("body").append("div")
+     .attr("class", "tooltip-donut")
+     .style("opacity", 0);
+
+    var path = svg.selectAll("path") // the different slices as paths.
+        .data(pie(data))
+        .enter()
+        .append("path")
+        .attr("d", arc)
+        .attr("fill", function(d){   
+            return color(d.data.taskDescription)
+            
+        })
+        .attr("stroke", "white")
+        .style("stroke-width", "4px")
+       
+        .on('mouseover', function (event, d, i) {
+        d3.select(this).transition()
+            .duration('50')
+            .attr('opacity', '.85');
+
+        //Makes the new div appear on hover:
+        div.transition()
+            .duration(50)
+            .style("opacity", 1);
+        let task = d.data.taskDescription
+        let longTime = d.data.totalTimeFocusedOnTaskLongForm
+        div.html(task + "<br>" + longTime ) //put label to display here
+            .style("left", (event.pageX + 10) + "px")
+            .style("top", (event.pageY - 15) + "px");        
+     })
+
+     .on('mouseout', function (event, d, i) {
+        d3.select(this).transition()
+            .duration('50')
+            .attr('opacity', '1');  
+        //Makes the new div disappear:
+        div.transition()
+            .duration('50')
+            .style("opacity", 0);
+     });
+
+    var legendRectSize = 14;
+    var legendSpacing = 7;
+  
+    var svgLegend = d3.select('.legend-area');
+        
+    var legend = svgLegend.selectAll('.legend') //the legend and placement
+        .data(color.domain())
+        .enter()
+        .append('g')
+        .attr('class', 'circle-legend')
+        .attr('transform', function (d, i) {
+            var height = legendRectSize + legendSpacing;   
+            var offset = -10;    
+            var horz = 25;
+            var vert = i * height - offset;
+            return 'translate(' + horz + ',' + vert + ')';
+            // var offset = height * color.domain().length / 2  //1800        
+        });
+    
+    legend.append('circle') //keys
+        .style('fill', color)
+        .style('stroke', color)
+        .attr('cx', 0)
+        .attr('cy', 0)
+        .attr('r', '0.5rem'); //size of circles
+
+    legend.append('text') //labels
+    .data(data)
+    .attr('x', legendRectSize + legendSpacing)
+    .attr('y', legendRectSize - legendSpacing)
+    .text(function (d) {       
+        return  `${d.taskDescription} : ${d.totalTimeFocusedOnTaskLongForm}`; 
+    });
+
+    var legendItems = document.querySelectorAll('.circle-legend');
+    console.log(legendItems.length)
+
+    //dynamically set the height of the legend box depending on how many items are added to it. 
+    svgLegend
+        .attr('height', function(){
+            return legendItems.length * 30;
+        })
 
 d3.select("#chart-selections")
    .on("change", function(event){

@@ -24,8 +24,6 @@ class Timer {
         let hours = 0;
         var stopwatch;
         var countdownInt;
-        var countdown15Int;
-        var countdown25Int;
         var playing = false;
         let pauseButton = document.querySelector('#pause');
         let playButton = document.querySelector('#play');
@@ -35,11 +33,11 @@ class Timer {
         let timerContainer = document.querySelector('.timer-container');
         let timerTitle = document.querySelector('.timer-task-description');
 
-        const addNewTaskButton = document.querySelector('#add-new-task');
-        const newTaskInput = document.querySelector('#new-task-input');
-        const arrayOfCheckboxes = document.querySelectorAll('.taskCheckbox');
-        const arrayOfSortIcons = document.querySelectorAll('.task-sort');
-        const arrayOfOptionIcons = document.querySelectorAll('.task-options');
+        // const addNewTaskButton = document.querySelector('#add-new-task');
+        // const newTaskInput = document.querySelector('#new-task-input');
+        // const arrayOfCheckboxes = document.querySelectorAll('.taskCheckbox');
+        // const arrayOfSortIcons = document.querySelectorAll('.task-sort');
+        // const arrayOfOptionIcons = document.querySelectorAll('.task-options');
         
         const alarm = document.createElement('AUDIO');
         alarm.setAttribute('src', 'assets/audio/alarm1.mp3');
@@ -64,42 +62,6 @@ class Timer {
         minutesHtml.innerHTML = `0${minutes}`
         hoursHtml.innerHTML = `0${hours}`
         playing = false;
-    }
-    function makeElementsNotKeyboardTabbable(){
-        newTaskInput.setAttribute("tabindex", "-1");
-        addNewTaskButton.setAttribute("tabindex", "-1");
-        arrayOfCheckboxes.forEach(function(checkbox){
-            checkbox.setAttribute("tabindex", "-1")
-        });  
-            startStopwatchButtonArray.forEach(function(stopwatch){
-            stopwatch.setAttribute("tabindex", "-1")
-        });   
-            arrayOfSortIcons.forEach(function(sorticon){
-            sorticon.setAttribute("tabindex", "-1")
-        });
-        arrayOfOptionIcons.forEach(function(optionicon){
-            optionicon.setAttribute("tabindex", "-1")
-        });
-        let chartsSelectBox = document.querySelector('#chart-selections');
-        chartsSelectBox.setAttribute("tabindex", "-1");
-    }
-    function makeElementsKeyboardTabbableAgain(){
-        newTaskInput.setAttribute("tabindex", "0");
-        addNewTaskButton.setAttribute("tabindex", "0");
-        arrayOfCheckboxes.forEach(function(checkbox){
-            checkbox.setAttribute("tabindex", "0")
-        });  
-            startStopwatchButtonArray.forEach(function(stopwatch){
-            stopwatch.setAttribute("tabindex", "0")
-        });   
-            arrayOfSortIcons.forEach(function(sorticon){
-            sorticon.setAttribute("tabindex", "0")
-        });
-        arrayOfOptionIcons.forEach(function(optionicon){
-            optionicon.setAttribute("tabindex", "0")
-        });
-        let chartsSelectBox = document.querySelector('#chart-selections');
-        chartsSelectBox.setAttribute("tabindex", "0");          
     }
     function createTimerTitle(timerType, timerId){
         let timerTypeTitle = document.createElement('h2');
@@ -696,11 +658,11 @@ function countdownClickStartHelper(countdownType, countdownNumber){
                                 if (!document.querySelector('.edit-time-save-button')){ 
 
                                     //adding overlay to focus user on editing the time and not doing anything else. 
-                                    addOverlay();
+                                    timer.addOverlay();
 
                                     //bring the task above the overlay so the user can access the edit boxes.
                                     parentDiv.style.zIndex = 1001;
-                                    makeElementsNotKeyboardTabbable();
+                                    timer.makeElementsNotKeyboardTabbable();
                                     //add the class for this layout
                                     parentDiv.classList.add('edit-time-task');
 
@@ -819,8 +781,9 @@ function countdownClickStartHelper(countdownType, countdownNumber){
                                         parentDiv.children[4].classList.remove('hidden');
                                         parentDiv.children[5].classList.remove('hidden');
 
-                                        makeElementsKeyboardTabbableAgain();
-                                        removeOverlay();
+                                        timer.removeOverlay();
+                                        timer.makeElementsKeyboardTabbableAgain();
+                                        
                                         list.setDataToLocalStorage();
                                         location.reload();//updates the charts with new times - ask FEMI
                                     })
@@ -866,9 +829,10 @@ function countdownClickStartHelper(countdownType, countdownNumber){
                                         parentDiv.children[3].classList.remove('hidden');
                                         parentDiv.children[4].classList.remove('hidden');
                                         parentDiv.children[5].classList.remove('hidden');
-
-                                        makeElementsKeyboardTabbableAgain();
-                                        removeOverlay();                   
+                                        
+                                        timer.removeOverlay(); 
+                                        timer.makeElementsKeyboardTabbableAgain();
+                                                          
                                     })
                                 }
                                 $(this).unbind('click', arguments.callee);
@@ -905,7 +869,68 @@ convertSecondsToTime(seconds){
     let minutesConverted = Math.floor(seconds % 3600 / 60);
     let secondsConverted = Math.floor(seconds % 3600 % 60);
     return `${hoursConverted}hrs ${minutesConverted}mins ${secondsConverted}secs`;
-}  
+}
+addOverlay(){
+    let pageBody = document.getElementsByTagName('BODY')[0]
+    let overlayEl = document.createElement("DIV");
+    overlayEl.setAttribute("class", "overlay");
+    pageBody.appendChild(overlayEl);
+    }
+removeOverlay(){
+    let overlay = document.querySelector('.overlay');
+    let pageBody = document.getElementsByTagName('BODY')[0];
+    pageBody.removeChild(overlay);
+    }
+makeElementsNotKeyboardTabbable(){
+    const addNewTaskButton = document.querySelector('#add-new-task');
+    const newTaskInput = document.querySelector('#new-task-input');
+    const arrayOfCheckboxes = document.querySelectorAll('.taskCheckbox');
+    const arrayOfSortIcons = document.querySelectorAll('.task-sort');
+    const arrayOfOptionIcons = document.querySelectorAll('.task-options');
+    let startStopwatchButtonArray = document.querySelectorAll('.start-stopwatch');
+
+    newTaskInput.setAttribute("tabindex", "-1");
+    addNewTaskButton.setAttribute("tabindex", "-1");
+    arrayOfCheckboxes.forEach(function(checkbox){
+        checkbox.setAttribute("tabindex", "-1")
+    });  
+        startStopwatchButtonArray.forEach(function(stopwatch){
+        stopwatch.setAttribute("tabindex", "-1")
+    });   
+        arrayOfSortIcons.forEach(function(sorticon){
+        sorticon.setAttribute("tabindex", "-1")
+    });
+    arrayOfOptionIcons.forEach(function(optionicon){
+        optionicon.setAttribute("tabindex", "-1")
+    });
+    let chartsSelectBox = document.querySelector('#chart-selections');
+    chartsSelectBox.setAttribute("tabindex", "-1");
+}
+makeElementsKeyboardTabbableAgain(){
+    const addNewTaskButton = document.querySelector('#add-new-task');
+    const newTaskInput = document.querySelector('#new-task-input');
+    const arrayOfCheckboxes = document.querySelectorAll('.taskCheckbox');
+    const arrayOfSortIcons = document.querySelectorAll('.task-sort');
+    const arrayOfOptionIcons = document.querySelectorAll('.task-options');
+    let startStopwatchButtonArray = document.querySelectorAll('.start-stopwatch');
+
+    newTaskInput.setAttribute("tabindex", "0");
+    addNewTaskButton.setAttribute("tabindex", "0");
+    arrayOfCheckboxes.forEach(function(checkbox){
+        checkbox.setAttribute("tabindex", "0")
+    });  
+        startStopwatchButtonArray.forEach(function(stopwatch){
+        stopwatch.setAttribute("tabindex", "0")
+    });   
+        arrayOfSortIcons.forEach(function(sorticon){
+        sorticon.setAttribute("tabindex", "0")
+    });
+    arrayOfOptionIcons.forEach(function(optionicon){
+        optionicon.setAttribute("tabindex", "0")
+    });
+    let chartsSelectBox = document.querySelector('#chart-selections');
+    chartsSelectBox.setAttribute("tabindex", "0");          
+}
 }
 class Task {
     constructor(taskDescription){
@@ -1020,16 +1045,21 @@ class List {
                                     let textToEdit = parentDiv.children[2].textContent;
 
                                     if (!document.querySelector('.save-button')){  //stops the situation whereby a user can open 2 or more input edit boxes.
-                                    
+
+                                        timer.makeElementsNotKeyboardTabbable();
+                                        timer.addOverlay();
+                                        
                                         const newInput = document.createElement("INPUT");
                                         newInput.setAttribute("type", "text")
                                         newInput.setAttribute("value", `${textToEdit}`);
                                         newInput.setAttribute("class", "editedTask")
+                                        newInput.style.zIndex="1001";
                                         liToReplace.parentNode.replaceChild(newInput, liToReplace);//works
 
                                         const saveButton = document.createElement('BUTTON');
                                         saveButton.setAttribute("class", "save-button");
                                         saveButton.setAttribute("type", "submit");
+                                        saveButton.style.zIndex="1001";
                                         saveButton.textContent = "Save Changes";
                                         newInput.after(saveButton);
                                     }
@@ -1046,6 +1076,8 @@ class List {
                                     inputBox.parentNode.replaceChild(newLi, inputBox); //confusing AF but basically replace the input box with the Li in the most awkward way possible. 
                                     
                                     saveButton.remove();
+                                    timer.removeOverlay();
+                                    timer.makeElementsKeyboardTabbableAgain();
 
                                     list.taskList.forEach(task => {
                                         if(task.id == newLi.id){

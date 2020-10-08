@@ -217,7 +217,7 @@ class Timer {
                             
                             scrollElementIntoView();  
                             stopWatchPlay();
-                            addOverlay();
+                            timer.addOverlay();
 
                             //bring the timer container above the overlay
                             timerContainer.style.zIndex = 1001;
@@ -240,7 +240,7 @@ class Timer {
                             let timerContainerTitle = "Stopwatch";
                             let timerId = "stopwatch-timer-title";
                             createTimerTitle(timerContainerTitle, timerId);
-                            makeElementsNotKeyboardTabbable();
+                            timer.makeElementsNotKeyboardTabbable();
                         } else {
                             startStopwatchButtonArray.forEach(function(stopwatchButton){
                                     event.preventDefault();
@@ -258,10 +258,10 @@ class Timer {
     });                         
 } 
 function countdownClickStartHelper(countdownType, countdownNumber){
-        addOverlay();
+        timer.addOverlay();
         scrollElementIntoView();
         timerContainer.style.zIndex = 1001;
-        makeElementsNotKeyboardTabbable();
+        timer.makeElementsNotKeyboardTabbable();
 
         let seconds = 0;
         let minutes = countdownNumber;
@@ -435,7 +435,7 @@ function countdownClickStartHelper(countdownType, countdownNumber){
                 }
                 clearInterval(countdownInt); 
                 removeTimerFromDom(); 
-                removeOverlay();  
+                timer.removeOverlay();  
                 playing = false;
                 seconds = 0;
                 minutes = 0;
@@ -445,7 +445,7 @@ function countdownClickStartHelper(countdownType, countdownNumber){
                 clearInterval(countdownInt);
                 countdownEndedModal.style.display = "none";
                 removeTimerFromDom();
-                removeOverlay();
+                timer.removeOverlay();
                 playing = false;
                 seconds = 0;
                 minutes = 0;
@@ -484,8 +484,8 @@ function countdownClickStartHelper(countdownType, countdownNumber){
                 clearInterval(intervalToPause);
             }      
             removeTimerFromDom();
-            removeOverlay();
-            makeElementsKeyboardTabbableAgain();  
+            timer.removeOverlay();
+            timer.makeElementsKeyboardTabbableAgain();  
             
             })
             negateButton.addEventListener('click', function(){
@@ -545,8 +545,8 @@ function countdownClickStartHelper(countdownType, countdownNumber){
                 }
                 saveTimeToTaskModal.style.display = "none"; 
                 removeTimerFromDom();
-                removeOverlay();
-                makeElementsKeyboardTabbableAgain();
+                timer.removeOverlay();
+                timer.makeElementsKeyboardTabbableAgain();
                 location.reload();
             })
             negateButton.addEventListener('click', function(){
@@ -844,17 +844,17 @@ function countdownClickStartHelper(countdownType, countdownNumber){
                 })
             })
         }  
-    function addOverlay(){
-        let pageBody = document.getElementsByTagName('BODY')[0]
-        let overlayEl = document.createElement("DIV");
-        overlayEl.setAttribute("class", "overlay");
-        pageBody.appendChild(overlayEl);
-    }
-    function removeOverlay(){
-        let overlay = document.querySelector('.overlay');
-        let pageBody = document.getElementsByTagName('BODY')[0];
-        pageBody.removeChild(overlay);
-    }
+    // function addOverlay(){
+    //     let pageBody = document.getElementsByTagName('BODY')[0]
+    //     let overlayEl = document.createElement("DIV");
+    //     overlayEl.setAttribute("class", "overlay");
+    //     pageBody.appendChild(overlayEl);
+    // }
+    // function removeOverlay(){
+    //     let overlay = document.querySelector('.overlay');
+    //     let pageBody = document.getElementsByTagName('BODY')[0];
+    //     pageBody.removeChild(overlay);
+    // }
         countDown15ClickStart(); 
         countDown25ClickStart();   
         stopWatchClickStart(); 
@@ -1221,20 +1221,25 @@ timer.timers();
 
 /************************************************ CHARTS & D3.js  **************************************************/
 
-// Need to refactor this 
 
-d3.select("#chart-selections>#total-time-focused")
-   .on("change", function(event){
-       console.log(event + "totals clicked")
-       update(totals)
-   })
-d3.select("#total-time-focused-today")
-   .on("change", function(event){
-       console.log("today clicked")
-       update(totals)
-   })
+var totalTimeFocusedOnEachTask = list.taskList; //dataset 1 - total time spent on each task.
+var totalTimeFocusedOnEachTaskToday =  getTodayTasks(); //dataset 2 total time spent on each task today.
 
-const data = list.taskList;
+    
+selectChart(totalTimeFocusedOnEachTask);
+
+function selectChart(data){
+
+    var chartSvg = document.querySelector('.chart-svg');
+    var circleLeg = document.querySelectorAll('.circle-legend');
+
+        if(chartSvg){
+        d3.select(chartSvg).remove(); 
+        }
+        if(circleLeg){
+            circleLeg.forEach(leg => leg.remove())
+        }
+
     var width = 550;
     var height = 320;
     var radius = 150;
@@ -1254,6 +1259,7 @@ const data = list.taskList;
         .outerRadius(radius);
     var pie = d3.pie()
         .value(function(d){
+            console.log(d);
             return d.totalTimeFocusedOnTask //what data will the chart use to create the slices.
         })
         .sort(null); //stops the chart sorting in order of size. 
@@ -1263,8 +1269,8 @@ const data = list.taskList;
      .attr("class", "tooltip-donut")
      .style("opacity", 0);
 
-    var path = svg.selectAll("path") // the different slices as paths.
-        .data(pie(data))
+    var path = svg.selectAll("path")
+        .data(pie(data)) 
         .enter()
         .append("path")
         .attr("d", arc)
@@ -1339,257 +1345,23 @@ const data = list.taskList;
     console.log(legendItems.length)
 
     //dynamically set the height of the legend box depending on how many items are added to it. 
-    svgLegend
-        .attr('height', function(){
-            return legendItems.length * 30;
-        })
+    // svgLegend
+    //     .attr('height', function(){
+    //         return legendItems.length * 30;
+    //     })
 
-d3.select("#chart-selections")
-   .on("change", function(event){
-    var option = event.target.value;
-    if(option === "total-time-focused-on-each-task"){
-        
-    //remove any charts and legends already there, to make space for new ones.
-        var chartSvg = document.querySelector('.chart-svg');
-        var circleLeg = document.querySelectorAll('.circle-legend');
+}
 
-            if(chartSvg){
-            d3.select(chartSvg).remove(); 
-            }
-            if(circleLeg){
-                circleLeg.forEach(leg => leg.remove())
-            }
-    const data = list.taskList;
-    var width = 550;
-    var height = 320;
-    var radius = 150;
-    var donutWidth = 75;
-    var color = d3.scaleOrdinal()
-        .range(["#33A8C7", "#52E3E1", "#A0E426", "#FDF148", "#FFAB00", "#F77976", "#F050AE", "#D883FF", "#9336FD"]); //colours for slices/ arcs
-    var svg = d3.select('.chart-area') //select the charts div
-        .append("svg") //create an svg el
-        .attr("class", "chart-svg")
-        .attr("width", width)
-        .attr("height", height)
-        .call(responsivefy)
-        .append("g")
-        .attr('transform', 'translate(' + (305) + ',' + (155) + ')'); //where the chart sits in the svg box
-    var arc = d3.arc()
-        .innerRadius(donutWidth)
-        .outerRadius(radius);
-    var pie = d3.pie()
-        .value(function(d){
-            return d.totalTimeFocusedOnTask //what data will the chart use to create the slices.
-        })
-        .sort(null); //stops the chart sorting in order of size. 
-    var legendRectSize = 14;
-    var legendSpacing = 7;
-    var div = d3.select("body").append("div")
-     .attr("class", "tooltip-donut")
-     .style("opacity", 0);
+d3.select('#chart-selections')
+    .on("change", function(event){
+         var option = event.target.value;
+        if(option === "total-time-focused-on-each-task"){
+            selectChart(totalTimeFocusedOnEachTask);
+        } else if(option === "total-time-focused-on-each-task-today")
+            selectChart(totalTimeFocusedOnEachTaskToday);      
+    })
 
-    var path = svg.selectAll("path") // the different slices as paths.
-        .data(pie(data))
-        .enter()
-        .append("path")
-        .attr("d", arc)
-        .attr("fill", function(d){   
-            return color(d.data.taskDescription)
-            
-        })
-        .attr("stroke", "white")
-        .style("stroke-width", "4px")
-       
-        .on('mouseover', function (event, d, i) {
-        d3.select(this).transition()
-            .duration('50')
-            .attr('opacity', '.85');
-
-        //Makes the new div appear on hover:
-        div.transition()
-            .duration(50)
-            .style("opacity", 1);
-        let task = d.data.taskDescription
-        let longTime = d.data.totalTimeFocusedOnTaskLongForm
-        div.html(task + "<br>" + longTime ) //put label to display here
-            .style("left", (event.pageX + 10) + "px")
-            .style("top", (event.pageY - 15) + "px");        
-     })
-
-     .on('mouseout', function (event, d, i) {
-        d3.select(this).transition()
-            .duration('50')
-            .attr('opacity', '1');  
-        //Makes the new div disappear:
-        div.transition()
-            .duration('50')
-            .style("opacity", 0);
-     });
-
-    var legendRectSize = 14;
-    var legendSpacing = 7;
-  
-    var svgLegend = d3.select('.legend-area');
-        
-    var legend = svgLegend.selectAll('.legend') //the legend and placement
-        .data(color.domain())
-        .enter()
-        .append('g')
-        .attr('class', 'circle-legend')
-        .attr('transform', function (d, i) {
-            var height = legendRectSize + legendSpacing;   
-            var offset = -10;    
-            var horz = 25;
-            var vert = i * height - offset;
-            return 'translate(' + horz + ',' + vert + ')';
-            // var offset = height * color.domain().length / 2  //1800        
-        });
-    
-    legend.append('circle') //keys
-        .style('fill', color)
-        .style('stroke', color)
-        .attr('cx', 0)
-        .attr('cy', 0)
-        .attr('r', '0.5rem'); //size of circles
-
-    legend.append('text') //labels
-    .data(data)
-    .attr('x', legendRectSize + legendSpacing)
-    .attr('y', legendRectSize - legendSpacing)
-    .text(function (d) {       
-        return  `${d.taskDescription} : ${d.totalTimeFocusedOnTaskLongForm}`; 
-    });
-
-    var legendItems = document.querySelectorAll('.circle-legend');
-    console.log(legendItems.length)
-
-    //dynamically set the height of the legend box depending on how many items are added to it. 
-    svgLegend
-        .attr('height', function(){
-            return legendItems.length * 30;
-        })
-    } else if (option === "total-time-focused-on-each-task-today"){     
-        //remove any charts and legends already there, to make space for new ones.
-        var chartSvg = document.querySelector('.chart-svg');
-        var circleLeg = document.querySelectorAll('.circle-legend');
-
-            if(chartSvg){
-            d3.select(chartSvg).remove(); 
-            }
-            if(circleLeg){
-                circleLeg.forEach(leg => leg.remove())
-            }
-
-        const data = getTodayTasks();
-
-    var width = 550;
-    var height = 320;
-    var radius = 150;
-    var donutWidth = 75;
-    var color = d3.scaleOrdinal()
-        .range(["#33A8C7", "#52E3E1", "#A0E426", "#FDF148", "#FFAB00", "#F77976", "#F050AE", "#D883FF", "#9336FD"]); //colours for slices/ arcs 
-    var svg = d3.select('.chart-area') //select the charts div
-        .append("svg") //create an svg el
-        .attr("width", width)
-        .attr("height", height)
-        .attr("class", "chart-svg")
-        .call(responsivefy)
-        .append("g")
-        .attr('transform', 'translate(' + (305) + ',' + (155) + ')'); //where the chart sits in the svg box - change this to center it
-        
-    var arc = d3.arc()
-        .innerRadius(donutWidth)
-        .outerRadius(radius);
-    
-    var pie = d3.pie()
-        .value(function(d){
-            return d.totalTimeFocusedOnTask //what data will the chart use to create the slices.
-        })
-        .sort(null); //stops the chart sorting in order of size.
-    
-    var div = d3.select("body").append("div")
-     .attr("class", "tooltip-donut")
-     .style("opacity", 0);
-
-    var path = svg.selectAll("path") // the different slices as paths.
-        .data(pie(data))
-        .enter()
-        .append("path")
-        .attr("d", arc)
-        .attr("fill", function(d){   
-            return color(d.data.taskDescription)      
-        })
-        .attr("stroke", "white")
-        .style("stroke-width", "4px")
-       
-        .on('mouseover', function (event, d, i) {
-        d3.select(this).transition()
-            .duration('50')
-            .attr('opacity', '.85');
-
-        //Makes the new div appear on hover:
-        div.transition()
-            .duration(50)
-            .style("opacity", 1);
-        let task = d.data.taskDescription
-        let longTime = d.data.totalTimeFocusedOnTaskLongForm
-        div.html(task + "<br>" + longTime ) //put label to display here
-            .style("left", (event.pageX + 10) + "px")
-            .style("top", (event.pageY - 15) + "px");        
-     })
-     .on('mouseout', function (event, d, i) {
-        d3.select(this).transition()
-            .duration('50')
-            .attr('opacity', '1');  
-        //Makes the new div disappear:
-        div.transition()
-            .duration('50')
-            .style("opacity", 0);
-     });
-
-    var legendRectSize = 14;
-    var legendSpacing = 7;
-  
-    var svgLegend = d3.select('.legend-area');
-        
-    var legend = svgLegend.selectAll('.legend') //the legend and placement
-        .data(color.domain())
-        .enter()
-        .append('g')
-        .attr('class', 'circle-legend')
-        .attr('transform', function (d, i) {
-            var height = legendRectSize + legendSpacing;   
-            var offset = -10;    
-            var horz = 25;
-            var vert = i * height - offset;
-            return 'translate(' + horz + ',' + vert + ')';
-            // var offset = height * color.domain().length / 2  //1800      
-        });  
-    legend.append('circle') //keys
-        .style('fill', color)
-        .style('stroke', color)
-        .attr('cx', 0)
-        .attr('cy', 0)
-        .attr('r', '0.5rem'); //size of circles
-
-    legend.append('text') //labels
-    .data(data)
-    .attr('x', legendRectSize + legendSpacing)
-    .attr('y', legendRectSize - legendSpacing)
-    .text(function (d) {       
-        return  `${d.taskDescription} : ${d.totalTimeFocusedOnTaskLongForm}`; 
-    });
-
-    var legendItems = document.querySelectorAll('.circle-legend');
-    console.log(legendItems.length)
-
-    //dynamically set the height of the legend box depending on how many items are added to it. 
-    svgLegend
-        .attr('height', function(){
-            return legendItems.length * 30;
-        })
-    }     
-   })
+ 
 // function change(dataToChange) {
 //      var pie = d3.pie()
 //      .value(function (d) {

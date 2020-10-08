@@ -1257,9 +1257,9 @@ function selectChart(data){
     var arc = d3.arc()
         .innerRadius(donutWidth)
         .outerRadius(radius);
+        
     var pie = d3.pie()
         .value(function(d){
-            console.log(d);
             return d.totalTimeFocusedOnTask //what data will the chart use to create the slices.
         })
         .sort(null); //stops the chart sorting in order of size. 
@@ -1279,7 +1279,6 @@ function selectChart(data){
             
         })
         .attr("stroke", "white")
-        .style("stroke-width", "4px")
        
         .on('mouseover', function (event, d, i) {
         d3.select(this).transition()
@@ -1322,8 +1321,7 @@ function selectChart(data){
             var offset = -10;    
             var horz = 25;
             var vert = i * height - offset;
-            return 'translate(' + horz + ',' + vert + ')';
-            // var offset = height * color.domain().length / 2  //1800        
+            return 'translate(' + horz + ',' + vert + ')';    
         });
     
     legend.append('circle') //keys
@@ -1337,12 +1335,16 @@ function selectChart(data){
     .data(data)
     .attr('x', legendRectSize + legendSpacing)
     .attr('y', legendRectSize - legendSpacing)
-    .text(function (d) {       
-        return  `${d.taskDescription} : ${d.totalTimeFocusedOnTaskLongForm}`; 
+    .text(function (d) {  
+        let taskDescrip = d.taskDescription;
+        if (taskDescrip.length > 50){
+            taskDescrip = taskDescrip.slice(0,50) + "...";
+        }
+  
+        return  `${taskDescrip} : ${d.totalTimeFocusedOnTaskLongForm}`; 
     });
 
     var legendItems = document.querySelectorAll('.circle-legend');
-    console.log(legendItems.length)
 
     // dynamically set the height of the legend box depending on how many items are added to it. 
     //this works for long lists but not for short ones - need to adjust it - maybe - if list.length > 6 then do bla bla
@@ -1352,16 +1354,22 @@ function selectChart(data){
               return legendItems.length * 30;
             }   
         })
-
+        .attr('width', function(){
+            return 700;
+        })
 }
-
 d3.select('#chart-selections')
     .on("change", function(event){
          var option = event.target.value;
         if(option === "total-time-focused-on-each-task"){
             selectChart(totalTimeFocusedOnEachTask);
-        } else if(option === "total-time-focused-on-each-task-today")
-            selectChart(totalTimeFocusedOnEachTaskToday);      
+        } else if(option === "total-time-focused-on-each-task-today"){
+            selectChart(totalTimeFocusedOnEachTaskToday); 
+        } else if (option === "tasks-completed"){
+
+        } else if(option === "tasks-completed-today"){
+
+        }
     })
 
  

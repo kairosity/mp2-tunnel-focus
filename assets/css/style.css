@@ -796,7 +796,11 @@ svg {
     /* -webkit-box-shadow: 2px 6px 0px 0px rgba(0,0,0,1);
     -moz-box-shadow: 2px 6px 0px 0px rgba(0,0,0,1);
     box-shadow: 2px 6px 0px 0px rgba(0,0,0,1); */
-    
+}
+
+svg.legend-area{
+    font-family: "Heebo", sans-serif;
+    font-size: 0.9em;
 }
 .extra-buttons{
     grid-row: 4 / 5;
@@ -829,6 +833,14 @@ div.tooltip-donut {
 .legend-area {
     display: flex;
     flex-direction: column;
+}
+
+.completed-tasks{
+    text-align: left;
+    align-self: flex-start;
+    padding: 1em;
+    font-family: "Heebo", sans-serif;
+    font-size: 1em;
 }
 
 /*----------------------------------------------------------- Modals  */

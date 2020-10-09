@@ -1228,17 +1228,25 @@ var totalTimeFocusedOnEachTaskToday =  getTodayTasks(); //dataset 2 total time s
     
 selectChart(totalTimeFocusedOnEachTask);
 
-function selectChart(data){
-
+function clearChartArea(){
     var chartSvg = document.querySelector('.chart-svg');
     var circleLeg = document.querySelectorAll('.circle-legend');
+    let completedTaskList = document.querySelector('.completed-task-list');
 
-        if(chartSvg){
+     if(chartSvg){
         d3.select(chartSvg).remove(); 
         }
-        if(circleLeg){
-            circleLeg.forEach(leg => leg.remove())
-        }
+    if(circleLeg){
+        circleLeg.forEach(leg => leg.remove())
+    }
+    if(completedTaskList){
+        completedTaskList.remove();
+    }
+}
+
+function selectChart(data){
+
+    clearChartArea()
 
     var width = 550;
     var height = 320;
@@ -1366,39 +1374,11 @@ d3.select('#chart-selections')
         } else if(option === "total-time-focused-on-each-task-today"){
             selectChart(totalTimeFocusedOnEachTaskToday); 
         } else if (option === "tasks-completed"){
-
+            completedTaskList();
         } else if(option === "tasks-completed-today"){
 
         }
     })
-
- 
-// function change(dataToChange) {
-//      var pie = d3.pie()
-//      .value(function (d) {
-//           return d.totalTimeFocusedOnTask;
-//      }).sort(null)(dataToChange);
-//      var width = 350;
-//      var height = 350;
-//      var radius = Math.min(width, height) / 2;
-//      var donutWidth = 75;
-//      path = d3.select("#charts")
-//           .selectAll("path")
-//           .data(pie); // Compute the new angles
-//      var arc = d3.arc()
-//           .innerRadius(radius - donutWidth)
-//           .outerRadius(radius);
-//      path.transition().duration(500).attr("d", arc); // redrawing the path with a smooth transition
-
-//      var legend = svg.selectAll('.legend');
-//      legend
-//     .data(dataToChange)
-//     .attr('x', legendRectSize + legendSpacing)
-//     .attr('y', legendRectSize - legendSpacing)
-//     .text(function (d) {       
-//         return  `${d.taskDescription} : ${d.totalTimeFocusedOnTaskLongForm} : this should change`; 
-//     });
-// }
 
 function getTodayTasks(){ 
     let tasks = list.taskList;
@@ -1438,12 +1418,34 @@ function getTodayTasks(){
         todaysTasksFiltered.push(temp[prop]);
     }
 
-    todaysTasksFiltered.forEach(task => task.totalTimeFocusedOnTask = task.timeToAdd );
+    todaysTasksFiltered.forEach(task => task.totalTimeFocusedOnTask = task.timeToAdd);
     todaysTasksFiltered.forEach(task => task.totalTimeFocusedOnTaskLongForm = timer.convertSecondsToTime(task.totalTimeFocusedOnTask));
     return todaysTasksFiltered;
 }
-/* The below function is taken from Ben Clinkenbeard's Blog Article and originally written by Brendan Sudol (attributed in README) */
 
+function completedTaskList(){
+    
+    clearChartArea();
+
+    let legendArea = document.querySelector('.legend-area');
+    
+    
+    legendArea.setAttribute("width", 0);
+    legendArea.setAttribute("height", 0);
+    let taskList = list.taskList;
+    let comTasksDiv = document.querySelector('.completed-tasks');
+    comTasksDiv.innerHTML += `<ol class="completed-task-list">`;
+    let comTaskListDiv = document.querySelector('.completed-task-list');
+    
+    taskList.forEach(function(task){
+        if(task.completed === true){
+            comTaskListDiv.innerHTML+= `<li>${task.taskDescription}</li>`
+        }
+    })
+    comTasksDiv.innerHTML += `</ol>`;
+}
+
+/* The below function is taken from Ben Clinkenbeard's Blog Article and originally written by Brendan Sudol (attributed in README) */
 function responsivefy(svg) {
   // container will be the DOM element
   // that the svg is appended to
@@ -1462,10 +1464,6 @@ function responsivefy(svg) {
       .call(resize);
  
   // add a listener so the chart will be resized
-  // when the window resizes
-  // multiple listeners for the same event type
-  // requires a namespace, i.e., 'click.foo'
-  // api docs: https://goo.gl/F3ZCFr
   d3.select(window).on(
       'resize.' + container.attr('id'), 
       resize

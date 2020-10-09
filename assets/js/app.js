@@ -577,6 +577,7 @@ function countdownClickStartHelper(countdownType, countdownNumber){
                 let localTime = dateStamp.toLocaleTimeString();
                 let localDate = dateStamp.toLocaleDateString();
                 let taskDescription = list.taskList[id].taskDescription;
+            
         //Find the task object with that taskId and add the timeToAdd to its timeFocusedOnTask prop.
         list.taskList[id].totalTimeFocusedOnTask += timeToAdd;
         list.taskList[id].totalTimeFocusedOnTaskLongForm = timer.convertSecondsToTime(list.taskList[id].totalTimeFocusedOnTask);
@@ -715,32 +716,55 @@ function countdownClickStartHelper(countdownType, countdownNumber){
                                     let editTimeTitle = document.querySelector('.edit-time-task-description');
                                     editTimeTitle.scrollIntoView();
 
+                                    let hoursValue = document.getElementById('editHours');
+                                    let minutesValue = document.getElementById('editMinutes');
+                                    let secondsValue = document.getElementById('editSeconds');
+
+                                    let originalHours = hoursValue.value;
+                                    let originalMinutes = minutesValue.value;
+                                    let originalSeconds = secondsValue.value;
+
+                                    //translate that time to seconds
+                                    let minutesInSeconds = originalMinutes * 60;
+                                    let hoursInSeconds = originalHours * 3600;
+
+                                    let baseTime = parseInt(originalSeconds) + minutesInSeconds + hoursInSeconds;
+
+                                    console.log(baseTime)
+
                                     //click event listener on the save button. //no need for both save button vars.
                                     let saveBtn = document.querySelector('.edit-time-save-button');
                                     saveBtn.addEventListener('click', function(){
 
-                                        //take the value in each of the time segments. 
-                                        let hoursToSave = document.getElementById('editHours');
-                                        let minutesToSave = document.getElementById('editMinutes');
-                                        let secondsToSave = document.getElementById('editSeconds');
 
-                                        let hoursToAdd = hoursToSave.value;
-                                        let minutesToAdd = minutesToSave.value;
-                                        let secondsToAdd = secondsToSave.value;
+                                        let hoursToAdd = hoursValue.value;
+                                        let minutesToAdd = minutesValue.value;
+                                        let secondsToAdd = secondsValue.value;
                     
                                         //translate that time to seconds
                                         let minutesInSeconds = minutesToAdd * 60;
                                         let hoursInSeconds = hoursToAdd * 3600;
-                                        let timeToAdd = parseInt(secondsToAdd) + minutesInSeconds + hoursInSeconds;
 
+                                        let dateStamp = new Date();
+                                        let localTime = dateStamp.toLocaleTimeString();
+                                        let localDate = dateStamp.toLocaleDateString();
+                                        let taskDescription = list.taskList[taskToTargetId].taskDescription;
+                                        let id = taskToTargetId;
+                                        let totalTimeToAdd = parseInt(secondsToAdd) + minutesInSeconds + hoursInSeconds;
+                                        let timeToAdd = totalTimeToAdd - baseTime;
+
+
+                                        list.taskList[taskToTargetId].timeSegments.push({id, timeToAdd, dateStamp, taskDescription, localDate, localTime});
+                                        
+                                    
                                         //translate those seconds to long form
 
-                                        let longFormTimeToAdd = timer.convertSecondsToTime(timeToAdd);
+                                        let longFormTimeToAdd = timer.convertSecondsToTime(totalTimeToAdd);
 
                                         //id matching loop - updates the totalTimeFocusedOnTask.
                                         for (let i=0; i<list.taskList.length; i++){
                                             if (list.taskList[i].id == taskToTargetId){
-                                                list.taskList[i].totalTimeFocusedOnTask = timeToAdd;
+                                                list.taskList[i].totalTimeFocusedOnTask = totalTimeToAdd;
                                                 list.taskList[i].totalTimeFocusedOnTaskLongForm = longFormTimeToAdd; 
                                             }
                                         }          
@@ -1112,6 +1136,7 @@ class List {
                     list.taskList.forEach(function(task){
                         if (task.id == checkboxId){ 
                             task.completed = true;
+                            
                         }
                     })
                         
@@ -1121,6 +1146,7 @@ class List {
                     list.taskList.forEach(function(task){
                         if (task.id == checkboxId){
                             task.completed = false;
+                            
                         }
                     })
                     }
@@ -1374,9 +1400,9 @@ d3.select('#chart-selections')
         } else if(option === "total-time-focused-on-each-task-today"){
             selectChart(totalTimeFocusedOnEachTaskToday); 
         } else if (option === "tasks-completed"){
-            completedTaskList();
+            completedTaskList(list.taskList);
         } else if(option === "tasks-completed-today"){
-
+            completedTaskList(totalTimeFocusedOnEachTaskToday);
         }
     })
 
@@ -1418,21 +1444,33 @@ function getTodayTasks(){
         todaysTasksFiltered.push(temp[prop]);
     }
 
+    //for each task in todaysTasksFiltered look at that tasks id and then go through the list.tasklist array and find the task with the same id and then check to see whether it is completed or not. 
+
+    for (let i=0; i<todaysTasksFiltered.length; i++){
+        for (let j=0; j< list.taskList.length; j++){
+            if(todaysTasksFiltered[i].id == list.taskList[j].id){
+                todaysTasksFiltered[i].completed = list.taskList[j].completed;
+            }
+        }
+    }
+
     todaysTasksFiltered.forEach(task => task.totalTimeFocusedOnTask = task.timeToAdd);
+    
     todaysTasksFiltered.forEach(task => task.totalTimeFocusedOnTaskLongForm = timer.convertSecondsToTime(task.totalTimeFocusedOnTask));
+    console.log(todaysTasksFiltered)
     return todaysTasksFiltered;
+    
 }
 
-function completedTaskList(){
+function completedTaskList(data){
     
     clearChartArea();
 
     let legendArea = document.querySelector('.legend-area');
     
-    
     legendArea.setAttribute("width", 0);
     legendArea.setAttribute("height", 0);
-    let taskList = list.taskList;
+    let taskList = data;
     let comTasksDiv = document.querySelector('.completed-tasks');
     comTasksDiv.innerHTML += `<ol class="completed-task-list">`;
     let comTaskListDiv = document.querySelector('.completed-task-list');

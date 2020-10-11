@@ -1174,15 +1174,19 @@ class List {
                                     //Removes the Task from the taskList array.
                                     list.taskList.splice(list.taskList.findIndex(task => task.id == taskToDeleteId), 1);
 
-                                    //resets the Task object ids to run from 0 upwards.
+                                    //resets the Task object ids & timeSegment ids to run from 0 upwards.
                                     let tList = list.taskList;
                                     for (let i=0; i<tList.length; i++){
                                         tList[i].id = i;
+                                        for (let j=0; j<tList[i].timeSegments.length; j++){
+                                            tList[i].timeSegments[j].id = i;
+                                        }
                                     }
                                     let arrOfDomTasks = document.querySelectorAll('.task-description');
                                     for (let i=0; i<arrOfDomTasks.length; i++){
                                         arrOfDomTasks[i].id = i.toString();
                                     }
+
 
                                     list.setDataToLocalStorage();
                                 }

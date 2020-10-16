@@ -1398,7 +1398,7 @@ function selectChart(data){
 }
 d3.select('#chart-selections')
     .on("change", function(event){
-         var option = event.target.value;
+        var option = event.target.value;
         if(option === "total-time-focused-on-each-task"){
             selectChart(totalTimeFocusedOnEachTask);
         } else if(option === "total-time-focused-on-each-task-today"){

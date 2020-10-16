@@ -375,8 +375,11 @@ This website was developed using GitPod in a Chrome browser and commits were pus
 - ### **[Google Fonts]()**
     All fonts used are google fonts.
 
-- ### **[Font Awesome]()**
+- ### **[Font Awesome](https://fontawesome.com/)**
     Most of the icons used are from Font Awesome.
+
+- ### **[Are there devices narrower than 320px (and data on their usage for web browsing)?](https://ux.stackexchange.com/questions/74798/are-there-devices-narrower-than-320px-and-data-on-their-usage-for-web-browsing)**
+    Information on responsive design re: smallest screen width to design for.
 
 ## 2. HTML & CSS
 

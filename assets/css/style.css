@@ -28,18 +28,18 @@
     justify-content: center;
     background-color: var(--pure-white);
     grid-template-columns: repeat(12, 1fr);
-    grid-template-rows: 200px auto auto 1fr;
+    grid-template-rows: 150px auto auto 1fr;
     position: relative;
 }
 /*----------------------------------------------------------- Timer  */
 
-#tests-heading {
+/* #tests-heading {
     padding: 1.2em;
 }
 
 .tests-body {
     text-align: center;
-}
+} */
 
 /*----------------------------------------------------------- Header  */
 .main-header{
@@ -58,23 +58,24 @@
 
 .main-heading {
     font-family: "Secular One", sans-serif;
-    font-size: 3.3rem;
+    font-size: 2rem;
     font-weight: 300;
     letter-spacing: 11px;
     text-transform: uppercase;
+    text-align: center;
 }
 
-.main-sub-heading{
+/* .main-sub-heading{
     font-family: "Secular One", sans-serif;
     font-size: 2.3rem;
     font-weight: 200;
     letter-spacing: 8px;
     text-transform: lowercase;
-}
+} */
 
 /*----------------------------------------------------------- Timer  */
 
-.timer-container{
+.timer-container {
     background-color: var(--light-blue);
     grid-column: 1 / 13;
     grid-row: 2 / 3;
@@ -92,14 +93,14 @@
     position: absolute;
     right: 12px;
     top: 5px;
-    font-size: 1.8rem;
+    font-size: 1.2rem;
     cursor: pointer;
     color: var(--pure-black);
     border: 3px solid var(--pure-black);
     background-color: var(--sun-yellow);
     border-radius: 50%;
-    width: 50px;
-    height: 50px;
+    width: 35px;
+    height: 35px;
     -webkit-box-shadow: 3px 5px 0px 0px rgba(0,0,0,1);
     -moz-box-shadow: 3px 5px 0px 0px rgba(0,0,0,1);
     box-shadow: 3px 5px 0px 0px rgba(0,0,0,1);
@@ -148,7 +149,6 @@
     outline: var(--sun-yellow) dashed 4px;
 }
 
-
 .fa-history:hover,
 .alarm:hover {
     transform: rotate(28deg); 
@@ -177,8 +177,9 @@
 .timer-title {
     color: var(--pure-black);
     font-family: "Secular One", sans-serif;
-    letter-spacing: 11px;
+    letter-spacing: 7px;
     text-transform: uppercase;
+    font-size: 1.1em;
 }
 .timer-task-description{
     color: var(--pure-white);
@@ -188,14 +189,15 @@
     font-weight: 300;
     border-bottom: var(--pure-white) 2px solid;
     margin-bottom: 20px;   
+    font-size: 1.3em;
 }
 #save-time-to-task {
     background-color: var(--sun-yellow);
     padding: 1em;
     color: var(--pure-black);
     font-family: "Heebo", sans-serif;
-    font-size: 1.1em;
-    font-weight: 600;
+    font-size: 0.9em;
+    font-weight: 500;
     border: 2px solid var(--pure-black);
     border-radius: 8px;
     -webkit-box-shadow: 3px 5px 0px 0px rgba(0,0,0,1);
@@ -318,8 +320,8 @@
 }
 #new-task-input{
     height: 40px;
-    width: 550px;
-    font-size: 1.4rem;
+    width: 290px;
+    font-size: 1.2rem;
     border: none;
     border-bottom: 3px solid var(--pure-black);
 }
@@ -330,21 +332,21 @@
 /* Make the placeholder text larger */
 
 #new-task-input::placeholder{
-    font-size: 1.4rem;
+    font-size: 1.2rem;
     font-family: "Heebo", sans-serif;
     color: var(--pure-black);
 }
 .add-new-task-plus-icon {
     display: block;
-    font-size: 2em;
+    font-size: 1.8em;
 }
 
 /* Add New Task Button */
 #add-new-task {
     border-radius: 50%;
     background-color: var(--sun-yellow);
-    width: 50px;
-    height: 50px;
+    width: 40px;
+    height: 40px;
     -webkit-box-shadow: 3px 5px 0px 0px rgba(0,0,0,1);
     -moz-box-shadow: 3px 5px 0px 0px rgba(0,0,0,1);
     box-shadow: 3px 5px 0px 0px rgba(0,0,0,1);
@@ -372,7 +374,7 @@
 .list-container {
     background-color: white;
     border-radius: 10px;
-    grid-column: 3 / 11;
+    grid-column: 1 / 13;
     grid-row: 3 / 7;
     margin-top: 16px;
     padding: 2em; 
@@ -380,12 +382,7 @@
 #list {
     display: flex;
     flex-direction: column;
-    border: 2px solid var(--pure-black);
-    border-radius: 8px;
     padding: 1.2em;
-    -webkit-box-shadow: 8px 10px 0px 0px rgba(0,0,0,1);
-    -moz-box-shadow: 8px 10px 0px 0px rgba(0,0,0,1);
-    box-shadow: 8px 10px 0px 0px rgba(0,0,0,1);
     margin-top: 20px;
 }
 /* Each new task line */
@@ -393,10 +390,11 @@
     font-size: 1.2em;
     padding-top: 0.5em;
     padding-bottom: 0.7em;
+    padding-left: 0.5em;
     display: grid;
     list-style-type: none;
     align-items: center;
-    grid-template-columns: 150px 30px 1fr auto auto auto;
+    grid-template-columns: 40px 20px 120px auto auto auto;
     grid-column-gap: 0.5em;
     justify-content: center;
 }
@@ -939,21 +937,162 @@ footer {
     border-radius: 8px;
 }
 
-
-
-
 /*----------------------------------------------------------- MEDIA QUERIES: Small Screens   */
 @media screen and (min-width: 576px) {
 
+.page-container {
+    grid-template-rows: 170px auto auto 1fr;   
+}
+
+/*----------------------------------------------------------- Timer Small Screens  */
+.close-timer-x {  
+    font-size: 1.8rem;
+    width: 50px;
+    height: 50px;
+}
+
+.timer-title {
+    font-size: 1.5em;
+    letter-spacing: 11px;
+}
+.timer-task-description{
+    font-size: 1.5em;   
+}
+#save-time-to-task {   
+    padding: 1em;  
+    font-size: 1.1em;
+    font-weight: 600;
+}
+
+/*----------------------------------------------------------- Add New Task - Small Screens  */
+
+#new-task-input{
+    width: 350px;
+    font-size: 1.4rem;
+}
+#new-task-input::placeholder{
+    font-size: 1.4rem;
+}
+
+.add-new-task-plus-icon {
+    font-size: 2em;
+}
+
+/* Add New Task Button */
+#add-new-task {
+    width: 50px;
+    height: 50px;
+}
+/*----------------------------------------------------------- Task List - Small Screens  */
+#list {
+    border: 2px solid var(--pure-black);
+    border-radius: 8px;
+    -webkit-box-shadow: 8px 10px 0px 0px rgba(0,0,0,1);
+    -moz-box-shadow: 8px 10px 0px 0px rgba(0,0,0,1);
+    box-shadow: 8px 10px 0px 0px rgba(0,0,0,1);
+}
+.task {
+    font-size: 1.2em;
+    padding-top: 0.5em;
+    padding-bottom: 0.7em;
+    display: grid;
+    list-style-type: none;
+    align-items: center;
+    grid-template-columns: 150px 30px 1fr auto auto auto;
+    grid-column-gap: 0.5em;
+    justify-content: center;
+}
+.task:not(:last-child):after {
+  content:'';
+  display:inline-block;
+  width:100%; 
+  height:100%;
+  border-bottom:1px solid var(--pure-black);
+  grid-column: 1 / 13;
+  margin-top: 11px;
+}
+.task:last-child:after{
+    content: '';
+    display:inline-block;
+    width:100%; 
+    height:100%;
+    border-bottom:0px solid var(--pure-black);
+    grid-column: 1 / 13;
+    margin-bottom: -27px;
+    
+}
+.task:last-child{
+    padding-bottom: 0.1em;
+}
+
 }
 /*----------------------------------------------------------- MEDIA QUERIES: Medium Screens   */
-@media screen and (min-width: 768px) {}
+@media screen and (min-width: 768px) {
 
+.page-container {
+    grid-template-rows: 200px auto auto 1fr;   
+}
+
+/*----------------------------------------------------------- Header - Medium Screens  */
+
+.main-heading {
+    font-size: 2.7rem;
+}
+
+/*----------------------------------------------------------- Timer Medium Screens  */
+.timer-container {
+    grid-column: 3 / 11;
+    grid-row: 2 / 3;
+    margin-top: 2em;
+}
+
+/*----------------------------------------------------------- Add New Task Medium Screens  */
+
+#new-task-input{
+    width: 450px;
+    font-size: 1.4rem;
+}
+
+/*----------------------------------------------------------- Task List Medium Screens  */
+
+.list-container {    
+    grid-column: 3 / 11; 
+}
+
+}
 
 /*----------------------------------------------------------- MEDIA QUERIES: Large Screens   */
 
-@media screen and (min-width: 992px) {}
+@media screen and (min-width: 992px) {
+
+/*----------------------------------------------------------- Header Large Screens  */
+
+.main-heading {
+    font-size: 3rem;
+}
+
+/*----------------------------------------------------------- Timer Large Screens  */
+
+.timer-container {
+    grid-column: 4 / 10;
+    grid-row: 2 / 3;
+}
+/*----------------------------------------------------------- Add New Task Medium Screens  */
+
+#new-task-input{
+    width: 550px;
+}
+
+}
 
 /*----------------------------------------------------------- MEDIA QUERIES: Extra-Large Screens   */
 
-@media screen and (min-width: 1200px) {}
+@media screen and (min-width: 1200px) {
+
+/*----------------------------------------------------------- Header Extra-Large Screens  */
+
+.main-heading {
+    font-size: 3.3rem;
+}
+
+}

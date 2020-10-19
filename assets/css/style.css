@@ -390,7 +390,7 @@
     font-size: 1.2em;
     padding-top: 0.5em;
     padding-bottom: 0.7em;
-    padding-left: 0.5em;
+    /* padding-left: 0.5em; */
     display: grid;
     list-style-type: none;
     align-items: center;
@@ -404,7 +404,7 @@
   width:100%; 
   height:100%;
   border-bottom:1px solid var(--pure-black);
-  grid-column: 1 / 13;
+  grid-column: 1 / 7;
   margin-top: 11px;
 }
 .task:last-child:after{
@@ -413,7 +413,7 @@
     width:100%; 
     height:100%;
     border-bottom:0px solid var(--pure-black);
-    grid-column: 1 / 13;
+    grid-column: 1 / 7;
     margin-bottom: -27px;
     
 }
@@ -473,6 +473,10 @@ li.task-description{
     text-decoration: line-through;
     text-decoration-style: wavy;
     text-decoration-color: var(--pure-black);
+}
+
+.task-options-icon{
+    grid-column: -1;
 }
 
 .start-stopwatch,

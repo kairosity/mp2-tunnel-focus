@@ -723,8 +723,8 @@ input.editTime{
 
 .chart-header {
     background-color: var(--sun-yellow); 
-    height: 150px;
-    width: 100%;
+    height: 60px;
+    width: 80%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -734,18 +734,18 @@ input.editTime{
     border-radius: 8px;
     border: 2px solid var(--pure-black);
     margin-bottom: 50px;
-    margin-top: 50px;
+    padding: 0.6em;
 }
 .chart-heading{
     font-family: "Secular One", sans-serif;
     font-weight: 400;
-    font-size: 1.2em;
+    font-size: 0.85em;
     text-transform: uppercase;
-    letter-spacing: 6px;
+    letter-spacing: 4px;
 }
 
 #chart-selections{
-    width: 450px;
+    width: 90%;
     height: 60px;
     padding: 1em;
     background-color: var(--sun-yellow);
@@ -757,9 +757,9 @@ input.editTime{
     margin-bottom: 50px;
     font-family: "Secular One", sans-serif;
     text-transform: uppercase;
-    letter-spacing: 2px;
-    font-size: 0.9em;
-    font-weight: 500;
+    letter-spacing: 1px;
+    font-size: 0.7em;
+    font-weight: 400;
     justify-self: center;
     align-self: center;
     text-align: center;
@@ -784,12 +784,24 @@ input.editTime{
 }
 
 #charts{
-    grid-row: 3 / 4;
+    grid-row: 3 / 5;
     grid-column: 2 / 12;
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto;
     flex-direction: row;
     align-items: center;
     justify-content: center;
+}
+
+.chart-area{
+    grid-row: 1/2;
+    grid-column: 1/2;
+}
+
+.legend-area{
+    grid-row: 2/3;
+    grid-column: 1/2;
 }
 svg {
     /* border: 2px solid #000000; */
@@ -1062,6 +1074,37 @@ footer {
 .list-container {    
     grid-column: 3 / 11; 
 }
+/*----------------------------------------------------------- Charts Medium Screens  */
+.chart-header {
+    height: 150px;
+    width: 100%;
+    margin-top: 50px;
+}
+.chart-heading{
+    font-size: 1.2em;
+    letter-spacing: 6px;
+}
+
+#chart-selections{
+    width: 450px;
+    height: 60px;
+    padding: 1em;
+    background-color: var(--sun-yellow);
+    -webkit-box-shadow: 0px 6px 0px 0px rgba(0,0,0,1);
+    -moz-box-shadow: 0px 6px 0px 0px rgba(0,0,0,1);
+    box-shadow: 0px 6px 0px 0px rgba(0,0,0,1);
+    border-radius: 8px;
+    border: 2px solid var(--pure-black);
+    margin-bottom: 50px;
+    font-family: "Secular One", sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 0.9em;
+    font-weight: 500;
+    justify-self: center;
+    align-self: center;
+    text-align: center;
+}
 
 }
 
@@ -1081,10 +1124,31 @@ footer {
     grid-column: 4 / 10;
     grid-row: 2 / 3;
 }
-/*----------------------------------------------------------- Add New Task Medium Screens  */
+/*----------------------------------------------------------- Add New Task Large Screens  */
 
 #new-task-input{
     width: 550px;
+}
+/*----------------------------------------------------------- Charts - Large Screens  */
+
+#charts{
+    grid-row: 3 / 4;
+    grid-column: 2 / 12;
+    display: grid;
+    grid-template-columns: 50% 50%;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.chart-area{
+    grid-row: 1/2;
+    grid-column: 1/2;
+}
+
+.legend-area{
+    grid-row: 1/2;
+    grid-column: 2/3;
 }
 
 }

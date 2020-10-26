@@ -1278,8 +1278,20 @@ function selectChart(data){
 
     clearChartArea()
 
-    var width = 550;
-    var height = 320;
+    var width = function(){
+        if(window.innerWidth < 576){
+                return 300
+            } else if (window.innerWidth > 575){
+                return 550
+            }
+    };
+    var height = function(){
+            if(window.innerWidth < 576){
+                return 250
+            } else if (window.innerWidth > 575){
+                return 320
+            }
+        }
     var radius = 150;
     var donutWidth = 75;
     var color = d3.scaleOrdinal()
@@ -1291,7 +1303,14 @@ function selectChart(data){
         .attr("height", height)
         .call(responsivefy)
         .append("g")
-        .attr('transform', 'translate(' + (305) + ',' + (155) + ')'); //where the chart sits in the svg box
+        .attr('transform', function(){
+            if (window.innerWidth < 576){
+                 return 'translate(' + 200 + ',' + 155 + ')';
+            } else if (window.innerWidth > 575){
+                 return 'translate(' + (305) + ',' + (155) + ')'
+            }
+        })
+
     var arc = d3.arc()
         .innerRadius(donutWidth)
         .outerRadius(radius);
@@ -1392,9 +1411,9 @@ function selectChart(data){
               return legendItems.length * 30;
             }   
         })
-        .attr('width', function(){
-            return 700;
-        })
+        // .attr('width', function(){
+        //     return 500;
+        // })
 }
 d3.select('#chart-selections')
     .on("change", function(event){
@@ -1501,7 +1520,13 @@ function responsivefy(svg) {
   // set viewBox attribute to the initial size
   // control scaling with preserveAspectRatio
   // resize svg on inital page load
-  svg.attr('viewBox', `0 0 ${width} ${height}`)
+  svg.attr('viewBox', function(){
+      if(window.innerWidth < 576) {
+        return `0 0 ${width} ${height + 70}`
+      } else if(window.innerWidth > 575) {
+        return `0 0 ${width} ${height}`
+      }
+  })
       .attr('preserveAspectRatio', 'xMinYMid')
       .call(resize);
  

@@ -712,11 +712,7 @@ input.editTime{
 }
 
 #charts{
-    border: 2px solid var(--pure-black);
-    border-radius: 8px;
-    -webkit-box-shadow: 3px 5px 0px 0px rgba(0,0,0,1);
-    -moz-box-shadow: 3px 5px 0px 0px rgba(0,0,0,1);
-    box-shadow: 3px 5px 0px 0px rgba(0,0,0,1);
+    border: none;
     margin-bottom: 50px;
     width: 70%;
 }
@@ -847,6 +843,8 @@ div.tooltip-donut {
 .legend-area {
     display: flex;
     flex-direction: column;
+    width: 90%;
+    margin: 0 auto;
 }
 
 .completed-tasks{
@@ -1039,6 +1037,16 @@ footer {
 }
 .task:last-child{
     padding-bottom: 0.1em;
+}
+/*----------------------------------------------------------- Charts - Small Screens  */
+#charts{
+    border: 2px solid var(--pure-black);
+    border-radius: 8px;
+    -webkit-box-shadow: 3px 5px 0px 0px rgba(0,0,0,1);
+    -moz-box-shadow: 3px 5px 0px 0px rgba(0,0,0,1);
+    box-shadow: 3px 5px 0px 0px rgba(0,0,0,1);
+    margin-bottom: 50px;
+    width: 70%;
 }
 
 }

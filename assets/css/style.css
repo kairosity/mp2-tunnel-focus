@@ -320,7 +320,7 @@
 }
 #new-task-input{
     height: 40px;
-    width: 290px;
+    width: 240px;
     font-size: 1.2rem;
     border: none;
     border-bottom: 3px solid var(--pure-black);
@@ -332,24 +332,24 @@
 /* Make the placeholder text larger */
 
 #new-task-input::placeholder{
-    font-size: 1.2rem;
+    font-size: 1rem;
     font-family: "Heebo", sans-serif;
     color: var(--pure-black);
 }
 .add-new-task-plus-icon {
     display: block;
-    font-size: 1.8em;
+    font-size: 1.5em;
 }
 
 /* Add New Task Button */
 #add-new-task {
     border-radius: 50%;
     background-color: var(--sun-yellow);
-    width: 40px;
-    height: 40px;
-    -webkit-box-shadow: 3px 5px 0px 0px rgba(0,0,0,1);
-    -moz-box-shadow: 3px 5px 0px 0px rgba(0,0,0,1);
-    box-shadow: 3px 5px 0px 0px rgba(0,0,0,1);
+    width: 35px;
+    height: 35px;
+    -webkit-box-shadow: 2px 4px 0px 0px rgba(0,0,0,1);
+    -moz-box-shadow: 2px 4px 0px 0px rgba(0,0,0,1);
+    box-shadow: 2px 4px 0px 0px rgba(0,0,0,1);
     transition: all ease-in-out 500ms;
 }
 /*----------------------------------------------------------- Focus Overlay  */
@@ -429,8 +429,8 @@ li.task-description{
 
 /* Custom code to style checkboxes - code from Milos Protic's article on same */
 .taskCheckbox  {
-    height: 25px;
-    width: 25px;
+    height: 20px;
+    width: 20px;
     -webkit-appearance: none;
     -moz-appearance: none;
     -o-appearance: none;
@@ -456,8 +456,8 @@ li.task-description{
     text-align: center;
     color: var(--pure-black);
     position: absolute;
-    left: 0.45rem;
-    top: 0.2rem;
+    left: 0.30rem;
+    top: 0.10rem;
 }
 .taskCheckbox:active {
     border: 2px solid var(--pure-black);
@@ -527,8 +527,8 @@ li.task-description{
 
 .total-task-time{
     font-family: "Heebo", sans-serif;
-    font-size: 0.8em;
-    font-weight: 500;
+    font-size: 0.6em;
+    font-weight: 400;
     color: var(--pure-black);
 }
 /*----------------------------------------------------------- Edit Task  */
@@ -829,15 +829,15 @@ path text {
 div.tooltip-donut {	
     position: absolute;			
     text-align: center;								
-    padding: .5rem;				
+    padding: .3rem;				
     background: var(--sun-yellow);
     color: var(--pure-black);
-    border: 2px solid var(--pure-black);		
+    border: 1px solid var(--pure-black);		
     border-radius: 8px;			
     pointer-events: none;
-    font-size: 1.1rem;
+    font-size: 0.8rem;
     font-family: "Heebo", sans-serif;
-    font-weight: 500;			
+    font-weight: 400;			
 }
 
 .legend-area {
@@ -996,6 +996,9 @@ footer {
 #add-new-task {
     width: 50px;
     height: 50px;
+    -webkit-box-shadow: 3px 5px 0px 0px rgba(0,0,0,1);
+    -moz-box-shadow: 3px 5px 0px 0px rgba(0,0,0,1);
+    box-shadow: 3px 5px 0px 0px rgba(0,0,0,1);
 }
 /*----------------------------------------------------------- Task List - Small Screens  */
 #list {
@@ -1038,6 +1041,25 @@ footer {
 .task:last-child{
     padding-bottom: 0.1em;
 }
+
+.total-task-time{
+    font-family: "Heebo", sans-serif;
+    font-size: 0.8em;
+    font-weight: 500;
+    color: var(--pure-black);
+}
+
+.taskCheckbox  {
+    height: 25px;
+    width: 25px;
+    border: 1px solid var(--pure-black);
+    border-radius: 4px;
+  }
+
+  .taskCheckbox:checked::before {
+    left: 0.45rem;
+    top: 0.2rem;
+}
 /*----------------------------------------------------------- Charts - Small Screens  */
 #charts{
     border: 2px solid var(--pure-black);
@@ -1047,6 +1069,23 @@ footer {
     box-shadow: 3px 5px 0px 0px rgba(0,0,0,1);
     margin-bottom: 50px;
     width: 70%;
+}
+
+.completed-tasks{
+    text-align: left;
+    align-self: flex-start;
+    padding: 1em;
+    font-family: "Heebo", sans-serif;
+    font-size: 1em;
+    margin: 20px;
+}
+
+div.tooltip-donut {									
+    padding: .5rem;				
+    border: 2px solid var(--pure-black);		
+    border-radius: 8px;			
+    font-size: 1.1rem;
+    font-weight: 500;			
 }
 
 }
@@ -1157,6 +1196,11 @@ footer {
 .legend-area{
     grid-row: 1/2;
     grid-column: 2/3;
+}
+
+.completed-tasks{
+    grid-row: 1/2;
+    grid-column: 1/3;
 }
 
 }

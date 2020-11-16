@@ -332,6 +332,9 @@ While verbose and winding, this was definitely preferable to writing out the exa
 
 - ### **[Responsive D3.js](https://brendansudol.com/writing/responsive-d3)**
     I used this function to make my charts fully responsive. 
+
+- ### **[Listening for a window width change](https://stackoverflow.com/questions/10750603/detect-a-window-width-change-but-not-a-height-change)**
+    Used to detect if a user resized the window on a desktop/laptop.
     
 # Deployment
 

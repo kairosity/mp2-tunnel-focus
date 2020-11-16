@@ -666,6 +666,7 @@ function countdownClickStartHelper(countdownType, countdownNumber){
                                     timer.makeElementsNotKeyboardTabbable();
                                     //add the class for this layout
                                     parentDiv.classList.add('edit-time-task');
+                                   
 
                                     //select the task description
                                     let taskToTarget = parentDiv.children[2];
@@ -1602,4 +1603,16 @@ function responsivefy(svg) {
       svg.attr('width', w);
       svg.attr('height', Math.round(w / aspect));
   }
+
 }
+
+/* The resize code below that specifically targets screen width change. 
+Taken from: https://stackoverflow.com/questions/10750603/detect-a-window-width-change-but-not-a-height-change */
+window.onresize = function() {
+    let lastWidth;
+	if (window.innerWidth != lastWidth) {
+		location.reload();
+		lastWidth = window.innerWidth;
+	}
+};
+

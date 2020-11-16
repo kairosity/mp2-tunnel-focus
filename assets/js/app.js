@@ -1220,6 +1220,54 @@ class List {
                 },
                 };
 
+
+            const hideOnEsc = {
+                name: 'hideOnEsc',
+                defaultValue: true,
+                fn({hide}) {
+                    function onKeyDown(event) {
+                    if (event.keyCode === 27) {
+                        hide();
+                    }
+                    }
+
+                    return {
+                    onShow() {
+                        document.addEventListener('keydown', onKeyDown);
+                    },
+                    onHide() {
+                        document.removeEventListener('keydown', onKeyDown);
+                    },
+                    };
+                },
+            };
+
+            const hideOnOptionSelect = {
+                name: 'hideOnOptionSelect',
+                defaultValue: true,
+                fn({hide}) {
+                    function onSelect(event) {
+                        const editTaskOpt = document.querySelector('.edit-task-option');
+                        const deleteTaskOpt = document.querySelector('.delete-task-option');
+                        const countdown15TaskOpt = document.querySelector('.countdown15-task-option');
+                        const countdown25TaskOpt = document.querySelector('.countdown25-task-option');
+                        const manualEditTaskOpt = document.querySelector('.edit-task-time-task-option');
+                    if ((event.target == editTaskOpt) || (event.target == deleteTaskOpt) || (event.target == countdown15TaskOpt ) || (event.target == countdown25TaskOpt ) || (event.target == manualEditTaskOpt )  )  {
+                        hide();
+                    }
+                    }
+
+                    return {
+                    onShow() {
+                        document.addEventListener('click', onSelect);
+                    },
+                    onHide() {
+                        document.removeEventListener('click', onSelect); 
+                    },
+                    };
+                },
+            };
+
             tippy('.task-options', {
                 allowHTML: true, 
                 content: popover.innerHTML,
@@ -1233,7 +1281,7 @@ class List {
                 trigger: 'click focus',
                 theme: 'blueish',
                 // sticky: true,
-                plugins: [hideOnPopperBlur],
+                plugins: [hideOnPopperBlur, hideOnEsc, hideOnOptionSelect], 
             });         
         }
         setDataToLocalStorage(){
@@ -1418,6 +1466,7 @@ function selectChart(data){
 d3.select('#chart-selections')
     .on("change", function(event){
         var option = event.target.value;
+        totalTimeFocusedOnEachTaskToday =  getTodayTasks();
         if(option === "total-time-focused-on-each-task"){
             selectChart(totalTimeFocusedOnEachTask);
         } else if(option === "total-time-focused-on-each-task-today"){
@@ -1426,6 +1475,7 @@ d3.select('#chart-selections')
             completedTaskList(list.taskList);
         } else if(option === "tasks-completed-today"){
             completedTaskList(totalTimeFocusedOnEachTaskToday);
+            
         }
     })
 
@@ -1435,8 +1485,9 @@ function getTodayTasks(){
     let dateNow = dateTimeNow.toLocaleDateString();
     let timeNow = dateTimeNow.toLocaleTimeString();
     let todaysTasks = [];
+    let i;
 
-    for (let i=0; i<tasks.length; i++){
+    for (i=0; i<tasks.length; i++){
         
         for (let j=0; j<tasks[i].timeSegments.length; j++){
             let individualTimeSegment = tasks[i].timeSegments[j];
@@ -1454,7 +1505,7 @@ function getTodayTasks(){
 
     var temp = {};
     var task = null;
-    for(var i=0; i < todaysTasks.length; i++) {
+    for(i=0; i < todaysTasks.length; i++) {
         task = {...todaysTasks[i]}; 
         if(!temp[task.id]) { //1
             temp[task.id] = task; //2
@@ -1468,6 +1519,7 @@ function getTodayTasks(){
     }
 
     //for each task in todaysTasksFiltered look at that tasks id and then go through the list.tasklist array and find the task with the same id and then check to see whether it is completed or not. 
+    //issue here is that IF no time has been added, but somehow the task is marked complete, it will not appear in the completed today list. 
 
     for (let i=0; i<todaysTasksFiltered.length; i++){
         for (let j=0; j< list.taskList.length; j++){

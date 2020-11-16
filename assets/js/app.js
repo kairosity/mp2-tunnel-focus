@@ -1132,10 +1132,19 @@ class List {
                 if(checkbox.checked == true){
                     checkbox.nextElementSibling.classList.add('completed');
                     checkbox.setAttribute("checked", true); 
+                    let dateStamp = new Date();
+                    let localTime = dateStamp.toLocaleTimeString();
+                    let localDate = dateStamp.toLocaleDateString();
                         
                     list.taskList.forEach(function(task){
                         if (task.id == checkboxId){ 
                             task.completed = true;
+                            task.timeSegments.push({id:task.id, timeToAdd:0, dateStamp, localTime, localDate, taskDescription: task.taskDescription});
+                            // list.taskList[id].timeSegments.push({id, timeToAdd, dateStamp, taskDescription, localDate, localTime});
+                            
+                            console.log(task.timeSegments)
+                            console.log(list.taskList)
+                        
                             
                         }
                     })
@@ -1532,7 +1541,7 @@ function getTodayTasks(){
     todaysTasksFiltered.forEach(task => task.totalTimeFocusedOnTask = task.timeToAdd);
     
     todaysTasksFiltered.forEach(task => task.totalTimeFocusedOnTaskLongForm = timer.convertSecondsToTime(task.totalTimeFocusedOnTask));
-    console.log(todaysTasksFiltered)
+    // console.log(todaysTasksFiltered)
     return todaysTasksFiltered;
     
 }

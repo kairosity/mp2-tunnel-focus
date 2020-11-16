@@ -365,7 +365,7 @@ function countdownClickStartHelper(countdownType, countdownNumber){
             return playing = false;  
         })
     }
-    function resetTime(intervalToReset,){
+    function resetTime(intervalToReset){ //,?
         resetButton.addEventListener('click', function(){
             clearInterval(intervalToReset);
             pauseButton.style.display = "none";
@@ -869,17 +869,6 @@ function countdownClickStartHelper(countdownType, countdownNumber){
                 })
             })
         }  
-    // function addOverlay(){
-    //     let pageBody = document.getElementsByTagName('BODY')[0]
-    //     let overlayEl = document.createElement("DIV");
-    //     overlayEl.setAttribute("class", "overlay");
-    //     pageBody.appendChild(overlayEl);
-    // }
-    // function removeOverlay(){
-    //     let overlay = document.querySelector('.overlay');
-    //     let pageBody = document.getElementsByTagName('BODY')[0];
-    //     pageBody.removeChild(overlay);
-    // }
         countDown15ClickStart(); 
         countDown25ClickStart();   
         stopWatchClickStart(); 

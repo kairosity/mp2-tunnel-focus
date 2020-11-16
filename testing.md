@@ -1,28 +1,77 @@
-# **Tunnel Focus Testing**
+# **Tunnel Focus Application Testing**
 
 # User Story Testing
 
-//go through each user  
+//go through each user story and compare goals to final outcomes.  
 
 # Manual Testing
 
-Continuous manual testing of all functions happened during development. Any time functionality was added or changed, I went through the entire application and tried to break it by doing all possible actions out of the normal logical flow of the application. This is how the majority of the bugs and issues were discovered. 
+Continuous manual testing of all functions happened during development. Any time functionality was added or changed, I went through the entire application and tried to break it by doing all possible actions out of the normal logical flow of the application. This is how the majority of the bugs and issues were discovered in CSS, JavaScript & HTML.
+
+# Automated Unit Testing with Jasmine
+
+Unit testing with Jasmine for this project was nothing short of exasperating. As the project is Object Oriented, I found writing simple functional unit tests nearly impossible. I tried setting up an empty SpecRunner.html file as instructed in the Jasmine docs, but I could not get the tests to read the necessary html in order for them to run successfully. I then used Jasmine-jQuery to attempt to avail of fixtures, and while the fixtures did seem to render, the tests would only function if run against my complete page. Finally the only way I was able to avail of unit testing was to duplicate my rough draft html in SpecRunner.html and then to run appSpec.js against that. My reasoning being that I can run the unit tests in SpecRunner.html and still have a clean index.html to view and undertake the manual testing. This is undoubtedly not the correct way of doing things, but it was the only way I could find to integrate the testing into my project. Ultimately though the bulk of all testing for this application was centered on thorough manual testing. 
 
 # Browser Testing
 
-The application was tested on all major browsers with the exception of Internet Explorer, as its usage is so low and it is being retired early next year. 
+The application was tested on all major browsers with the exception of Internet Explorer, as its usage is so low and it is due to be completely retired early next year. 
 
 # Application Logic / Structure
 
 This task manager application is based on the principles of Object-Oriented Programming. Its logic is structured around 3 objects that interact: a Task object, a List object and a Timer object. 
 In its incipient stages I had sketched out functionality based on a series of functions and event listeners and I saw how quickly that structure becomes unwieldly. The classes I have used compartmentalize the code and make it far easier to manage. I've noticed particularly how useful objects are for maintaining a clean global scope, with almost no variables.
 
-# JavaScript
+# JavaScript Testing
 
-## Unit Testing with Jasmine
-Unit testing with Jasmine for this project was nothing short of exasperating. As the project is Object Oriented, I found writing simple functional unit tests nearly impossible. I tried setting up an empty SpecRunner.html file as instructed in the Jasmine docs, but I could not get the tests to read the necessary html in order for them to run successfully. I then used Jasmine-jQuery to attempt to avail of fixtures, and while the fixtures did seem to render, the tests would only function if run against my complete page. Finally the only way I was able to avail of unit testing was to duplicate my rough draft html in SpecRunner.html and then to run appSpec.js against that. My reasoning being that I can run the unit tests in SpecRunner.html and still have a clean index.html to view and undertake the manual testing. This is undoubtedly not the correct way of doing things, but it was the only way I could find to integrate the testing into my project.
+This section will detail each of the class objects that this application is comprised of. It will look at each individual method/function, I will summarise their purpose and how they work, and any issues that arose during testing will be outlined.
 
 ## **Timer Class**
+
+### *Properties*: 
+- seconds (integer)
+- minutes (integer)
+- hours (integer)
+
+### *Methods*:
+- initialiseTimer()
+- timers()
+
+### *Helper Functions*:
+- removeTimerFromDom()
+- createTimerTitle()
+- formatTime()
+- resetCountdownHtml()
+- scrollElementIntoView()
+
+### *Timing Functions*:
+- countUp()
+- stopWatchPlay()
+- countDown15Play()
+- countDown25Play()
+- countdown15TimeToAdd(hours, minutes, seconds)
+- countdown25TimeToAdd(hours, minutes, seconds)
+- stopwatchTimeToAdd(hours, minutes, seconds)
+
+### *Structural Functions*:
+- stopWatchClickStart()
+- countdownClickStartHelper(countdownType, countdownNumber)
+- countDown15ClickStart()
+- countDown25ClickStart()
+- playOnClick()
+- pauseOnClick(intervalToPause)
+- resetTime(intervalToReset)
+- resetTimes()
+- countdownEnded()
+- closeTimer()
+- saveTimeButton()
+- saveTimeToTask(id, seconds)
+- alarmToggle()
+- manualTaskTimeEdit()
+- convertSecondsToTime(seconds)
+- addOverlay()
+- removeOverlay()
+- makeElementsNotKeyboardTabbable()
+- makeElementsKeyboardTabbableAgain()
 
 ## Timer.initialiseTimer():
 This method is called on page load and all it does is ensure that we don't see "::" (as below) when the timer is called up for the first time. Instead it formats a nice row of 0s: 00:00:00
@@ -33,17 +82,12 @@ This method is called on page load and all it does is ensure that we don't see "
 ## Timer.timers():
 This method encapsulates all the timer functions. It it not meant to be called on the object as a method per se, more it acts as a convenient storage facility for the group of functions that power the timers. 
 
-### **Helper functions**
+## **Helper functions**
 These are a series of functions that I've used to make the code more modular and easier to read by sectioning off code used more than once into smaller functions. 
 
 - ## removeTimerFromDom()
 
-
 __FUNCTION SUMMARY:__ This removes the timer from the DOM when the user is finished using it. It is called when a user saves a recently timed time to a task, or when a user presses the X button on the timer. 
-
-- ## makeElementsNotKeyboardTabbable() & makeElementsKeyboardTabbableAgain()
-
-__FUNCTION SUMMARY:__ These functions stop keyboard accessibility to a selection of elements. An addOverlay() function is used to stop users being able to click on elements when they are timing, or manually editing the time on a task. This works well for mouse users, but keyboard users were still able to tab and interact with various elements, hence the need for these two functions. 
 
 - ## createTimerTitle()
 
@@ -57,7 +101,12 @@ __FUNCTION SUMMARY:__ This formats the time displayed by the timer into the 00:0
 
 __FUNCTION SUMMARY:__ This resets the countdown timer display to either 15 or 25, it is different from the stopwatch reset, for obvious reasons. 
 
-### **Timing functions**
+- ## scrollElementIntoView()
+
+__FUNCTION SUMMARY:__ This scrolls the targeted element into view smoothly.
+
+
+## **Timing functions**
 These are a series of functions that take care of the timing logic. 
 
 - ## countUp() 
@@ -120,6 +169,9 @@ __ISSUE 1:__ As the seconds, minutes and hours are initialised to 0, I had diffi
 
 __FIX 1:__ I had to nest the functions within countDown15Play() & countDown25Play() in order to use *that* as the local scope in which to initialise minutes to 15 & 25 respectively. 
 
+- ## countdown15TimeToAdd(hours, minutes, seconds) & countdown25TimeToAdd(hours, minutes, seconds) & stopwatchTimeToAdd(hours, minutes, seconds)
+
+__FUNCTION SUMMARY:__ These three functions calculate the amount of time to add to a particular task depending on which type of timer is used. The formula for doing so differs. 
 
 ### **Structural functions**
 These are the functions that take care of the foundations of the timing code. 
@@ -140,6 +192,11 @@ __FIX 1:__ The fix was to add a boolean variable called "playing" that I use any
  __FIX 2:__ I added the same conditional just before the function call to stopWatchPlay() within stopWatchPlayOnClick(): ```if(!playing){```
 
  __FIX 3:__ These issues and others were rendered obsolete when I included addOverlay() to the program, which effectively makes it impossible for a user to click on any other timer functions while the timer is running.
+
+- ## countdownClickStartHelper(countdownType, countdownNumber)
+
+__FUNCTION SUMMARY:__ This function collates all elements and functions common to both countdownClickStart functions (detailed below) in one function in order to refactor code an save space.
+
 
 - ## countDown15ClickStart() & countDown25ClickStart()
 
@@ -179,17 +236,18 @@ __ISSUE 1:__ If the user clicks the close button and the timer was in the middle
 
 
 - ## saveTimeButton() & saveTimeToTask()
-    __FUNCTION(S) SUMMARY:__ The saveTimeButton first listens for a click event on the saveButton to save the currently timed time into two different task object properties as well as updating the time based elements in the DOM. 
+    
+__FUNCTION(S) SUMMARY:__ The saveTimeButton first listens for a click event on the saveButton to save the currently timed time into two different task object properties as well as updating the time based elements in the DOM. 
 
-    This function first checks whether or not time is 'playing' and if it is, it stops it. Then it hides the pause button and adds the play button. This was important because it is not unreasonable to think that a user might not pause the timer before deciding to save it. 
+This function first checks whether or not time is 'playing' and if it is, it stops it. Then it hides the pause button and adds the play button. This was important because it is not unreasonable to think that a user might not pause the timer before deciding to save it. 
 
-    An alert then asks whether the user is sure that they want to stop timing and save the time. If they confirm that they do, this function calls on the saveTimeToTask() function, passing in the id connected with the title of the task currently sitting in the timer seat. As the DOM ids are perfectly synced with the task ids - this allows me to pass that time data directly into the two task time properties: totalTimeFocusedOnTask & totalTimeFocusedOnTaskLongForm. It uses a Timer method: Timer.convertSecondsToTime to create the data that goes into the totalTimeFocusedOnTaskLongForm property.
+An alert then asks whether the user is sure that they want to stop timing and save the time. If they confirm that they do, this function calls on the saveTimeToTask() function, passing in the id connected with the title of the task currently sitting in the timer seat. As the DOM ids are perfectly synced with the task ids - this allows me to pass that time data directly into the two task time properties: totalTimeFocusedOnTask & totalTimeFocusedOnTaskLongForm. It uses a Timer method: Timer.convertSecondsToTime to create the data that goes into the totalTimeFocusedOnTaskLongForm property.
 
-    The saveTimeToTask() function then saves those changes to localStorage. And the saveTimeButton() function goes on to change the DOM time elements with updated task time data. 
+The saveTimeToTask() function then saves those changes to localStorage. And the saveTimeButton() function goes on to change the DOM time elements with updated task time data. 
 
-    The saveTimeToTask function also performs different time saving calculations depending on which timer is being used. For the timers it minuses the full amount of time passed in seconds from either 900 or 1500, otherwise it calculates the stopwatch time in seconds. 
+The saveTimeToTask function also calls upon the two countdown15TimeToAdd() & countdown25TimeToAdd() functions previously detailed to help it to add the correct amount of time to the associated task.
 
-    When it has determined the amount of time in seconds to add to the task, it then uses timer.convertSecondsToTime to convert that to a long form time that is stored on the task object and displayed before each task in the task list. 
+When it has determined the amount of time in seconds to add to the task, it then uses timer.convertSecondsToTime to convert that to a long form time that is stored on the task object and displayed before each task in the task list. 
 
 - ## alarmToggle() 
 
@@ -199,19 +257,7 @@ __FUNCTION SUMMARY:__ This function changes the alarm icon on click and associat
 
 __FUNCTION SUMMARY:__ This function allows the user to manually input or completely alter the amount of time spent working on a particular task. It listens for clicks on its associated icon and then uses the long form time that is displayed next to the task and splits it up into its integer components, creating new inputs to display these for alteration. When the user is ready to save the new time input they can click on  the save button and the function translates the new time first to seconds to save on the task and then into the long form again to save to the task as well.  
 
-- ## addOverlay() & removeOverlay(); 
-
-__FUNCTION SUMMARY:__ This function appends a div with the class 'overlay' to the body of the page. This overlay sits on top of the page at z-index: 1000 effectively disabling the page contents. removeOverlay() reverses the function.
-
-- ## Timer.convertSecondsToTime(seconds)
-
-__FUNCTION SUMMARY:__ Takes in seconds and converts them into hours, minutes and seconds in a human readable format. The code was taken from a Stack Overflow question and is referenced in the attribution section of this README. 
-
-__ISSUE 1:__ I could not call this method from within other functions in this class. timer.convertSecondsToTime would not work. I kept getting a ```"Uncaught ReferenceError: convertSecondsToTime is not defined"```
-
-__FIX 1:__ I had instantiated a local variable called timer and used it to refer to the timer container in the DOM. So calling timer.convertSecondsToTime() when trying to refer to an instance of the Timer Object called timer, was not actually doing that and was indeed not defined. Changing the variable name to timerContainer fixed the issue. 
-
-__ISSUE 2:__ The manual edit time function was working the first time you clicked or pressed enter on it, but then the second time it was running through the function fully and then running through it again, which was causing all sorts of issues. Below is how it worked on the first click (successfully displaying the elements it is meant to):
+__ISSUE 1:__ The manual edit time function was working the first time you clicked or pressed enter on it, but then the second time it was running through the function fully and then running through it again, which was causing all sorts of issues. Below is how it worked on the first click (successfully displaying the elements it is meant to):
 
 ![success](misc-images/howitshouldlook.png)
 
@@ -219,7 +265,7 @@ But this is what was happening on the second click without refreshing the page:
 
 ![manualtasktimebug](misc-images/issue2manualtasktimeedit.png)
 
-__FIX 2:__ The issue was that the click event handlers for the manual time edit button were adding up each time a user clicked on the button without refreshing the page. I eventually discovered this by examining the event listeners on that button at various stages of the function (as seen below): 
+__FIX 1:__ The issue was that the click event handlers for the manual time edit button were adding up each time a user clicked on the button without refreshing the page. I eventually discovered this by examining the event listeners on that button at various stages of the function (as seen below): 
 
 ![1stround](misc-images/1st-round.png)
 ![2ndround](misc-images/2nd-round.png)
@@ -230,13 +276,31 @@ Then Haley from tutor support sent me [this](https://stackoverflow.com/questions
                     $(this).unbind('keyup', arguments.callee);
 
 
-__ISSUE 3:__ The new inputs created by the manualTaskTimeEdit() function allowed users to input negative numbers as time to add to a task. This is a logical impossibility, so I needed to find a way to make it impossible for a user to do this. 
+__ISSUE 2:__ The new inputs created by the manualTaskTimeEdit() function allowed users to input negative numbers as time to add to a task. This is a logical impossibility, so I needed to find a way to make it impossible for a user to do this. 
 
-__FIX 3:__ I found [this](https://stackoverflow.com/questions/31575496/prevent-negative-inputs-in-form-input-type-number) code on Stack Overflow which I added to the input construction as an attribute/value pair. 
+__FIX 2:__ I found [this](https://stackoverflow.com/questions/31575496/prevent-negative-inputs-in-form-input-type-number) code on Stack Overflow which I added to the input construction as an attribute/value pair. 
 
-__ISSUE 4:__ This worked for manual inputs of time, but users could still input negative numbers by using the down arrows in the number input section. 
+__ISSUE 3:__ This worked for manual inputs of time, but users could still input negative numbers by using the down arrows in the number input section. 
 
-__FIX 4:__ 
+__FIX 3:__  Where I dynamically set each edit box of time, I added the code `newTime.setAttribute("min", "0");` which effectively made it impossible to use the arrows to set a time less than 0. 
+
+
+- ## Timer.convertSecondsToTime(seconds)
+
+__FUNCTION SUMMARY:__ Takes in seconds and converts them into hours, minutes and seconds in a human readable format. The code was taken from a Stack Overflow question and is referenced in the attribution section of this README. 
+
+__ISSUE 1:__ I could not call this method from within other functions in this class. timer.convertSecondsToTime would not work. I kept getting a ```"Uncaught ReferenceError: convertSecondsToTime is not defined"```
+
+__FIX 1:__ I had instantiated a local variable called timer and used it to refer to the timer container in the DOM. So calling timer.convertSecondsToTime() when trying to refer to an instance of the Timer Object called timer, was not actually doing that and was indeed not defined. Changing the variable name to timerContainer fixed the issue. 
+
+- ## addOverlay() & removeOverlay(); 
+
+__FUNCTION SUMMARY:__ This function appends a div with the class 'overlay' to the body of the page. This overlay sits on top of the page at z-index: 1000 effectively disabling the page contents. removeOverlay() reverses the function.
+
+- ## makeElementsNotKeyboardTabbable() && makeElementKeyboardTabbableAgain();
+
+__FUNCTION SUMMARY:__ These functions solved the issue of when an option was opened for example "edit task" - the user could break the application by tabbing through elements in the background, even when the yellow overlay was applied. makeElementsNotKeyboardTabbable() goes through each of the background elements and sets: `"tabindex", "-1"` and makeElementKeyboardTabbableAgain() does the opposite. 
+
 
 ## Task Class
 
@@ -246,15 +310,8 @@ __FIX 4:__
 - completed (boolean)
 - order (integer)
 - totalTimeFocusedOnTask (integer)
-
-### *Methods*:
-- 
-- 
-
-## Task.addTimeToTask()
-### __*Manual Testing*__
-
-### __*Unit Testing*__
+- totalTimeFocusedOnTaskLongForm (string);
+- timeSegments (array)
 
 
 ## List Class

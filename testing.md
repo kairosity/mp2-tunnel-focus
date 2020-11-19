@@ -328,21 +328,21 @@ __FUNCTION SUMMARY:__ These functions solved the issue of when an option was ope
 - setDataToLocalStorage()
 
 
-## List.buildTaskList()
+## buildTaskList()
 
 __METHOD SUMMARY__: This method takes the tasks stored in local storage and writes them to the DOM for use. If there is nothing saved in local storage an empty array is returned from the Class definition and that is used. 
 The method loops through each task stored in the taskList array and divides them into complete and incomplete tasks. 
-### __*Manual Testing*__
-__ISSUE 1:__ When writing tasks to the DOM, I needed to find a way to distinguish between completed and not completed tasks.
+
+
+__ISSUE 1:__ When writing tasks to the DOM, I needed to find a way to distinguish between completed and incomplete tasks.
 
 __FIX 1:__ Firstly I used the aforementioned if / else if conditional logic within the loop of tasks in the task array, dividing the html blocks into those with "checked" and those without.
 
 __FIX 2:__ The other necessity to logging the completed tasks correctly was to call the toggleTaskComplete() method within buildTaskList()
 
-### __*Unit Testing*__
 ## addNewTask()
-__METHOD SUMMARY__: This method adds a new task to the DOM and also saves it into the taskList array as a Task Object. 
-### __*Manual Testing*__
+__METHOD SUMMARY__: This method adds a new task to the DOM and also saves it into the taskList array as a Task Object with certain default properties. The method then clears the input value in the DOM and sets it up so that other methods are functional on the new task. 
+
 __ISSUE 1:__ Empty strings are being loggied as new tasks. I have conditional code saying ```if((newTaskInput !== null) && (newTaskInput !== "")){``` only then allow a new task 
 to be created, and this works to a degree. If a user doesn't write anything and tries to add a task, they are blocked from doing so. However if they press the space bar a few times, 
 a new empty string is added as a task. 
@@ -362,13 +362,9 @@ This way the ids will always run from 0 upwards and they will always match the i
 of bugs discussed [here](LINK TO delete() bugs).  
 
 
-### __*Unit Testing*__
-
 ## editTask()
 
 __METHOD SUMMARY__: This method takes the ```<li>``` that holds the task description and replaces it in the DOM with an input element that uses the li's task description attribute as it's value. The user can then edit the input and click on a save button to save the new task description.
-
-### __*Manual Testing*__
 
 __ISSUE 1:__ Once the user had clicked to "edit task" button, they were free to click on it again, as many times as they wanted which could lead to this situation:  
 
@@ -376,20 +372,20 @@ __ISSUE 1:__ Once the user had clicked to "edit task" button, they were free to 
 
 __FIX 1:__ I added a conditional that only allowed the edit method to be called if the save button was not already in the DOM: ```if (!document.querySelector('.save-button')){```
 
-### __*Unit Testing*__
 
-## 4. toggleTaskComplete()
+## toggleTaskComplete()
 
-__METHOD SUMMARY__:
+__METHOD SUMMARY__: This method listens for a change event on the checkboxes. If the change is that the checkbox is 'checked' then the method adds a 'completed' class to the task and sets the checkboxes 'checked' attribute to be 'true'. Variables are then created to display the local time and date for when the task completion happened. The full taskList is then looped through to match the DOM task in question with its corresponding task object, and a number of things happen: 
+1. The task object is marked as completed = true.
+2. The task timeSegments array is added to, with the task id and properties representing the date and time, as well as the taskDescription. This is to get around a bug that happens if a user doesn't add any time to a task, but still decides to mark that task as completed. In the former situation (and without this timeSegment added), the task would not appear in the list of tasks completed 'today', as the dateTime stamp is normally applied to the task object, when time is added. This way, the date is added to the timeSegments array (which is where the function pertaining to the 'today tasks' looks for data) even though timeAdded remains 0. This bug and fix is further clarified in the associated function below. (NAME IT).
 
-### __*Manual Testing*__
+If the checkbox checked is false, the 'completed' class is removed from the tasks classList and the task object is also marked as not completed.
 
-### __*Unit Testing*__
+The tasks' new statuses are then saved to local storage. 
 
-## 5. deleteTask()
-__METHOD SUMMARY__:
 
-### __*Manual Testing*__
+## deleteTask()
+__METHOD SUMMARY__: This method deletes a task both from the taskList object array and from the DOM list of tasks. 
 
 __ISSUE 1:__ When I changed the connection between Task objects and their html representations from the task descriptions to the task ids, it led to 
 the following bug: when a user deletes a task, it is removed from the html and the taskList array. Therefore when a new task in instantiated based on 
@@ -413,22 +409,12 @@ And the second re-numbers the DOM tasks also from 0 upwards:
 
 This way the html tasks and Task objects will always have the same ids and can therefore be connected seamlessly.
 
-__ISSUE 2:__ This solution however, created another bug that behaved oddly. If a user loads a previously saved list from local storage, adds some tasks and then checks off some of the new tasks, and then 
-adds another task, the checkmarks were disappearing on some of the newer additions. They still had a "checked" attribute when investigated and they still had the "complete" class assigned to them to draw the 
-line through them, but the application was not registering the visual checkmark on the page. I debugged this using the Chrome JavaScript debugger, and the breakpoints pointed at the particular method causing the 
-error. The addNewTask method calls the toggleTaskComplete() method when it finishes running, to ensure that checkmark capability is available for the new task added. The debugger pointed to the part of 
-the toggleTaskComplete() method where it checks if the item is 'checked' and if it is to add the class "completed". For some reason, this is where the actual ticks in the checkboxes were being removed 
-from the items. I found that adding: ```checkbox.setAttribute("checked", true)``` fixed the issue by explicitly forcing the "checked" attribute on all new task additions.
+__ISSUE 2:__ This solution however, created another bug that behaved oddly. If a user loads a previously saved list from local storage, adds some tasks and then checks off some of the new tasks, and then adds another task, the checkmarks were disappearing on some of the newer additions. They still had a "checked" attribute when investigated and they still had the "complete" class assigned to them to draw the line through them, but the application was not registering the visual checkmark on the page. I debugged this using the Chrome JavaScript debugger, and the breakpoints pointed at the particular method causing the error. The addNewTask method calls the toggleTaskComplete() method when it finishes running, to ensure that checkmark capability is available for the new task added. The debugger pointed to the part of the toggleTaskComplete() method where it checks if the item is 'checked' and if it is to add the class "completed". For some reason, this is where the actual ticks in the checkboxes were being removed from the items. I found that adding: ```checkbox.setAttribute("checked", true)``` fixed the issue by explicitly forcing the "checked" attribute on all new task additions.
 
+## dynamicPopoverNav()
+__METHOD SUMMARY__: This code creates and sets the options for the tippy.js popover box that this application uses for presenting the various options to the user. The code is taken directly from the tippy.js documentation.
 
-### __*Unit Testing*__
-
-## 6. dynamicPopoverNav()
-__METHOD SUMMARY__:
-### __*Manual Testing*__
-
-__ISSUE1:__ The popover. For my application's wireframed design to work, I needed to dynamically summon the navigation popover (containing edit, delete, timers etc...), on a specific task, as all the options
-relate to a particular task. They are not general. I created an array of ellipsis icons that I iterated through and added an event listener for clicks. When any of the icons were clicked the popover would appear over the associated icon. 
+__ISSUE1:__ The popover. For my application's wireframed design to work, I needed to dynamically summon the navigation popover (containing edit, delete, timers etc...), on a specific task, as all the options relate to a particular task. They are not general. I created an array of ellipsis icons that I iterated through and added an event listener for clicks. When any of the icons were clicked the popover would appear over the associated icon. 
 I started by using getBoundingClientRect() as illustrated below. 
 
             const ellipsisArray = document.querySelectorAll('.task-options');
@@ -474,24 +460,52 @@ __ISSUE 3:__ Another issue I found, was that when a user went to select an optio
 __FIX 3:__ I created my own tippy.js plugin to deal with this issue. ```hideOnOptionSelect``` It follows the recommended plugin formula for tippy.js and it includes an event listener for clicks on any of the popover options. Instead of looping through the array of popover options, I chose to create const variables for each of the four targeted options and then using || operators within my IF statement to outline the desired behaviour. This approach worked better within the parameters of the tippy.js plugin formula.  
 
 
-### __*Unit Testing*__
-
-## 7. setDataToLocalStorage()
+## setDataToLocalStorage()
 __METHOD SUMMARY__: A short method to stringify the taskList array and save its data to localStorage. This method is called whenever the user changes or adds to their
 tasks. 
-### __*Manual Testing*__
 
-- This actually required a good bit of testing and moving the method around to understand where and how it was saving the data. 
+This actually required a good bit of testing and moving the method around to understand where and how it was saving the data. 
 
 __ISSUE 1:__ Initially I had not realised that every time localStorage is set, it completely overwrites the previous save. I had initially set it to save after each individual 
 task was created, which of course meant that there was only ever a single task saved. 
 
 __FIX__ 1: I made sure that the method was placed so as to save the entire list each time localStorage is set.
 
-### __*Unit Testing*__
+## Productivity Chart Functions
 
+The chart functions are separate to the OOP approach, but they draw from and integrate into many of the object methods.
 
-getTodayTasks()
+## clearChartArea()
+
+__FUNCTION SUMMARY:__ This function looks to see if there is a chart, a circle legend or a list present in the chart area and if there is, it removes them to clear space for a new one to be loaded in. 
+
+## selectChart(data)
+
+__FUNCTION SUMMARY:__ This function is called automatically on page load with the data used being the totalTimeFocusedOnEachTask. This function encapsulates all of the D3.js code that creates the donut charts I use to display the task time data. It starts by outlining the width & height of the svg area. It then sets the radius for the donut chart and the colour range to use for the slices/arcs. Here I matched these to my colour theme. D3.js goes on to create the chart using the totalTimeFocusedOnTask property of each task looked at. 
+
+When the user hovers over any of the individual donut slices, the data for that slice will be displayed alongside the todo item task description. 
+
+The legend is then built up from the same data's taskDescription. The colour is made to match the donut slice colours and the positioning is translated to best fit the screen. 
+
+Finally the D3.js code is determined by which chart option a user selects. I have a "change" event listener on the drop-down menu and the function applies the selectChart() function feeding it different data for each of the two chart options. Then it applies the completedTaskList() function also with different data for each of the list options. 
+
+__ISSUE 1__: I needed my svg charts to change size rather more dramatically on smaller screens (under 576) than was the case, also the responsivefy() function's algorithm was making the legend impossible to read on mobile screens. 
+
+__FIX 1__: I added if / else statements to anonymous functions to set the width and height of the chart svgs. Although somewhat more prescriptive, this worked well in tangent with the responsivefy() function. 
+
+__ISSUE 2__: When the task descriptions were very long the legend didn't fit on screen. 
+
+__FIX 2__: I used slice to limit the length of the legend task Description to 50 chars. 
+
+__ISSUE 3__: The legend box proved difficult to position correctly depending on how many items were in the task list. 
+
+__FIX 3__: I included a function that set the height property of the legend dynamically if there were more than 6 items in the list. 
+
+__ISSUE 4__: The legend was not centered on small to medium sized screens. 
+
+__FIX 4__: UNFIXED AS YET.
+
+## getTodayTasks()
 
 __FUNCTION SUMMARY:__ This function takes all the tasks in the taskList array of objects and then loops through each task's individual timeSegments array of objects and compares the timeSegment's local date to the current date at the time of calling the function. If the two dates are the same, i.e. if the task was saved 'today', then it pushes that timeSegment into a new array called todaysTasks. 
 
@@ -522,3 +536,15 @@ __FIX 1:__ The fix was just to add a spread operator at the point where the obje
                 task = {...todaysTasks[i]}; 
 
 This created a shallow copy of the original object, and thus left the original time segment alone, and stopped artificially inflating the task times. 
+
+## completedTaskList(data)
+
+__FUNCTION SUMMARY:__ This function builds up the two lists: "Tasks Completed" and "Tasks Completed Today" and writes them to the DOM. First it clears the chart area. It takes in data as a parameter and then for each item in that data array it assesses whether or not that task is "completed" and if it is, it adds it to the DOM list.
+
+## responsivefy(svg)
+
+__FUNCTION SUMMARY:__ This function is taken from Ben Clinkenbeard's Blog Article and originally written by Brendan Sudol. It effectively makes the charts responsive to window size changes and I use it as a filler function in between my media queries that change the sizing of the charts. 
+
+## window resize anonymous function 
+
+__FUNCTION SUMMARY:__ This was taken from https://stackoverflow.com/questions/10750603/detect-a-window-width-change-but-not-a-height-change and it affects a page reload when the window is resized horizontally, but not vertically. 

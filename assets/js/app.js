@@ -1036,7 +1036,7 @@ class List {
                 list.setDataToLocalStorage();
                 list.dynamicPopoverNav();
                 timer.timers();
-                location.reload(); //to fix stopwatch click start bug on new tasks that are added. ASK FEMI
+                location.reload(); //to fix stopwatch click start bug on new tasks that are added.
                
             } else if ((newTaskInputValue === "") || (newTaskInputValue === null)){ //this doesn't fire with spaces - look into that. 
                 alert("Please add a task."); 
@@ -1186,7 +1186,6 @@ class List {
                                         arrOfDomTasks[i].id = i.toString();
                                     }
 
-
                                     list.setDataToLocalStorage();
                                 }
                             })
@@ -1283,6 +1282,7 @@ class List {
                 plugins: [hideOnPopperBlur, hideOnEsc, hideOnOptionSelect], 
             });         
         }
+
         setDataToLocalStorage(){
             window.localStorage.setItem("taskList", JSON.stringify(list.taskList));
         }
@@ -1531,7 +1531,6 @@ function getTodayTasks(){
     todaysTasksFiltered.forEach(task => task.totalTimeFocusedOnTask = task.timeToAdd);
     
     todaysTasksFiltered.forEach(task => task.totalTimeFocusedOnTaskLongForm = timer.convertSecondsToTime(task.totalTimeFocusedOnTask));
-    // console.log(todaysTasksFiltered)
     return todaysTasksFiltered;
     
 }

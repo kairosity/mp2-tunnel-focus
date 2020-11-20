@@ -541,7 +541,8 @@ input.editedTask {
 }
 
 input.editedTask:focus {
-    outline: none;
+    background-color: var(--dark-blue);
+    outline: var(--sun-yellow) dashed 4px;
 }
 .save-button {
     background-color: var(--sun-yellow);
@@ -572,7 +573,7 @@ input.editedTask:focus {
     outline: none;
 }
 .save-button:focus{
-    outline: none;
+    outline: var(--dark-blue) dashed 4px;
 }
 
 /*----------------------------------------------------------- Manually Edit Task Time  */
@@ -608,6 +609,11 @@ input.editTime{
     padding: 4px;
     background-color: var(--light-blue);
 }
+
+input.editTime:focus {
+    background-color: var(--dark-blue);
+}
+
 
 .edit-time-task-description{
     font-family: "Heebo", sans-serif;
@@ -692,7 +698,7 @@ input.editTime{
 
 .edit-time-save-button:focus,
 .edit-time-cancel-button:focus{
-    outline: none;
+    outline: var(--dark-blue) dashed 4px;
 }
 
 /*----------------------------------------------------------- Charts   */
@@ -774,7 +780,7 @@ input.editTime{
 }
 
 #chart-selections:focus{
-    outline: none;
+    outline: var(--dark-blue) 4px dashed;
 }
 
 #charts{
@@ -932,6 +938,14 @@ div.tooltip-donut {
     border: 2px solid var(--pure-white);
 }
 
+.confirm-button:focus,
+.sttt-confirm-button:focus,
+.ce-confirm-button:focus,
+.negate-button:focus,
+.sttt-negate-button:focus,
+.ce-negate-button:focus {
+    outline: var(--dark-blue) dashed 4px;
+}
 
 /*----------------------------------------------------------- Footer   */
 

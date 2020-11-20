@@ -1441,9 +1441,16 @@ function selectChart(data){
     .attr('y', legendRectSize - legendSpacing)
     .text(function (d) {  
         let taskDescrip = d.taskDescription;
-        if (taskDescrip.length > 50){
-            taskDescrip = taskDescrip.slice(0,50) + "...";
+        if(window.innerWidth < 781) {
+            if (taskDescrip.length > 15){
+            taskDescrip = taskDescrip.slice(0,15) + "...";
         }
+        } else {
+            if (taskDescrip.length > 25){
+            taskDescrip = taskDescrip.slice(0,25) + "...";
+        }
+        }
+        
   
         return  `${taskDescrip} : ${d.totalTimeFocusedOnTaskLongForm}`; 
     });

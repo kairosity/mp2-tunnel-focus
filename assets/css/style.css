@@ -808,7 +808,7 @@ svg {
 
 svg.legend-area{
     font-family: "Heebo", sans-serif;
-    font-size: 0.9em;
+    font-size: 0.75em;
 }
 .extra-buttons{
     grid-row: 4 / 5;
@@ -841,7 +841,7 @@ div.tooltip-donut {
 .legend-area {
     display: flex;
     flex-direction: column;
-    width: 90%;
+    width: fit-content;
     margin: 0 auto;
 }
 
@@ -1228,6 +1228,7 @@ div.tooltip-donut {
 .legend-area{
     grid-row: 1/2;
     grid-column: 2/3;
+    width: -webkit-fill-available;
 }
 
 .completed-tasks{
@@ -1245,6 +1246,10 @@ div.tooltip-donut {
 
 .main-heading {
     font-size: 3.3rem;
+}
+/*----------------------------------------------------------- Charts Extra-Large Screens  */
+svg.legend-area{
+    font-size: 0.9em;
 }
 
 }

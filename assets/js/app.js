@@ -1603,11 +1603,11 @@ function responsivefy(svg) {
 
 /* The resize code below that specifically targets screen width change. 
 Taken from: https://stackoverflow.com/questions/10750603/detect-a-window-width-change-but-not-a-height-change */
-window.onresize = function() {
-    let lastWidth;
-	if (window.innerWidth != lastWidth) {
-		location.reload();
-		lastWidth = window.innerWidth;
-	}
-};
+// window.onresize = function() {
+//     let lastWidth;
+// 	if (window.innerWidth != lastWidth) {
+// 		location.reload();
+// 		lastWidth = window.innerWidth;
+// 	}
+// };
 

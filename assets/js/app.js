@@ -1074,7 +1074,7 @@ class List {
                                         saveButton.setAttribute("class", "save-button");
                                         saveButton.setAttribute("type", "submit");
                                         saveButton.style.zIndex="1001";
-                                        saveButton.textContent = "Save Changes";
+                                        saveButton.textContent = "Save";
                                         newInput.after(saveButton);
                                     }
 

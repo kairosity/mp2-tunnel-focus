@@ -505,6 +505,10 @@ __ISSUE 4__: The legend was not centered on small to medium sized screens.
 
 __FIX 4__: UNFIXED AS YET.
 
+__ISSUE 5__: When a user selects a chart / list on mobile it zooms in to the selection, but did not zoom out again to the normal view. 
+
+__FIX 5__: 
+
 ## getTodayTasks()
 
 __FUNCTION SUMMARY:__ This function takes all the tasks in the taskList array of objects and then loops through each task's individual timeSegments array of objects and compares the timeSegment's local date to the current date at the time of calling the function. If the two dates are the same, i.e. if the task was saved 'today', then it pushes that timeSegment into a new array called todaysTasks. 
@@ -545,6 +549,7 @@ __FUNCTION SUMMARY:__ This function builds up the two lists: "Tasks Completed" a
 
 __FUNCTION SUMMARY:__ This function is taken from Ben Clinkenbeard's Blog Article and originally written by Brendan Sudol. It effectively makes the charts responsive to window size changes and I use it as a filler function in between my media queries that change the sizing of the charts. 
 
-## window resize anonymous function 
 
-__FUNCTION SUMMARY:__ This was taken from https://stackoverflow.com/questions/10750603/detect-a-window-width-change-but-not-a-height-change and it affects a page reload when the window is resized horizontally, but not vertically. 
+# Mobile Testing
+
+A rather unpleasant surprise I had halfway through designing the application was that the Chrome Dev Tools mobile emulator is not that good at emulating mobiles. Many of the application's features that worked fine in the emulator did not work or worked badly on mobile. I was able to fix all of these, but it highlighted the difficulties inherent in designing for mobile without constantly pushing to GitHub, making the site live and checking how it really works. 

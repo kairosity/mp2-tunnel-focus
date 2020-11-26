@@ -41,6 +41,7 @@ class Timer {
         
         const alarm = document.createElement('AUDIO');
         alarm.setAttribute('src', 'assets/audio/alarm1.mp3');
+        alarm.setAttribute('autoplay', 'false');
         let alarmButton = document.querySelector('.alarm');
 
         let secondsHtml = document.getElementById('seconds');
@@ -143,10 +144,16 @@ class Timer {
             if (alarmButton.innerHTML == `<i class="fas fa-bell-slash" aria-hidden="true"></i>`){
             alarm.muted == true;
             clearInterval(countdownInt);
+            seconds = 0;
+            minutes = 0;
+            hours = 0;
             countdownEnded();        
         } else {
             alarm.play()
             clearInterval(countdownInt);
+            seconds = 0;
+            minutes = 0;
+            hours = 0;
             countdownEnded();
         }      
         }
@@ -1007,10 +1014,17 @@ class List {
             }
         })
         addNewTaskButton.addEventListener('click', function(){ //event listener working. 
-        
+            
             let newTaskInputValue = newTaskInput.value;
 
-            if((newTaskInputValue !== null) && (newTaskInputValue !== "")){
+            function myTrim(x) {
+            return x.replace(/^\s+|\s+$/gm,'');
+            }
+
+            newTaskInputValue = myTrim(newTaskInputValue);
+
+            if((newTaskInputValue !== null) && (newTaskInputValue !== "") ){
+               
                 let newTask = new Task(newTaskInputValue); //creates a new Task obj. & sets its props.
                 newTask.id = list.taskList.length; //it will always be 1to1.
                 newTask.totalTimeFocusedOnTask = 0;
@@ -1038,8 +1052,8 @@ class List {
                 timer.timers();
                 location.reload(); //to fix stopwatch click start bug on new tasks that are added.
                
-            } else if ((newTaskInputValue === "") || (newTaskInputValue === null)){ //this doesn't fire with spaces - look into that. 
-                alert("Please add a task."); 
+            } else if ((newTaskInputValue === "") || (newTaskInputValue === null)){ 
+                alert("Please add a task."); //change this to a modal.
             }
             
         })

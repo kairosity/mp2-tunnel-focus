@@ -335,6 +335,9 @@ While verbose and winding, this was definitely preferable to writing out the exa
 
 - ### **[Listening for a window width change](https://stackoverflow.com/questions/10750603/detect-a-window-width-change-but-not-a-height-change)**
     Used to detect if a user resized the window on a desktop/laptop.
+
+- ### **[w3schools trim() method, specifically using their regex trim function](https://www.w3schools.com/jsref/jsref_trim_string.asp)**
+    Used to solve an issue whereby a user could enter nothing as a task by hitting the spacebar a few times
     
 # Deployment
 

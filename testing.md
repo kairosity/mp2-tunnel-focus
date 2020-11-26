@@ -47,6 +47,8 @@ This section will detail each of the class objects that this application is comp
 - countUp()
 - stopWatchPlay()
 - countDown15Play()
+- countdown()
+- countDownFunction()
 - countDown25Play()
 - countdown15TimeToAdd(hours, minutes, seconds)
 - countdown25TimeToAdd(hours, minutes, seconds)
@@ -168,6 +170,22 @@ __FUNCTION SUMMARY:__ These are the functions that call the interval timing func
 __ISSUE 1:__ As the seconds, minutes and hours are initialised to 0, I had difficulty arranging these functions so that minutes could initialise to 15 & 25. Initialising minutes within the countDown functions which are called by countdown() & countdown25SetInterval() every second, just kept the minutes at 15.
 
 __FIX 1:__ I had to nest the functions within countDown15Play() & countDown25Play() in order to use *that* as the local scope in which to initialise minutes to 15 & 25 respectively. 
+
+ ## countdown()
+
+ __FUNCTION SUMMARY:__ This function runs the countDownFunction() every second.
+
+## countDownFunction()
+
+__FUNCTION SUMMARY:__ This is the actual countdown function that changes the timing variables every second and outlines the rules for when to alter the minutes (hours don't come into play as our two countdown timers only run for 15 and 25 minutes).
+
+__ISSUE 1:__ When the countdown timers ended, the display kicked in when the seconds fall before :00 so the display would show 00:00:0-1 which was not a big deal, but I didn't like the way it looked. 
+
+__FIX 1:__ I just set the ```seconds = 0, minutes = 0 & hours = 0;``` explicitly within the countdown() function before the countdownEnded() function is called, which was where this occured previously.
+
+__ISSUE 2:__ The alarm sound doesn't play on mobile or ipad.
+
+__FIX 2:__ It transpires that Chrome and Safari for Mobile don't allow audio to play unless a user has clicked on a button to play audio. It does however work on Firefox for mobile.   UNFIXED
 
 - ## countdown15TimeToAdd(hours, minutes, seconds) & countdown25TimeToAdd(hours, minutes, seconds) & stopwatchTimeToAdd(hours, minutes, seconds)
 
@@ -347,7 +365,19 @@ __ISSUE 1:__ Empty strings are being loggied as new tasks. I have conditional co
 to be created, and this works to a degree. If a user doesn't write anything and tries to add a task, they are blocked from doing so. However if they press the space bar a few times, 
 a new empty string is added as a task. 
 
-__FIX 1:__ -- As yet unfixed. 
+__FIX 1:__ I used the w3schools information on trim() to remove the whitespace around the task input before adding it to the task list. Specifically I used the regex function they list to strip all tasks of excess whitespace before they are processed and added to the list.
+
+                function myTrim(x) {
+                return x.replace(/^\s+|\s+$/gm,'');
+                }
+
+                newTaskInputValue = myTrim(newTaskInputValue);
+
+This had the effect of ensuring that all tasks had no whitespace before they were processed by the next part of the function which checks that: 
+
+            if((newTaskInputValue !== null) && (newTaskInputValue !== "") && (newTaskInputValue !== " ")){
+
+Before the trim function a user could enter multiple spaces using the spacebar and it would fall through the cracks as it was not null, nor was the value "". Now the regex function strips every empty task entered with multiple spacebars down to "", triggering an alert asking the user to enter a task. 
 
 __ISSUE 2:__ I needed to find a way to connect the Task Object in memory to the representation of the task in the DOM. 
 

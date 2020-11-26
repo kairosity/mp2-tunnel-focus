@@ -44,11 +44,12 @@
         </div>
       
         <div class="list-container"> <!--TASK LIST GOES HERE: THIS IS A GRID CHILD OF GRID-OVERLORD-->
-            
+           
             <div class="add-new-task">
                 <input type="text" id="new-task-input" placeholder="Type to add a new task...">
                 <button id="add-new-task"><i class="fas fa-plus add-new-task-plus-icon"></i></button>
             </div>
+             <a href="#charts-start" id="skip-tasks" tabindex="0">Skip Tasks</a>
 
 
             <div id="list"> 
@@ -110,7 +111,7 @@
                 <h2 class="chart-heading">Productivity Charts</h2>
             </div>
 
-            <div class="custom-select" tabindex="0">
+            <div id="charts-start" class="custom-select" tabindex="0">
                 <select name="chart-selections" id="chart-selections" tabindex="0">
                     <option id="total-time-focused" value="total-time-focused-on-each-task">Total Time Focused on Each Task</option>
                     <option id="total-time-focused-today" value="total-time-focused-on-each-task-today">Total time Focused on Each Task Today</option>

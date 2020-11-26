@@ -273,6 +273,7 @@ For all other fonts, I used another Google Font called Heebo, which is a clean a
 
 Ensuring that the entire application is keyboard accessible was very important from the outset and each function and section of the application was coded with full keyboard functionality in mind. 
 
+### 1. Event Listeners 
 One particular roadblock I encountered when doing so was working out how to code behaviour based on two event listeners without having to duplicate large amounts of code.
 
 I eventually found [this](https://stackoverflow.com/questions/11845678/adding-multiple-event-listeners-to-one-element) code online that helped me craft that functionality, which removed a huge amount of duplication. 
@@ -289,6 +290,9 @@ This got extra complex when I needed to nest two of these event arrays within ea
                                 if((e === 'click') || (event.keyCode === 13)) { 
                                     REST OF LOGIC HERE }
 While verbose and winding, this was definitely preferable to writing out the exact same logic twice, once for click events and once for keyup events. 
+
+### 2. Skip Tasks 
+Another issue I found when testing the application using only a keyboard was that it was infuriating when you had a long task list and you wanted to toggle charts, to have to tab through each individual task and all its associated options. To circumvent this issue, I included a "Skip Tasks" link that becomes visible only when the site is navigated using a keyboard.  
 
 # Future Release Features
 

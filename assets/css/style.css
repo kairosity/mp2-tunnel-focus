@@ -66,6 +66,21 @@
 }
 
 
+/*------------- Skip Tasks Link: Accessibility for keyboard users. */
+
+#skip-tasks {
+	position: absolute;
+	top: 12%;
+	left: 45%;
+	font-size: 15px;
+    font-family: "Heebo", sans-serif;
+	color: var(--pure-white);
+	text-transform: uppercase;
+}
+#skip-tasks:focus {
+	color: var(--pure-black);
+}
+
 
 /*----------------------------------------------------------- Timer  */
 
@@ -970,6 +985,14 @@ footer {
     grid-template-rows: 170px auto auto 1fr;   
 }
 
+/*----------------------------------------------------------- Skip Tasks Small Screens  */
+
+#skip-tasks {
+	top: 13%;
+	left: 80%;
+	font-size: 20px;
+}
+
 /*----------------------------------------------------------- Timer Small Screens  */
 .close-timer-x {  
     font-size: 1.8rem;
@@ -1158,7 +1181,13 @@ div.tooltip-donut {
 .main-heading {
     font-size: 2.7rem;
 }
+/*----------------------------------------------------------- Skip Tasks Medium Screens  */
 
+#skip-tasks {
+	top: 15%;
+	left: 81%;
+	font-size: 20px;
+}
 /*----------------------------------------------------------- Timer Medium Screens  */
 .timer-container {
     grid-column: 3 / 11;
@@ -1221,6 +1250,13 @@ div.tooltip-donut {
 .main-heading {
     font-size: 3rem;
 }
+/*----------------------------------------------------------- Skip Tasks Large Screens  */
+
+#skip-tasks {
+	top: 18.5%;
+	left: 81%;
+	font-size: 30px;
+}
 
 /*----------------------------------------------------------- Timer Large Screens  */
 
@@ -1271,6 +1307,13 @@ div.tooltip-donut {
 
 .main-heading {
     font-size: 3.3rem;
+}
+/*----------------------------------------------------------- Skip Tasks Extra-Large Screens  */
+
+#skip-tasks {
+	top: 18.5%;
+	left: 78%;
+	font-size: 30px;
 }
 /*----------------------------------------------------------- Charts Extra-Large Screens  */
 svg.legend-area{

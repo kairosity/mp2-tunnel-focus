@@ -761,7 +761,7 @@ input.editTime:focus {
 #chart-selections{
     width: 90%;
     height: 60px;
-    padding: 1em;
+    padding: 0.5em;
     background-color: var(--sun-yellow);
     -webkit-box-shadow: 0px 6px 0px 0px rgba(0,0,0,1);
     -moz-box-shadow: 0px 6px 0px 0px rgba(0,0,0,1);
@@ -771,8 +771,8 @@ input.editTime:focus {
     margin-bottom: 50px;
     font-family: "Secular One", sans-serif;
     text-transform: uppercase;
-    letter-spacing: 1px;
-    font-size: 0.7em;
+    letter-spacing: 0.5px;
+    font-size: 11px;
     font-weight: 400;
     justify-self: center;
     align-self: center;

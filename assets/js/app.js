@@ -41,7 +41,6 @@ class Timer {
         
         const alarm = document.createElement('AUDIO');
         alarm.setAttribute('src', 'assets/audio/alarm1.mp3');
-        alarm.setAttribute('autoplay', 'false');
         let alarmButton = document.querySelector('.alarm');
 
         let secondsHtml = document.getElementById('seconds');
@@ -149,7 +148,6 @@ class Timer {
             hours = 0;
             countdownEnded();        
         } else {
-            alarm.play()
             clearInterval(countdownInt);
             seconds = 0;
             minutes = 0;
@@ -307,6 +305,8 @@ function countdownClickStartHelper(countdownType, countdownNumber){
                             $(countdown15Button).bind('click keyup', function(event){
                           
                                 if((event.type === 'click') || (event.keyCode === 13)) {
+                                        alarm.play()
+                                        alarm.pause()
                                         countdownClickStartHelper("countdown15", 15);
                                         countDown15Play()
                                         pauseOnClick(countdownInt); 
@@ -403,6 +403,9 @@ function countdownClickStartHelper(countdownType, countdownNumber){
             }       
     }      
     function countdownEnded(){ 
+        if (!alarmButton.innerHTML == `<i class="fas fa-bell-slash" aria-hidden="true"></i>`){
+            alarm.play()
+        }
         playing = false;  
         let countdownEndedModal = document.getElementById('countdown-ended-modal');
         countdownEndedModal.style.display = "block";

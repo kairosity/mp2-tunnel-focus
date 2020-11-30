@@ -244,6 +244,10 @@ __FUNCTION SUMMARY:__ When either of the countdown timers reach 0 seconds and 0 
 
  __FIX 1:__ ??? 
 
+ __ISSUE 2:__ When the countdown ends on a mobile device, the alarm did not play. 
+
+ __FIX 2:__ This happens because to protect users from an aural onslaught, mobile browsers have specific rules about unsolicited audio playing, thus audio must be actively triggered by the user 
+
 - ## closeTimer() 
 
 __FUNCTION SUMMARY:__ This closes down the timer and removes it from sight when the X button is clicked. 
@@ -537,7 +541,7 @@ __FIX 4__: UNFIXED AS YET.
 
 __ISSUE 5__: When a user selects a chart / list on mobile it zooms in to the selection, but did not zoom out again to the normal view. 
 
-__FIX 5__: 
+__FIX 5__: UNFIXED 
 
 ## getTodayTasks()
 

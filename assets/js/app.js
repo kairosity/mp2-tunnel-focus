@@ -122,8 +122,8 @@ class Timer {
 //Countdown 15 Play
     function countDown15Play(){
 
-        seconds = 0;
-        minutes = 15;
+        seconds = 3; /// CHANGE THIS BACK WHEN BUG FIXED
+        minutes = 0;
         hours = 0;
         countdown();
     }
@@ -403,7 +403,7 @@ function countdownClickStartHelper(countdownType, countdownNumber){
             }       
     }      
     function countdownEnded(){ 
-        if (!alarmButton.innerHTML == `<i class="fas fa-bell-slash" aria-hidden="true"></i>`){
+        if (alarmButton.innerHTML == `<i class="fas fa-bell" aria-hidden="true"></i>`){
             alarm.play()
         }
         playing = false;  

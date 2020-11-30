@@ -342,6 +342,9 @@ Another issue I found when testing the application using only a keyboard was tha
 
 - ### **[w3schools trim() method, specifically using their regex trim function](https://www.w3schools.com/jsref/jsref_trim_string.asp)**
     Used to solve an issue whereby a user could enter nothing as a task by hitting the spacebar a few times
+
+- ### **[codingsoul's Stack Overflow solution to getting audio to play on mobile](https://stackoverflow.com/questions/45747427/playing-an-audio-sound-with-javascript-when-time-expires-is-not-working-on-andro)**
+    Used to enable audio for the countdown timer alarms on mobile. 
     
 # Deployment
 
@@ -398,6 +401,9 @@ This website was developed using GitPod in a Chrome browser and commits were pus
 
 - ### **[CSS Cursor Property](https://www.w3schools.com/cssref/pr_class_cursor.asp)**
     W3Schools information about using the different cursors.
+
+- ### **[Audio tag information](https://medium.com/better-programming/everything-about-the-audio-tag-in-html-and-javascript-c531d3bb882a)**
+    Useful information about using the AUDIO tag.
 
 ## 3. JavaScript
 
@@ -501,6 +507,9 @@ This website was developed using GitPod in a Chrome browser and commits were pus
 
 - ### **[Debugging in Chrome](https://javascript.info/debugging-chrome)**
     Information about Chrome Debugging tools. 
+
+- ### **[Can I Use](https://caniuse.com/)**
+    Great for working out what features are workable on mobile devices and ensuring cross-browser compatibility. 
 
 # Technology Used
 

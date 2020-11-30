@@ -246,7 +246,11 @@ __FUNCTION SUMMARY:__ When either of the countdown timers reach 0 seconds and 0 
 
  __ISSUE 2:__ When the countdown ends on a mobile device, the alarm did not play. 
 
- __FIX 2:__ This happens because to protect users from an aural onslaught, mobile browsers have specific rules about unsolicited audio playing, thus audio must be actively triggered by the user 
+ __FIX 2:__ This happens because to protect users from an aural onslaught, mobile browsers have specific rules about unsolicited audio playing, thus audio must be actively triggered by the user, to emulate that situation, I added:
+
+                                    alarm.play()
+                                    alarm.pause()
+To both the countDown15ClickStart() & countDown25ClickStart() functions, as per information found on Stack Overflow. (attributed in readme)
 
 - ## closeTimer() 
 

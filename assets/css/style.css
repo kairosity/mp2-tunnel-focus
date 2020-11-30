@@ -476,8 +476,6 @@ li.task-description{
     background: linear-gradient(110deg, var(--dark-blue), var(--light-blue), var(--grass-green), var(--sun-yellow), var(--orange), var(--coral), var(--happy-pink), var(--strong-lavendar), var(--purple-blush));
     transform: scale(1.1);
 }
-
-
 .completed {
     text-decoration: line-through;
     text-decoration-color: var(--pure-black);
@@ -877,10 +875,11 @@ div.tooltip-donut {
 
 /*----------------------------------------------------------- Modals  */
 
-/* Close Timer Without Saving Modal */
+/* Modal Framework */
 .modal,
 #save-time-to-task-modal,
-#countdown-ended-modal {
+#countdown-ended-modal,
+#enter-task-modal {
   display: none; 
   position: fixed; 
   z-index: 1002; 
@@ -962,6 +961,8 @@ div.tooltip-donut {
 .ce-negate-button:focus {
     outline: var(--dark-blue) dashed 4px;
 }
+/* The "Please enter a valid task modal" */
+
 
 /*----------------------------------------------------------- Footer   */
 

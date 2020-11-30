@@ -545,7 +545,11 @@ __FIX 4__: UNFIXED AS YET.
 
 __ISSUE 5__: When a user selects a chart / list on mobile it zooms in to the selection, but did not zoom out again to the normal view. 
 
-__FIX 5__: UNFIXED 
+__FIX 5__: I found a solution by Warren Chandler (attributed in README) that added some scale attributes to the application's meta tag, as below: 
+
+```< meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0,user-scalable=0"/>```
+
+While this isn't an ideal solution, as disabling zooming can have unforeseen consequences, it hasn't affected this particular application negatively and the alternative was impacting user experience. 
 
 ## getTodayTasks()
 

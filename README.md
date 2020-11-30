@@ -345,6 +345,9 @@ Another issue I found when testing the application using only a keyboard was tha
 
 - ### **[codingsoul's Stack Overflow solution to getting audio to play on mobile](https://stackoverflow.com/questions/45747427/playing-an-audio-sound-with-javascript-when-time-expires-is-not-working-on-andro)**
     Used to enable audio for the countdown timer alarms on mobile. 
+
+- ### **[Stop iPhones From Zooming in on Form Fields](https://www.warrenchandler.com/2019/04/02/stop-iphones-from-zooming-in-on-form-fields/)
+    Use Warren Chandler's solution to fix this issue in my application. 
     
 # Deployment
 
@@ -478,6 +481,9 @@ This website was developed using GitPod in a Chrome browser and commits were pus
 
 - ### **[Make any chart responsive with one function](https://benclinkinbeard.com/d3tips/make-any-chart-responsive-with-one-function/?utm_content=buffer976d6&utm_medium=social&utm_source=twitter.com&utm_campaign=buffer)**
     The original source of information about how to make any D3.js chart responsive.
+
+- ### **[How to prevent mobile devices from zooming in on elements](https://www.warrenchandler.com/2019/04/02/stop-iphones-from-zooming-in-on-form-fields/)**
+    Information about the above was used to fix an annoying issue whereby the application would zoom in when a chart option was being selected, but would not zoom out automatically. 
     
 ## 4. D3.js 
 

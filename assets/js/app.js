@@ -146,6 +146,7 @@ class Timer {
             seconds = 0;
             minutes = 0;
             hours = 0;
+            
             countdownEnded();        
         } else {
             clearInterval(countdownInt);
@@ -415,14 +416,26 @@ function countdownClickStartHelper(countdownType, countdownNumber){
         let typeOfTimer = document.querySelector('.timer-title');
         let thisTask = timerTitle.textContent;
 
+        
+
         if (typeOfTimer.textContent == "Countdown 15"){
             messageElement.textContent = `Congrats! You've worked for the full 15 minutes! Do you want to save 15 minutes to the task: ${thisTask}?`
+            if (alarmButton.innerHTML == `<i class="fas fa-bell-slash" aria-hidden="true"></i>`){
+               timer.addSilentAlarm() 
+            }
+            
             clearInterval(countdownInt);
         } else if (typeOfTimer.textContent == "Countdown 25"){
             messageElement.textContent = `Congrats! You've worked for the full 25 minutes! Do you want to save 25 minutes to the task: ${thisTask}?`;
+            if (alarmButton.innerHTML == `<i class="fas fa-bell-slash" aria-hidden="true"></i>`){
+               timer.addSilentAlarm() 
+            }
             clearInterval(countdownInt);
         }
             confirmButton.addEventListener('click', function(){
+                 if (alarmButton.innerHTML == `<i class="fas fa-bell-slash" aria-hidden="true"></i>`){
+                    timer.removeSilentAlarm() 
+                } 
                 countdownEndedModal.style.display = "none"; 
 
                 //calls save time function which will save seconds and long form time on the associated task object.
@@ -452,6 +465,9 @@ function countdownClickStartHelper(countdownType, countdownNumber){
                 hours = 0;     
             })
             negateButton.addEventListener('click', function(){
+                if (alarmButton.innerHTML == `<i class="fas fa-bell-slash" aria-hidden="true"></i>`){
+                    timer.removeSilentAlarm() 
+                }
                 clearInterval(countdownInt);
                 countdownEndedModal.style.display = "none";
                 removeTimerFromDom();
@@ -957,6 +973,16 @@ removeOverlay(){
     let pageBody = document.getElementsByTagName('BODY')[0];
     pageBody.removeChild(overlay);
     }
+addSilentAlarm(){
+    let overlay = document.querySelector('.overlay');
+    overlay.removeAttribute("class", "overlay");
+    overlay.setAttribute("class", "silent-alarm");
+}
+removeSilentAlarm(){
+    let silentAlarm = document.querySelector('.silent-alarm');
+    let pageBody = document.getElementsByTagName('BODY')[0];
+    pageBody.removeChild(silentAlarm);
+}
 makeElementsNotKeyboardTabbable(){
     const addNewTaskButton = document.querySelector('#add-new-task');
     const newTaskInput = document.querySelector('#new-task-input');

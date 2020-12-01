@@ -242,6 +242,59 @@
     outline: var(--sun-yellow) dashed 4px;
 }
 
+.silent-alarm{
+    width: 100%;
+    height: 100%;
+    z-index: 1002;
+    position: fixed;
+    opacity: 1;
+    top: 0px;
+    left: 0px;
+    animation: flashing-colours 5s linear;
+    animation-iteration-count: infinite;
+
+}
+
+@keyframes flashing-colours{
+		100%,0%{
+			background-color: rgb(255,0,0);
+		}
+		8%{
+			background-color: rgb(255,127,0);
+		}
+		16%{
+			background-color: rgb(255,255,0);
+		}
+		25%{
+			background-color: rgb(127,255,0);
+		}
+		33%{
+			background-color: rgb(0,255,0);
+		}
+		41%{
+			background-color: rgb(0,255,127);
+		}
+		50%{
+			background-color: rgb(0,255,255);
+		}
+		58%{
+			background-color: rgb(0,127,255);
+		}
+		66%{
+			background-color: rgb(0,0,255);
+		}
+		75%{
+			background-color: rgb(127,0,255);
+		}
+		83%{
+			background-color: rgb(255,0,255);
+		}
+		91%{
+			background-color: rgb(255,0,127);
+		}
+}
+
+
 
 /*----------------------------------------------------------- Popover Options Box  */
 
@@ -885,7 +938,7 @@ div.tooltip-donut {
 #enter-task-modal {
   display: none; 
   position: fixed; 
-  z-index: 1002; 
+  z-index: 1003; 
   left: 0;
   top: 0;
   width: 100%; 

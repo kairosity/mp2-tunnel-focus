@@ -1046,7 +1046,6 @@ class Task {
         this.taskDescription = taskDescription; //obvz - the only essential prop to create a new task obj.
         this.id = null;
         this.completed = false; 
-        this.order = -1; //order of priority in list - will use to structure list order
         this.totalTimeFocusedOnTask = 0; //running total of time focused on a specific task saved in seconds. 
         this.totalTimeFocusedOnTaskLongForm = timer.convertSecondsToTime(this.totalTimeFocusedOnTask);
         this.timeSegments = [];
@@ -1070,7 +1069,6 @@ class List {
                     <input class="taskCheckbox" type="checkbox" tabindex=0 checked>
                     <li class="task-description completed" id="${taskList[i].id}">${taskList[i].taskDescription}</li>
                     <a class="task-stopwatch task-list-icon" ><i class="fas fa-stopwatch start-stopwatch" tabindex=0></i></i></a>
-                    <a class="task-sort task-list-icon" tabindex=0><i class="fas fa-sort sort-tasks-icon"></i></a>
                     <a class="task-options task-list-icon" aria-label="task-options-ellipsis" tabindex=0><i class="fas fa-ellipsis-v task-options-icon"></i></a>
                 </div>`;
             } else if(taskList[i].completed === false) {
@@ -1080,7 +1078,6 @@ class List {
                     <input class="taskCheckbox" type="checkbox" tabindex=0>
                     <li class="task-description" id="${taskList[i].id}">${taskList[i].taskDescription}</li>
                     <a class="task-stopwatch task-list-icon"><i class="fas fa-stopwatch start-stopwatch"  tabindex=0 ></i></i></a>
-                    <a class="task-sort task-list-icon" tabindex=0><i class="fas fa-sort sort-tasks-icon"></i></a>
                     <a class="task-options task-list-icon" tabindex=0><i class="fas fa-ellipsis-v task-options-icon"></i></a>
                 </div>`;
             }
@@ -1124,7 +1121,6 @@ class List {
                     <input class="taskCheckbox" type="checkbox" tabindex=0>
                     <li class="task-description" id="${newTask.id}">${newTask.taskDescription}</li>
                     <a class="task-stopwatch task-list-icon" ><i class="fas fa-stopwatch start-stopwatch" tabindex=0 ></i></i></a>
-                    <a class="task-sort task-list-icon" tabindex=0><i class="fas fa-sort sort-tasks-icon"></i></a>
                     <a class="task-options task-list-icon" tabindex=0><i class="fas fa-ellipsis-v task-options-icon"></i></a>
                 </div>`;
 
@@ -1556,8 +1552,6 @@ function selectChart(data){
             taskDescrip = taskDescrip.slice(0,25) + "...";
         }
         }
-        
-  
         return  `${taskDescrip} : ${d.totalTimeFocusedOnTaskLongForm}`; 
     });
 

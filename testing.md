@@ -72,6 +72,8 @@ This section will detail each of the class objects that this application is comp
 - convertSecondsToTime(seconds)
 - addOverlay()
 - removeOverlay()
+- addSilentAlarm()
+- removeSilentAlarm()
 - makeElementsNotKeyboardTabbable()
 - makeElementsKeyboardTabbableAgain()
 
@@ -260,7 +262,6 @@ __ISSUE 1:__ If the user clicks the close button and the timer was in the middle
 
  __FIX 1:__ I instituted an if/else if statement that would pause the particular interval being used before the timer container is removed from the DOM.
 
-
 - ## saveTimeButton() & saveTimeToTask()
     
 __FUNCTION(S) SUMMARY:__ The saveTimeButton first listens for a click event on the saveButton to save the currently timed time into two different task object properties as well as updating the time based elements in the DOM. 
@@ -310,7 +311,6 @@ __ISSUE 3:__ This worked for manual inputs of time, but users could still input 
 
 __FIX 3:__  Where I dynamically set each edit box of time, I added the code `newTime.setAttribute("min", "0");` which effectively made it impossible to use the arrows to set a time less than 0. 
 
-
 - ## Timer.convertSecondsToTime(seconds)
 
 __FUNCTION SUMMARY:__ Takes in seconds and converts them into hours, minutes and seconds in a human readable format. The code was taken from a Stack Overflow question and is referenced in the attribution section of this README. 
@@ -322,6 +322,10 @@ __FIX 1:__ I had instantiated a local variable called timer and used it to refer
 - ## addOverlay() & removeOverlay(); 
 
 __FUNCTION SUMMARY:__ This function appends a div with the class 'overlay' to the body of the page. This overlay sits on top of the page at z-index: 1000 effectively disabling the page contents. removeOverlay() reverses the function.
+
+- ## addSilentAlarm() & removeSilentAlarm()
+
+__FUNCTION SUMMARY:__ This function creates a silent alarm of flashing colours for users who want to be alerted in a more subtle manner. It works simply by removing the overlay class and adding the silent-alarm class which is defined in CSS code as an infinite animation scrolling through all the colours in the app's colour theme. The rather slow 15 second animation time, is to avoid strobing. I took the CSS for the animation structure from Zak's codepen (attributed in README).
 
 - ## makeElementsNotKeyboardTabbable() && makeElementKeyboardTabbableAgain();
 

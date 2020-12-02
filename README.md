@@ -348,6 +348,9 @@ Another issue I found when testing the application using only a keyboard was tha
 
 - ### **[Stop iPhones From Zooming in on Form Fields](https://www.warrenchandler.com/2019/04/02/stop-iphones-from-zooming-in-on-form-fields/)
     Use Warren Chandler's solution to fix this issue in my application. 
+
+- ### **[Zac's CSS Only Rainbow Animation](https://codepen.io/zak/pen/rWJzPy)**
+    Borrowed and altered this CSS code for the app's silent alarm. 
     
 # Deployment
 

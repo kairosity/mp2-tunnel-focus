@@ -250,47 +250,48 @@
     opacity: 1;
     top: 0px;
     left: 0px;
-    animation: flashing-colours 5s linear;
+    animation: flashing-colours 15s linear;
     animation-iteration-count: infinite;
 
 }
 
+
 @keyframes flashing-colours{
 		100%,0%{
-			background-color: rgb(255,0,0);
+			background-color: var(--dark-blue);
 		}
 		8%{
-			background-color: rgb(255,127,0);
+			background-color: var(--light-blue);
 		}
 		16%{
-			background-color: rgb(255,255,0);
+			background-color: var(--grass-green);
 		}
 		25%{
-			background-color: rgb(127,255,0);
+			background-color: var(--sun-yellow);
 		}
 		33%{
-			background-color: rgb(0,255,0);
+			background-color: var(--orange);
 		}
 		41%{
-			background-color: rgb(0,255,127);
+			background-color: var(--coral);
 		}
 		50%{
-			background-color: rgb(0,255,255);
+			background-color: var(--happy-pink);
 		}
 		58%{
-			background-color: rgb(0,127,255);
+			background-color: var(--purple-blush);
 		}
 		66%{
-			background-color: rgb(0,0,255);
+			background-color: var(--strong-lavendar)
 		}
 		75%{
-			background-color: rgb(127,0,255);
+			background-color: var(--pure-black)
 		}
 		83%{
-			background-color: rgb(255,0,255);
+			background-color: var(--pure-white)
 		}
 		91%{
-			background-color: rgb(255,0,127);
+			background-color: var(--happy-pink);
 		}
 }
 
@@ -1121,25 +1122,6 @@ input.editedTask {
     grid-column-gap: 0.5em;
     justify-content: center;
 }
-/* .task:not(:last-child):after {
-  content:'';
-  display:inline-block;
-  width:100%; 
-  height:100%;
-  border-bottom:1px solid var(--pure-black);
-  grid-column: 1 / 13;
-  margin-top: 11px;
-}
-.task:last-child:after{
-    content: '';
-    display:inline-block;
-    width:100%; 
-    height:100%;
-    border-bottom:0px solid var(--pure-black);
-    grid-column: 1 / 13;
-    margin-bottom: -27px;
-    
-} */
 .task:last-child{
     padding-bottom: 0.1em;
 }
@@ -1378,4 +1360,12 @@ svg.legend-area{
     font-size: 0.9em;
 }
 
+}
+
+@media screen and (max-width: 340px) {
+    #skip-tasks {
+	top: 13%;
+	font-size: 14px;
+    
+}
 }

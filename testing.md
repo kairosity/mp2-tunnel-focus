@@ -2,7 +2,58 @@
 
 # User Story Testing
 
-//go through each user story and compare goals to final outcomes.  
+## First Time User Goals
+
+- **To be able to easily and clearly understand the purpose of this web application.**
+    - The sub-heading provides a succint synopsis of the raison d'etre of the application.
+    - The new task entry input also explicitly tells the user what is expected of them, and how to do it: "Type to add a new task..."
+- **To be able to quickly and easily understand how to navigate the application.**
+    - When the user launches the application for the first time, all they see is the heading and the sub-heading and the suggestion of adding a new task. Once they do that they see the time summary associated with that task, a stopwatch icon & an ellipsis icon.
+    - The icons avail of metaphorical thinking in that they clearly represent what they do. The only two icons without further verbal explanations are the elipsis and the stopwatch.
+        1. The elipsis is well established as leading to further options, therefore does not require further explanation.
+        2. Since the sub-heading of the app, is "time your tasks" it is reasonable to expect the user to assume the stopwatch has something to do with timing their tasks. If they click it and discover that it counts upwards and they wanted to count downwards, they can easily cancel the operation and choose one of the countdown timers from the options menu.
+    - All the menu options have icons & written explanations of what they do. 
+- **For the application to be visually appealing and have a clean interface that is easy to view.**
+    - I've designed the application with a bright clean faux retro interface that is easy to view and navigate. 
+
+## General User Goals
+
+- **To be able to add tasks to a list.**
+    - This is easily achieved by following the on-screen instructions using either a mouse or keyboard. 
+- **To be able to edit a task.**
+    - Intuitively achieved by selecting the "Edit Task" option from the menu options. Focus is specifically placed on the edit box using colour and an overlay that makes any other page interaction impossible. 
+- **To be able to check off tasks when they are completed.**
+    - The checkboxes are clearly visible on the page and they display rainbow colours and increase in size when hovered over.
+- **To be able to delete a task.**
+    - Easily achieved by selecting the delete task option from the the options menu.
+
+- **To be able to start the focus timer when I start working on a particular task.**
+    - The stopwatch icon is clearly visible on the main task line and when clicked a focus timer starts automatically.
+
+- **To be able to pause the focus timer if I take a break.**
+    - The pause button is clearly visible on the timer modal that appears when the timer is summoned. When the pause is clicked or selected, it disappears and the play button takes its place.
+- **I want to be able to reset the focus timer for that particular segment of time, if for whatever reason I don't actually focus on work.**
+    - The reset button is also clearly visible within the timer modal and when clicked it resets the timer to 00:00:00.
+
+- **I want to be able to start a countdown timer for work on a particular task.**
+- **I want to be able to select whether the countdown timer runs for 15 or 25 minutes.**
+    - Both of the above are intuitively achieved by selecting either "Countdown 15 Mins" or "Countdown 25 Mins" from the options menu.
+- **When the countdown timer ends, I want to be alerted with an audio alarm and/or a visual display.**
+    - An audio alarm automatically plays as default on termination of the countdown period.
+- **As a user with a small sleeping child, I want to have the option of turning off the audio alarm and relying on just 
+a visual indication that the countdown is over.**
+    - If the alarm bell button is clicked, the alarm is muted and instead of an audio alarm, the screen displays a loop of changing colours, easily visible to peripheral vision.
+
+- As a user, I want to be able to start an open-ended timer for longer sessions working on a particular task.
+- I want to be alerted after every 30 minutes working with the open-ended timer.
+- If I forget that the open-ended timer is running, I want to be able to delete that segment of time and not have it added to the total
+time spent focused on that task.  
+
+- I want to know how much time I have spent on each task today.
+- I want to know how much time I have spent on each task overall. 
+- I want to know how much time I have spent focused and working today.
+- I would like to see this information displayed in pleasing and easy to comprehend charts and visuals.
+- I would like to see a list of what tasks I completed today.
 
 # Manual Testing
 

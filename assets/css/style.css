@@ -31,16 +31,6 @@
     grid-template-rows: 150px auto auto 1fr;
     position: relative;
 }
-/*----------------------------------------------------------- Timer  */
-
-/* #tests-heading {
-    padding: 1.2em;
-}
-
-.tests-body {
-    text-align: center;
-} */
-
 /*----------------------------------------------------------- Header  */
 .main-header{
     background-color: var(--sun-yellow);
@@ -65,6 +55,13 @@
     text-align: center;
 }
 
+h2.sub-heading {
+    font-family: "Heebo", sans-serif;
+    font-size: 1.5rem;
+    font-weight: 300;
+    letter-spacing: 5px;
+    text-align: center;
+}
 
 /*------------- Skip Tasks Link: Accessibility for keyboard users. */
 

@@ -62,7 +62,7 @@ __*As a returning user:*__
 
 - As a user who is __*hard of hearing*__, I want there to be a visual display when the countdown timer ends. 
 - As a user who is __*colourblind*__, I want the colours used to employ sufficient contrast so that any visual cues are apparent to me.
-- As a user who is __*physically impaired*__ I want to be able to use the keyboard to navigate and interact with the application. 
+- As a user who is __*physically impaired*__ I want to be able to use the keyboard to navigate and fully interact with the application. 
 
 ## Strategy
 
@@ -351,6 +351,9 @@ Another issue I found when testing the application using only a keyboard was tha
 
 - ### **[Zac's CSS Only Rainbow Animation](https://codepen.io/zak/pen/rWJzPy)**
     Borrowed and altered this CSS code for the app's silent alarm. 
+
+- ### **[How to focus in an input box on page load](https://stackoverflow.com/questions/4331022/focus-input-box-on-load)**
+    Used to ensure that users did not have to hit tab or use the mouse each time they wanted to add new tasks.
     
 # Deployment
 

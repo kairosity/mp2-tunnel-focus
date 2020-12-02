@@ -50,10 +50,10 @@
     align-items: center;
     grid-column: 1 / 13;
     justify-content: center;
-    -webkit-box-shadow: 0px 6px 0px 0px rgba(0,0,0,1);
+    /* -webkit-box-shadow: 0px 6px 0px 0px rgba(0,0,0,1);
     -moz-box-shadow: 0px 6px 0px 0px rgba(0,0,0,1);
     box-shadow: 0px 6px 0px 0px rgba(0,0,0,1);
-    border-radius: 8px;
+    border-radius: 8px; */
 }
 
 .main-heading {
@@ -798,11 +798,11 @@ input.editTime:focus {
     display: flex;
     justify-content: center;
     align-items: center;
-    -webkit-box-shadow: 3px 5px 0px 0px rgba(0,0,0,1);
+    /* -webkit-box-shadow: 3px 5px 0px 0px rgba(0,0,0,1);
     -moz-box-shadow: 3px 5px 0px 0px rgba(0,0,0,1);
     box-shadow: 3px 5px 0px 0px rgba(0,0,0,1);
     border-radius: 8px;
-    border: 2px solid var(--pure-black);
+    border: 2px solid var(--pure-black); */
     margin-bottom: 50px;
     padding: 0.6em;
 }
@@ -925,6 +925,11 @@ div.tooltip-donut {
     font-size: 1em;
 }
 
+::marker {
+    color: var(--dark-blue);
+    font-weight: 700;
+}
+
 /*----------------------------------------------------------- Modals  */
 
 /* Modal Framework */
@@ -1027,8 +1032,8 @@ footer {
     grid-column: 1 / 13;
     grid-row: 8/9;
     justify-content: center;
-    border-top: 5px solid var(--pure-black);
-    border-radius: 8px;
+    /* border-top: 5px solid var(--pure-black);
+    border-radius: 8px; */
 }
 
 /*----------------------------------------------------------- MEDIA QUERIES: Small Screens   */

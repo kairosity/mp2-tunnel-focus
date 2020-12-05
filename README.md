@@ -346,7 +346,7 @@ Another issue I found when testing the application using only a keyboard was tha
 - ### **[codingsoul's Stack Overflow solution to getting audio to play on mobile](https://stackoverflow.com/questions/45747427/playing-an-audio-sound-with-javascript-when-time-expires-is-not-working-on-andro)**
     Used to enable audio for the countdown timer alarms on mobile. 
 
-- ### **[Stop iPhones From Zooming in on Form Fields](https://www.warrenchandler.com/2019/04/02/stop-iphones-from-zooming-in-on-form-fields/)
+- ### **[Stop iPhones From Zooming in on Form Fields](https://www.warrenchandler.com/2019/04/02/stop-iphones-from-zooming-in-on-form-fields/)**
     Use Warren Chandler's solution to fix this issue in my application. 
 
 - ### **[Zac's CSS Only Rainbow Animation](https://codepen.io/zak/pen/rWJzPy)**
@@ -522,6 +522,8 @@ This website was developed using GitPod in a Chrome browser and commits were pus
 
 - ### **[Can I Use](https://caniuse.com/)**
     Great for working out what features are workable on mobile devices and ensuring cross-browser compatibility. 
+
+- ### **[How to Delete a Git Branch Both Locally and Remotely ](https://www.freecodecamp.org/news/how-to-delete-a-git-branch-both-locally-and-remotely/)**
 
 # Technology Used
 

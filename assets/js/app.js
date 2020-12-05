@@ -314,8 +314,8 @@ function countdownClickStartHelper(countdownType, countdownNumber){
                                         resetTime(countdownInt);
                                         closeTimer();  
                                     }
-                                $(this).unbind('click', arguments.callee);
-                                $(this).unbind('keyup', arguments.callee);          
+                                // $(this).unbind('click', arguments.callee);
+                                // $(this).unbind('keyup', arguments.callee);          
                                 })
                     }
                  })
@@ -337,8 +337,8 @@ function countdownClickStartHelper(countdownType, countdownNumber){
                                         resetTime(countdownInt);
                                         closeTimer();  
                                     }
-                                $(this).unbind('click', arguments.callee);
-                                $(this).unbind('keyup', arguments.callee);
+                                // $(this).unbind('click', arguments.callee);
+                                // $(this).unbind('keyup', arguments.callee);
                                 })
                             }
                         })
@@ -691,7 +691,6 @@ function countdownClickStartHelper(countdownType, countdownNumber){
             const button = document.createElement('BUTTON');
             button.setAttribute("class", `edit-time-${buttonType}-button`);
             button.setAttribute("type", "submit");
-            console.log(button);
 
             if (buttonType == "save"){
                 button.textContent = "Save New Total Time";
@@ -701,6 +700,29 @@ function countdownClickStartHelper(countdownType, countdownNumber){
                 
             }
             return button;
+        }
+
+     function makeTimeNumbersFromStrings(arrayOfStringTimes, arrayOfNumberTimes){
+            arrayOfStringTimes.forEach(function(item){
+            if (item.length === 5){
+                arrayOfNumberTimes.push(parseInt(item.slice(0,2)));
+            } else if(item.length === 6){
+                arrayOfNumberTimes.push(parseInt(item.slice(0,3)));
+            } else if(item.length === 7){
+                arrayOfNumberTimes.push(parseInt(item.slice(0,4)));
+            } else if(item.length === 8){
+                arrayOfNumberTimes.push(parseInt(item.slice(0,5)));
+            } else if(item.length === 9){
+                arrayOfNumberTimes.push(parseInt(item.slice(0,6)));
+            } else if(item.length === 10){
+                arrayOfNumberTimes.push(parseInt(item.slice(0,7)));
+            } else if(item.length === 11){
+                arrayOfNumberTimes.push(parseInt(item.slice(0,8)));
+            }else {
+                arrayOfNumberTimes.push(parseInt(item.slice(0,1)));
+            }
+        });
+        return arrayOfNumberTimes;
         }
 
     function manualTaskTimeEdit(){  
@@ -727,39 +749,46 @@ function countdownClickStartHelper(countdownType, countdownNumber){
 
                                 //get the <p> where the time is described long form.
                                 let longFormTimeToTarget = fullTaskLine.firstElementChild;
+                                console.log(longFormTimeToTarget)
 
-                                //take that <p> string</p> and divide it on the spaces to isolate the numbers.
+
+                                /*
+                                take that <p> string</p> and divide it on the spaces to isolate the numbers. 
+                                Gives us an array of strings - Eg: ["0hrs", "6mins", "5secs"] 
+                                */
                                 let timeToEdit = longFormTimeToTarget.textContent.split(" ");
+                                console.log(timeToEdit)
+
+                                // This is going to be the array of time numbers
                                 let timeArray = []
 
-                                //transform each of the string time numbers into numbers and push them to timeArray
-                                timeToEdit.forEach(function(item){
-                                    if (item.length === 5){
-                                        timeArray.push(parseInt(item.slice(0,2)));
-                                    } else if(item.length === 6){
-                                        timeArray.push(parseInt(item.slice(0,3)));
-                                    } else if(item.length === 7){
-                                        timeArray.push(parseInt(item.slice(0,4)));
-                                    } else if(item.length === 8){
-                                        timeArray.push(parseInt(item.slice(0,5)));
-                                    } else if(item.length === 9){
-                                        timeArray.push(parseInt(item.slice(0,6)));
-                                    } else if(item.length === 10){
-                                        timeArray.push(parseInt(item.slice(0,7)));
-                                    } else if(item.length === 11){
-                                        timeArray.push(parseInt(item.slice(0,8)));
-                                    }else {
-                                        timeArray.push(parseInt(item.slice(0,1)));
-                                    }
-                                });
+                                makeTimeNumbersFromStrings(timeToEdit, timeArray);
+
+                                //Transform each of the string time numbers into numbers and push them to timeArray
+                                // timeToEdit.forEach(function(item){
+                                //     if (item.length === 5){
+                                //         timeArray.push(parseInt(item.slice(0,2)));
+                                //     } else if(item.length === 6){
+                                //         timeArray.push(parseInt(item.slice(0,3)));
+                                //     } else if(item.length === 7){
+                                //         timeArray.push(parseInt(item.slice(0,4)));
+                                //     } else if(item.length === 8){
+                                //         timeArray.push(parseInt(item.slice(0,5)));
+                                //     } else if(item.length === 9){
+                                //         timeArray.push(parseInt(item.slice(0,6)));
+                                //     } else if(item.length === 10){
+                                //         timeArray.push(parseInt(item.slice(0,7)));
+                                //     } else if(item.length === 11){
+                                //         timeArray.push(parseInt(item.slice(0,8)));
+                                //     }else {
+                                //         timeArray.push(parseInt(item.slice(0,1)));
+                                //     }
+                                // });
                                 let hoursToEdit = timeArray[0];
                                 let minutesToEdit = timeArray[1];
                                 let secondsToEdit = timeArray[2];
 
                                 hideTaskIcons();
-
-                                //if there's no save time button already there then ....
-                                if (!document.querySelector('.edit-time-save-button')){ 
 
                                     //adding overlay to focus user on editing the time and not doing anything else. 
                                     timer.addOverlay();
@@ -772,6 +801,7 @@ function countdownClickStartHelper(countdownType, countdownNumber){
                  
                                     //select the task description
                                     let taskToTarget = fullTaskLine.children[2];
+                                    console.log(taskToTarget)
                                    
                                     taskToTarget.classList.add('edit-time-task-description');
                                     taskToTarget.classList.remove('task');
@@ -798,32 +828,15 @@ function countdownClickStartHelper(countdownType, countdownNumber){
                                     //remove the <p></p> time in longform.
                                     fullTaskLine.removeChild(longFormTimeToTarget);
 
-                                    
-
-                                    let saveButton2 = createButton("save");
+                                    let editTaskSaveButton = createButton("save");
                                    
-                                   
-
                                     //add the save button after the seconds input.
-                                    document.getElementById('editSeconds').after(saveButton2);
+                                    document.getElementById('editSeconds').after(editTaskSaveButton);
 
-                                    let cancelButton = createButton("cancel");
-                                
-
-                                    // //create the save button. REFACTOR
-                                    // const saveButton2 = document.createElement('BUTTON');
-                                    // saveButton2.setAttribute("class", "edit-time-save-button");
-                                    // saveButton2.setAttribute("type", "submit");
-                                    // saveButton2.textContent = "Save New Total Time";
-
-                                    // //create the cancel button. REFACTOR
-                                    // const cancelButton = document.createElement('BUTTON');
-                                    // cancelButton.setAttribute("class", "edit-time-cancel-button");
-                                    // cancelButton.setAttribute("type", "submit");
-                                    // cancelButton.textContent = "Cancel Changes & Exit";
+                                    let editTaskCancelButton = createButton("cancel");
 
                                     //add the cancel button after the save button.
-                                    saveButton2.after(cancelButton);
+                                    editTaskSaveButton.after(editTaskCancelButton);
                               
                                     let editTimeTitle = document.querySelector('.edit-time-task-description');
                                     editTimeTitle.scrollIntoView();
@@ -842,10 +855,8 @@ function countdownClickStartHelper(countdownType, countdownNumber){
 
                                     let baseTime = parseInt(originalSeconds) + minutesInSeconds + hoursInSeconds;
 
-                                    //click event listener on the save button. //no need for both save button vars.
-                                    let saveBtn = document.querySelector('.edit-time-save-button');
-                                    saveBtn.addEventListener('click', function(){
-
+                                    //If the save button is clicked: 
+                                    editTaskSaveButton.addEventListener('click', function(){
 
                                         let hoursToAdd = hoursValue.value;
                                         let minutesToAdd = minutesValue.value;
@@ -863,10 +874,8 @@ function countdownClickStartHelper(countdownType, countdownNumber){
                                         let totalTimeToAdd = parseInt(secondsToAdd) + minutesInSeconds + hoursInSeconds;
                                         let timeToAdd = totalTimeToAdd - baseTime;
 
-
                                         list.taskList[taskToTargetId].timeSegments.push({id, timeToAdd, dateStamp, taskDescription, localDate, localTime});
                                         
-                                    
                                         //translate those seconds to long form
 
                                         let longFormTimeToAdd = timer.convertSecondsToTime(totalTimeToAdd);
@@ -879,11 +888,11 @@ function countdownClickStartHelper(countdownType, countdownNumber){
                                             }
                                         }          
                                         //remove the save button
-                                        fullTaskLine.removeChild(saveBtn);
+                                        fullTaskLine.removeChild(editTaskSaveButton);
                                         fullTaskLine.classList.remove('edit-time-task');
 
                                         //remove the cancel button
-                                        fullTaskLine.removeChild(cancelButton);
+                                        fullTaskLine.removeChild(editTaskCancelButton);
 
                                         //remove / destroy all the new elements 
                                         fullTaskLine.removeChild(document.getElementById('editSeconds'));
@@ -904,8 +913,6 @@ function countdownClickStartHelper(countdownType, countdownNumber){
                                         updatedTime.textContent = `${longFormTimeToAdd}`;
                                         // let newTime = 
                                         fullTaskLine.insertBefore(updatedTime, insertBeforeNode);
-
-                                        
                                      
                                         //remove special class from description
                                         fullTaskLine.children[2].classList.remove('edit-time-task-description');
@@ -927,17 +934,18 @@ function countdownClickStartHelper(countdownType, countdownNumber){
                                         list.setDataToLocalStorage();
                                         location.reload();//updates the charts with new times - ask FEMI
                                     })
-                                    let cancelBtn = document.querySelector('.edit-time-cancel-button');
-                                    cancelBtn.addEventListener('click', function(){
+                                    
+                                    //If the Cancel button is clicked: 
+                                    editTaskCancelButton.addEventListener('click', function(){
 
                                         let longFormTimeToAdd = list.taskList[taskToTargetId].totalTimeFocusedOnTaskLongForm;
                                         
                                         //remove the save button
-                                        fullTaskLine.removeChild(saveBtn);
+                                        fullTaskLine.removeChild(editTaskSaveButton);
                                         fullTaskLine.classList.remove('edit-time-task');
 
                                         //remove the cancel button
-                                        fullTaskLine.removeChild(cancelButton);
+                                        fullTaskLine.removeChild(editTaskCancelButton);
 
                                         //remove / destroy all the new elements 
                                         fullTaskLine.removeChild(document.getElementById('editSeconds'));
@@ -974,9 +982,8 @@ function countdownClickStartHelper(countdownType, countdownNumber){
                                         timer.makeElementsKeyboardTabbableAgain();
                                                           
                                     })
-                                }
-                                $(this).unbind('click', arguments.callee);
-                                $(this).unbind('keyup', arguments.callee);
+                                // $(this).unbind('click', arguments.callee);
+                                // $(this).unbind('keyup', arguments.callee);
                             }
                             });
                         }

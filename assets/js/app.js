@@ -725,6 +725,23 @@ function countdownClickStartHelper(countdownType, countdownNumber){
         return arrayOfNumberTimes;
         }
 
+        function createNewInputsForManualTimeEdit(measureOfTime, timeVariableToEdit, longFormTime){
+                const newLabel = document.createElement('LABEL');
+                newLabel.setAttribute("for", "edit"+measureOfTime);
+                newLabel.textContent = measureOfTime+":";
+                newLabel.setAttribute("class", "editTime edit-time-"+measureOfTime.toLowerCase()+"-label");
+                longFormTime.parentNode.insertBefore(newLabel, longFormTime);
+
+                const newTime = document.createElement("INPUT");
+                newTime.setAttribute("type", "number")
+                newTime.setAttribute("value", `${timeVariableToEdit}`);
+                newTime.setAttribute("id", "edit"+measureOfTime);
+                newTime.setAttribute("class", "editTime edit-time-"+measureOfTime.toLowerCase());
+                newTime.setAttribute("oninput", "validity.valid||(value='')");
+                newTime.setAttribute("min", "0");      
+                longFormTime.parentNode.insertBefore(newTime, longFormTime);
+            }
+
     function manualTaskTimeEdit(){  
         const ellipsisArray = document.querySelectorAll('.task-options');
         ellipsisArray.forEach(function(ellipsis){
@@ -751,84 +768,50 @@ function countdownClickStartHelper(countdownType, countdownNumber){
                                 let longFormTimeToTarget = fullTaskLine.firstElementChild;
                                 console.log(longFormTimeToTarget)
 
-
                                 /*
                                 take that <p> string</p> and divide it on the spaces to isolate the numbers. 
                                 Gives us an array of strings - Eg: ["0hrs", "6mins", "5secs"] 
                                 */
                                 let timeToEdit = longFormTimeToTarget.textContent.split(" ");
-                                console.log(timeToEdit)
 
                                 // This is going to be the array of time numbers
                                 let timeArray = []
 
+                                //Calls the function that transforms the strings into integers and uses the two arrays created above.
                                 makeTimeNumbersFromStrings(timeToEdit, timeArray);
 
-                                //Transform each of the string time numbers into numbers and push them to timeArray
-                                // timeToEdit.forEach(function(item){
-                                //     if (item.length === 5){
-                                //         timeArray.push(parseInt(item.slice(0,2)));
-                                //     } else if(item.length === 6){
-                                //         timeArray.push(parseInt(item.slice(0,3)));
-                                //     } else if(item.length === 7){
-                                //         timeArray.push(parseInt(item.slice(0,4)));
-                                //     } else if(item.length === 8){
-                                //         timeArray.push(parseInt(item.slice(0,5)));
-                                //     } else if(item.length === 9){
-                                //         timeArray.push(parseInt(item.slice(0,6)));
-                                //     } else if(item.length === 10){
-                                //         timeArray.push(parseInt(item.slice(0,7)));
-                                //     } else if(item.length === 11){
-                                //         timeArray.push(parseInt(item.slice(0,8)));
-                                //     }else {
-                                //         timeArray.push(parseInt(item.slice(0,1)));
-                                //     }
-                                // });
+                                //Creates variables for each of the time categories and sets them as numbers.
                                 let hoursToEdit = timeArray[0];
                                 let minutesToEdit = timeArray[1];
                                 let secondsToEdit = timeArray[2];
 
+                                //Calls the function that hides the task icons.
                                 hideTaskIcons();
 
-                                    //adding overlay to focus user on editing the time and not doing anything else. 
-                                    timer.addOverlay();
+                                //Calls the function that adds an overlay to focus user on editing the time and not doing anything else. 
+                                timer.addOverlay();
 
-                                    //bring the task above the overlay so the user can access the edit boxes.
-                                    fullTaskLine.style.zIndex = 1001;
-                                    timer.makeElementsNotKeyboardTabbable();
-                                    //add the class for this layout
-                                    fullTaskLine.classList.add('edit-time-task');
+                                //bring the task above the overlay so the user can access the edit boxes.
+                                fullTaskLine.style.zIndex = 1001;
+                                timer.makeElementsNotKeyboardTabbable();
+                                //add the class for this layout
+                                fullTaskLine.classList.add('edit-time-task');
                  
-                                    //select the task description
-                                    let taskToTarget = fullTaskLine.children[2];
-                                    console.log(taskToTarget)
+                                //select the task description
+                                let taskToTarget = fullTaskLine.children[2];
                                    
-                                    taskToTarget.classList.add('edit-time-task-description');
-                                    taskToTarget.classList.remove('task');
+                                taskToTarget.classList.add('edit-time-task-description');
+                                taskToTarget.classList.remove('task');
 
-                                    function createNewInputsForManualTimeEdit(timeMeasure, timeToEdit){
-                                        const newLabel = document.createElement('LABEL');
-                                        newLabel.setAttribute("for", "edit"+timeMeasure);
-                                        newLabel.textContent = timeMeasure+":";
-                                        newLabel.setAttribute("class", "editTime edit-time-"+timeMeasure.toLowerCase()+"-label");
-                                        longFormTimeToTarget.parentNode.insertBefore(newLabel, longFormTimeToTarget);
-                                        const newTime = document.createElement("INPUT");
-                                        newTime.setAttribute("type", "number")
-                                        newTime.setAttribute("value", `${timeToEdit}`);
-                                        newTime.setAttribute("id", "edit"+timeMeasure);
-                                        newTime.setAttribute("class", "editTime edit-time-"+timeMeasure.toLowerCase());
-                                        newTime.setAttribute("oninput", "validity.valid||(value='')");
-                                        newTime.setAttribute("min", "0");      
-                                        longFormTimeToTarget.parentNode.insertBefore(newTime, longFormTimeToTarget);
-                                    }
-                                    createNewInputsForManualTimeEdit("Hours", hoursToEdit);
-                                    createNewInputsForManualTimeEdit("Minutes", minutesToEdit);
-                                    createNewInputsForManualTimeEdit("Seconds", secondsToEdit);
+                                //Call the time input creation function for each of the measures of time.
+                                createNewInputsForManualTimeEdit("Hours", hoursToEdit, longFormTimeToTarget);
+                                createNewInputsForManualTimeEdit("Minutes", minutesToEdit, longFormTimeToTarget);
+                                createNewInputsForManualTimeEdit("Seconds", secondsToEdit, longFormTimeToTarget);
 
-                                    //remove the <p></p> time in longform.
-                                    fullTaskLine.removeChild(longFormTimeToTarget);
+                                //remove the time in longform ( a <p> tag )
+                                fullTaskLine.removeChild(longFormTimeToTarget);
 
-                                    let editTaskSaveButton = createButton("save");
+                                let editTaskSaveButton = createButton("save");
                                    
                                     //add the save button after the seconds input.
                                     document.getElementById('editSeconds').after(editTaskSaveButton);
@@ -982,8 +965,8 @@ function countdownClickStartHelper(countdownType, countdownNumber){
                                         timer.makeElementsKeyboardTabbableAgain();
                                                           
                                     })
-                                // $(this).unbind('click', arguments.callee);
-                                // $(this).unbind('keyup', arguments.callee);
+                                $(this).unbind('click', arguments.callee);
+                                $(this).unbind('keyup', arguments.callee);
                             }
                             });
                         }

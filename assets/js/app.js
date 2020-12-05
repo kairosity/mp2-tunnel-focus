@@ -122,8 +122,8 @@ class Timer {
 //Countdown 15 Play
     function countDown15Play(){
 
-        seconds = 3; /// CHANGE THIS BACK WHEN BUG FIXED
-        minutes = 0;
+        seconds = 0; 
+        minutes = 15; //CHANGE HERE WHEN TESTING
         hours = 0;
         countdown();
     }
@@ -1558,7 +1558,6 @@ function selectChart(data){
     var legendItems = document.querySelectorAll('.circle-legend');
 
     // dynamically set the height of the legend box depending on how many items are added to it. 
-    //this works for long lists but not for short ones - need to adjust it - maybe - if list.length > 6 then do bla bla
     svgLegend
         .attr('height', function(){
             if (legendItems.length > 6) {

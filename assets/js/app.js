@@ -742,6 +742,22 @@ function countdownClickStartHelper(countdownType, countdownNumber){
                 longFormTime.parentNode.insertBefore(newTime, longFormTime);
             }
 
+         function removeNewTimeElements(taskLine, saveButton, cancelButton) {
+                //remove the save button
+                taskLine.removeChild(saveButton);
+                //remove the "edit-time-task" class
+                taskLine.classList.remove('edit-time-task');
+                //remove the cancel button
+                taskLine.removeChild(cancelButton);
+                //remove all the time inputs & labels
+                taskLine.removeChild(document.getElementById('editSeconds'));
+                taskLine.removeChild(document.querySelector('.edit-time-seconds-label'));
+                taskLine.removeChild(document.getElementById('editMinutes'));
+                taskLine.removeChild(document.querySelector('.edit-time-minutes-label'));
+                taskLine.removeChild(document.getElementById('editHours'));
+                taskLine.removeChild(document.querySelector('.edit-time-hours-label')); 
+            }
+
     function manualTaskTimeEdit(){  
         const ellipsisArray = document.querySelectorAll('.task-options');
         ellipsisArray.forEach(function(ellipsis){
@@ -870,20 +886,10 @@ function countdownClickStartHelper(countdownType, countdownNumber){
                                                 list.taskList[i].totalTimeFocusedOnTaskLongForm = longFormTimeToAdd; 
                                             }
                                         }          
-                                        //remove the save button
-                                        fullTaskLine.removeChild(editTaskSaveButton);
-                                        fullTaskLine.classList.remove('edit-time-task');
-
-                                        //remove the cancel button
-                                        fullTaskLine.removeChild(editTaskCancelButton);
-
-                                        //remove / destroy all the new elements 
-                                        fullTaskLine.removeChild(document.getElementById('editSeconds'));
-                                        fullTaskLine.removeChild(document.querySelector('.edit-time-seconds-label'));
-                                        fullTaskLine.removeChild(document.getElementById('editMinutes'));
-                                        fullTaskLine.removeChild(document.querySelector('.edit-time-minutes-label'));
-                                        fullTaskLine.removeChild(document.getElementById('editHours'));
-                                        fullTaskLine.removeChild(document.querySelector('.edit-time-hours-label'));         
+                                
+                                        //remove all the new created elements
+                                        removeNewTimeElements(fullTaskLine, editTaskSaveButton, editTaskCancelButton);
+                                                
                                         fullTaskLine.style.zIndex = 0;
 
                                         //bring back all the required elements in correct order
@@ -922,21 +928,9 @@ function countdownClickStartHelper(countdownType, countdownNumber){
                                     editTaskCancelButton.addEventListener('click', function(){
 
                                         let longFormTimeToAdd = list.taskList[taskToTargetId].totalTimeFocusedOnTaskLongForm;
-                                        
-                                        //remove the save button
-                                        fullTaskLine.removeChild(editTaskSaveButton);
-                                        fullTaskLine.classList.remove('edit-time-task');
 
-                                        //remove the cancel button
-                                        fullTaskLine.removeChild(editTaskCancelButton);
-
-                                        //remove / destroy all the new elements 
-                                        fullTaskLine.removeChild(document.getElementById('editSeconds'));
-                                        fullTaskLine.removeChild(document.querySelector('.edit-time-seconds-label'));
-                                        fullTaskLine.removeChild(document.getElementById('editMinutes'));
-                                        fullTaskLine.removeChild(document.querySelector('.edit-time-minutes-label'));
-                                        fullTaskLine.removeChild(document.getElementById('editHours'));
-                                        fullTaskLine.removeChild(document.querySelector('.edit-time-hours-label'));    
+                                        // Calls the function that removes all the new created elements
+                                        removeNewTimeElements(fullTaskLine, editTaskSaveButton, editTaskCancelButton);   
                                         
                                         fullTaskLine.style.zIndex = 0;
 

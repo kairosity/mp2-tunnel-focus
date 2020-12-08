@@ -845,62 +845,84 @@ function countdownClickStartHelper(countdownType, countdownNumber){
                                 //V11. Text to Edit
                                 let taskTextToEdit = editTaskName.innerText;
 
-                                //Here is where I need to create an edit task input using the value from editTaskName
+                                //P9. Create Edit Task Name Input & populate with task name.
 
-                                const newInput = document.createElement("INPUT");
-                                newInput.setAttribute("type", "text")
-                                newInput.setAttribute("value", `${taskTextToEdit}`);
-                                newInput.setAttribute("class", "editedTask")
-                                newInput.style.zIndex="1001";
-                                editTaskName.parentNode.replaceChild(newInput, editTaskName);//works
+                                const editTaskNameInput = document.createElement("INPUT");
+                                editTaskNameInput.setAttribute("type", "text")
+                                editTaskNameInput.setAttribute("value", `${taskTextToEdit}`);
+                                editTaskNameInput.setAttribute("class", "editedTask")
+                                editTaskNameInput.style.zIndex="1001";
+                                editTaskName.parentNode.replaceChild(editTaskNameInput, editTaskName);
 
+                                //V12, V13, V14 - Time Measure Input Variables Created Earlier 
+                                let hoursInput = document.getElementById('editHours');
+                                let minutesInput = document.getElementById('editMinutes');
+                                let secondsInput = document.getElementById('editSeconds');
 
-                                let hoursValue = document.getElementById('editHours');
-                                let minutesValue = document.getElementById('editMinutes');
-                                let secondsValue = document.getElementById('editSeconds');
+                                //V15, V16, V17 - Time Measure Input Values 
+                                let originalHours = hoursInput.value;
+                                let originalMinutes = minutesInput.value;
+                                let originalSeconds = secondsInput.value;
 
-                                let originalHours = hoursValue.value;
-                                let originalMinutes = minutesValue.value;
-                                let originalSeconds = secondsValue.value;
-
-                                //translate that time to seconds
+                                //V18, V19 Original (pre-edited) Minutes & Hours In Seconds
                                 let minutesInSeconds = originalMinutes * 60;
                                 let hoursInSeconds = originalHours * 3600;
 
+                                //V20 Base Time In Seconds
                                 let baseTime = parseInt(originalSeconds) + minutesInSeconds + hoursInSeconds;
 
-                                //If the save button is clicked: 
+                                //When the save button is clicked: 
                                 editTaskSaveButton.addEventListener('click', function(){
 
-                                    let hoursToAdd = hoursValue.value;
-                                    let minutesToAdd = minutesValue.value;
-                                    let secondsToAdd = secondsValue.value;
+                                    //1. Save New task Name. 
+
+                                    //create a new list element to put the edited task into
+                                    const newTaskLi = document.createElement('LI');
+                                    newTaskLi.setAttribute("class", "task-description");
+                                    newTaskLi.setAttribute("id", `${taskToTargetId}` ); //because it's still available in memory.
+                                    console.log(newTaskLi);
+                                    newTaskLi.textContent = editTaskNameInput.value; //set the value of the li to the edited task value.
+                                    editTaskNameInput.parentNode.replaceChild(newTaskLi, editTaskNameInput); //confusing AF but basically replace the input box with the new Li in the most awkward way possible. 
+
+                                    list.taskList.forEach(task => {
+                                        if(task.id == newTaskLi.id){
+                                            task.taskDescription = newTaskLi.textContent;
+                                        }
+                                        if((task.id == newTaskLi.id) && (task.completed == true)){
+                                            newTaskLi.classList.add('completed');
+                                        }
+                                    })
+                                    //2. Collect any new time measure inputs and save them too. 
+                                    // Variables to collect any new values for seconds, minutes & hours
+                                    let hoursToAdd = hoursInput.value;
+                                    let minutesToAdd = minutesInput.value;
+                                    let secondsToAdd = secondsInput.value;
                     
-                                        //translate that time to seconds
-                                        let minutesInSeconds = minutesToAdd * 60;
-                                        let hoursInSeconds = hoursToAdd * 3600;
+                                    //Convert those (new or old) times to seconds
+                                    let minutesInSeconds = minutesToAdd * 60;
+                                    let hoursInSeconds = hoursToAdd * 3600;
 
-                                        let dateStamp = new Date();
-                                        let localTime = dateStamp.toLocaleTimeString();
-                                        let localDate = dateStamp.toLocaleDateString();
-                                        let taskDescription = list.taskList[taskToTargetId].taskDescription;
-                                        let id = taskToTargetId;
-                                        let totalTimeToAdd = parseInt(secondsToAdd) + minutesInSeconds + hoursInSeconds;
-                                        let timeToAdd = totalTimeToAdd - baseTime;
+                                    //Current date
+                                    let dateStamp = new Date();
+                                    let localTime = dateStamp.toLocaleTimeString();
+                                    let localDate = dateStamp.toLocaleDateString();
+                                    let taskDescription = list.taskList[taskToTargetId].taskDescription; //needs to change. 
+                                    let id = taskToTargetId;
+                                    let totalTimeToAdd = parseInt(secondsToAdd) + minutesInSeconds + hoursInSeconds;
+                                    let timeToAdd = totalTimeToAdd - baseTime;
 
-                                        list.taskList[taskToTargetId].timeSegments.push({id, timeToAdd, dateStamp, taskDescription, localDate, localTime});
+                                    list.taskList[taskToTargetId].timeSegments.push({id, timeToAdd, dateStamp, taskDescription, localDate, localTime});
                                         
-                                        //translate those seconds to long form
+                                    //Convert those seconds to long form time
+                                    let longFormTimeToAdd = timer.convertSecondsToTime(totalTimeToAdd);
 
-                                        let longFormTimeToAdd = timer.convertSecondsToTime(totalTimeToAdd);
-
-                                        //id matching loop - updates the totalTimeFocusedOnTask.
-                                        for (let i=0; i<list.taskList.length; i++){
-                                            if (list.taskList[i].id == taskToTargetId){
-                                                list.taskList[i].totalTimeFocusedOnTask = totalTimeToAdd;
-                                                list.taskList[i].totalTimeFocusedOnTaskLongForm = longFormTimeToAdd; 
-                                            }
-                                        }          
+                                    //id matching loop - updates the totalTimeFocusedOnTask.
+                                    for (let i=0; i<list.taskList.length; i++){
+                                        if (list.taskList[i].id == taskToTargetId){
+                                            list.taskList[i].totalTimeFocusedOnTask = totalTimeToAdd;
+                                            list.taskList[i].totalTimeFocusedOnTaskLongForm = longFormTimeToAdd; 
+                                        }
+                                    }          
                                 
                                         //remove all the new created elements
                                         removeNewTimeElements(fullTaskLine, editTaskSaveButton, editTaskCancelButton);
@@ -1188,74 +1210,6 @@ class List {
         }
     })
 }
-    editTask(){
-        const ellipsisArray = document.querySelectorAll('.task-options');
-        ellipsisArray.forEach(function(ellipsis){
-            ['click','keyup'].forEach(function(evt){
-                ellipsis.addEventListener(evt, function(elipEvent){
-                    if((evt === 'click') || (elipEvent.keyCode === 9)) {
-                         const editTaskButton = document.querySelector('.edit-task-option');
-                        ['click','keyup'].forEach(function(e){
-                            editTaskButton.addEventListener(e, function(event){
-                                if((e === 'click') || (event.keyCode === 13)) {
-                                    let parentDiv = event.target.closest('.task');
-                                    let liToReplace = parentDiv.children[2];
-                                    let textToEdit = parentDiv.children[2].textContent;
-
-                                    if (!document.querySelector('.save-button')){  //stops the situation whereby a user can open 2 or more input edit boxes.
-
-                                        timer.makeElementsNotKeyboardTabbable();
-                                        timer.addOverlay();
-                                        
-                                        const newInput = document.createElement("INPUT");
-                                        newInput.setAttribute("type", "text")
-                                        newInput.setAttribute("value", `${textToEdit}`);
-                                        newInput.setAttribute("class", "editedTask")
-                                        newInput.style.zIndex="1001";
-                                        liToReplace.parentNode.replaceChild(newInput, liToReplace);//works
-
-                                        const saveButton = document.createElement('BUTTON');
-                                        saveButton.setAttribute("class", "save-button");
-                                        saveButton.setAttribute("type", "submit");
-                                        saveButton.style.zIndex="1001";
-                                        saveButton.textContent = "Save";
-                                        newInput.after(saveButton);
-                                    }
-
-                                const saveButton = document.querySelector('.save-button');
-                                const inputBox = document.querySelector('.editedTask')
-                                
-                                saveButton.addEventListener('click', function(){
-                                    //create a new list element to put the edited task into
-                                    const newLi = document.createElement('LI');
-                                    newLi.setAttribute("class", "task-description");
-                                    newLi.setAttribute("id", `${liToReplace.id}` ); //because it's still available in memory.
-                                    newLi.textContent = inputBox.value; //set the value of the li to the edited task value.
-                                    inputBox.parentNode.replaceChild(newLi, inputBox); //confusing AF but basically replace the input box with the Li in the most awkward way possible. 
-                                    
-                                    saveButton.remove();
-                                    timer.removeOverlay();
-                                    timer.makeElementsKeyboardTabbableAgain();
-
-                                    list.taskList.forEach(task => {
-                                        if(task.id == newLi.id){
-                                            task.taskDescription = newLi.textContent;
-                                        }
-                                        if((task.id == newLi.id) && (task.completed == true)){
-                                            newLi.classList.add('completed');
-                                        }
-                                    })
-                                list.setDataToLocalStorage()
-                            })
-
-                                }
-                            })
-                        })
-                    }
-                })
-            })
-        })
-    }
     toggleTaskComplete(){
         //listen for checkbox clicks on specific task.
         const arrayOfCheckboxes = document.querySelectorAll('.taskCheckbox');
@@ -1429,7 +1383,6 @@ let list = new List();
 let timer = new Timer();
 //call these functions so they are operational on the list that is built from local storage.
 list.deleteTask();
-list.editTask();
 list.dynamicPopoverNav();
 timer.initialiseTimer();
 timer.timers();

@@ -686,7 +686,8 @@ function countdownClickStartHelper(countdownType, countdownNumber){
         fullTaskLine.children[4].classList.add('hidden');
         fullTaskLine.children[5].classList.add('hidden');
         }
-
+    
+    //Function to abstract the creation of save & cancel buttons for the edit option
     function createButton(buttonType) {
             const button = document.createElement('BUTTON');
             button.setAttribute("class", `edit-time-${buttonType}-button`);
@@ -702,6 +703,7 @@ function countdownClickStartHelper(countdownType, countdownNumber){
             return button;
         }
 
+    //Function that takes an array of times as strings and turns it into an array of times as integers, formatted correctly.
      function makeTimeNumbersFromStrings(arrayOfStringTimes, arrayOfNumberTimes){
             arrayOfStringTimes.forEach(function(item){
             if (item.length === 5){
@@ -725,6 +727,7 @@ function countdownClickStartHelper(countdownType, countdownNumber){
         return arrayOfNumberTimes;
         }
 
+        //A function that creates labels and inputs for each measure of time in the edit task modal.
         function createNewInputsForManualTimeEdit(measureOfTime, timeVariableToEdit, longFormTime){
                 const newLabel = document.createElement('LABEL');
                 newLabel.setAttribute("for", "edit"+measureOfTime);
@@ -741,15 +744,12 @@ function countdownClickStartHelper(countdownType, countdownNumber){
                 newTime.setAttribute("min", "0");      
                 longFormTime.parentNode.insertBefore(newTime, longFormTime);
             }
-
+        
+        // A function that removes all the new time elements created for the edit task modal.
          function removeNewTimeElements(taskLine, saveButton, cancelButton) {
-                //remove the save button
                 taskLine.removeChild(saveButton);
-                //remove the "edit-time-task" class
                 taskLine.classList.remove('edit-time-task');
-                //remove the cancel button
                 taskLine.removeChild(cancelButton);
-                //remove all the time inputs & labels
                 taskLine.removeChild(document.getElementById('editSeconds'));
                 taskLine.removeChild(document.querySelector('.edit-time-seconds-label'));
                 taskLine.removeChild(document.getElementById('editMinutes'));
@@ -774,92 +774,107 @@ function countdownClickStartHelper(countdownType, countdownNumber){
 
                             if((event.type === 'click') || (event.type === 'keyup') && (event.keyCode === 13)) {
 
-                                //Find the task line clicked on and save in fullTaskLine.
+                                // Variables = V   /   Functions = F     /    Process = P
+
+                                //V1. The Specific Task Line
                                 let fullTaskLine = event.target.closest('.task');
-
-                                //get the id of that task
+                                //V2. Targeted task's ID
                                 let taskToTargetId = fullTaskLine.children[2].id;
-
-                                //get the <p> where the time is described long form.
+                                //V8. Select the task description
+                                let taskToTarget = fullTaskLine.children[2];
+                                console.log(taskToTarget.innerText)
+                                //V3. The Specific Long Form Time <p> 
                                 let longFormTimeToTarget = fullTaskLine.firstElementChild;
-                                console.log(longFormTimeToTarget)
-
+                                //V4. Array of time strings
                                 /*
                                 take that <p> string</p> and divide it on the spaces to isolate the numbers. 
                                 Gives us an array of strings - Eg: ["0hrs", "6mins", "5secs"] 
                                 */
                                 let timeToEdit = longFormTimeToTarget.textContent.split(" ");
-
-                                // This is going to be the array of time numbers
+                                //V5. Array of time numbers
                                 let timeArray = []
 
-                                //Calls the function that transforms the strings into integers and uses the two arrays created above.
+                                //F1. Calls the function that transforms the strings into integers and uses the two arrays created above.
                                 makeTimeNumbersFromStrings(timeToEdit, timeArray);
 
-                                //Creates variables for each of the time categories and sets them as numbers.
+                                //V5, V6, V7 Creates variables for each of the time categories and sets them as numbers.
                                 let hoursToEdit = timeArray[0];
                                 let minutesToEdit = timeArray[1];
                                 let secondsToEdit = timeArray[2];
 
-                                //Calls the function that hides the task icons.
+                                // V9. Save Button Creation
+                                let editTaskSaveButton = createButton("save");
+                                // V10. Cancel Button Creation
+                                let editTaskCancelButton = createButton("cancel");
+
+                                //F2. Calls the function that hides the task icons.
                                 hideTaskIcons();
 
-                                //Calls the function that adds an overlay to focus user on editing the time and not doing anything else. 
+                                //F3.  Calls the function that adds an overlay to focus user on editing the time and not doing anything else. 
                                 timer.addOverlay();
 
-                                //bring the task above the overlay so the user can access the edit boxes.
+                                //P1. Bring the task above the overlay so the user can access the edit boxes.
                                 fullTaskLine.style.zIndex = 1001;
+                                //F4. Make elements not tabbable
                                 timer.makeElementsNotKeyboardTabbable();
-                                //add the class for this layout
+                                //P2, P3, P4 - Add the classes for this layout
                                 fullTaskLine.classList.add('edit-time-task');
-                 
-                                //select the task description
-                                let taskToTarget = fullTaskLine.children[2];
-                                   
                                 taskToTarget.classList.add('edit-time-task-description');
                                 taskToTarget.classList.remove('task');
 
-                                //Call the time input creation function for each of the measures of time.
+                                //F5, F6, F7 - Call the time input creation function for each of the measures of time.
                                 createNewInputsForManualTimeEdit("Hours", hoursToEdit, longFormTimeToTarget);
                                 createNewInputsForManualTimeEdit("Minutes", minutesToEdit, longFormTimeToTarget);
                                 createNewInputsForManualTimeEdit("Seconds", secondsToEdit, longFormTimeToTarget);
 
-                                //remove the time in longform ( a <p> tag )
+                                //P5. Remove the time in longform ( a <p> tag )
                                 fullTaskLine.removeChild(longFormTimeToTarget);
 
-                                let editTaskSaveButton = createButton("save");
-                                   
-                                    //add the save button after the seconds input.
-                                    document.getElementById('editSeconds').after(editTaskSaveButton);
-
-                                    let editTaskCancelButton = createButton("cancel");
-
-                                    //add the cancel button after the save button.
-                                    editTaskSaveButton.after(editTaskCancelButton);
+                                //P6. Add the save button after the seconds input.
+                                document.getElementById('editSeconds').after(editTaskSaveButton);
+                                
+                                //P7. Add the cancel button after the save button.
+                                editTaskSaveButton.after(editTaskCancelButton);
                               
-                                    let editTimeTitle = document.querySelector('.edit-time-task-description');
-                                    editTimeTitle.scrollIntoView();
+                                //V10. Edit Task Name 
+                                let editTaskName = document.querySelector('.edit-time-task-description');
+                                
+                                //P8. Scroll title into view.
+                                editTaskName.scrollIntoView(); //check this
 
-                                    let hoursValue = document.getElementById('editHours');
-                                    let minutesValue = document.getElementById('editMinutes');
-                                    let secondsValue = document.getElementById('editSeconds');
+                                //V11. Text to Edit
+                                let taskTextToEdit = editTaskName.innerText;
 
-                                    let originalHours = hoursValue.value;
-                                    let originalMinutes = minutesValue.value;
-                                    let originalSeconds = secondsValue.value;
+                                //Here is where I need to create an edit task input using the value from editTaskName
 
-                                    //translate that time to seconds
-                                    let minutesInSeconds = originalMinutes * 60;
-                                    let hoursInSeconds = originalHours * 3600;
+                                const newInput = document.createElement("INPUT");
+                                newInput.setAttribute("type", "text")
+                                newInput.setAttribute("value", `${taskTextToEdit}`);
+                                newInput.setAttribute("class", "editedTask")
+                                newInput.style.zIndex="1001";
+                                editTaskName.parentNode.replaceChild(newInput, editTaskName);//works
 
-                                    let baseTime = parseInt(originalSeconds) + minutesInSeconds + hoursInSeconds;
 
-                                    //If the save button is clicked: 
-                                    editTaskSaveButton.addEventListener('click', function(){
+                                let hoursValue = document.getElementById('editHours');
+                                let minutesValue = document.getElementById('editMinutes');
+                                let secondsValue = document.getElementById('editSeconds');
 
-                                        let hoursToAdd = hoursValue.value;
-                                        let minutesToAdd = minutesValue.value;
-                                        let secondsToAdd = secondsValue.value;
+                                let originalHours = hoursValue.value;
+                                let originalMinutes = minutesValue.value;
+                                let originalSeconds = secondsValue.value;
+
+                                //translate that time to seconds
+                                let minutesInSeconds = originalMinutes * 60;
+                                let hoursInSeconds = originalHours * 3600;
+
+                                let baseTime = parseInt(originalSeconds) + minutesInSeconds + hoursInSeconds;
+
+                                //If the save button is clicked: 
+                                editTaskSaveButton.addEventListener('click', function(){
+
+                                    let hoursToAdd = hoursValue.value;
+                                    let minutesToAdd = minutesValue.value;
+                                    let secondsToAdd = secondsValue.value;
                     
                                         //translate that time to seconds
                                         let minutesInSeconds = minutesToAdd * 60;

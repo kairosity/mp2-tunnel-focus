@@ -594,17 +594,18 @@ li.task-description{
 
 input.editedTask {
     height: 50px;
-    width: 100%;
+    width: 90%;
     font-family: "Heebo", sans-serif;
     font-size: 0.7em;
     border: var(--pure-black) solid 2px;
     border-radius: 8px;
-    -webkit-box-shadow: 1.5px 3px 0px 0px rgba(0,0,0,1);
+    /* -webkit-box-shadow: 1.5px 3px 0px 0px rgba(0,0,0,1);
     -moz-box-shadow: 1.5px 3px 0px 0px rgba(0,0,0,1);
-    box-shadow: 1.5px 3px 0px 0px rgba(0,0,0,1);
+    box-shadow: 1.5px 3px 0px 0px rgba(0,0,0,1); */
     transition: all 1000ms;
     padding: 4px;
     background-color: var(--light-blue);
+    margin-bottom: 10px;
 }
 
 input.editedTask:focus {
@@ -1093,7 +1094,7 @@ footer {
 /*----------------------------------------------------------- Edit Task - Small Screens  */
 input.editedTask {
     
-    width: 100%;
+    width: 90%;
     font-size: 0.9em;
 }
 .save-button {

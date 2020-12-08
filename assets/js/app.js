@@ -767,7 +767,7 @@ function countdownClickStartHelper(countdownType, countdownNumber){
                 ellipsis.addEventListener(evt, function(elipEvent){
                      //if the evt is click or the keyup event is a tab...
                     if((evt === 'click') || (elipEvent.keyCode === 9)) {
-                        const manuallyEditTimeButton = document.querySelector('.edit-task-time-task-option');
+                        const manuallyEditTimeButton = document.querySelector('.edit-task-option');
                       
                         // manuallyEditTimeButton.addEventListener('click', function(event){
                         $(manuallyEditTimeButton).bind('click keyup', function(event){
@@ -1188,10 +1188,9 @@ class List {
                 //calls these functions so they are operational on the new task.
                 list.toggleTaskComplete(list.taskList); //checks for completion tasks when new tasks are added.
                 list.deleteTask();
-                list.editTask();
-                list.setDataToLocalStorage();
                 list.dynamicPopoverNav();
                 timer.timers();
+                list.setDataToLocalStorage();
                 location.reload(); //to fix stopwatch click start bug on new tasks that are added.
                
             } else if ((newTaskInputValue === "") || (newTaskInputValue === null)){

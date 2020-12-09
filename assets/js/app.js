@@ -1189,6 +1189,7 @@ class List {
         arrayOfCheckboxes.forEach(function(checkbox){  
             
             let checkboxId = checkbox.nextElementSibling.id;
+            let chartSelection = document.getElementById('chart-selections');
             checkbox.addEventListener('change', function(){ 
                 if(checkbox.checked == true){
                     checkbox.nextElementSibling.classList.add('completed');
@@ -1203,8 +1204,12 @@ class List {
                             task.timeSegments.push({id:task.id, timeToAdd:0, dateStamp, localTime, localDate, taskDescription: task.taskDescription});
                             // list.taskList[id].timeSegments.push({id, timeToAdd, dateStamp, taskDescription, localDate, localTime});   
                         }
-                    })
-                        
+                    })           
+                    if ((chartSelection.value === "tasks-completed") || (chartSelection.value === "tasks-completed-today")) {
+                        list.setDataToLocalStorage()
+                        location.reload();
+                    }
+            
                 } else if (checkbox.checked == false){
                     checkbox.nextElementSibling.classList.remove('completed'); //I think this is causing the issue? 
                      
@@ -1214,6 +1219,10 @@ class List {
                             
                         }
                     })
+                    if ((chartSelection.value === "tasks-completed") || (chartSelection.value === "tasks-completed-today")) {
+                        list.setDataToLocalStorage()
+                        location.reload();
+                    }
                     }
                     list.setDataToLocalStorage()
                 })       

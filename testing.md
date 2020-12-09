@@ -119,7 +119,7 @@ This section will detail each of the class objects that this application is comp
 - saveTimeButton()
 - saveTimeToTask(id, seconds)
 - alarmToggle()
-- manualTaskTimeEdit()
+- editTask()
 - convertSecondsToTime(seconds)
 - addOverlay()
 - removeOverlay()
@@ -331,9 +331,10 @@ When it has determined the amount of time in seconds to add to the task, it then
 
 __FUNCTION SUMMARY:__ This function changes the alarm icon on click and associated on/off classes.
 
-- ## manualTaskTimeEdit() 
+- ## editTask() 
+    ### *( originally manualTaskTimeEdit()  )*
 
-__FUNCTION SUMMARY:__ This function allows the user to manually input or completely alter the amount of time spent working on a particular task. It listens for clicks on its associated icon and then uses the long form time that is displayed next to the task and splits it up into its integer components, creating new inputs to display these for alteration. When the user is ready to save the new time input they can click on  the save button and the function translates the new time first to seconds to save on the task and then into the long form again to save to the task as well.  
+__FUNCTION SUMMARY:__ This function allows the user to manually edit a task input or completely alter the amount of time spent working on a particular task. It listens for clicks on its associated icon and then uses the long form time that is displayed next to the task and splits it up into its integer components, creating new inputs to display these for alteration. When the user is ready to save the new time input they can click on the save button and the function translates the new time first to seconds to save on the task and then into the long form again to save to the task as well. Following a suggestion by my mentor I also merged my code from the editTask() function into this one to have just one edit method. 
 
 __ISSUE 1:__ The manual edit time function was working the first time you clicked or pressed enter on it, but then the second time it was running through the function fully and then running through it again, which was causing all sorts of issues. Below is how it worked on the first click (successfully displaying the elements it is meant to):
 
@@ -361,6 +362,22 @@ __FIX 2:__ I found [this](https://stackoverflow.com/questions/31575496/prevent-n
 __ISSUE 3:__ This worked for manual inputs of time, but users could still input negative numbers by using the down arrows in the number input section. 
 
 __FIX 3:__  Where I dynamically set each edit box of time, I added the code `newTime.setAttribute("min", "0");` which effectively made it impossible to use the arrows to set a time less than 0. 
+
+__ISSUE 4:__ Not so much an issue, more an explainer, but the scope of this function was expanded on my mentor's suggestion that I merge it with the edit task function. This made sense, as there was no sound logic for separating the two editing capabilities. 
+
+__FIX 4:__ I was able to merge all of the edit task code (with alterations) into the manually edit task time function, as well as create a shared modal window.
+
+## editTask() 
+*Original Method integrated with the above*
+
+__METHOD SUMMARY__: This method takes the ```<li>``` that holds the task description and replaces it in the DOM with an input element that uses the li's task description attribute as it's value. The user can then edit the input and click on a save button to save the new task description.
+
+__ISSUE 1:__ Once the user had clicked to "edit task" button, they were free to click on it again, as many times as they wanted which could lead to this situation:  
+
+![edit-task-issue](misc-images/edit-task-issue.png)
+
+__FIX 1:__ I added a conditional that only allowed the edit method to be called if the save button was not already in the DOM: ```if (!document.querySelector('.save-button')){```
+
 
 - ## Timer.convertSecondsToTime(seconds)
 
@@ -453,18 +470,6 @@ to edit or delete one of them, the entire app would break as it would not be abl
 __FIX 3:__ My solution was to change from using task descriptions to using ids. The Task object ids are set when they are initialised and they are based on the current length of the taskList array.
 This way the ids will always run from 0 upwards and they will always match the id attributes of their html counterparts, which are set on the ```<li>``` task elements. This solution also led to a series
 of bugs discussed [here](LINK TO delete() bugs).  
-
-
-## editTask()
-
-__METHOD SUMMARY__: This method takes the ```<li>``` that holds the task description and replaces it in the DOM with an input element that uses the li's task description attribute as it's value. The user can then edit the input and click on a save button to save the new task description.
-
-__ISSUE 1:__ Once the user had clicked to "edit task" button, they were free to click on it again, as many times as they wanted which could lead to this situation:  
-
-![edit-task-issue](misc-images/edit-task-issue.png)
-
-__FIX 1:__ I added a conditional that only allowed the edit method to be called if the save button was not already in the DOM: ```if (!document.querySelector('.save-button')){```
-
 
 ## toggleTaskComplete()
 

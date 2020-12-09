@@ -892,7 +892,6 @@ path text {
    stroke: #fff;
 }
 
-
 div.tooltip-donut {	
     position: absolute;			
     text-align: center;								
@@ -934,7 +933,8 @@ div.tooltip-donut {
 .modal,
 #save-time-to-task-modal,
 #countdown-ended-modal,
-#enter-task-modal {
+#enter-task-modal,
+#confirm-deletion-modal {
   display: none; 
   position: fixed; 
   z-index: 1003; 
@@ -950,7 +950,8 @@ div.tooltip-donut {
 /* Modal Content/Box */
 .modal-content,
 .sttt-modal-content,
-.countdown-ended-modal-content {
+.countdown-ended-modal-content,
+.confirm-deletion-modal-content {
   background-color: var(--sun-yellow);
   margin: 15% auto;
   padding: 20px;
@@ -970,7 +971,8 @@ div.tooltip-donut {
 /* Modal Buttons */
 .close-timer-modal-btn,
 .sttt-modal-btn,
-.ce-modal-btn{ 
+.ce-modal-btn,
+.confirm-deletion-modal-btn{ 
     width: 120px;   
     padding: 5px 14px;
     border-radius: 8px;
@@ -986,7 +988,8 @@ div.tooltip-donut {
 }
 .close-timer-modal-btn:hover,
 .sttt-modal-btn:hover,
-.ce-modal-btn:hover {
+.ce-modal-btn:hover,
+.confirm-deletion-modal-btn:hover {
     -webkit-box-shadow: 5px 9px 0px 0px rgba(0,0,0,1);
     -moz-box-shadow: 5px 9px 0px 0px rgba(0,0,0,1);
     box-shadow: 5px 9px 0px 0px rgba(0,0,0,1);
@@ -994,7 +997,8 @@ div.tooltip-donut {
 /* The 'Yes, Exit' Button */
 .confirm-button,
 .sttt-confirm-button,
-.ce-confirm-button {
+.ce-confirm-button,
+.deletion-confirm-button {
     background-color: var(--pure-white);
     color: var(--pure-black);
     border: 2px solid var(--pure-black);
@@ -1002,7 +1006,8 @@ div.tooltip-donut {
 /* The 'No, Cancel' Button */
 .negate-button,
 .sttt-negate-button,
-.ce-negate-button{
+.ce-negate-button,
+.deletion-negate-button{
     background-color: var(--pure-black);
     color: var(--pure-white);
     border: 2px solid var(--pure-white);
@@ -1016,8 +1021,6 @@ div.tooltip-donut {
 .ce-negate-button:focus {
     outline: var(--dark-blue) dashed 4px;
 }
-/* The "Please enter a valid task modal" */
-
 
 /*----------------------------------------------------------- Footer   */
 
@@ -1145,7 +1148,8 @@ input.editedTask {
 /* Modal Content/Box */
 .modal-content,
 .sttt-modal-content,
-.countdown-ended-modal-content {
+.countdown-ended-modal-content,
+.confirm-deletion-modal-content {
   border: 2px solid var(--pure-black);
   border-radius: 8px;
   width: 350px;

@@ -246,7 +246,7 @@ class Timer {
                             let timerContainerTitle = "Stopwatch";
                             let timerId = "stopwatch-timer-title";
                             createTimerTitle(timerContainerTitle, timerId);
-                            timer.makeElementsNotKeyboardTabbable();
+                            timer.makeArrayElementsNotKeyboardTabbable();
                         } else {
                             startStopwatchButtonArray.forEach(function(stopwatchButton){
                                     event.preventDefault();
@@ -267,7 +267,7 @@ function countdownClickStartHelper(countdownType, countdownNumber){
         timer.addOverlay();
         scrollElementIntoView();
         timerContainer.style.zIndex = 1001;
-        timer.makeElementsNotKeyboardTabbable();
+        timer.makeArrayElementsNotKeyboardTabbable();
 
         let seconds = 0;
         let minutes = countdownNumber;
@@ -415,8 +415,7 @@ function countdownClickStartHelper(countdownType, countdownNumber){
         let messageElement = document.querySelector('.ce-modal-p');
         let typeOfTimer = document.querySelector('.timer-title');
         let thisTask = timerTitle.textContent;
-
-        
+     
 
         if (typeOfTimer.textContent == "Countdown 15"){
             messageElement.textContent = `Congrats! You've worked for the full 15 minutes! Do you want to save 15 minutes to the task: ${thisTask}?`
@@ -500,24 +499,13 @@ function countdownClickStartHelper(countdownType, countdownNumber){
             let resetButton = document.querySelector('#reset');
             let closeTimerX = document.querySelector('.close-timer-x');
 
-            saveButton.setAttribute("tabindex", "-1");
-            alarmButton.setAttribute("tabindex", "-1");
-            pauseButton.setAttribute("tabindex", "-1");
-            playButton.setAttribute("tabindex", "-1");
-            resetButton.setAttribute("tabindex", "-1");
-            closeTimerX.setAttribute("tabindex", "-1");
 
+            makeElementsUntabbable(saveButton, alarmButton, pauseButton, playButton, resetButton, closeTimerX);
 
             confirmButton.addEventListener('click', function(){
             
             closeTimerModal.style.display = "none";
-            
-            saveButton.setAttribute("tabindex", "0");
-            alarmButton.setAttribute("tabindex", "0");
-            pauseButton.setAttribute("tabindex", "0");
-            playButton.setAttribute("tabindex", "0");
-            resetButton.setAttribute("tabindex", "0");
-            closeTimerX.setAttribute("tabindex", "0");
+            makeElementsTabbable(saveButton, alarmButton, pauseButton, playButton, resetButton, closeTimerX);
             
                 //if user clicks X in the middle of timer playing then I need to pause it first
             let intervalToPause;
@@ -533,17 +521,13 @@ function countdownClickStartHelper(countdownType, countdownNumber){
             }      
             removeTimerFromDom();
             timer.removeOverlay();
-            timer.makeElementsKeyboardTabbableAgain();  
+            timer.makeArrayElementsKeyboardTabbableAgain();  
             
             })
             negateButton.addEventListener('click', function(){
             closeTimerModal.style.display = "none"; 
-            saveButton.setAttribute("tabindex", "0");
-            alarmButton.setAttribute("tabindex", "0");
-            pauseButton.setAttribute("tabindex", "0");
-            playButton.setAttribute("tabindex", "0");
-            resetButton.setAttribute("tabindex", "0");
-            closeTimerX.setAttribute("tabindex", "0");
+
+            makeElementsTabbable(saveButton, alarmButton, pauseButton, playButton, resetButton, closeTimerX);
             })                
         })       
     }
@@ -566,19 +550,14 @@ function countdownClickStartHelper(countdownType, countdownNumber){
             let negateButton = document.querySelector('.sttt-negate-button');
             let messageElement = document.querySelector('.sttt-modal-p');
             let typeOfTimer = document.querySelector('.timer-title');
-
             
             let alarmButton = document.querySelector('#alarm-on');
             let pauseButton = document.querySelector('#pause');
             let playButton = document.querySelector('#play');
             let resetButton = document.querySelector('#reset');
             let closeTimerX = document.querySelector('.close-timer-x');
-            saveButton.setAttribute("tabindex", "-1");
-            alarmButton.setAttribute("tabindex", "-1");
-            pauseButton.setAttribute("tabindex", "-1");
-            playButton.setAttribute("tabindex", "-1");
-            resetButton.setAttribute("tabindex", "-1");
-            closeTimerX.setAttribute("tabindex", "-1");
+
+            makeElementsUntabbable(saveButton, alarmButton, pauseButton, playButton, resetButton, closeTimerX);
            
             if (playing == true){
                 pauseButton.style.display = "none";
@@ -612,30 +591,28 @@ function countdownClickStartHelper(countdownType, countdownNumber){
                     }       
                 }
                 saveTimeToTaskModal.style.display = "none";
-                saveButton.setAttribute("tabindex", "0");
-                alarmButton.setAttribute("tabindex", "0");
-                pauseButton.setAttribute("tabindex", "0");
-                playButton.setAttribute("tabindex", "0");
-                resetButton.setAttribute("tabindex", "0");
-                closeTimerX.setAttribute("tabindex", "0");
+                makeElementsTabbable(saveButton, alarmButton, pauseButton, playButton, resetButton, closeTimerX);
 
                 removeTimerFromDom();
                 timer.removeOverlay();
-                timer.makeElementsKeyboardTabbableAgain();
+                timer.makeArrayElementsKeyboardTabbableAgain();
                 location.reload();
             })
             negateButton.addEventListener('click', function(){
                 saveTimeToTaskModal.style.display = "none";
-                saveButton.setAttribute("tabindex", "0");
-                alarmButton.setAttribute("tabindex", "0");
-                pauseButton.setAttribute("tabindex", "0");
-                playButton.setAttribute("tabindex", "0");
-                resetButton.setAttribute("tabindex", "0");
-                closeTimerX.setAttribute("tabindex", "0"); 
+                makeElementsTabbable(saveButton, alarmButton, pauseButton, playButton, resetButton, closeTimerX);
             })
             return playing = false; 
         })
     }
+
+    function makeElementsUntabbable(...elements){
+        elements.forEach(element => element.setAttribute("tabindex", "-1"))
+    }
+    function makeElementsTabbable(...elements){
+        elements.forEach(element => element.setAttribute("tabindex", "0"))
+    }
+    
     function saveTimeToTask(id, seconds){
 
         //select the timer titles to use to determine which timer is being played.
@@ -831,7 +808,7 @@ function countdownClickStartHelper(countdownType, countdownNumber){
                                 //P1. Bring the task above the overlay so the user can access the edit boxes.
                                 fullTaskLine.style.zIndex = 1001;
                                 //F4. Make elements not tabbable
-                                timer.makeElementsNotKeyboardTabbable();
+                                timer.makeArrayElementsNotKeyboardTabbable();
                                 //P2, P3, P4 - Add the classes for this layout
                                 fullTaskLine.classList.add('edit-time-task');
                                 taskToTarget.classList.add('edit-time-task-description');
@@ -943,7 +920,7 @@ function countdownClickStartHelper(countdownType, countdownNumber){
                                     showTaskIcons(fullTaskLine);
 
                                     timer.removeOverlay();
-                                    timer.makeElementsKeyboardTabbableAgain();
+                                    timer.makeArrayElementsKeyboardTabbableAgain();
                                     
                                     list.setDataToLocalStorage();
                                     location.reload();
@@ -965,7 +942,7 @@ function countdownClickStartHelper(countdownType, countdownNumber){
                                     showTaskIcons(fullTaskLine);
                                         
                                     timer.removeOverlay(); 
-                                    timer.makeElementsKeyboardTabbableAgain();
+                                    timer.makeArrayElementsKeyboardTabbableAgain();
                                     list.setDataToLocalStorage();
                                     location.reload();
                                                           
@@ -1015,11 +992,11 @@ removeSilentAlarm(){
     let pageBody = document.getElementsByTagName('BODY')[0];
     pageBody.removeChild(silentAlarm);
 }
-makeElementsNotKeyboardTabbable(){
+makeArrayElementsNotKeyboardTabbable(){
     const addNewTaskButton = document.querySelector('#add-new-task');
     const newTaskInput = document.querySelector('#new-task-input');
     const arrayOfCheckboxes = document.querySelectorAll('.taskCheckbox');
-    const arrayOfSortIcons = document.querySelectorAll('.task-sort');
+    // const arrayOfSortIcons = document.querySelectorAll('.task-sort');
     const arrayOfOptionIcons = document.querySelectorAll('.task-options');
     let startStopwatchButtonArray = document.querySelectorAll('.start-stopwatch');
     const skipTasks = document.querySelector('#skip-tasks');
@@ -1033,9 +1010,9 @@ makeElementsNotKeyboardTabbable(){
         startStopwatchButtonArray.forEach(function(stopwatch){
         stopwatch.setAttribute("tabindex", "-1")
     });   
-        arrayOfSortIcons.forEach(function(sorticon){
-        sorticon.setAttribute("tabindex", "-1")
-    });
+    //     arrayOfSortIcons.forEach(function(sorticon){
+    //     sorticon.setAttribute("tabindex", "-1")
+    // });
     arrayOfOptionIcons.forEach(function(optionicon){
         optionicon.setAttribute("tabindex", "-1")
     });
@@ -1043,7 +1020,7 @@ makeElementsNotKeyboardTabbable(){
     chartsSelectBox.setAttribute("tabindex", "-1");
     
 }
-makeElementsKeyboardTabbableAgain(){
+makeArrayElementsKeyboardTabbableAgain(){
     const addNewTaskButton = document.querySelector('#add-new-task');
     const newTaskInput = document.querySelector('#new-task-input');
     const arrayOfCheckboxes = document.querySelectorAll('.taskCheckbox');
@@ -1171,13 +1148,13 @@ class List {
                 
                 let addValidTaskModal = document.getElementById('enter-task-modal');
                 addValidTaskModal.style.display = "block";
-                timer.makeElementsNotKeyboardTabbable();
+                timer.makeArrayElementsNotKeyboardTabbable();
                 let okButton = document.querySelector('.valid-task-confirm-button');
 
                 okButton.addEventListener('click', function(){
                 
                 addValidTaskModal.style.display = "none";
-                timer.makeElementsKeyboardTabbableAgain();  
+                timer.makeArrayElementsKeyboardTabbableAgain();  
 
             })  
         }
@@ -1241,25 +1218,48 @@ class List {
                                 if((e === 'click') || (event.keyCode === 13)) {
                                     let taskToDelete = event.target.closest('.task');
                                     let taskToDeleteId = taskToDelete.children[2].id;
+                                    let confirmDeletionModal = document.getElementById('confirm-deletion-modal');
+                                    let confirmDeletionBtn = document.querySelector('.deletion-confirm-button');
+                                    let negateDeletionBtn = document.querySelector('.deletion-negate-button');
+                                    let messageElement = document.querySelector('.confirm-deletion-modal-p');
+                                    let taskNameToDelete = taskToDelete.children[2].textContent;    
+                                    timer.makeArrayElementsNotKeyboardTabbable();
+                                    confirmDeletionModal.style.display = "block";
+                                    messageElement.textContent = `Are you sure you want to delete ${taskNameToDelete}?`;
+                                    
+                                    
+                                    
+                                    confirmDeletionBtn.addEventListener('click', function(){
+                                        //Removes the task from the DOM
+                                        taskToDelete.remove();
 
-                                    //Removes the task from the DOM
-                                    taskToDelete.remove();
+                                        //Removes the Task from the taskList array.
+                                        list.taskList.splice(list.taskList.findIndex(task => task.id == taskToDeleteId), 1);
 
-                                    //Removes the Task from the taskList array.
-                                    list.taskList.splice(list.taskList.findIndex(task => task.id == taskToDeleteId), 1);
-
-                                    //resets the Task object ids & timeSegment ids to run from 0 upwards.
-                                    let tList = list.taskList;
-                                    for (let i=0; i<tList.length; i++){
-                                        tList[i].id = i;
-                                        for (let j=0; j<tList[i].timeSegments.length; j++){
-                                            tList[i].timeSegments[j].id = i;
+                                        //resets the Task object ids & timeSegment ids to run from 0 upwards.
+                                        let tList = list.taskList;
+                                        for (let i=0; i<tList.length; i++){
+                                            tList[i].id = i;
+                                            for (let j=0; j<tList[i].timeSegments.length; j++){
+                                                tList[i].timeSegments[j].id = i;
+                                            }
                                         }
-                                    }
-                                    let arrOfDomTasks = document.querySelectorAll('.task-description');
-                                    for (let i=0; i<arrOfDomTasks.length; i++){
-                                        arrOfDomTasks[i].id = i.toString();
-                                    }
+                                        let arrOfDomTasks = document.querySelectorAll('.task-description');
+                                        for (let i=0; i<arrOfDomTasks.length; i++){
+                                            arrOfDomTasks[i].id = i.toString();
+                                        }
+
+                                         confirmDeletionModal.style.display = "none";
+                                         list.setDataToLocalStorage();
+                                         timer.makeArrayElementsKeyboardTabbableAgain();
+                                    })
+
+                                    negateDeletionBtn.addEventListener('click', function(){
+                                        confirmDeletionModal.style.display = "none";
+                                        timer.makeArrayElementsKeyboardTabbableAgain();
+                                        
+                                    })
+                                    
                                     list.setDataToLocalStorage();
                                 }
                             })

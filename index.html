@@ -71,10 +71,8 @@
                 </div>
 
                  <!-- MODALS -->
-                <!-- The Save Time To Task Modal -->
+                <!-- Save Time To Task Modal -->
                 <div id="save-time-to-task-modal">
-
-                   <!-- Modal content -->
                     <div class="sttt-modal-content">
                         <p class="sttt-modal-p">Do you want to save ${thistime} to ${thistask}?</p>
                         <button class="sttt-confirm-button sttt-modal-btn" tabindex="0">Yes, Save</button>
@@ -82,32 +80,34 @@
                     </div>
 
                 </div>
+                <!-- Countdown Ended Modal -->
                 <div id="countdown-ended-modal">
-                     <!-- Modal content -->
                     <div class="countdown-ended-modal-content">
                         <p class="ce-modal-p">Congrats! You've worked for the full ${countdowntime} minutes! Do you want to save those ${countdownminutes} minutes to the task: ${}?</p>
                         <button class="ce-confirm-button ce-modal-btn" tabindex="0">Yes, Save</button>
                         <button class="ce-negate-button ce-modal-btn" tabindex="0">No, Cancel</button>
                     </div>
-
                 </div>
 
-                <!-- The close timer modal -->
+                <!-- Close timer modal -->
                 <div id="close-timer-modal" class="modal">
-
-                    <!-- Modal content -->
                     <div class="modal-content">
                         <p class="close-timer-modal-p">Are you sure you want to exit the timer without saving?</p>
                         <button class="confirm-button close-timer-modal-btn" tabindex="0">Yes, Exit</button>
                         <button class="negate-button close-timer-modal-btn" tabindex="0">No, Cancel</button>
                     </div>
-
+                </div>
+                <!-- Confirm deletion modal -->
+                <div id="confirm-deletion-modal" class="modal">
+                    <div class="confirm-deletion-modal-content">
+                        <p class="confirm-deletion-modal-p">Are you sure you want to delete ${thistask}?</p>
+                        <button class="deletion-confirm-button confirm-deletion-modal-btn" tabindex="0">Yes</button>
+                        <button class="deletion-negate-button confirm-deletion-modal-btn" tabindex="0">No</button>
+                    </div>
                 </div>
 
-                <!-- The please enter a valid task modal -->
+                <!-- "Please Enter a Valid Task" modal -->
                 <div id="enter-task-modal" class="modal">
-
-                    <!-- Modal content -->
                     <div class="modal-content">
                         <p class="close-timer-modal-p">Please enter a valid task.</p>
                         <button class="confirm-button close-timer-modal-btn valid-task-confirm-button" tabindex="0">Ok, will do!</button>

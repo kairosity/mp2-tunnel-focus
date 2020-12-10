@@ -16,10 +16,11 @@
 <body>
 
     <div class="page-container grid-overlord"> 
-    
+     
         <header class="main-header">
             <h1 class="main-heading">Tunnel Focus</h1>
             <h2 class="sub-heading">Time Your Tasks</h2>
+            <a id="info"><i class="far fa-question-circle" tabindex="0"></i></a>
         </header>
 
          <div class="timer-container" role="dialog"> <!--TIMER GOES HERE -->
@@ -112,8 +113,29 @@
                         <p class="close-timer-modal-p">Please enter a valid task.</p>
                         <button class="confirm-button close-timer-modal-btn valid-task-confirm-button" tabindex="0">Ok, will do!</button>
                     </div>
-
                 </div>
+
+                <!-- Information Modal -->
+                <div id="information-modal" class="modal">
+                    <div class="information-modal-content">
+                        <h2>Welcome to Tunnel Focus!</h2>
+                        <h3>The task list you can time.</h3>
+                        <div class="info-grid">
+                            <i class="fas fa-stopwatch info-task-icon"></i><p> This is the stopwatch timer, it is open ended and counts up from 0. Every 30 minutes it will beep once.</p>
+                            <i class="fas fa-ellipsis-v info-task-icon"></i><p> This is the options icon, click it to view more options.</p>
+                            <i class="fas fa-hourglass-half info-task-icon info-countdown15-timer-icon"></i><p> There are 2 countdown timers 15 minutes & 25 minutes, in keeping with pomodoro best practices.</p>
+                            <i class="far fa-edit info-task-icon info-task-edit-icon"></i><p> The "Edit Task" option allows you to manually edit the task description & the amount of time spent on that task.</p>
+                            <i class="fas fa-trash-alt info-task-icon info-task-delete-icon"></i><p> Delete completed tasks that you no longer want to view by clicking "Delete Task".</p>
+                            <i class="fas fa-bell info-task-icon"></i><p> When the timer is active, clicking the bell will mute the alarm.</p>
+                            <i class="fas fa-pause info-task-icon"></i><p> If you need a break mid-task, you can pause & then play the timer again from where you left off.</p>
+                            <i class="fas fa-history info-task-icon"></i><p> You can reset your time.</p>
+                        </div>
+                        <p>Enjoy being more productive!</p>
+                        <button class="close-timer-x close-info-x" tabindex="0"><i class="fas fa-times"></i></button>
+                    </div>
+                </div>
+
+
        
 
         <div class="focus-summary-container" > <!--FOCUS SUMMARIES & CHARTS GO HERE : THIS IS A GRID CHILD OF GRID-OVERLORD -->

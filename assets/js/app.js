@@ -1001,6 +1001,7 @@ makeArrayElementsNotKeyboardTabbable(){
     let startStopwatchButtonArray = document.querySelectorAll('.start-stopwatch');
     const skipTasks = document.querySelector('#skip-tasks');
     let chartsSelectBox = document.querySelector('#chart-selections');
+    let infoIcon = document.querySelector('.fa-question-circle');
 
     newTaskInput.setAttribute("tabindex", "-1");
     addNewTaskButton.setAttribute("tabindex", "-1");
@@ -1018,6 +1019,7 @@ makeArrayElementsNotKeyboardTabbable(){
     });
     skipTasks.setAttribute("tabindex", "-1");
     chartsSelectBox.setAttribute("tabindex", "-1");
+    infoIcon.setAttribute("tabindex", "-1");
     
 }
 makeArrayElementsKeyboardTabbableAgain(){
@@ -1029,7 +1031,7 @@ makeArrayElementsKeyboardTabbableAgain(){
     let startStopwatchButtonArray = document.querySelectorAll('.start-stopwatch');
     const skipTasks = document.querySelector('#skip-tasks');
     let chartsSelectBox = document.querySelector('#chart-selections');
-    
+    let infoIcon = document.querySelector('.fa-question-circle');
 
     newTaskInput.setAttribute("tabindex", "0");
     addNewTaskButton.setAttribute("tabindex", "0");
@@ -1047,8 +1049,40 @@ makeArrayElementsKeyboardTabbableAgain(){
     });
     skipTasks.setAttribute("tabindex", "0");
     chartsSelectBox.setAttribute("tabindex", "0");
+    infoIcon.setAttribute("tabindex", "0");
           
 }
+
+appInformation() {
+
+    //Event Listener when clicking on question mark. 
+    let infoIcon = document.querySelector('.fa-question-circle');
+    let infoModal = document.querySelector('#information-modal');
+
+    infoIcon.addEventListener('keyup', function(event){
+            if(event.keyCode === 13){
+                infoIcon.click();
+            }
+        })
+
+    infoIcon.addEventListener('click', function(){
+
+        timer.addOverlay();
+        timer.makeArrayElementsNotKeyboardTabbable();
+        infoModal.style.zIndex = 1001;
+
+        let closeButton = document.querySelector('.close-info-x');
+
+        closeButton.addEventListener('click', function(){
+            timer.removeOverlay();
+            timer.makeArrayElementsKeyboardTabbableAgain();
+            infoModal.style.zIndex = -900;
+        })
+    })
+    
+
+}
+
 }
 class Task {
     constructor(taskDescription){
@@ -1216,7 +1250,7 @@ class List {
                         ['click','keyup'].forEach(function(e){
                             deleteTaskButton.addEventListener(e, function(event){
                                 if((e === 'click') || (event.keyCode === 13)) {
-                                    let taskToDelete = event.target.closest('.task');
+                                    const taskToDelete = event.target.closest('.task');
                                     let taskToDeleteId = taskToDelete.children[2].id;
                                     let confirmDeletionModal = document.getElementById('confirm-deletion-modal');
                                     let confirmDeletionBtn = document.querySelector('.deletion-confirm-button');
@@ -1226,9 +1260,7 @@ class List {
                                     timer.makeArrayElementsNotKeyboardTabbable();
                                     confirmDeletionModal.style.display = "block";
                                     messageElement.textContent = `Are you sure you want to delete ${taskNameToDelete}?`;
-                                    
-                                    
-                                    
+                                          
                                     confirmDeletionBtn.addEventListener('click', function(){
                                         //Removes the task from the DOM
                                         taskToDelete.remove();
@@ -1256,8 +1288,7 @@ class List {
 
                                     negateDeletionBtn.addEventListener('click', function(){
                                         confirmDeletionModal.style.display = "none";
-                                        timer.makeArrayElementsKeyboardTabbableAgain();
-                                        
+                                        timer.makeArrayElementsKeyboardTabbableAgain();  
                                     })
                                     
                                     list.setDataToLocalStorage();
@@ -1292,7 +1323,6 @@ class List {
                 },
                 };
 
-
             const hideOnEsc = {
                 name: 'hideOnEsc',
                 defaultValue: true,
@@ -1302,7 +1332,6 @@ class List {
                         hide();
                     }
                     }
-
                     return {
                     onShow() {
                         document.addEventListener('keydown', onKeyDown);
@@ -1368,6 +1397,7 @@ list.deleteTask();
 list.dynamicPopoverNav();
 timer.initialiseTimer();
 timer.timers();
+timer.appInformation();
 
 /************************************************ CHARTS & D3.js  **************************************************/
 

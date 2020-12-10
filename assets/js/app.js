@@ -7,39 +7,43 @@ let negateDeletionBtn = document.querySelector('.deletion-negate-button');
 confirmDeletionBtn.addEventListener('click', confirmDeletion);
 negateDeletionBtn.addEventListener('click', negateDeletion);
 
+//GLOBAL FUNCTIONS
+
 function confirmDeletion(){
-        let taskToDeleteId = taskToDel.children[2].id;
-        //Removes the task from the DOM
-        
-        taskToDel.remove();
-        
-        //Removes the Task from the taskList array.
-        list.taskList.splice(list.taskList.findIndex(task => task.id == taskToDeleteId), 1);
+    let taskToDeleteId = taskToDel.children[2].id;
+    //Removes the task from the DOM
+    
+    taskToDel.remove();
+    
+    //Removes the Task from the taskList array.
+    list.taskList.splice(list.taskList.findIndex(task => task.id == taskToDeleteId), 1);
 
-        //resets the Task object ids & timeSegment ids to run from 0 upwards.
-        let tList = list.taskList;
-        for (let i=0; i<tList.length; i++){
-            tList[i].id = i;
-            for (let j=0; j<tList[i].timeSegments.length; j++){
-                tList[i].timeSegments[j].id = i;
-            }
+    //resets the Task object ids & timeSegment ids to run from 0 upwards.
+    let tList = list.taskList;
+    for (let i=0; i<tList.length; i++){
+        tList[i].id = i;
+        for (let j=0; j<tList[i].timeSegments.length; j++){
+            tList[i].timeSegments[j].id = i;
         }
-        //resets the ids of the DOM tasks to link up with the tasks in local Storage so they all sync. 
-        let arrOfDomTasks = document.querySelectorAll('.task-description');
-        for (let i=0; i<arrOfDomTasks.length; i++){
-            arrOfDomTasks[i].id = i.toString();
-        }
-        
-            confirmDeletionModal.style.display = "none";
-            list.setDataToLocalStorage();
-            timer.makeArrayElementsKeyboardTabbableAgain();
     }
-    function negateDeletion(){
+    //resets the ids of the DOM tasks to link up with the tasks in local Storage so they all sync. 
+    let arrOfDomTasks = document.querySelectorAll('.task-description');
+    for (let i=0; i<arrOfDomTasks.length; i++){
+        arrOfDomTasks[i].id = i.toString();
+    }
+    
         confirmDeletionModal.style.display = "none";
-        timer.makeArrayElementsKeyboardTabbableAgain(); 
-        taskToDel = "";
-    }
+        list.setDataToLocalStorage();
+        timer.makeArrayElementsKeyboardTabbableAgain();
+}
 
+function negateDeletion(){
+    confirmDeletionModal.style.display = "none";
+    timer.makeArrayElementsKeyboardTabbableAgain(); 
+    taskToDel = "";
+}
+
+// CLASSES 
 class Timer {
     constructor(){
       
@@ -81,8 +85,10 @@ class Timer {
         // const arrayOfOptionIcons = document.querySelectorAll('.task-options');
         
         const alarm = document.createElement('AUDIO');
-        alarm.setAttribute('src', 'assets/audio/alarm1.mp3');
+        alarm.setAttribute('src', 'assets/audio/alarm2.mp3');
         let alarmButton = document.querySelector('.alarm');
+        const beep = document.createElement('AUDIO');
+        beep.setAttribute('src', 'assets/audio/beep.mp3');
 
         let secondsHtml = document.getElementById('seconds');
         let minutesHtml = document.getElementById('minutes');
@@ -163,8 +169,8 @@ class Timer {
 //Countdown 15 Play
     function countDown15Play(){
 
-        seconds = 0; 
-        minutes = 15; //CHANGE HERE WHEN TESTING
+        seconds = 3; 
+        minutes = 0; //CHANGE HERE WHEN TESTING
         hours = 0;
         countdown();
     }
@@ -355,8 +361,8 @@ function countdownClickStartHelper(countdownType, countdownNumber){
                                         resetTime(countdownInt);
                                         closeTimer();  
                                     }
-                                // $(this).unbind('click', arguments.callee);
-                                // $(this).unbind('keyup', arguments.callee);          
+                                $(this).unbind('click', arguments.callee);
+                                $(this).unbind('keyup', arguments.callee);          
                                 })
                     }
                  })
@@ -378,8 +384,8 @@ function countdownClickStartHelper(countdownType, countdownNumber){
                                         resetTime(countdownInt);
                                         closeTimer();  
                                     }
-                                // $(this).unbind('click', arguments.callee);
-                                // $(this).unbind('keyup', arguments.callee);
+                                $(this).unbind('click', arguments.callee);
+                                $(this).unbind('keyup', arguments.callee);
                                 })
                             }
                         })

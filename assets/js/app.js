@@ -1,4 +1,45 @@
- 
+//GLOBAL VARIABLES
+
+var taskToDel = "";
+let confirmDeletionModal = document.getElementById('confirm-deletion-modal');
+let confirmDeletionBtn = document.querySelector('.deletion-confirm-button');
+let negateDeletionBtn = document.querySelector('.deletion-negate-button');
+confirmDeletionBtn.addEventListener('click', confirmDeletion);
+negateDeletionBtn.addEventListener('click', negateDeletion);
+
+function confirmDeletion(){
+        let taskToDeleteId = taskToDel.children[2].id;
+        //Removes the task from the DOM
+        
+        taskToDel.remove();
+        
+        //Removes the Task from the taskList array.
+        list.taskList.splice(list.taskList.findIndex(task => task.id == taskToDeleteId), 1);
+
+        //resets the Task object ids & timeSegment ids to run from 0 upwards.
+        let tList = list.taskList;
+        for (let i=0; i<tList.length; i++){
+            tList[i].id = i;
+            for (let j=0; j<tList[i].timeSegments.length; j++){
+                tList[i].timeSegments[j].id = i;
+            }
+        }
+        //resets the ids of the DOM tasks to link up with the tasks in local Storage so they all sync. 
+        let arrOfDomTasks = document.querySelectorAll('.task-description');
+        for (let i=0; i<arrOfDomTasks.length; i++){
+            arrOfDomTasks[i].id = i.toString();
+        }
+        
+            confirmDeletionModal.style.display = "none";
+            list.setDataToLocalStorage();
+            timer.makeArrayElementsKeyboardTabbableAgain();
+    }
+    function negateDeletion(){
+        confirmDeletionModal.style.display = "none";
+        timer.makeArrayElementsKeyboardTabbableAgain(); 
+        taskToDel = "";
+    }
+
 class Timer {
     constructor(){
       
@@ -17,7 +58,7 @@ class Timer {
     } 
     timers(){
 
-// --------------------------------------GLOBAL VARIABLES-------------------------------//
+// --------------------------------------TIMER CLASS VARIABLES-------------------------------//
 
         let seconds = 0;
         let minutes = 0;
@@ -1240,58 +1281,47 @@ class List {
             })
             
         }
+        
+
     deleteTask(){
         const ellipsisArray = document.querySelectorAll('.task-options');
+        //for each ellipsis icon on the main page attach two listeners - one for clicks, one for keyboard
         ellipsisArray.forEach(function(ellipsis){
             ['click','keyup'].forEach(function(evt){
+
+                //for each of those add a handler on the specific ellipsis icon clicked and attach 2 event handlers - one for clicks and one for the tab key
                 ellipsis.addEventListener(evt, function(elipEvent){
                     if((evt === 'click') || (elipEvent.keyCode === 9)) {
+
+                        //For the delete task button inside the selected ellipsis
                          const deleteTaskButton = document.querySelector('.delete-task-option');
-                        ['click','keyup'].forEach(function(e){
+                         
+                         //for either a click or keyup record the specific event (e) that was clicked on
+                        ['click','keyup'].forEach(function(e){ 
+                            //add an event listener to that specific delete button pertaining to that ellipsis and if the event is a click or an enter key then run the logic: 
                             deleteTaskButton.addEventListener(e, function(event){
                                 if((e === 'click') || (event.keyCode === 13)) {
-                                    const taskToDelete = event.target.closest('.task');
-                                    let taskToDeleteId = taskToDelete.children[2].id;
-                                    let confirmDeletionModal = document.getElementById('confirm-deletion-modal');
-                                    let confirmDeletionBtn = document.querySelector('.deletion-confirm-button');
-                                    let negateDeletionBtn = document.querySelector('.deletion-negate-button');
+
+                                    
+                                    taskToDel = event.target.closest('.task');
+                                    
+                                    
+                                    // let confirmDeletionModal = document.getElementById('confirm-deletion-modal');
+                                   
                                     let messageElement = document.querySelector('.confirm-deletion-modal-p');
-                                    let taskNameToDelete = taskToDelete.children[2].textContent;    
+                                    let taskNameToDelete = taskToDel.children[2].textContent;  
+                                    console.log(`${taskNameToDelete}  1st pass`);  
+
                                     timer.makeArrayElementsNotKeyboardTabbable();
+
+                                    //Bring up the modal
                                     confirmDeletionModal.style.display = "block";
                                     messageElement.textContent = `Are you sure you want to delete ${taskNameToDelete}?`;
-                                          
-                                    confirmDeletionBtn.addEventListener('click', function(){
-                                        //Removes the task from the DOM
-                                        taskToDelete.remove();
-
-                                        //Removes the Task from the taskList array.
-                                        list.taskList.splice(list.taskList.findIndex(task => task.id == taskToDeleteId), 1);
-
-                                        //resets the Task object ids & timeSegment ids to run from 0 upwards.
-                                        let tList = list.taskList;
-                                        for (let i=0; i<tList.length; i++){
-                                            tList[i].id = i;
-                                            for (let j=0; j<tList[i].timeSegments.length; j++){
-                                                tList[i].timeSegments[j].id = i;
-                                            }
-                                        }
-                                        let arrOfDomTasks = document.querySelectorAll('.task-description');
-                                        for (let i=0; i<arrOfDomTasks.length; i++){
-                                            arrOfDomTasks[i].id = i.toString();
-                                        }
-
-                                         confirmDeletionModal.style.display = "none";
-                                         list.setDataToLocalStorage();
-                                         timer.makeArrayElementsKeyboardTabbableAgain();
-                                    })
-
-                                    negateDeletionBtn.addEventListener('click', function(){
-                                        confirmDeletionModal.style.display = "none";
-                                        timer.makeArrayElementsKeyboardTabbableAgain();  
-                                    })
+                                     
                                     
-                                    list.setDataToLocalStorage();
+                                    
+                                    
+                                    // list.setDataToLocalStorage();
                                 }
                             })
                         })

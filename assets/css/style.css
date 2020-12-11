@@ -1084,14 +1084,11 @@ div.tooltip-donut {
 footer {
     background-color: var(--sun-yellow);
     padding: 2rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    grid-column: 1 / 13;
-    grid-row: 8/9;
-    justify-content: center;
-    /* border-top: 5px solid var(--pure-black);
-    border-radius: 8px; */
+    position: absolute;
+    bottom: -25px;
+    left: 0;
+    right: 0;
+    height: 60px;
 }
 
 /*----------------------------------------------------------- MEDIA QUERIES: Small Screens   */
@@ -1377,6 +1374,7 @@ div.tooltip-donut {
     flex-direction: row;
     align-items: center;
     justify-content: center;
+    grid-row-gap: 30px;
 }
 
 .chart-area{

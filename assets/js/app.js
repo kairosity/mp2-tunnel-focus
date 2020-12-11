@@ -158,9 +158,12 @@ class Timer {
             minutes = 0;
             hours = hours + 1;
         }
-        if((minutes % 30 === 0) && (minutes !== 0) && (seconds === 0)){
+        if (alarmButton.innerHTML == `<i class="fas fa-bell" aria-hidden="true"></i>`){
+           if((minutes % 2 === 0) && (minutes !== 0) && (seconds === 0)){
             beep.play();
         }    
+        }
+         
         formatTime(seconds, minutes, hours);
     }
     function stopWatchPlay(){

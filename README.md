@@ -226,7 +226,7 @@ I used a recurring design theme of hard box shadows on almost all the component 
 
 ### Colour Palette 
 I wanted a bright, fresh and clean somewhat retro look, using bold and happy colours. The two main accent colours are bright yellow and a light bright blue/cyan, with the remaining colours used for small details and for the different charts slices. 
-![palette](misc-images/color-palette.png)
+![palette](assets/misc-images/color-palette.png)
 
 ### Typography 
 
@@ -258,7 +258,7 @@ For all other fonts, I used another Google Font called Heebo, which is a clean a
 9. [Popover Mockup](wireframes/popover-design.png)
 10. [Select Options Mockup](wireframes/select-options-mockup.png)
 11. [Typography](wireframes/typography.png) 
-12. [Colour Palette](misc-images/color-palette.png)
+12. [Colour Palette](assets/misc-images/color-palette.png)
 
 
 # Features
@@ -364,15 +364,15 @@ This website was developed using GitPod in a Chrome browser and commits were pus
 1. I went to the main page of my GitHub repository.
 2. I clicked on the "Settings" tab on the main horizontal tab bar.
 
-![settings](misc-images/deployment0.png)
+![settings](assets/misc-images/deployment0.png)
 
 3. I scrolled down to the "GitHub Pages" section of settings.
 
-![githubpages](misc-images/deployment1.png)
+![githubpages](assets/misc-images/deployment1.png)
 
 4. I selected "Branch: Master" and the "Root" Directory and then clicked "Save".
 
-![branch](misc-images/deployment2.png)
+![branch](assets/misc-images/deployment2.png)
 
 5. Site Published.
 

@@ -131,7 +131,7 @@ This section will detail each of the class objects that this application is comp
 ## Timer.initialiseTimer():
 This method is called on page load and all it does is ensure that we don't see "::" (as below) when the timer is called up for the first time. Instead it formats a nice row of 0s: 00:00:00
 
-![timer-init](misc-images/timer-initialisation.png)
+![timer-init](assets/misc-images/timer-initialisation.png)
 
 
 ## Timer.timers():
@@ -178,13 +178,13 @@ These are a series of functions that take care of the timing logic.
     __ISSUE 2:__ Even though I initialised the time properties to integers - when they are written dynamically in the DOM they are converted to strings. Here is an example of 
     one of the unanticipated side-effects of this:
 
-    ![issue2](misc-images/timer-issue-1.png)
+    ![issue2](assets/misc-images/timer-issue-1.png)
 
     __FIX 2:__ I found that for the purpose of this application it's fine that the html representation of time is in string form. The conversion  to strings is automatic, 
     and when I work with the total time I will convert those strings back to numbers. To fix the multiplying 1s, I left the conversion from strings to numbers up to the browser.
 
     __ISSUE 3:__ The stopwatch timer was working perfectly for counting seconds, but when it got to 59 minutes & 59 seconds it then showed: 00:60:00 for a second before changing to 01:00:01.
-    ![issue3](misc-images/timer-issue-3.png)![issue3](misc-images/timer-issue-2.png)
+    ![issue3](assets/misc-images/timer-issue-3.png)![issue3](assets/misc-images/timer-issue-2.png)
 
     __FIX:__ I had written an IF / ELSE IF statement for my timing logic:
 
@@ -338,16 +338,16 @@ __FUNCTION SUMMARY:__ This function allows the user to manually edit a task inpu
 
 __ISSUE 1:__ The manual edit time function was working the first time you clicked or pressed enter on it, but then the second time it was running through the function fully and then running through it again, which was causing all sorts of issues. Below is how it worked on the first click (successfully displaying the elements it is meant to):
 
-![success](misc-images/howitshouldlook.png)
+![success](assets/misc-images/howitshouldlook.png)
 
 But this is what was happening on the second click without refreshing the page: 
 
-![manualtasktimebug](misc-images/issue2manualtasktimeedit.png)
+![manualtasktimebug](assets/misc-images/issue2manualtasktimeedit.png)
 
 __FIX 1:__ The issue was that the click event handlers for the manual time edit button were adding up each time a user clicked on the button without refreshing the page. I eventually discovered this by examining the event listeners on that button at various stages of the function (as seen below): 
 
-![1stround](misc-images/1st-round.png)
-![2ndround](misc-images/2nd-round.png)
+![1stround](assets/misc-images/1st-round.png)
+![2ndround](assets/misc-images/2nd-round.png)
 
 Then Haley from tutor support sent me [this](https://stackoverflow.com/questions/209029/best-way-to-remove-an-event-handler-in-jquery) useful information about using jQuery to effect a bind and unbind function on event listeners, in order to cancel or remove the event listeners of click and / or keyup. This worked a treat, as below:
 
@@ -374,7 +374,7 @@ __METHOD SUMMARY__: This method takes the ```<li>``` that holds the task descrip
 
 __ISSUE 1:__ Once the user had clicked to "edit task" button, they were free to click on it again, as many times as they wanted which could lead to this situation:  
 
-![edit-task-issue](misc-images/edit-task-issue.png)
+![edit-task-issue](assets/misc-images/edit-task-issue.png)
 
 __FIX 1:__ I added a conditional that only allowed the edit method to be called if the save button was not already in the DOM: ```if (!document.querySelector('.save-button')){```
 
@@ -547,13 +547,13 @@ functionality I wanted in less than 15 minutes. Long live tippy.js
 
 __ISSUE 2:__ While tippy.js is wonderful, I found that the keyboard accessibility would not automatically close the popover from the previous task before opening a new task item further down the list. This led to the following untidy situation, which would be quite irritating for keyboard users: 
 
-![tippy-keyboard-access](misc-images/tippy-keyboard-access.png)
+![tippy-keyboard-access](assets/misc-images/tippy-keyboard-access.png)
 
 __FIX 2:__ As you can see above, I started trying to fix this issue by creating an X close button, that was clickable and keyboard tabbable, while this worked (sort of) using visibility and z-index, I then found a less hacky way in the closed issues on the developer's github repo using an object plugin that was actually in the documentation. The plugin is called hideOnPopperBlur and is attributed in the code and README.md file. 
 
 __ISSUE 3:__ Another issue I found, was that when a user went to select an option from the popover options list, for example they click on "Edit Task", the popover did not disappear immediately, which is the functionality I believe makes the most sense. The tippy.js default is that it disappears when the user clicks anywhere else on the screen, but I felt that it should be hidden immediately to avoid this ugly situation: 
 
-![tippy-popover-hanging-about](misc-images/tippy-popover-hanging-about.png)
+![tippy-popover-hanging-about](assets/misc-images/tippy-popover-hanging-about.png)
 
 __FIX 3:__ I created my own tippy.js plugin to deal with this issue. ```hideOnOptionSelect``` It follows the recommended plugin formula for tippy.js and it includes an event listener for clicks on any of the popover options. Instead of looping through the array of popover options, I chose to create const variables for each of the four targeted options and then using || operators within my IF statement to outline the desired behaviour. This approach worked better within the parameters of the tippy.js plugin formula.  
 
@@ -624,17 +624,17 @@ __ISSUE 1:__ This function introduced me to the concept of 'passing by reference
 1. Three tasks are worked on "today" 
 2. The first task is worked on, on 3 separate occasions for 4seconds, 3 seconds & 4 seconds. 
 3. The other two tasks are just worked on once each. 
-![passbyref1](misc-images/passbyref1.png)
+![passbyref1](assets/misc-images/passbyref1.png)
 
 4. getTodayTasks() is called to create a chart. 
 5. It successfully sums the first task into a single object displaying 11 seconds worked on the task. 
 
-![passbyref2](misc-images/passbyref2.png)
+![passbyref2](assets/misc-images/passbyref2.png)
 6. The user adds another task and works on it for a number of seconds. 
 7. To update the chart, the user calls getTodayTasks again. 
 8. But now the first task is registering as having 18seconds of total time worked on it. And if we look at the original task object, to our *horror* we see that the function has mutated the original time segment as well. 
-![passbyref3](misc-images/passbyref3.png)
-![passbyref4](misc-images/passbyref4.png)
+![passbyref3](assets/misc-images/passbyref3.png)
+![passbyref4](assets/misc-images/passbyref4.png)
 
 __FIX 1:__ The fix was just to add a spread operator at the point where the object first gets passed into the function:
 

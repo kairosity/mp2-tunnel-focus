@@ -207,12 +207,12 @@ for the timer.
 
 __*Alternatively here are the individual wireframes:*__
 
-1. [1st draft wireframes: pen on paper: A](wireframes/wireframe1.jpg)
-2. [1st draft wireframes: pen on paper: B](wireframes/wireframe2.jpg)
-3. [Mobile Wireframes 2nd Draft](wireframes/mobile-wireframes-2nd-draft.png)
-4. [Mobile Wireframes - Final Draft](wireframes/mobile-wireframes.png)
-5. [Tablet Wireframes - Final Draft](wireframes/tablet-wireframes.png)
-6. [Desktop Wireframes - Final Draft](wireframes/desktop-wireframes.png)
+1. [1st draft wireframes: pen on paper: A](assets/wireframes/wireframe1.jpg)
+2. [1st draft wireframes: pen on paper: B](assets/wireframes/wireframe2.jpg)
+3. [Mobile Wireframes 2nd Draft](assets/wireframes/mobile-wireframes-2nd-draft.png)
+4. [Mobile Wireframes - Final Draft](assets/wireframes/mobile-wireframes.png)
+5. [Tablet Wireframes - Final Draft](assets/wireframes/tablet-wireframes.png)
+6. [Desktop Wireframes - Final Draft](assets/wireframes/desktop-wireframes.png)
 
 If you choose to view them this way, please click download as the GitHub viewer can expand the smaller files to an uncomfortably large zoom ratio.
 
@@ -238,26 +238,26 @@ For the typography I wanted a slightly unusual heading font, but nothing with to
 
 For all other fonts, I used another Google Font called Heebo, which is a clean and elegant sans-serif that worked well to stay out of the way of the colourful design. Clear enough and simple enough to present information to the user, without overpowering the look of the application. 
 
-![typography](wireframes/typography.png)
+![typography](assets/wireframes/typography.png)
 
 ### Design Mockups 
 #### Main Mockups
-1. [Mobile Mockups](wireframes/mobile-mockups.png)
-2. [Tablet Mockups](wireframes/tablet-mockups.png)
-3. [Desktop Mockups](wireframes/desktop-mockups.png)
+1. [Mobile Mockups](assets/wireframes/mobile-mockups.png)
+2. [Tablet Mockups](assets/wireframes/tablet-mockups.png)
+3. [Desktop Mockups](assets/wireframes/desktop-mockups.png)
 
 #### Component Mockups
-1. [Components Mockups](wireframes/components-mockups.png)
-2. [Mobile Timer Mockup](wireframes/mobile-timer-mockup.png)
-3. [Task List Mockup](wireframes/task-list-mockup.png)
-4. [Desktop Charts Mockup](wireframes/desktop-charts-mockup.png)
-5. [Desktop Timer & List Detail Mockup](wireframes/desktop-timer-and-list-detail-mockup.png)
-6. [Desktop Timer Mockup](wireframes/desktop-timer-mockup.png)
-7. [Manual Task Time Edit Mockup](wireframes/manual-task-time-edit.png)
-8. [Modal Mockup](wireframes/modal-mockup.png)
-9. [Popover Mockup](wireframes/popover-design.png)
-10. [Select Options Mockup](wireframes/select-options-mockup.png)
-11. [Typography](wireframes/typography.png) 
+1. [Components Mockups](assets/wireframes/components-mockups.png)
+2. [Mobile Timer Mockup](assets/wireframes/mobile-timer-mockup.png)
+3. [Task List Mockup](assets/wireframes/task-list-mockup.png)
+4. [Desktop Charts Mockup](assets/wireframes/desktop-charts-mockup.png)
+5. [Desktop Timer & List Detail Mockup](assets/wireframes/desktop-timer-and-list-detail-mockup.png)
+6. [Desktop Timer Mockup](assets/wireframes/desktop-timer-mockup.png)
+7. [Manual Task Time Edit Mockup](assets/wireframes/manual-task-time-edit.png)
+8. [Modal Mockup](assets/wireframes/modal-mockup.png)
+9. [Popover Mockup](assets/wireframes/popover-design.png)
+10. [Select Options Mockup](assets/wireframes/select-options-mockup.png)
+11. [Typography](assets/wireframes/typography.png) 
 12. [Colour Palette](assets/misc-images/color-palette.png)
 
 
@@ -365,6 +365,7 @@ This website was developed using GitPod in a Chrome browser and commits were pus
 2. I clicked on the "Settings" tab on the main horizontal tab bar.
 
 ![settings](assets/misc-images/deployment0.png)
+
 
 3. I scrolled down to the "GitHub Pages" section of settings.
 
@@ -538,5 +539,5 @@ This website was developed using GitPod in a Chrome browser and commits were pus
 
 # Acknowledgements
 
-Thanks To Haley from Tutor Support who helped me crack a particularly stubborn bug in the Manual Time Edit Function. 
-Thanks to Igor from Tutor Support who gave me some great direction v-a-v Jasmine Testing. 
+Thanks To Tutor Support specifically; Haley who helped me crack a particularly stubborn bug in the Manual Time Edit Function, 
+Igor who gave me some great direction v-a-v Jasmine Testing & Stephen who helped me extract elements of my deleteTask() function to the global space to fix an addEventListener issue.  

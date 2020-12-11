@@ -361,8 +361,8 @@ function countdownClickStartHelper(countdownType, countdownNumber){
                                         resetTime(countdownInt);
                                         closeTimer();  
                                     }
-                                $(this).unbind('click', arguments.callee);
-                                $(this).unbind('keyup', arguments.callee);          
+                                $(this).unbind('click');
+                                $(this).unbind('keyup');          
                                 })
                     }
                  })
@@ -384,8 +384,8 @@ function countdownClickStartHelper(countdownType, countdownNumber){
                                         resetTime(countdownInt);
                                         closeTimer();  
                                     }
-                                $(this).unbind('click', arguments.callee);
-                                $(this).unbind('keyup', arguments.callee);
+                                $(this).unbind('click');
+                                $(this).unbind('keyup');
                                 })
                             }
                         })
@@ -994,8 +994,8 @@ function countdownClickStartHelper(countdownType, countdownNumber){
                                     location.reload();
                                                           
                                     })
-                                $(this).unbind('click', arguments.callee);
-                                $(this).unbind('keyup', arguments.callee);
+                                $(this).unbind('click');
+                                $(this).unbind('keyup');
                             }
                             });
                         }

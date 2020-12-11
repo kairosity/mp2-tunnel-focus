@@ -367,6 +367,16 @@ __ISSUE 4:__ Not so much an issue, more an explainer, but the scope of this func
 
 __FIX 4:__ I was able to merge all of the edit task code (with alterations) into the manually edit task time function, as well as create a shared modal window.
 
+__ISSUE 5:__ If a user opened the edit task modal, didn't change any of the time variables, but altered the task description OR even just instead of clicking cancel, they clicked save changes, the application was adding a time segment to the associated array, which was in turn making that task appear in the "Total time focused on each task today" chart legend. It was correct insofar as it registered 0hrs 0mins 0secs, but there was no need for it to be there. 
+
+__FIX 5:__ I added the following if statement within the editTask() method:
+
+            if (totalTimeToAdd !== 0) {
+                list.taskList[taskToTargetId].timeSegments.push({id, timeToAdd, dateStamp, taskDescription, localDate, localTime});
+            }    
+Thus ensuring that if no time is added, but the task description is edited, the name will change correctly, but the task will not appear in the "today" chart legend.             
+
+
 ## editTask() 
 *Original Method integrated with the above*
 

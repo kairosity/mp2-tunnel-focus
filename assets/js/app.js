@@ -947,15 +947,22 @@ function countdownClickStartHelper(countdownType, countdownNumber){
                                     let hoursInSeconds = hoursToAdd * 3600;
 
                                     /* 5. Take a snapshot of the date & time these changes were made in order to keep the "today" chart information accurate. If a task is edited, the new amount of time minused from the original time is added as a time segment in an array. */
+                                    let totalTimeToAdd = parseInt(secondsToAdd) + minutesInSeconds + hoursInSeconds;
+                                    console.log(totalTimeToAdd)
+
+                                    
+
                                     let dateStamp = new Date();
                                     let localTime = dateStamp.toLocaleTimeString();
                                     let localDate = dateStamp.toLocaleDateString();
                                     let taskDescription = list.taskList[taskToTargetId].taskDescription;
                                     let id = parseInt(taskToTargetId);
-                                    let totalTimeToAdd = parseInt(secondsToAdd) + minutesInSeconds + hoursInSeconds;
+                                    
                                     let timeToAdd = totalTimeToAdd - baseTime;
-
-                                    list.taskList[taskToTargetId].timeSegments.push({id, timeToAdd, dateStamp, taskDescription, localDate, localTime});
+                                    
+                                    if (totalTimeToAdd !== 0) {
+                                       list.taskList[taskToTargetId].timeSegments.push({id, timeToAdd, dateStamp, taskDescription, localDate, localTime});
+                                    }                                    
                                         
                                     //6. Convert those seconds to long form time
                                     let longFormTimeToAdd = timer.convertSecondsToTime(totalTimeToAdd);

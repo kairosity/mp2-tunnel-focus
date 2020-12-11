@@ -3,30 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0 maximum-scale=1.0,user-scalable=0">
-    
-
-   
     <link rel="stylesheet" href="https://unpkg.com/tippy.js@6/animations/scale.css"/>
     <link rel="stylesheet" href="assets/css/style.css">
     <title>Tunnel Focus: Time Your Tasks</title>
-    
-
 </head>
 
 <body>
-
+    <!------------------------------------------------------------------------ PAGE CONTAINER DIV -->
     <div class="page-container grid-overlord"> 
      
+    <!------------------------------------------------------------------------ HEADER -------------->
         <header class="main-header">
             <h1 class="main-heading">Tunnel Focus</h1>
             <h2 class="sub-heading">Time Your Tasks</h2>
             <a id="info"><i class="far fa-question-circle" tabindex="0"></i></a>
         </header>
-
-         <div class="timer-container" role="dialog"> <!--TIMER GOES HERE -->
-
-            <h2 id="" class="timer-task-description"></h2>
-            
+    <!------------------------------------------------------------------------ TIMER --------------->
+         <div class="timer-container" role="dialog"> 
+            <h2 id="" class="timer-task-description"></h2>     
             <div class="outer-timer-box">
             <div class="timer-box">
                 <h2 id="hours"></h2>
@@ -45,21 +39,17 @@
             <button id="save-time-to-task">Save Time To Task</button>
             <button class="close-timer-x" tabindex="0"><i class="fas fa-times"></i></button>
         </div>
-      
-        <div class="list-container"> <!--TASK LIST GOES HERE-->
-           
+    <!------------------------------------------------------------------------ TASK LIST ----------->
+        <div class="list-container">
             <div class="add-new-task">
                 <input type="text" id="new-task-input" placeholder="Type to add a new task..." autofocus>
                 <button id="add-new-task"><i class="fas fa-plus add-new-task-plus-icon"></i></button>
             </div>
              <a href="#charts-start" id="skip-tasks" tabindex="0">Skip Tasks</a>
-
-
-            <div id="list"> 
-                
+            <div id="list">          
             </div>
         </div>
-
+    <!---------------------------------------------------------------- OPTIONS POPOVER NAVIGATION ---->
                 <div class="popover-wrapper" id="popover">
                     <div class="popover-box">
                         <ul class="task-options-list">
@@ -70,52 +60,9 @@
                         </ul>
                     </div>
                 </div>
+    <!------------------------------------------------------------------------ MODALS --------------->
 
-                 <!-- MODALS -->
-                <!-- Save Time To Task Modal -->
-                <div id="save-time-to-task-modal">
-                    <div class="sttt-modal-content">
-                        <p class="sttt-modal-p">Do you want to save ${thistime} to ${thistask}?</p>
-                        <button class="sttt-confirm-button sttt-modal-btn" tabindex="0">Yes, Save</button>
-                        <button class="sttt-negate-button sttt-modal-btn" tabindex="0">No, Cancel</button>
-                    </div>
-
-                </div>
-                <!-- Countdown Ended Modal -->
-                <div id="countdown-ended-modal">
-                    <div class="countdown-ended-modal-content">
-                        <p class="ce-modal-p">Congrats! You've worked for the full ${countdowntime} minutes! Do you want to save those ${countdownminutes} minutes to the task: ${}?</p>
-                        <button class="ce-confirm-button ce-modal-btn" tabindex="0">Yes, Save</button>
-                        <button class="ce-negate-button ce-modal-btn" tabindex="0">No, Cancel</button>
-                    </div>
-                </div>
-
-                <!-- Close timer modal -->
-                <div id="close-timer-modal" class="modal">
-                    <div class="modal-content">
-                        <p class="close-timer-modal-p">Are you sure you want to exit the timer without saving?</p>
-                        <button class="confirm-button close-timer-modal-btn" tabindex="0">Yes, Exit</button>
-                        <button class="negate-button close-timer-modal-btn" tabindex="0">No, Cancel</button>
-                    </div>
-                </div>
-                <!-- Confirm deletion modal -->
-                <div id="confirm-deletion-modal" class="modal">
-                    <div class="confirm-deletion-modal-content">
-                        <p class="confirm-deletion-modal-p">Are you sure you want to delete ${thistask}?</p>
-                        <button class="deletion-confirm-button confirm-deletion-modal-btn" tabindex="0">Yes</button>
-                        <button class="deletion-negate-button confirm-deletion-modal-btn" tabindex="0">No</button>
-                    </div>
-                </div>
-
-                <!-- "Please Enter a Valid Task" modal -->
-                <div id="enter-task-modal" class="modal">
-                    <div class="modal-content">
-                        <p class="close-timer-modal-p">Please enter a valid task.</p>
-                        <button class="confirm-button close-timer-modal-btn valid-task-confirm-button" tabindex="0">Ok, will do!</button>
-                    </div>
-                </div>
-
-                <!-- Information Modal -->
+    <!--------------------------------------------------------------------- APP INFORMATION MODAL ----->
                 <div id="information-modal" class="modal">
                     <div class="information-modal-content">
                         <h2>Welcome to Tunnel Focus!</h2>
@@ -134,16 +81,50 @@
                         <button class="close-timer-x close-info-x" tabindex="0"><i class="fas fa-times"></i></button>
                     </div>
                 </div>
-
-
-       
-
-        <div class="focus-summary-container" > <!--FOCUS SUMMARIES & CHARTS GO HERE : THIS IS A GRID CHILD OF GRID-OVERLORD -->
-
+    <!-------------------------------------------------------------------- SAVE TIME TO TASK MODAL --->
+                <div id="save-time-to-task-modal">
+                    <div class="sttt-modal-content">
+                        <p class="sttt-modal-p">Do you want to save ${thistime} to ${thistask}?</p>
+                        <button class="sttt-confirm-button sttt-modal-btn" tabindex="0">Yes, Save</button>
+                        <button class="sttt-negate-button sttt-modal-btn" tabindex="0">No, Cancel</button>
+                    </div>
+                </div>
+    <!-------------------------------------------------------------------- COUNTDOWN ENDED MODAL ----->
+                <div id="countdown-ended-modal">
+                    <div class="countdown-ended-modal-content">
+                        <p class="ce-modal-p">Congrats! You've worked for the full ${countdowntime} minutes! Do you want to save those ${countdownminutes} minutes to the task: ${}?</p>
+                        <button class="ce-confirm-button ce-modal-btn" tabindex="0">Yes, Save</button>
+                        <button class="ce-negate-button ce-modal-btn" tabindex="0">No, Cancel</button>
+                    </div>
+                </div>
+    <!-------------------------------------------------------------------- CLOSE TIMER MODAL --------->
+                <div id="close-timer-modal" class="modal">
+                    <div class="modal-content">
+                        <p class="close-timer-modal-p">Are you sure you want to exit the timer without saving?</p>
+                        <button class="confirm-button close-timer-modal-btn" tabindex="0">Yes, Exit</button>
+                        <button class="negate-button close-timer-modal-btn" tabindex="0">No, Cancel</button>
+                    </div>
+                </div>
+    <!------------------------------------------------------------------- CONFIRM DELETION MODAL ----->
+                <div id="confirm-deletion-modal" class="modal">
+                    <div class="confirm-deletion-modal-content">
+                        <p class="confirm-deletion-modal-p">Are you sure you want to delete ${thistask}?</p>
+                        <button class="deletion-confirm-button confirm-deletion-modal-btn" tabindex="0">Yes</button>
+                        <button class="deletion-negate-button confirm-deletion-modal-btn" tabindex="0">No</button>
+                    </div>
+                </div>
+    <!--------------------------------------------------------- "PLEASE ENTER A VALID TASK" MODAL ----->
+                <div id="enter-task-modal" class="modal">
+                    <div class="modal-content">
+                        <p class="close-timer-modal-p">Please enter a valid task.</p>
+                        <button class="confirm-button close-timer-modal-btn valid-task-confirm-button" tabindex="0">Ok, will do!</button>
+                    </div>
+                </div> 
+    <!-------------------------------------------------------------------------- PRODUCTIVITY CHARTS ----->
+        <div class="focus-summary-container" > 
             <div class="chart-header">
                 <h2 class="chart-heading">Productivity Charts</h2>
             </div>
-
             <div id="charts-start" class="custom-select" tabindex="-1">
                 <select name="chart-selections" id="chart-selections" tabindex="0">
                     <option id="total-time-focused" value="total-time-focused-on-each-task">Total Time Focused on Each Task</option>
@@ -152,19 +133,16 @@
                     <option value="tasks-completed-today">Tasks Completed Today</option>
                 </select>
             </div>
-
                 <div id="charts">
                     <div class="completed-tasks"></div>
                     <div class="chart-area"></div>
                     <svg class="legend-area"></svg>
                 </div>
         </div>
+    <!--------------------------------------------------------------------------------------- FOOTER ----->  
         <footer></footer>
     </div>
 
-   
-
-    
     <script src="https://kit.fontawesome.com/a27a231c02.js"></script>
     <script src="https://unpkg.com/@popperjs/core@2/dist/umd/popper.min.js"></script>
     <script src="https://unpkg.com/tippy.js@6/dist/tippy-bundle.umd.js"></script>

@@ -157,6 +157,9 @@ class Timer {
         if(minutes >= 60){
             minutes = 0;
             hours = hours + 1;
+        }
+        if((minutes % 30 === 0) && (minutes !== 0) && (seconds === 0)){
+            beep.play();
         }    
         formatTime(seconds, minutes, hours);
     }

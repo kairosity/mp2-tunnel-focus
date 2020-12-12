@@ -653,6 +653,21 @@ __FIX 1:__ The fix was just to add a spread operator at the point where the obje
 
 This created a shallow copy of the original object, and thus left the original time segment alone, and stopped artificially inflating the task times. 
 
+__ISSUE 2:__ When a user went to edit a task description, the new task description would not be updated in the legend for "Total Time Focused on Each Task Today", this was because of how that code is structured, it uses a temporary array and the first time a task was placed in that array, that task's description would remain the reference description. 
+
+__FIX 2:__ This issue was solved by adding the * line below ensuring that the most up to date task description in the local storage taskList array is placed into the "todaysTasksFiltered" array and thus reflected in the chart legend. 
+
+            for (let i=0; i<todaysTasksFiltered.length; i++){
+                    for (let j=0; j< list.taskList.length; j++){
+                        if(todaysTasksFiltered[i].id == list.taskList[j].id){
+                            todaysTasksFiltered[i].completed = list.taskList[j].completed;
+                          *  todaysTasksFiltered[i].taskDescription = list.taskList[j].taskDescription;
+                        }
+                    }
+                }
+
+
+
 ## completedTaskList(data)
 
 __FUNCTION SUMMARY:__ This function builds up the two lists: "Tasks Completed" and "Tasks Completed Today" and writes them to the DOM. First it clears the chart area. It takes in data as a parameter and then for each item in that data array it assesses whether or not that task is "completed" and if it is, it adds it to the DOM list.

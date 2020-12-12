@@ -1691,12 +1691,13 @@ function getTodayTasks(){
     }
 
     //for each task in todaysTasksFiltered look at that tasks id and then go through the list.tasklist array and find the task with the same id and then check to see whether it is completed or not. 
-    //issue here is that IF no time has been added, but somehow the task is marked complete, it will not appear in the completed today list. 
+   
 
     for (let i=0; i<todaysTasksFiltered.length; i++){
         for (let j=0; j< list.taskList.length; j++){
             if(todaysTasksFiltered[i].id == list.taskList[j].id){
                 todaysTasksFiltered[i].completed = list.taskList[j].completed;
+                todaysTasksFiltered[i].taskDescription = list.taskList[j].taskDescription;
             }
         }
     }

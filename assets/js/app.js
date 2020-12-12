@@ -1445,11 +1445,26 @@ var totalTimeFocusedOnEachTask = list.taskList; //dataset 1 - total time spent o
 var totalTimeFocusedOnEachTaskToday =  getTodayTasks(); //dataset 2 total time spent on each task today.
 
 var messageDiv = document.querySelector('.chart-message');
-messageDiv.innerHTML = "";
+clearChartArea()
 
-    
-selectChart(totalTimeFocusedOnEachTask);
+function timeOnTaskExists(){   
+    var isThereTimeOnThisTask;
+    var taskArray = list.taskList;
 
+            for (let i=0; i<taskArray.length; i++){
+                if (taskArray[i].totalTimeFocusedOnTask !== 0) {
+                isThereTimeOnThisTask = true;
+                break;
+                } 
+            } return isThereTimeOnThisTask;
+        }
+
+if(timeOnTaskExists() === true){
+   selectChart(totalTimeFocusedOnEachTask);
+} else {
+  messageDiv.innerHTML = `<h2 class="no-timed-tasks">You have not timed any tasks yet.</h2>`;  
+}
+ 
 function clearChartArea(){
     var chartSvg = document.querySelector('.chart-svg');
     var circleLeg = document.querySelectorAll('.circle-legend');
@@ -1467,7 +1482,6 @@ function clearChartArea(){
 }
 
 function selectChart(data){
-
     clearChartArea()
 
     var width = function(){
@@ -1614,23 +1628,18 @@ d3.select('#chart-selections')
         var option = event.target.value;
         totalTimeFocusedOnEachTaskToday =  getTodayTasks();
 
-        let timeOnTaskExists = function(){
-            list.taskList.forEach(task => {
-                if(task.totalTimeFocusedOnTask !== 0) {
-                    return true
-                }
-            })
-        }
 
         if(option === "total-time-focused-on-each-task"){
-            if (timeOnTaskExists == true) {
+            if(timeOnTaskExists() === true){
             selectChart(totalTimeFocusedOnEachTask);
+            messageDiv.innerHTML = "";
             } else {
                 messageDiv.innerHTML = `<h2 class="no-timed-tasks">You have not timed any tasks yet.</h2>`;
             }
         } else if(option === "total-time-focused-on-each-task-today"){
-            if (timeOnTaskExists == true) {
-            selectChart(totalTimeFocusedOnEachTaskToday); 
+            if(timeOnTaskExists() === true){
+            selectChart(totalTimeFocusedOnEachTaskToday);
+            messageDiv.innerHTML = ""; 
             } else {
                  messageDiv.innerHTML = `<h2 class="no-timed-tasks">You have not timed any tasks today.</h2>`;
             }

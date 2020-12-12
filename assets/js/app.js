@@ -1444,6 +1444,9 @@ timer.appInformation();
 var totalTimeFocusedOnEachTask = list.taskList; //dataset 1 - total time spent on each task.
 var totalTimeFocusedOnEachTaskToday =  getTodayTasks(); //dataset 2 total time spent on each task today.
 
+var messageDiv = document.querySelector('.chart-message');
+messageDiv.innerHTML = "";
+
     
 selectChart(totalTimeFocusedOnEachTask);
 
@@ -1486,7 +1489,7 @@ function selectChart(data){
     var color = d3.scaleOrdinal()
         .range(["#33A8C7", "#52E3E1", "#A0E426", "#FDF148", "#FFAB00", "#F77976", "#F050AE", "#D883FF", "#9336FD"]); //colours for slices/ arcs
     var svg = d3.select('.chart-area') //select the charts div
-        .append("svg") //create an svg el
+        .append("svg") 
         .attr("class", "chart-svg")
         .attr("width", width)
         .attr("height", height)
@@ -1604,18 +1607,33 @@ function selectChart(data){
               return legendItems.length * 30;
             }   
         })
-        // .attr('width', function(){
-        //     return 500;
-        // })
+        
 }
 d3.select('#chart-selections')
     .on("change", function(event){
         var option = event.target.value;
         totalTimeFocusedOnEachTaskToday =  getTodayTasks();
+
+        let timeOnTaskExists = function(){
+            list.taskList.forEach(task => {
+                if(task.totalTimeFocusedOnTask !== 0) {
+                    return true
+                }
+            })
+        }
+
         if(option === "total-time-focused-on-each-task"){
+            if (timeOnTaskExists == true) {
             selectChart(totalTimeFocusedOnEachTask);
+            } else {
+                messageDiv.innerHTML = `<h2 class="no-timed-tasks">You have not timed any tasks yet.</h2>`;
+            }
         } else if(option === "total-time-focused-on-each-task-today"){
+            if (timeOnTaskExists == true) {
             selectChart(totalTimeFocusedOnEachTaskToday); 
+            } else {
+                 messageDiv.innerHTML = `<h2 class="no-timed-tasks">You have not timed any tasks today.</h2>`;
+            }
         } else if (option === "tasks-completed"){
             completedTaskList(list.taskList);
         } else if(option === "tasks-completed-today"){
@@ -1704,7 +1722,7 @@ function completedTaskList(data){
     
     //If no tasks are completed show a message to that effect
     if (completedTasksExist == null){
-        comTaskListDiv.innerHTML+= `<h2 class="no-completed-tasks">You have not marked any tasks as complete.</h2>`
+        messageDiv.innerHTML = `<h2>You have not marked any tasks as complete.</h2>`
     }
     comTasksDiv.innerHTML += `</ol>`;
 }

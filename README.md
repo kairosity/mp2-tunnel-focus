@@ -526,6 +526,8 @@ This website was developed using GitPod in a Chrome browser and commits were pus
 
 - ### **[How to Delete a Git Branch Both Locally and Remotely ](https://www.freecodecamp.org/news/how-to-delete-a-git-branch-both-locally-and-remotely/)**
 
+- ### **[Tab Index Order](https://bitsofco.de/how-and-when-to-use-the-tabindex-attribute/)**
+
 # Technology Used
 
 - HTML

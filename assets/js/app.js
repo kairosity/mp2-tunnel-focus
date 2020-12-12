@@ -948,10 +948,6 @@ function countdownClickStartHelper(countdownType, countdownNumber){
 
                                     /* 5. Take a snapshot of the date & time these changes were made in order to keep the "today" chart information accurate. If a task is edited, the new amount of time minused from the original time is added as a time segment in an array. */
                                     let totalTimeToAdd = parseInt(secondsToAdd) + minutesInSeconds + hoursInSeconds;
-                                    console.log(totalTimeToAdd)
-
-                                    
-
                                     let dateStamp = new Date();
                                     let localTime = dateStamp.toLocaleTimeString();
                                     let localDate = dateStamp.toLocaleDateString();
@@ -1114,7 +1110,6 @@ makeArrayElementsKeyboardTabbableAgain(){
 }
 
 appInformation() {
-
     //Event Listener when clicking on question mark. 
     let infoIcon = document.querySelector('.fa-question-circle');
     let infoModal = document.querySelector('#information-modal');
@@ -1124,9 +1119,7 @@ appInformation() {
                 infoIcon.click();
             }
         })
-
     infoIcon.addEventListener('click', function(){
-
         timer.addOverlay();
         timer.makeArrayElementsNotKeyboardTabbable();
         infoModal.style.zIndex = 1001;
@@ -1139,8 +1132,6 @@ appInformation() {
             infoModal.style.zIndex = -900;
         })
     })
-    
-
 }
 
 }
@@ -1211,8 +1202,7 @@ class List {
 
             newTaskInputValue = myTrim(newTaskInputValue);
 
-            if((newTaskInputValue !== null) && (newTaskInputValue !== "") ){
-               
+            if((newTaskInputValue !== null) && (newTaskInputValue !== "") ){        
                 let newTask = new Task(newTaskInputValue); //creates a new Task obj. & sets its props.
                 newTask.id = list.taskList.length; //it will always be 1to1.
                 newTask.totalTimeFocusedOnTask = 0;
@@ -1236,7 +1226,7 @@ class List {
                 list.dynamicPopoverNav();
                 timer.timers();
                 list.setDataToLocalStorage();
-                location.reload(); //to fix stopwatch click start bug on new tasks that are added.
+                location.reload(); 
                
             } else if ((newTaskInputValue === "") || (newTaskInputValue === null)){
                 
@@ -1706,9 +1696,16 @@ function completedTaskList(data){
     
     taskList.forEach(function(task){
         if(task.completed === true){
-            comTaskListDiv.innerHTML+= `<li>${task.taskDescription}</li>`
+            comTaskListDiv.innerHTML+= `<li class="completed-task">${task.taskDescription}</li>`
         }
     })
+    //Check if any of the tasks are checked as completed
+    let completedTasksExist = document.querySelector('.completed-task');
+    
+    //If no tasks are completed show a message to that effect
+    if (completedTasksExist == null){
+        comTaskListDiv.innerHTML+= `<h2 class="no-completed-tasks">You have not marked any tasks as complete.</h2>`
+    }
     comTasksDiv.innerHTML += `</ol>`;
 }
 

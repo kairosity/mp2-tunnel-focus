@@ -1628,12 +1628,12 @@ d3.select('#chart-selections')
         var option = event.target.value;
         totalTimeFocusedOnEachTaskToday =  getTodayTasks();
 
-
         if(option === "total-time-focused-on-each-task"){
             if(timeOnTaskExists() === true){
             selectChart(totalTimeFocusedOnEachTask);
             messageDiv.innerHTML = "";
             } else {
+                clearChartArea();
                 messageDiv.innerHTML = `<h2 class="no-timed-tasks">You have not timed any tasks yet.</h2>`;
             }
         } else if(option === "total-time-focused-on-each-task-today"){
@@ -1641,12 +1641,18 @@ d3.select('#chart-selections')
             selectChart(totalTimeFocusedOnEachTaskToday);
             messageDiv.innerHTML = ""; 
             } else {
+                 clearChartArea();
                  messageDiv.innerHTML = `<h2 class="no-timed-tasks">You have not timed any tasks today.</h2>`;
             }
         } else if (option === "tasks-completed"){
             completedTaskList(list.taskList);
         } else if(option === "tasks-completed-today"){
             completedTaskList(totalTimeFocusedOnEachTaskToday);
+            let completedTaskExists = document.querySelector('.completed-task');
+            if (!completedTaskExists){
+                messageDiv.innerHTML = `<h2>You have not marked any tasks as completed today.</h2>`
+            }
+             
             
         }
     })
@@ -1712,6 +1718,7 @@ function getTodayTasks(){
 function completedTaskList(data){
     
     clearChartArea();
+    messageDiv.innerHTML = "";
 
     let legendArea = document.querySelector('.legend-area');
     
@@ -1721,7 +1728,7 @@ function completedTaskList(data){
     let comTasksDiv = document.querySelector('.completed-tasks');
     comTasksDiv.innerHTML += `<ol class="completed-task-list">`;
     let comTaskListDiv = document.querySelector('.completed-task-list');
-    
+     
     taskList.forEach(function(task){
         if(task.completed === true){
             comTaskListDiv.innerHTML+= `<li class="completed-task">${task.taskDescription}</li>`

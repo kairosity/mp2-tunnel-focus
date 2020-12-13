@@ -755,7 +755,6 @@ input.editTime:focus {
     flex-basis: 100%;
     text-align: center;
     padding: 1em;
-    text-transform: capitalize;
     /* font-size: 0.7em; */
 }
 .edit-time-hours-label,

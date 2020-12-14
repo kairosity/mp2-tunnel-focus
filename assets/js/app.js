@@ -1,23 +1,22 @@
-//GLOBAL VARIABLES
-
+// --------------------------------------GLOBAL VARIABLES-------------------------------//
 var taskToDel = "";
 let confirmDeletionModal = document.getElementById('confirm-deletion-modal');
 let confirmDeletionBtn = document.querySelector('.deletion-confirm-button');
 let negateDeletionBtn = document.querySelector('.deletion-negate-button');
 confirmDeletionBtn.addEventListener('click', confirmDeletion);
 negateDeletionBtn.addEventListener('click', negateDeletion);
-
-//GLOBAL FUNCTIONS
-
+// --------------------------------------GLOBAL FUNCTIONS-------------------------------//
+/**
+ * This function runs when a user confirms a task deletion. 
+ * It first removes a task from the taskList array in localStorage and then resets the localStorage task ids and timeSegment array ids to run from 0 upwards, so that the tasks always perfectly sync. 
+ * It then resets the ids of the DOM tasks so they match the tasks in localStorage. 
+ * Then it hides the delete task modal and saves changes. 
+ */
 function confirmDeletion(){
-    let taskToDeleteId = taskToDel.children[2].id;
-    //Removes the task from the DOM
-    
-    taskToDel.remove();
-    
+    let taskToDeleteId = taskToDel.children[2].id;   
+    taskToDel.remove(); 
     //Removes the Task from the taskList array.
     list.taskList.splice(list.taskList.findIndex(task => task.id == taskToDeleteId), 1);
-
     //resets the Task object ids & timeSegment ids to run from 0 upwards.
     let tList = list.taskList;
     for (let i=0; i<tList.length; i++){
@@ -31,19 +30,20 @@ function confirmDeletion(){
     for (let i=0; i<arrOfDomTasks.length; i++){
         arrOfDomTasks[i].id = i.toString();
     }
-    
         confirmDeletionModal.style.display = "none";
         list.setDataToLocalStorage();
         timer.makeArrayElementsKeyboardTabbableAgain();
 }
-
+/**
+ * This function runs when a user cancels a task deletion. 
+ * It hides the delete task modal and sets the global variable of taskToDel back to empty. 
+ */
 function negateDeletion(){
     confirmDeletionModal.style.display = "none";
     timer.makeArrayElementsKeyboardTabbableAgain(); 
     taskToDel = "";
 }
-
-// CLASSES 
+// --------------------------------------CLASSES-------------------------------//
 class Timer {
     constructor(){
       
@@ -51,6 +51,10 @@ class Timer {
         this.minutes = 0;
         this.hours = 0;
     }
+/**
+ * This function initialises the timer variables and
+ * formats them with leading 0s so they look nice.
+ */
     initialiseTimer(){
         let secondsHtml = document.getElementById('seconds');
         let minutesHtml = document.getElementById('minutes');
@@ -61,9 +65,7 @@ class Timer {
         hoursHtml.innerHTML = `0${this.hours}`;
     } 
     timers(){
-
 // --------------------------------------TIMER CLASS VARIABLES-------------------------------//
-
         let seconds = 0;
         let minutes = 0;
         let hours = 0;
@@ -76,26 +78,22 @@ class Timer {
         let startStopwatchButtonArray = document.querySelectorAll('.start-stopwatch');
         let saveButton = document.getElementById('save-time-to-task');
         let timerContainer = document.querySelector('.timer-container');
-        let timerTitle = document.querySelector('.timer-task-description');
-
-        // const addNewTaskButton = document.querySelector('#add-new-task');
-        // const newTaskInput = document.querySelector('#new-task-input');
-        // const arrayOfCheckboxes = document.querySelectorAll('.taskCheckbox');
-        // const arrayOfSortIcons = document.querySelectorAll('.task-sort');
-        // const arrayOfOptionIcons = document.querySelectorAll('.task-options');
-        
+        let timerTitle = document.querySelector('.timer-task-description');   
         const alarm = document.createElement('AUDIO');
-        alarm.setAttribute('src', 'assets/audio/alarm2.mp3');
+        alarm.setAttribute('src', 'assets/audio/alarm1.mp3');
         let alarmButton = document.querySelector('.alarm');
         const beep = document.createElement('AUDIO');
         beep.setAttribute('src', 'assets/audio/beep.mp3');
-
         let secondsHtml = document.getElementById('seconds');
         let minutesHtml = document.getElementById('minutes');
         let hoursHtml = document.getElementById('hours');
 
 // --------------------------------------HELPER FUNCTIONS-------------------------------//
-
+/**
+ * This function removes the timer modal from the DOM.
+ * And resets the timer variables to 0
+ * And resets the html representations of the timer variables to 0.
+ */
     function removeTimerFromDom(){
         let timerTitleInDOM = document.querySelector('.timer-title');
         timerContainer.removeChild(timerTitleInDOM);
@@ -110,6 +108,9 @@ class Timer {
         hoursHtml.innerHTML = `0${hours}`
         playing = false;
     }
+/**
+ * This function creates a specific title for the timer modal, based on whether the timer is stopwatch, countdown for 15 minutes or countdown for 25 minutes. 
+ */
     function createTimerTitle(timerType, timerId){
         let timerTypeTitle = document.createElement('h2');
         timerTypeTitle.textContent = `${timerType}`; 
@@ -118,6 +119,9 @@ class Timer {
         timerTypeTitle.style.display = 'flex';
         timerContainer.insertAdjacentElement('afterbegin', timerTypeTitle);
     }
+/**
+ * This function formats the time and distinguishes between singular and double digits, so as to place a leading 0 on single digit time measures 00:01:09 for example, as opposed to 0:1:9.
+ */
     function formatTime(seconds, minutes, hours){   
         if(seconds <= 9){
                 secondsHtml.innerHTML = `0${seconds}`;
@@ -135,11 +139,17 @@ class Timer {
                 hoursHtml.innerHTML = hours;
             }
     }
+/**
+ * This function resets the countdown timer to either 00:15:00 or 00:25:00.
+ */
     function resetCountdownHtml(seconds, minutes, hours){
         secondsHtml.innerHTML = `0${seconds}`;
         minutesHtml.innerHTML = `${minutes}`;
         hoursHtml.innerHTML = `0${hours}`;
     }
+/**
+ * This function scrolls a specific element into view for the user. 
+ */
     function scrollElementIntoView(){
         window.scrollTo({
             top: 0,
@@ -147,7 +157,13 @@ class Timer {
         });
     }
 // --------------------------------------TIMING FUNCTIONS-------------------------------//
-    // Stopwatch countup
+/**
+ * This function counts up from 0. 
+ * When seconds get to 60, they revert to 0 and 1 is added to minutes.
+ * Likewise with minutes & hours. 
+ * If the alarm is left unmuted, then every 30 seconds, the application will beep once to mark the passage of time.
+ * Finally this function calls the format time function.
+ */
     function countUp(){
         seconds = seconds + 1;
         if(seconds >= 60){
@@ -162,30 +178,47 @@ class Timer {
            if((minutes % 2 === 0) && (minutes !== 0) && (seconds === 0)){
             beep.play();
         }    
-        }
-         
+        }      
         formatTime(seconds, minutes, hours);
     }
+/**
+ * This function calls the above countUp() function every second.
+ * Thus calling the formatTime() function every second. 
+ * Which is what displays the stopwatch time counting upwards from 0.  
+ */
     function stopWatchPlay(){
     stopwatch = setInterval(function(){ 
         countUp(); 
         }, 1000);
         return playing = true;
     }
-//Countdown 15 Play
+/**
+ * This function sets the initial countdown for the 15 minute countdown timer and then calls the countdown timer function.
+ */
     function countDown15Play(){
-
-        seconds = 3; 
-        minutes = 0; //CHANGE HERE WHEN TESTING
+        seconds = 0; 
+        minutes = 15; //CHANGE HERE WHEN TESTING
         hours = 0;
         countdown();
     }
+/**
+ * This function calls the countDownFunction every second. 
+ */
     function countdown(){
         countdownInt = setInterval(function(){ 
             countDownFunction(); 
             }, 1000);
             return playing = true;
         }
+/**
+ * This function countsDown by -1 second.
+ * If seconds are less than 0 and minutes are more/equal to 1 it resets seconds to 59 and substracts 1 from minutes. 
+ * It distinguishes between whether or not to play an alarm and...
+ * When seconds and minutes are both 0 it runs the clearInterval() function with countdown as a parameter.
+ * And resets the time measure variables to 0.
+ * Then it calls the countdownEnded() function.
+ * There is also an addendum if/else statement that fixes an irritating formatting bug. 
+ */
     function countDownFunction(){
         seconds = seconds - 1;
         if((seconds < 0) && (minutes >= 1)){
@@ -228,13 +261,20 @@ class Timer {
             }
         }          
     }
+/**
+ * This function sets the initial countdown for the 25 minute countdown timer and then calls the countdown timer function. 
+ */
     function countDown25Play(){
         seconds = 0;
         minutes = 25;
         hours = 0;
-
         countdown();
     }
+/**
+ * The following two functions are used to determine how much time to add to a task when the 15 & 25 minute countdowns have ended.
+ * If the timer is allowed count right down to 0 then the time to add is either 900 or 1500.
+ * If not, the functions calculates the specific amount.
+ */
     function countdown15TimeToAdd(hours, minutes, seconds){
         var minutesInSeconds = minutes * 60
         if ( (seconds == -1) && (minutesInSeconds == 0) ){
@@ -255,6 +295,9 @@ class Timer {
             return timeToAdd;
         }
     }
+/**
+ * This function calculates how much time to add to a task when the stopwatch function is used.
+ */
     function stopwatchTimeToAdd(hours, minutes, seconds){
         let minutesInSeconds = minutes * 60;
         let hoursInSeconds = hours * 3600;
@@ -262,40 +305,38 @@ class Timer {
         return timeToAdd;
     }
 // --------------------------------------STRUCTURAL FUNCTIONS-------------------------------// 
-
+/**
+ * This function listens for change on the stopwatch icons.
+ * It shows the timer modal when the icon is clicked/keyboard selected. 
+ * It starts the stopwatch timer playing. 
+ * It adds an overlay to stop the user accidentially clicking elsewhere. 
+ * It sets up the timer modal using data contained in the task that was selected.
+ * And stops anything in the background of the timer from being accessible via the keyboard.
+ * It also calls all methods associated with playing, pausing, resetting & closing the timer, so they are available for use when the stopwatch is running.  
+ */
         function stopWatchClickStart(){
             startStopwatchButtonArray.forEach(function(stopwatchButton){
                 ['click','keyup'].forEach(function(e){
                     stopwatchButton.addEventListener(e, function(event){
                         if((e === 'click') || (event.keyCode === 13)) {
                             if ((!playing) && (playButton.style.display == '')) {
-
-                            //show timer when stopwatch clicked.
                             timerContainer.style.display = 'flex'; 
                             playing = true; 
-                            
                             scrollElementIntoView();  
                             stopWatchPlay();
                             timer.addOverlay();
-
                             //bring the timer container above the overlay
                             timerContainer.style.zIndex = 1001;
-
                             //Find the id of the task clicked on.
                             let id = event.target.parentElement.previousElementSibling.id;
-
                             //Find the task description and add it as a h2 in the timer.
-                            let description = event.target.parentElement.previousElementSibling.textContent;
-                            
+                            let description = event.target.parentElement.previousElementSibling.textContent;   
                             //Select the area where the title will go
                             let timerTitle = document.querySelector('.timer-task-description');
-
                             //Give it an id to match the task's id.
                             timerTitle.id = id;
-
                             //give it a description to match task description.
                             timerTitle.textContent = description;
-
                             let timerContainerTitle = "Stopwatch";
                             let timerId = "stopwatch-timer-title";
                             createTimerTitle(timerContainerTitle, timerId);
@@ -304,7 +345,6 @@ class Timer {
                             startStopwatchButtonArray.forEach(function(stopwatchButton){
                                     event.preventDefault();
                             }) 
-                            console.log("We cannot play the timer because one of these things is true: 1-playing==true 2-seconds, minutes or hours are not at 0 or the play button is visible.");
                         }             
                     pauseOnClick(stopwatch); 
                     resetTime(stopwatch);
@@ -316,24 +356,27 @@ class Timer {
             });
     });                         
 } 
+/**
+ * This function sets up a number of foundational elements for when either of the countdown timers are selected:
+ * It adds an overlay, scrolls the timer into view, brings the timer above other elements on the z-index, and ensures that no background elements can be accessed using the keyboard. 
+ * It then formats the display time in the DOM.
+ * Then it brings up the countdown timer specific to the type of timer selected and with the specific data pertaining to the task selected (id & description etc..)
+ */
 function countdownClickStartHelper(countdownType, countdownNumber){
         timer.addOverlay();
         scrollElementIntoView();
         timerContainer.style.zIndex = 1001;
         timer.makeArrayElementsNotKeyboardTabbable();
-
         let seconds = 0;
         let minutes = countdownNumber;
         let hours = 0;
         secondsHtml.innerHTML = `0${seconds}`;
         minutesHtml.innerHTML = `${minutes}`;
         hoursHtml.innerHTML = `0${hours}`;
-
         //Find the id of the task clicked on.
         let parentDiv = event.target.closest('.task');
         let taskToTargetId = parentDiv.children[2].id;
         let taskToTargetDescription = parentDiv.children[2].textContent;
-    
         if ((!playing) && (seconds == 0) && (minutes == countdownNumber) && (hours==0) && (playButton.style.display == '')){
             timerContainer.style.display = 'flex';      
             let timerContainerTitle = `Countdown ${countdownNumber}`;
@@ -347,17 +390,19 @@ function countdownClickStartHelper(countdownType, countdownNumber){
             timerTitle.textContent = taskToTargetDescription;
 }
 }
+/**
+ * This function listens for clicks/enters on the 15 minute countdown timer icon.
+ * If selected it initialises the alarms, calls the countdownStartHelper & plays the countdown timer.
+ * It also makes all associated countdown functions available: (pause, play, reset & close).
+ */
     function countDown15ClickStart(){
         const ellipsisArray = document.querySelectorAll('.task-options');    
         ellipsisArray.forEach(function(ellipsis){
             ['click','keyup'].forEach(function(evt){
                 ellipsis.addEventListener(evt, function(elipEvent){
                     if((evt === 'click') || (elipEvent.keyCode === 9)) {
-
                         const countdown15Button = document.querySelector('.countdown15-task-option');
-
-                            $(countdown15Button).bind('click keyup', function(event){
-                          
+                            $(countdown15Button).bind('click keyup', function(event){           
                                 if((event.type === 'click') || (event.keyCode === 13)) {
                                         alarm.play()
                                         alarm.pause()
@@ -375,6 +420,11 @@ function countdownClickStartHelper(countdownType, countdownNumber){
                 })
                 })
             } 
+/**
+ * This function listens for clicks/enters on the 25 minute countdown timer icon.
+ * If selected it initialises the alarms, calls the countdownStartHelper & plays the countdown timer.
+ * It also makes all associated countdown functions available: (pause, play, reset & close).
+ */
     function countDown25ClickStart(){
         const ellipsisArray = document.querySelectorAll('.task-options');    
         ellipsisArray.forEach(function(ellipsis){
@@ -397,12 +447,14 @@ function countdownClickStartHelper(countdownType, countdownNumber){
                         })
                     })
                 })
-            }                                      
+            }
+/**
+ * This function plays whichever timer is open when the play button is selected/clicked. 
+ */                                      
     function playOnClick(){
         playButton.addEventListener('click', function(){ 
             let timerTitleDOM = document.querySelector('.timer-title');
-            if(!playing){
-                
+            if(!playing){     
                 if (timerTitleDOM.textContent == 'Stopwatch'){
                     stopWatchPlay();
                     resetTime(stopwatch);
@@ -417,16 +469,22 @@ function countdownClickStartHelper(countdownType, countdownNumber){
             }       
         });
     };
+/**
+ * This function pauses whichever timer is open for the user. 
+ */
     function pauseOnClick(intervalToPause){
         pauseButton.addEventListener('click', function(){
-            //stop interval timer counting.
             clearInterval(intervalToPause);   
             pauseButton.style.display = "none";
             playButton.style.display = "inline-block";
             return playing = false;  
         })
     }
-    function resetTime(intervalToReset){ //,?
+/**
+ * This function resets whichever timer the user is using.
+ * It calls on resetTimes() to reset the variables & DOM times.
+ */
+    function resetTime(intervalToReset){ 
         resetButton.addEventListener('click', function(){
             clearInterval(intervalToReset);
             pauseButton.style.display = "none";
@@ -435,6 +493,9 @@ function countdownClickStartHelper(countdownType, countdownNumber){
             return playing = false;
         })
     }
+/**
+ * This function resets the variables & html DOM time measures of whichever timer is open. 
+ */
     function resetTimes(){
         let timerTitleDOM = document.querySelector('.timer-title');
             if (timerTitleDOM.textContent == 'Stopwatch'){
@@ -455,7 +516,17 @@ function countdownClickStartHelper(countdownType, countdownNumber){
                 hours = 0;
                 resetCountdownHtml(seconds, minutes, hours);
             }       
-    }      
+    } 
+/**
+ * This function runs when either of the countdown functions have run their full course (15 or 25 minutes).
+ * If the alarm is not muted, then the alarm plays.
+ * If the alarm is muted then a silent colourful alarm plays.
+ * A modal pops up asking the user if they want to save the full time to that particular task.
+ * If they confirm the save the modal is removed & the time is saved to that particular task using the saveTimeToTask() function. 
+ * For each task in the list, if the the task id is the same as the task id in the timer then this function will display the new time to the task's long form task time property which has been updated by the saveTimeToTask() function.
+ * Then everything is cleared and reset, and the timer is removed from the DOM.
+ * If the user decides not to save the time to that task, then everything closes and nothing is saved.
+ */     
     function countdownEnded(){ 
         if (alarmButton.innerHTML == `<i class="fas fa-bell" aria-hidden="true"></i>`){
             alarm.play()
@@ -468,14 +539,11 @@ function countdownClickStartHelper(countdownType, countdownNumber){
         let messageElement = document.querySelector('.ce-modal-p');
         let typeOfTimer = document.querySelector('.timer-title');
         let thisTask = timerTitle.textContent;
-     
-
         if (typeOfTimer.textContent == "Countdown 15"){
             messageElement.textContent = `Congrats! You've worked for the full 15 minutes! Do you want to save 15 minutes to the task: ${thisTask}?`
             if (alarmButton.innerHTML == `<i class="fas fa-bell-slash" aria-hidden="true"></i>`){
                timer.addSilentAlarm() 
-            }
-            
+            }    
             clearInterval(countdownInt);
         } else if (typeOfTimer.textContent == "Countdown 25"){
             messageElement.textContent = `Congrats! You've worked for the full 25 minutes! Do you want to save 25 minutes to the task: ${thisTask}?`;
@@ -489,19 +557,9 @@ function countdownClickStartHelper(countdownType, countdownNumber){
                     timer.removeSilentAlarm() 
                 } 
                 countdownEndedModal.style.display = "none"; 
-
-                //calls save time function which will save seconds and long form time on the associated task object.
-                saveTimeToTask(timerTitle.id, seconds);
-                 
-                //Updates the time worked display for the task on the task list.
-                //task id is...
+                saveTimeToTask(timerTitle.id, seconds);    
                 let idForSavingTime = timerTitle.id;
-                //shows all the tasks in the list.
-                let taskTimeDisplay1 = document.querySelectorAll('.task-description'); 
-               
-                //for each task in list, if the the task id is the same as the task id in the timer then 
-                // select the task's timedisplay element (where the total task time is displayed)
-                // and change it to the task object's long form task time property which has been updated by the saveTimeToTask() function.
+                let taskTimeDisplay1 = document.querySelectorAll('.task-description');     
                 for (let i=0; i<taskTimeDisplay1.length; i++){
                     if(taskTimeDisplay1[i].id == idForSavingTime){
                         let timeDisplay = taskTimeDisplay1[i].parentElement.firstElementChild; 
@@ -530,9 +588,15 @@ function countdownClickStartHelper(countdownType, countdownNumber){
                 hours = 0; 
             });         
     }
+/**
+ * This function closes the timer when the X button is entered/clicked.
+ * A modal asking the user to confirm that they want to close without saving pops up.
+ * The timer continues to run while the modal is open by design.
+ * If the user confirms closure, then the timer pauses and is removed from the DOM.
+ * If the user cancels closure the timer continues to time as before.
+ */
     function closeTimer(){
         let xButton = document.querySelector('.close-timer-x');
-
         xButton.addEventListener('keyup', function(event){
             if(event.keyCode === 13){
                 event.preventDefault();
@@ -540,42 +604,32 @@ function countdownClickStartHelper(countdownType, countdownNumber){
             }
         })     
         xButton.addEventListener('click', function(){
-            //bring up close timer modal
             let closeTimerModal = document.getElementById('close-timer-modal');
             closeTimerModal.style.display = "block";
             let confirmButton = document.querySelector('.confirm-button');
             let negateButton = document.querySelector('.negate-button');
-
             let alarmButton = document.querySelector('#alarm-on');
             let pauseButton = document.querySelector('#pause');
             let playButton = document.querySelector('#play');
             let resetButton = document.querySelector('#reset');
             let closeTimerX = document.querySelector('.close-timer-x');
-
-
             makeElementsUntabbable(saveButton, alarmButton, pauseButton, playButton, resetButton, closeTimerX);
-
             confirmButton.addEventListener('click', function(){
-            
-            closeTimerModal.style.display = "none";
-            makeElementsTabbable(saveButton, alarmButton, pauseButton, playButton, resetButton, closeTimerX);
-            
-                //if user clicks X in the middle of timer playing then I need to pause it first
-            let intervalToPause;
-            let typeOfTimer = document.querySelector('.timer-title').textContent;
-
-            if(typeOfTimer == "Stopwatch"){
-                intervalToPause = stopwatch;
-            } else if ((typeOfTimer == "Countdown 15") || (typeOfTimer == "Countdown 25")){
-                intervalToPause = countdownInt;
-            }
-            if (playing){
-                clearInterval(intervalToPause);
-            }      
-            removeTimerFromDom();
-            timer.removeOverlay();
-            timer.makeArrayElementsKeyboardTabbableAgain();  
-            
+                closeTimerModal.style.display = "none";
+                makeElementsTabbable(saveButton, alarmButton, pauseButton, playButton, resetButton, closeTimerX);
+                let intervalToPause;
+                let typeOfTimer = document.querySelector('.timer-title').textContent;
+                if(typeOfTimer == "Stopwatch"){
+                    intervalToPause = stopwatch;
+                } else if ((typeOfTimer == "Countdown 15") || (typeOfTimer == "Countdown 25")){
+                    intervalToPause = countdownInt;
+                }
+                if (playing){
+                    clearInterval(intervalToPause);
+                }      
+                removeTimerFromDom();
+                timer.removeOverlay();
+                timer.makeArrayElementsKeyboardTabbableAgain();   
             })
             negateButton.addEventListener('click', function(){
             closeTimerModal.style.display = "none"; 
@@ -584,6 +638,9 @@ function countdownClickStartHelper(countdownType, countdownNumber){
             })                
         })       
     }
+/**
+ * This function  
+ */
     function saveTimeButton(){
         saveButton.addEventListener('keyup', function(event){
                 if(event.keyCode === 13){

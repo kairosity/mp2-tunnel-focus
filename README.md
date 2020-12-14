@@ -311,6 +311,10 @@ Another issue I found when testing the application using only a keyboard was tha
 
 # Issues / Room For Improvement
 
+1. I've realised over the course of building this application that the way I structured my event listeners (nestled inside object methods) was needlessly complex and led itself to some irritating bugs that needed fixes in the form of bind & unbind methods. I think for future projects I would separate out my classes from event listeners more definitively for this reason. 
+
+2. Automated testing for this application was tricky, and I think would be easier for a more purely functional ty for a less OOP application and 
+
 # Attribution
 
 - ### **[Code to Convert Seconds into Hours, Minutes & Seconds](https://stackoverflow.com/questions/37096367/how-to-convert-seconds-to-minutes-and-hours-in-javascript)**

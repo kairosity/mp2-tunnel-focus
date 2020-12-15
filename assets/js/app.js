@@ -110,7 +110,7 @@ class Timer {
     }
 /**
  * This function creates a specific title for the timer modal, based on whether the timer is stopwatch, countdown for 15 minutes or countdown for 25 minutes. 
- */
+*/
     function createTimerTitle(timerType, timerId){
         let timerTypeTitle = document.createElement('h2');
         timerTypeTitle.textContent = `${timerType}`; 
@@ -120,8 +120,8 @@ class Timer {
         timerContainer.insertAdjacentElement('afterbegin', timerTypeTitle);
     }
 /**
- * This function formats the time and distinguishes between singular and double digits, so as to place a leading 0 on single digit time measures 00:01:09 for example, as opposed to 0:1:9.
- */
+* This function formats the time and distinguishes between singular and double digits, so as to place a leading 0 on single digit time measures 00:01:09 for example, as opposed to 0:1:9.
+*/
     function formatTime(seconds, minutes, hours){   
         if(seconds <= 9){
                 secondsHtml.innerHTML = `0${seconds}`;
@@ -140,21 +140,129 @@ class Timer {
             }
     }
 /**
- * This function resets the countdown timer to either 00:15:00 or 00:25:00.
- */
+* This function resets the countdown timer to either 00:15:00 or 00:25:00.
+*/
     function resetCountdownHtml(seconds, minutes, hours){
         secondsHtml.innerHTML = `0${seconds}`;
         minutesHtml.innerHTML = `${minutes}`;
         hoursHtml.innerHTML = `0${hours}`;
     }
 /**
- * This function scrolls a specific element into view for the user. 
- */
+* This function scrolls a specific element into view for the user. 
+*/
     function scrollElementIntoView(){
         window.scrollTo({
             top: 0,
             behavior: "smooth"
         });
+    }
+/**
+* This function loops through an indeterminate number of parameters and makes each of them untabbable.
+*/
+    function makeElementsUntabbable(...elements){
+        elements.forEach(element => element.setAttribute("tabindex", "-1"))
+    }
+/**
+* This function loops through an indeterminate number of parameters and makes each of them tabbable.
+*/
+    function makeElementsTabbable(...elements){
+        elements.forEach(element => element.setAttribute("tabindex", "0"))
+    }
+/**
+* This function hides the task icons.
+*/
+    function hideTaskIcons(taskLine){
+        taskLine.children[1].classList.add('hidden');
+        taskLine.children[3].classList.add('hidden');
+        taskLine.children[4].classList.add('hidden');
+        taskLine.children[5].classList.add('hidden');
+    }
+/**
+* This function shows the task icons.
+*/
+    function showTaskIcons(taskLine){
+    taskLine.children[1].classList.remove('hidden');
+    taskLine.children[3].classList.remove('hidden');
+    taskLine.children[4].classList.remove('hidden');
+    }
+/**
+* This function creates save & cancel buttons.
+*/
+    function createButton(buttonType) {
+        const button = document.createElement('BUTTON');
+        button.setAttribute("class", `edit-time-${buttonType}-button`);
+        button.setAttribute("type", "submit");
+        if (buttonType == "save"){
+            button.textContent = "Save New Total Time";     
+        } else if (buttonType == "cancel"){
+            button.textContent = "Cancel Changes & Exit";  
+        }
+        return button;
+    }
+/**
+* This function takes an array of times as strings and turns it into an array of times as integers and formats them correctly.
+*/
+    function makeTimeNumbersFromStrings(arrayOfStringTimes, arrayOfNumberTimes){
+        arrayOfStringTimes.forEach(function(item){
+        if (item.length === 5){
+            arrayOfNumberTimes.push(parseInt(item.slice(0,2)));
+        } else if(item.length === 6){
+            arrayOfNumberTimes.push(parseInt(item.slice(0,3)));
+        } else if(item.length === 7){
+            arrayOfNumberTimes.push(parseInt(item.slice(0,4)));
+        } else if(item.length === 8){
+            arrayOfNumberTimes.push(parseInt(item.slice(0,5)));
+        } else if(item.length === 9){
+            arrayOfNumberTimes.push(parseInt(item.slice(0,6)));
+        } else if(item.length === 10){
+            arrayOfNumberTimes.push(parseInt(item.slice(0,7)));
+        } else if(item.length === 11){
+            arrayOfNumberTimes.push(parseInt(item.slice(0,8)));
+        }else {
+            arrayOfNumberTimes.push(parseInt(item.slice(0,1)));
+        }
+    });
+    return arrayOfNumberTimes;
+    }
+/**
+* This function creates labels and inputs for each measure of time in the edit task modal.  
+*/
+    function createNewInputsForManualTimeEdit(measureOfTime, timeVariableToEdit, longFormTime){
+        const newLabel = document.createElement('LABEL');
+        newLabel.setAttribute("for", "edit"+measureOfTime);
+        newLabel.textContent = measureOfTime+":";
+        newLabel.setAttribute("class", "editTime edit-time-"+measureOfTime.toLowerCase()+"-label");
+        longFormTime.parentNode.insertBefore(newLabel, longFormTime);
+        const newTime = document.createElement("INPUT");
+        newTime.setAttribute("type", "number")
+        newTime.setAttribute("value", `${timeVariableToEdit}`);
+        newTime.setAttribute("id", "edit"+measureOfTime);
+        newTime.setAttribute("class", "editTime edit-time-"+measureOfTime.toLowerCase());
+        newTime.setAttribute("oninput", "validity.valid||(value='')");
+        newTime.setAttribute("min", "0");      
+        longFormTime.parentNode.insertBefore(newTime, longFormTime);
+    }
+/**
+* This function removes the elements & classes created for the edit modal and restores the original task 
+list icons, classes & div elements. 
+*/
+    function removeEditOptionElements(taskLine, saveButton, cancelButton, longFormTime) {                              
+        taskLine.removeChild(saveButton);
+        taskLine.classList.remove('edit-time-task');
+        taskLine.removeChild(cancelButton);
+        taskLine.removeChild(document.getElementById('editSeconds'));
+        taskLine.removeChild(document.querySelector('.edit-time-seconds-label'));
+        taskLine.removeChild(document.getElementById('editMinutes'));
+        taskLine.removeChild(document.querySelector('.edit-time-minutes-label'));
+        taskLine.removeChild(document.getElementById('editHours'));
+        taskLine.removeChild(document.querySelector('.edit-time-hours-label')); 
+        taskLine.style.zIndex = 0;
+        let insertBeforeNode = taskLine.children[0];
+        let updatedTime = document.createElement('P');
+        updatedTime.setAttribute('class', 'total-task-time');
+        updatedTime.textContent = `${longFormTime}`;
+        taskLine.insertBefore(updatedTime, insertBeforeNode);
+        taskLine.children[2].classList.remove('edit-time-task-description');
     }
 // --------------------------------------TIMING FUNCTIONS-------------------------------//
 /**
@@ -639,7 +747,16 @@ function countdownClickStartHelper(countdownType, countdownNumber){
         })       
     }
 /**
- * This function  
+ * This function listens for clicks or enter on the "save time to task" button on any of the timers. 
+ * When clicked, a modal appears asking the user to confirm that they want to save the specific time to that specific task.
+ * All elements outside the modal are rendered inaccessible.
+ * If the timer is playing, it is paused.
+ * If the save is confirmed by the user then the saveTimeToTask() function is called.
+ * Then it checks the id currently connected to the timed task against all the ids in the task list in the DOM.
+ * When the ids match it saves the time timed to the longformtime variable that displays the time next to the task. 
+ * The function then hides the modal and makes all the necessary elements accessible again.
+ * It removes the overlay and then forces a reload of the page.
+ * If the save is cancelled, the user reverts to the timer and can press play to continue timing.
  */
     function saveTimeButton(){
         saveButton.addEventListener('keyup', function(event){
@@ -649,26 +766,20 @@ function countdownClickStartHelper(countdownType, countdownNumber){
                 }
             })
         saveButton.addEventListener('click', function(){
-            //alert asking if the user definitely want to add {seconds} to their total time on that task.
             let timerTitle = document.querySelector('.timer-task-description');
-
             let thisTask = timerTitle.textContent;
-
             let saveTimeToTaskModal = document.getElementById('save-time-to-task-modal');
             saveTimeToTaskModal.style.display = "block";
             let confirmButton = document.querySelector('.sttt-confirm-button');
             let negateButton = document.querySelector('.sttt-negate-button');
             let messageElement = document.querySelector('.sttt-modal-p');
             let typeOfTimer = document.querySelector('.timer-title');
-            
             let alarmButton = document.querySelector('#alarm-on');
             let pauseButton = document.querySelector('#pause');
             let playButton = document.querySelector('#play');
             let resetButton = document.querySelector('#reset');
             let closeTimerX = document.querySelector('.close-timer-x');
-
             makeElementsUntabbable(saveButton, alarmButton, pauseButton, playButton, resetButton, closeTimerX);
-           
             if (playing == true){
                 pauseButton.style.display = "none";
                 playButton.style.display = "inline-block";
@@ -686,14 +797,11 @@ function countdownClickStartHelper(countdownType, countdownNumber){
                 let timeInsert = timer.convertSecondsToTime(timeToAddInSecs);
                 messageElement.textContent = `Do you want to save ${timeInsert} to to to your task: "${thisTask}"? `
                 clearInterval(countdownInt);
-            }
-            
+            }   
             confirmButton.addEventListener('click', function(){
                 saveTimeToTask(timerTitle.id, seconds);
-                //needs to update the time spent display on task list.
                 let idForSavingTime = timerTitle.id;
-                let taskTimeDisplay1 = document.querySelectorAll('.task-description'); //with the same id as the timertitle id.
-                
+                let taskTimeDisplay1 = document.querySelectorAll('.task-description');
                 for (let i=0; i<taskTimeDisplay1.length; i++){
                     if(taskTimeDisplay1[i].id == idForSavingTime){
                         let timeDisplay = taskTimeDisplay1[i].parentElement.firstElementChild; 
@@ -702,7 +810,6 @@ function countdownClickStartHelper(countdownType, countdownNumber){
                 }
                 saveTimeToTaskModal.style.display = "none";
                 makeElementsTabbable(saveButton, alarmButton, pauseButton, playButton, resetButton, closeTimerX);
-
                 removeTimerFromDom();
                 timer.removeOverlay();
                 timer.makeArrayElementsKeyboardTabbableAgain();
@@ -715,44 +822,40 @@ function countdownClickStartHelper(countdownType, countdownNumber){
             return playing = false; 
         })
     }
-
-    function makeElementsUntabbable(...elements){
-        elements.forEach(element => element.setAttribute("tabindex", "-1"))
-    }
-    function makeElementsTabbable(...elements){
-        elements.forEach(element => element.setAttribute("tabindex", "0"))
-    }
-    
+/**
+ * This function first checks to see which timer is being used.
+ * Then it calls a function specific to that timer than determines how much time to add to the task in seconds. 
+ * It creates a new dateStamp and creates variables to hold the date and time of when the time was added to the task.
+ * It then finds the task saved to local storage with the same id as the task being timed.
+ * And it adds the time to its time spent on task property. 
+ * It then converts the new total time in seconds to the longform time property and updates that on the task object. 
+ * Then it creates a new entry in the time Segments array of objects and includes: id, time, date & task description information for use with the charts & lists. 
+ */ 
     function saveTimeToTask(id, seconds){
-
-        //select the timer titles to use to determine which timer is being played.
-            var minutesInSeconds;
-            
-             let typeOfTimer = document.querySelector('.timer-title');
-             let timeToAdd;
-               
-                if (typeOfTimer.textContent == "Countdown 15") {
-                    timeToAdd = countdown15TimeToAdd(hours, minutes, seconds);
-                    clearInterval(countdownInt); //necessary??
-                } else if (typeOfTimer.textContent == "Countdown 25"){
-                    timeToAdd = countdown25TimeToAdd(hours, minutes, seconds);
-                    clearInterval(countdownInt); //necessary??
-                } else if (typeOfTimer.textContent == "Stopwatch"){
-                    timeToAdd = stopwatchTimeToAdd(hours, minutes, seconds);
-                }
-                // timeToAdd = seconds;
-                let dateStamp = new Date();
-                let localTime = dateStamp.toLocaleTimeString();
-                let localDate = dateStamp.toLocaleDateString();
-                let taskDescription = list.taskList[id].taskDescription;
-            
-        //Find the task object with that taskId and add the timeToAdd to its timeFocusedOnTask prop.
+        var minutesInSeconds; 
+        let typeOfTimer = document.querySelector('.timer-title');
+        let timeToAdd;    
+        if (typeOfTimer.textContent == "Countdown 15") {
+            timeToAdd = countdown15TimeToAdd(hours, minutes, seconds);
+            clearInterval(countdownInt); 
+        } else if (typeOfTimer.textContent == "Countdown 25"){
+            timeToAdd = countdown25TimeToAdd(hours, minutes, seconds);
+            clearInterval(countdownInt); 
+        } else if (typeOfTimer.textContent == "Stopwatch"){
+            timeToAdd = stopwatchTimeToAdd(hours, minutes, seconds);
+        }
+        let dateStamp = new Date();
+        let localTime = dateStamp.toLocaleTimeString();
+        let localDate = dateStamp.toLocaleDateString();
+        let taskDescription = list.taskList[id].taskDescription;    
         list.taskList[id].totalTimeFocusedOnTask += timeToAdd;
         list.taskList[id].totalTimeFocusedOnTaskLongForm = timer.convertSecondsToTime(list.taskList[id].totalTimeFocusedOnTask);
         list.taskList[id].timeSegments.push({id, timeToAdd, dateStamp, taskDescription, localDate, localTime});
-        
         list.setDataToLocalStorage(); 
     }
+/**
+ * This function turns the alarm sound on and off. 
+ */
     function alarmToggle(){
         let alarmButton = document.querySelector('.alarm');
         alarmButton.addEventListener('click', function(){
@@ -763,229 +866,106 @@ function countdownClickStartHelper(countdownType, countdownNumber){
             }
         })
     }
-    //Refactored editTask Helper Functions
-    
-    // Used to hide the task icons so they don't appear in the edit modal.
-    function hideTaskIcons(taskLine){
-        taskLine.children[1].classList.add('hidden');
-        taskLine.children[3].classList.add('hidden');
-        taskLine.children[4].classList.add('hidden');
-        taskLine.children[5].classList.add('hidden');
-        }
-      function showTaskIcons(taskLine){
-        //Checkbox
-        taskLine.children[1].classList.remove('hidden');
-        //Stopwatch Icon
-        taskLine.children[3].classList.remove('hidden');
-        //Ellipsis Icon
-        taskLine.children[4].classList.remove('hidden');
-        // fullTaskLine.children[5].classList.remove('hidden'); //don't need this? 
-        }
-    
-    //Function to abstract the creation of save & cancel buttons for the edit option
-    function createButton(buttonType) {
-            const button = document.createElement('BUTTON');
-            button.setAttribute("class", `edit-time-${buttonType}-button`);
-            button.setAttribute("type", "submit");
-
-            if (buttonType == "save"){
-                button.textContent = "Save New Total Time";
-                
-            } else if (buttonType == "cancel"){
-                button.textContent = "Cancel Changes & Exit";
-                
-            }
-            return button;
-        }
-
-    //Function that takes an array of times as strings and turns it into an array of times as integers, formatted correctly.
-     function makeTimeNumbersFromStrings(arrayOfStringTimes, arrayOfNumberTimes){
-            arrayOfStringTimes.forEach(function(item){
-            if (item.length === 5){
-                arrayOfNumberTimes.push(parseInt(item.slice(0,2)));
-            } else if(item.length === 6){
-                arrayOfNumberTimes.push(parseInt(item.slice(0,3)));
-            } else if(item.length === 7){
-                arrayOfNumberTimes.push(parseInt(item.slice(0,4)));
-            } else if(item.length === 8){
-                arrayOfNumberTimes.push(parseInt(item.slice(0,5)));
-            } else if(item.length === 9){
-                arrayOfNumberTimes.push(parseInt(item.slice(0,6)));
-            } else if(item.length === 10){
-                arrayOfNumberTimes.push(parseInt(item.slice(0,7)));
-            } else if(item.length === 11){
-                arrayOfNumberTimes.push(parseInt(item.slice(0,8)));
-            }else {
-                arrayOfNumberTimes.push(parseInt(item.slice(0,1)));
-            }
-        });
-        return arrayOfNumberTimes;
-        }
-
-    //A function that creates labels and inputs for each measure of time in the edit task modal.
-    function createNewInputsForManualTimeEdit(measureOfTime, timeVariableToEdit, longFormTime){
-            const newLabel = document.createElement('LABEL');
-            newLabel.setAttribute("for", "edit"+measureOfTime);
-            newLabel.textContent = measureOfTime+":";
-            newLabel.setAttribute("class", "editTime edit-time-"+measureOfTime.toLowerCase()+"-label");
-            longFormTime.parentNode.insertBefore(newLabel, longFormTime);
-
-            const newTime = document.createElement("INPUT");
-            newTime.setAttribute("type", "number")
-            newTime.setAttribute("value", `${timeVariableToEdit}`);
-            newTime.setAttribute("id", "edit"+measureOfTime);
-            newTime.setAttribute("class", "editTime edit-time-"+measureOfTime.toLowerCase());
-            newTime.setAttribute("oninput", "validity.valid||(value='')");
-            newTime.setAttribute("min", "0");      
-            longFormTime.parentNode.insertBefore(newTime, longFormTime);
-        }
-
-    /* This function removes the elements & classes created for the edit modal and restores the original task 
-    list icons, classes & div elements. */
-    function removeEditOptionElements(taskLine, saveButton, cancelButton, longFormTime) {                              
-        taskLine.removeChild(saveButton);
-        taskLine.classList.remove('edit-time-task');
-        taskLine.removeChild(cancelButton);
-        taskLine.removeChild(document.getElementById('editSeconds'));
-        taskLine.removeChild(document.querySelector('.edit-time-seconds-label'));
-        taskLine.removeChild(document.getElementById('editMinutes'));
-        taskLine.removeChild(document.querySelector('.edit-time-minutes-label'));
-        taskLine.removeChild(document.getElementById('editHours'));
-        taskLine.removeChild(document.querySelector('.edit-time-hours-label')); 
-        taskLine.style.zIndex = 0;
-        //Bring back the updated longform time <p>  
-        let insertBeforeNode = taskLine.children[0];
-        let updatedTime = document.createElement('P');
-        updatedTime.setAttribute('class', 'total-task-time');
-        updatedTime.textContent = `${longFormTime}`;
-        taskLine.insertBefore(updatedTime, insertBeforeNode);
-        taskLine.children[2].classList.remove('edit-time-task-description');
-    }
-
+/**
+ * This function listens for clicks or enters on the edit task option.
+ * It stores the task id & description,
+ * It takes the long form string of time and extracts the time numbers from that using the makeTimeNumbersFromStrings() function.  
+ * From this it stores the time measures in separate arrays to edit.
+ * It creates a save button and a cancel button using the createButton() helper function. 
+ * It hides the task icons.
+ * It adds an overlay.
+ * It brings the task above the overlay for user access.
+ * It makes elements underneath the task to edit, not tabbable. 
+ * It adds certain classes for styling the edit modal.
+ * It creates new inputs using a function for each measure of time to be edited.
+ * It removes the long form time.
+ * It adds the save & cancel buttons.
+ * It sets up the task description to edit and creates an input where that can happen.
+ * It scrolls the task description into view.
+ * It populates the time measure inputs with the time recorded on the task prior to editing.
+ * It sets the value of the edit task name input to the task description.
+ * It listens for clicks/enter on the "Save Changes" button and if confirmed:
+ * It takes what is in the input box and saves that as the new DOM task description.
+ * It then loops through the taskList in local storage and when the ids match, it updates the saved task with the input task description & makes sure that the checkmark info is passed to the newly created <li> element.
+ * It then collects any new time measure inputs and saves them too.
+ * Converting those times to seconds.
+ * It takes a snapshot of the date & time these changes were made in order to keep the "today" chart information accurate. If a task is edited, the new amount of time minused from the original time is added as a time segment in an array.
+ * Those seconds are converted to long form time.
+ * Then an ID matching loop updates the totalTimeFocusedOnTask by taking into account any changes to the time made in the edit task window. 
+ * All the new elements created for the edit modal are removed and all the original elements are brought back.
+ * The overlay is removed and the elements that were underneath it are made tabbable again. 
+ * The new data is saved to local storage and the page is reloaded to update the DOM.
+ * If the cancel button is clicked:
+ * The long form time is set as the time before the edit option was selected.
+ * The task name/description goes back to what it was.
+ * All the newly created DIVs are removed and the original elements are brought back.
+ * The icons are brought back.
+ * The overlay is removed.
+ * The data is saved & the page is reloaded.
+ */
     function editTask(){  
         const ellipsisArray = document.querySelectorAll('.task-options');
         ellipsisArray.forEach(function(ellipsis){
-             //for each of these event types do the following:
             ['click','keyup'].forEach(function(evt){
-                 //listen for either of the above on ind. elipsises. passing on the specific elip in elipEvent
                 ellipsis.addEventListener(evt, function(elipEvent){
-                     //if the evt is click or the keyup event is a tab...
                     if((evt === 'click') || (elipEvent.keyCode === 9)) {
                         const manuallyEditTimeButton = document.querySelector('.edit-task-option');
-                      
-                        // manuallyEditTimeButton.addEventListener('click', function(event){
                         $(manuallyEditTimeButton).bind('click keyup', function(event){
-
                             if((event.type === 'click') || (event.type === 'keyup') && (event.keyCode === 13)) {
-
-                                //V1. The Specific Task Line
                                 let fullTaskLine = event.target.closest('.task');
-                               
-                                //V2. Targeted task's ID
                                 let taskToTargetId = fullTaskLine.children[2].id;
-                                //V3. Select the task description
-                                let taskToTarget = fullTaskLine.children[2];
-                                //V4. The Specific Long Form Time <p> 
+                                let taskToTarget = fullTaskLine.children[2]; 
                                 let longFormTimeToTarget = fullTaskLine.firstElementChild;
-                                //V5. Array of time strings
-                                /*
-                                take that <p> string</p> and divide it on the spaces to isolate the numbers. 
-                                Gives us an array of strings - Eg: ["0hrs", "6mins", "5secs"] 
-                                */
                                 let timeToEdit = longFormTimeToTarget.textContent.split(" ");
-                                //V6. Array of time numbers
                                 let timeArray = []
-
-                                //F1. Calls the function that transforms the strings into integers and uses the two arrays created above.
                                 makeTimeNumbersFromStrings(timeToEdit, timeArray);
-
-                                //V7, V8, V9 Creates variables for each of the time categories and sets them as numbers.
                                 let hoursToEdit = timeArray[0];
                                 let minutesToEdit = timeArray[1];
                                 let secondsToEdit = timeArray[2];
-
-                                // V10. Save Button Creation
                                 let editTaskSaveButton = createButton("save");
-                                // V11. Cancel Button Creation
                                 let editTaskCancelButton = createButton("cancel");
-
-                                //F2. Calls the function that hides the task icons.
                                 hideTaskIcons(fullTaskLine);
-
-                                //F3.  Calls the function that adds an overlay to focus user on editing the time and not doing anything else. 
                                 timer.addOverlay();
-
-                                //P1. Bring the task above the overlay so the user can access the edit boxes.
                                 fullTaskLine.style.zIndex = 1001;
-                                //F4. Make elements not tabbable
                                 timer.makeArrayElementsNotKeyboardTabbable();
-                                //P2, P3, P4 - Add the classes for this layout
                                 fullTaskLine.classList.add('edit-time-task');
                                 taskToTarget.classList.add('edit-time-task-description');
                                 taskToTarget.classList.remove('task');
-                              
-                                //F5, F6, F7 - Call the time input creation function for each of the measures of time.
                                 createNewInputsForManualTimeEdit("Hours", hoursToEdit, longFormTimeToTarget);
                                 createNewInputsForManualTimeEdit("Minutes", minutesToEdit, longFormTimeToTarget);
                                 createNewInputsForManualTimeEdit("Seconds", secondsToEdit, longFormTimeToTarget);
-
-                                //P5. Remove the time in longform ( a <p> tag )
                                 fullTaskLine.removeChild(longFormTimeToTarget);
-
-                                //P6. Add the save button after the seconds input.
                                 document.getElementById('editSeconds').after(editTaskSaveButton);
-                                
-                                //P7. Add the cancel button after the save button.
                                 editTaskSaveButton.after(editTaskCancelButton);
-                              
-                                //V12. Edit Task Name 
                                 let editTaskName = document.querySelector('.edit-time-task-description');
-                                
-                                //P8. Scroll title into view.
                                 editTaskName.scrollIntoView(); //check this
-
-                                //V13. Text to Edit
                                 let taskTextToEdit = editTaskName.innerText;
-
-                                //P9. Create Edit Task Name Input & populate with task name.
+                                //Create Edit Task Name Input & populate with task name.
                                 const editTaskNameInput = document.createElement("INPUT");
                                 editTaskNameInput.setAttribute("type", "text")
                                 editTaskNameInput.setAttribute("value", `${taskTextToEdit}`);
                                 editTaskNameInput.setAttribute("class", "editedTask")
                                 editTaskNameInput.style.zIndex="1001";
-                                editTaskName.parentNode.replaceChild(editTaskNameInput, editTaskName);
-
-                                //V14, V15, V16 - Time Measure Input Variables Created Earlier 
+                                editTaskName.parentNode.replaceChild(editTaskNameInput, editTaskName); 
                                 let hoursInput = document.getElementById('editHours');
                                 let minutesInput = document.getElementById('editMinutes');
                                 let secondsInput = document.getElementById('editSeconds');
-
-                                //V17, V18, V19 - Time Measure Input Values 
                                 let originalHours = hoursInput.value;
                                 let originalMinutes = minutesInput.value;
                                 let originalSeconds = secondsInput.value;
-
-                                //V20, V21 Original (pre-edited) Minutes & Hours In Seconds
+                                //Original (pre-edited) Minutes & Hours In Seconds
                                 let minutesInSeconds = originalMinutes * 60;
                                 let hoursInSeconds = originalHours * 3600;
-
-                                //V22 Base Time In Seconds
+                                //Base Time In Seconds
                                 let baseTime = parseInt(originalSeconds) + minutesInSeconds + hoursInSeconds;
-
-                                //V23 New task Element for when edit modal closes
+                                //New task Element for when edit modal closes
                                 const newTaskLi = document.createElement('LI');
                                 newTaskLi.setAttribute("class", "task-description");
                                 newTaskLi.setAttribute("id", `${taskToTargetId}`);
-                                newTaskLi.textContent = editTaskNameInput.value; //set the value of the li to the edited task value.
-
-                                // Event Listener for when the save button is clicked/selected: 
-                                editTaskSaveButton.addEventListener('click', function(){
-
-                                    /* 1. Look at the task name / description currently in the input box & create a new LI element to display the new information in the task list when the edit modal is closed. */       
-                                    newTaskLi.textContent = editTaskNameInput.value; //set the value of the li to the edited task value.
-                                    editTaskNameInput.parentNode.replaceChild(newTaskLi, editTaskNameInput); //Replace the input box with the new Li. 
-
-                                    /* 2 Loop through the taskList in local storage and when the ids match, update the storage task with the input task description & make sure that the checkmark info is passed to the newly created LI */
+                                newTaskLi.textContent = editTaskNameInput.value; 
+                                editTaskSaveButton.addEventListener('click', function(){      
+                                    newTaskLi.textContent = editTaskNameInput.value; 
+                                    editTaskNameInput.parentNode.replaceChild(newTaskLi, editTaskNameInput);
                                     list.taskList.forEach(task => {
                                         if(task.id == newTaskLi.id){
                                             task.taskDescription = newTaskLi.textContent;
@@ -994,71 +974,44 @@ function countdownClickStartHelper(countdownType, countdownNumber){
                                             newTaskLi.classList.add('completed');
                                         }
                                     })
-                                    // 3.Collect any new time measure inputs and save them too.
                                     let hoursToAdd = hoursInput.value;
                                     let minutesToAdd = minutesInput.value;
                                     let secondsToAdd = secondsInput.value;
-                    
-                                    //4. Convert those times to seconds
                                     let minutesInSeconds = minutesToAdd * 60;
                                     let hoursInSeconds = hoursToAdd * 3600;
-
-                                    /* 5. Take a snapshot of the date & time these changes were made in order to keep the "today" chart information accurate. If a task is edited, the new amount of time minused from the original time is added as a time segment in an array. */
                                     let totalTimeToAdd = parseInt(secondsToAdd) + minutesInSeconds + hoursInSeconds;
                                     let dateStamp = new Date();
                                     let localTime = dateStamp.toLocaleTimeString();
                                     let localDate = dateStamp.toLocaleDateString();
                                     let taskDescription = list.taskList[taskToTargetId].taskDescription;
                                     let id = parseInt(taskToTargetId);
-                                    
                                     let timeToAdd = totalTimeToAdd - baseTime;
-                                    
                                     if (totalTimeToAdd !== 0) {
                                        list.taskList[taskToTargetId].timeSegments.push({id, timeToAdd, dateStamp, taskDescription, localDate, localTime});
                                     }                                    
-                                        
-                                    //6. Convert those seconds to long form time
                                     let longFormTimeToAdd = timer.convertSecondsToTime(totalTimeToAdd);
-
-                                    //7. ID matching loop - updates the totalTimeFocusedOnTask by taking into account any changes to the time made in the edit task window. 
                                     for (let i=0; i<list.taskList.length; i++){
                                         if (list.taskList[i].id == taskToTargetId){
                                             list.taskList[i].totalTimeFocusedOnTask = totalTimeToAdd;
                                             list.taskList[i].totalTimeFocusedOnTaskLongForm = longFormTimeToAdd; 
                                         }
                                     }                 
-                                    //8. Remove all the new created elements using a function & bring back original Divs
                                     removeEditOptionElements(fullTaskLine, editTaskSaveButton, editTaskCancelButton, longFormTimeToAdd);
-                                    //9. Bring back the icons.
                                     showTaskIcons(fullTaskLine);
-
                                     timer.removeOverlay();
                                     timer.makeArrayElementsKeyboardTabbableAgain();
-                                    
                                     list.setDataToLocalStorage();
                                     location.reload();
                                     })
-                                    
-                                //If the Cancel button is clicked: 
                                 editTaskCancelButton.addEventListener('click', function(){
-
-                                    //1. Set the long form time as the time before the edit option was selected.
                                     let longFormTimeToAdd = list.taskList[taskToTargetId].totalTimeFocusedOnTaskLongForm;
-
-                                    //2. Replace the task name input with just the task name
                                     editTaskNameInput.parentNode.replaceChild(newTaskLi, editTaskNameInput);
-
-                                    //3. Remove all the new created elements using a function & bring back original Divs
                                     removeEditOptionElements(fullTaskLine, editTaskSaveButton, editTaskCancelButton, longFormTimeToAdd);
-
-                                    //4. Bring back the icons.
-                                    showTaskIcons(fullTaskLine);
-                                        
+                                    showTaskIcons(fullTaskLine);      
                                     timer.removeOverlay(); 
                                     timer.makeArrayElementsKeyboardTabbableAgain();
                                     list.setDataToLocalStorage();
-                                    location.reload();
-                                                          
+                                    location.reload();                        
                                     })
                                 $(this).unbind('click');
                                 $(this).unbind('keyup');

@@ -538,6 +538,9 @@ This website was developed using GitPod in a Chrome browser and commits were pus
 
 - ### **[Tab Index Order](https://bitsofco.de/how-and-when-to-use-the-tabindex-attribute/)**
 
+- ### **[DirtyMarkup Formatter](https://www.10bestdesign.com/dirtymarkup/)**
+    Used to prettify my HTML, CSS & JS code.
+
 # Technology Used
 
 - HTML

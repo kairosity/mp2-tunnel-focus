@@ -101,9 +101,9 @@ class Timer {
 			seconds = 0;
 			minutes = 0;
 			hours = 0;
-			secondsHtml.innerHTML = `0${seconds}`
-			minutesHtml.innerHTML = `0${minutes}`
-			hoursHtml.innerHTML = `0${hours}`
+			secondsHtml.innerHTML = `0${seconds}`;
+			minutesHtml.innerHTML = `0${minutes}`;
+			hoursHtml.innerHTML = `0${hours}`;
 			playing = false;
 		}
 		/**
@@ -158,13 +158,13 @@ class Timer {
 		 * This function loops through an indeterminate number of parameters and makes each of them untabbable.
 		 */
 		function makeElementsUntabbable(...elements) {
-			elements.forEach(element => element.setAttribute("tabindex", "-1"))
+			elements.forEach(element => element.setAttribute("tabindex", "-1"));
 		}
 		/**
 		 * This function loops through an indeterminate number of parameters and makes each of them tabbable.
 		 */
 		function makeElementsTabbable(...elements) {
-			elements.forEach(element => element.setAttribute("tabindex", "0"))
+			elements.forEach(element => element.setAttribute("tabindex", "0"));
 		}
 		/**
 		 * This function hides the task icons.
@@ -232,7 +232,7 @@ class Timer {
 			newLabel.setAttribute("class", "editTime edit-time-" + measureOfTime.toLowerCase() + "-label");
 			longFormTime.parentNode.insertBefore(newLabel, longFormTime);
 			const newTime = document.createElement("INPUT");
-			newTime.setAttribute("type", "number")
+			newTime.setAttribute("type", "number");
 			newTime.setAttribute("value", `${timeVariableToEdit}`);
 			newTime.setAttribute("id", "edit" + measureOfTime);
 			newTime.setAttribute("class", "editTime edit-time-" + measureOfTime.toLowerCase());
@@ -302,8 +302,8 @@ class Timer {
 		 * This function sets the initial countdown for the 15 minute countdown timer and then calls the countdown timer function.
 		 */
 		function countDown15Play() {
-			seconds = 0;
-			minutes = 15; //CHANGE HERE WHEN TESTING
+			seconds = 3;
+			minutes = 0; //CHANGE HERE WHEN TESTING
 			hours = 0;
 			countdown();
 		}
@@ -333,7 +333,7 @@ class Timer {
 			}
 			if ((seconds < 0) && (minutes == 0)) {
 				if (alarmButton.innerHTML == `<i class="fas fa-bell-slash" aria-hidden="true"></i>`) {
-					alarm.muted == true;
+					alarm.muted = true;
 					clearInterval(countdownInt);
 					seconds = 0;
 					minutes = 0;
@@ -381,9 +381,9 @@ class Timer {
 		 * If not, the functions calculates the specific amount.
 		 */
 		function countdown15TimeToAdd(hours, minutes, seconds) {
-			var minutesInSeconds = minutes * 60
+			var minutesInSeconds = minutes * 60;
 			if ((seconds == -1) && (minutesInSeconds == 0)) {
-				var timeToAdd = 900
+				var timeToAdd = 900;
 				return timeToAdd;
 			} else {
 				var timeToAdd = 900 - (minutesInSeconds + seconds);
@@ -392,9 +392,9 @@ class Timer {
 		}
 
 		function countdown25TimeToAdd(hours, minutes, seconds) {
-			var minutesInSeconds = minutes * 60
+			var minutesInSeconds = minutes * 60;
 			if ((seconds == -1) && (minutesInSeconds == 0)) {
-				var timeToAdd = 1500
+				var timeToAdd = 1500;
 				return timeToAdd;
 			} else {
 				var timeToAdd = 1500 - (minutesInSeconds + seconds);
@@ -450,7 +450,7 @@ class Timer {
 							} else {
 								startStopwatchButtonArray.forEach(function(stopwatchButton) {
 									event.preventDefault();
-								})
+								});
 							}
 							pauseOnClick(stopwatch);
 							resetTime(stopwatch);
@@ -458,7 +458,7 @@ class Timer {
 							closeTimer();
 							timer.initialiseTimer();
 						}
-					}, false)
+					}, false);
 				});
 			});
 		}
@@ -510,21 +510,21 @@ class Timer {
 							const countdown15Button = document.querySelector('.countdown15-task-option');
 							$(countdown15Button).bind('click keyup', function(event) {
 								if ((event.type === 'click') || (event.keyCode === 13)) {
-									alarm.play()
-									alarm.pause()
+									alarm.play();
+									alarm.pause();
 									countdownClickStartHelper("countdown15", 15);
-									countDown15Play()
+									countDown15Play();
 									pauseOnClick(countdownInt);
 									resetTime(countdownInt);
 									closeTimer();
 								}
 								$(this).unbind('click');
 								$(this).unbind('keyup');
-							})
+							});
 						}
-					})
-				})
-			})
+					});
+				});
+			});
 		}
 		/**
 		 * This function listens for clicks/enters on the 25 minute countdown timer icon.
@@ -541,18 +541,18 @@ class Timer {
 							$(countdown25Button).bind('click keyup', function(event) {
 								if ((event.type === 'click') || (event.keyCode === 13)) {
 									countdownClickStartHelper("countdown25", 25);
-									countDown25Play()
+									countDown25Play();
 									pauseOnClick(countdownInt);
 									resetTime(countdownInt);
 									closeTimer();
 								}
 								$(this).unbind('click');
 								$(this).unbind('keyup');
-							})
+							});
 						}
-					})
-				})
-			})
+					});
+				});
+			});
 		}
 		/**
 		 * This function plays whichever timer is open when the play button is selected/clicked. 
@@ -574,7 +574,7 @@ class Timer {
 					playButton.style.display = "none";
 				}
 			});
-		};
+		}
 		/**
 		 * This function pauses whichever timer is open for the user. 
 		 */
@@ -584,7 +584,7 @@ class Timer {
 				pauseButton.style.display = "none";
 				playButton.style.display = "inline-block";
 				return playing = false;
-			})
+			});
 		}
 		/**
 		 * This function resets whichever timer the user is using.
@@ -597,7 +597,7 @@ class Timer {
 				playButton.style.display = "inline-block";
 				resetTimes();
 				return playing = false;
-			})
+			});
 		}
 		/**
 		 * This function resets the variables & html DOM time measures of whichever timer is open. 
@@ -635,7 +635,7 @@ class Timer {
 		 */
 		function countdownEnded() {
 			if (alarmButton.innerHTML == `<i class="fas fa-bell" aria-hidden="true"></i>`) {
-				alarm.play()
+				alarm.play();
 			}
 			playing = false;
 			let countdownEndedModal = document.getElementById('countdown-ended-modal');
@@ -646,21 +646,21 @@ class Timer {
 			let typeOfTimer = document.querySelector('.timer-title');
 			let thisTask = timerTitle.textContent;
 			if (typeOfTimer.textContent == "Countdown 15") {
-				messageElement.textContent = `Congrats! You've worked for the full 15 minutes! Do you want to save 15 minutes to the task: ${thisTask}?`
+				messageElement.textContent = `Congrats! You've worked for the full 15 minutes! Do you want to save 15 minutes to the task: ${thisTask}?`;
 				if (alarmButton.innerHTML == `<i class="fas fa-bell-slash" aria-hidden="true"></i>`) {
-					timer.addSilentAlarm()
+					timer.addSilentAlarm();
 				}
 				clearInterval(countdownInt);
 			} else if (typeOfTimer.textContent == "Countdown 25") {
 				messageElement.textContent = `Congrats! You've worked for the full 25 minutes! Do you want to save 25 minutes to the task: ${thisTask}?`;
 				if (alarmButton.innerHTML == `<i class="fas fa-bell-slash" aria-hidden="true"></i>`) {
-					timer.addSilentAlarm()
+					timer.addSilentAlarm();
 				}
 				clearInterval(countdownInt);
 			}
 			confirmButton.addEventListener('click', function() {
 				if (alarmButton.innerHTML == `<i class="fas fa-bell-slash" aria-hidden="true"></i>`) {
-					timer.removeSilentAlarm()
+					timer.removeSilentAlarm();
 				}
 				countdownEndedModal.style.display = "none";
 				saveTimeToTask(timerTitle.id, seconds);
@@ -679,10 +679,10 @@ class Timer {
 				seconds = 0;
 				minutes = 0;
 				hours = 0;
-			})
+			});
 			negateButton.addEventListener('click', function() {
 				if (alarmButton.innerHTML == `<i class="fas fa-bell-slash" aria-hidden="true"></i>`) {
-					timer.removeSilentAlarm()
+					timer.removeSilentAlarm();
 				}
 				clearInterval(countdownInt);
 				countdownEndedModal.style.display = "none";
@@ -708,7 +708,7 @@ class Timer {
 					event.preventDefault();
 					xButton.click();
 				}
-			})
+			});
 			xButton.addEventListener('click', function() {
 				let closeTimerModal = document.getElementById('close-timer-modal');
 				closeTimerModal.style.display = "block";
@@ -736,12 +736,12 @@ class Timer {
 					removeTimerFromDom();
 					timer.removeOverlay();
 					timer.makeArrayElementsKeyboardTabbableAgain();
-				})
+				});
 				negateButton.addEventListener('click', function() {
 					closeTimerModal.style.display = "none";
 					makeElementsTabbable(saveButton, alarmButton, pauseButton, playButton, resetButton, closeTimerX);
-				})
-			})
+				});
+			});
 		}
 		/**
 		 * This function listens for clicks or enter on the "save time to task" button on any of the timers. 
@@ -761,7 +761,7 @@ class Timer {
 					event.preventDefault();
 					saveButton.click();
 				}
-			})
+			});
 			saveButton.addEventListener('click', function() {
 				let timerTitle = document.querySelector('.timer-task-description');
 				let thisTask = timerTitle.textContent;
@@ -782,17 +782,17 @@ class Timer {
 					playButton.style.display = "inline-block";
 				}
 				if (typeOfTimer.textContent == "Stopwatch") {
-					messageElement.textContent = `Do you want to save ${hours} hours ${minutes} minutes & ${seconds} seconds to your task: "${thisTask}"? `
+					messageElement.textContent = `Do you want to save ${hours} hours ${minutes} minutes & ${seconds} seconds to your task: "${thisTask}"? `;
 					clearInterval(stopwatch);
 				} else if (typeOfTimer.textContent == "Countdown 15") {
 					let timeToAddInSecs = countdown15TimeToAdd(hours, minutes, seconds);
 					let timeInsert = timer.convertSecondsToTime(timeToAddInSecs);
-					messageElement.textContent = `Do you want to save ${timeInsert} to to your task: "${thisTask}"? `
+					messageElement.textContent = `Do you want to save ${timeInsert} to to your task: "${thisTask}"? `;
 					clearInterval(countdownInt);
 				} else if (typeOfTimer.textContent == "Countdown 25") {
 					let timeToAddInSecs = countdown25TimeToAdd(hours, minutes, seconds);
 					let timeInsert = timer.convertSecondsToTime(timeToAddInSecs);
-					messageElement.textContent = `Do you want to save ${timeInsert} to to to your task: "${thisTask}"? `
+					messageElement.textContent = `Do you want to save ${timeInsert} to to to your task: "${thisTask}"? `;
 					clearInterval(countdownInt);
 				}
 				confirmButton.addEventListener('click', function() {
@@ -811,13 +811,13 @@ class Timer {
 					timer.removeOverlay();
 					timer.makeArrayElementsKeyboardTabbableAgain();
 					location.reload();
-				})
+				});
 				negateButton.addEventListener('click', function() {
 					saveTimeToTaskModal.style.display = "none";
 					makeElementsTabbable(saveButton, alarmButton, pauseButton, playButton, resetButton, closeTimerX);
-				})
+				});
 				return playing = false;
-			})
+			});
 		}
 		/**
 		 * This function first checks to see which timer is being used.
@@ -868,7 +868,7 @@ class Timer {
 				} else {
 					alarmButton.innerHTML = `<i class="fas fa-bell" aria-hidden="true"></i>`;
 				}
-			})
+			});
 		}
 		/**
 		 * This function listens for clicks or enters on the edit task option.
@@ -921,7 +921,7 @@ class Timer {
 									let taskToTarget = fullTaskLine.children[2];
 									let longFormTimeToTarget = fullTaskLine.firstElementChild;
 									let timeToEdit = longFormTimeToTarget.textContent.split(" ");
-									let timeArray = []
+									let timeArray = [];
 									makeTimeNumbersFromStrings(timeToEdit, timeArray);
 									let hoursToEdit = timeArray[0];
 									let minutesToEdit = timeArray[1];
@@ -946,9 +946,9 @@ class Timer {
 									let taskTextToEdit = editTaskName.innerText;
 									//Create Edit Task Name Input & populate with task name.
 									const editTaskNameInput = document.createElement("INPUT");
-									editTaskNameInput.setAttribute("type", "text")
+									editTaskNameInput.setAttribute("type", "text");
 									editTaskNameInput.setAttribute("value", `${taskTextToEdit}`);
-									editTaskNameInput.setAttribute("class", "editedTask")
+									editTaskNameInput.setAttribute("class", "editedTask");
 									editTaskNameInput.style.zIndex = "1001";
 									editTaskName.parentNode.replaceChild(editTaskNameInput, editTaskName);
 									let hoursInput = document.getElementById('editHours');
@@ -977,7 +977,7 @@ class Timer {
 											if ((task.id == newTaskLi.id) && (task.completed == true)) {
 												newTaskLi.classList.add('completed');
 											}
-										})
+										});
 										let hoursToAdd = hoursInput.value;
 										let minutesToAdd = minutesInput.value;
 										let secondsToAdd = secondsInput.value;
@@ -1013,7 +1013,7 @@ class Timer {
 										timer.makeArrayElementsKeyboardTabbableAgain();
 										list.setDataToLocalStorage();
 										location.reload();
-									})
+									});
 									editTaskCancelButton.addEventListener('click', function() {
 										let longFormTimeToAdd = list.taskList[taskToTargetId].totalTimeFocusedOnTaskLongForm;
 										editTaskNameInput.parentNode.replaceChild(newTaskLi, editTaskNameInput);
@@ -1023,7 +1023,7 @@ class Timer {
 										timer.makeArrayElementsKeyboardTabbableAgain();
 										list.setDataToLocalStorage();
 										location.reload();
-									})
+									});
 									$(this).unbind('click');
 									$(this).unbind('keyup');
 								}
@@ -1055,7 +1055,7 @@ class Timer {
 	 * This method adds an overlay to the page making certain elements inaccessible to the user.
 	 */
 	addOverlay() {
-		let pageBody = document.getElementsByTagName('BODY')[0]
+		let pageBody = document.getElementsByTagName('BODY')[0];
 		let overlayEl = document.createElement("DIV");
 		overlayEl.setAttribute("class", "overlay");
 		pageBody.appendChild(overlayEl);
@@ -1099,13 +1099,13 @@ class Timer {
 		newTaskInput.setAttribute("tabindex", "-1");
 		addNewTaskButton.setAttribute("tabindex", "-1");
 		arrayOfCheckboxes.forEach(function(checkbox) {
-			checkbox.setAttribute("tabindex", "-1")
+			checkbox.setAttribute("tabindex", "-1");
 		});
 		startStopwatchButtonArray.forEach(function(stopwatch) {
-			stopwatch.setAttribute("tabindex", "-1")
+			stopwatch.setAttribute("tabindex", "-1");
 		});
 		arrayOfOptionIcons.forEach(function(optionicon) {
-			optionicon.setAttribute("tabindex", "-1")
+			optionicon.setAttribute("tabindex", "-1");
 		});
 		skipTasks.setAttribute("tabindex", "-1");
 		chartsSelectBox.setAttribute("tabindex", "-1");
@@ -1127,13 +1127,13 @@ class Timer {
 		newTaskInput.setAttribute("tabindex", "0");
 		addNewTaskButton.setAttribute("tabindex", "0");
 		arrayOfCheckboxes.forEach(function(checkbox) {
-			checkbox.setAttribute("tabindex", "0")
+			checkbox.setAttribute("tabindex", "0");
 		});
 		startStopwatchButtonArray.forEach(function(stopwatch) {
-			stopwatch.setAttribute("tabindex", "0")
+			stopwatch.setAttribute("tabindex", "0");
 		});
 		arrayOfOptionIcons.forEach(function(optionicon) {
-			optionicon.setAttribute("tabindex", "0")
+			optionicon.setAttribute("tabindex", "0");
 		});
 		skipTasks.setAttribute("tabindex", "0");
 		chartsSelectBox.setAttribute("tabindex", "0");
@@ -1153,7 +1153,7 @@ class Timer {
 			if (event.keyCode === 13) {
 				infoIcon.click();
 			}
-		})
+		});
 		infoIcon.addEventListener('click', function() {
 			timer.addOverlay();
 			timer.makeArrayElementsNotKeyboardTabbable();
@@ -1163,8 +1163,8 @@ class Timer {
 				timer.removeOverlay();
 				timer.makeArrayElementsKeyboardTabbableAgain();
 				infoModal.style.zIndex = -900;
-			})
-		})
+			});
+		});
 	}
 }
 class Task {
@@ -1232,7 +1232,7 @@ class List {
 				event.preventDefault();
 				addNewTaskButton.click();
 			}
-		})
+		});
 		addNewTaskButton.addEventListener('click', function() {
 			let newTaskInputValue = newTaskInput.value;
 
@@ -1267,9 +1267,9 @@ class List {
 				okButton.addEventListener('click', function() {
 					addValidTaskModal.style.display = "none";
 					timer.makeArrayElementsKeyboardTabbableAgain();
-				})
+				});
 			}
-		})
+		});
 	}
 	/**
 	 * This method listens for checkbox clicks or enters on a specific task.
@@ -1305,9 +1305,9 @@ class List {
 								taskDescription: task.taskDescription
 							});
 						}
-					})
+					});
 					if ((chartSelection.value === "tasks-completed") || (chartSelection.value === "tasks-completed-today")) {
-						list.setDataToLocalStorage()
+						list.setDataToLocalStorage();
 						location.reload();
 					}
 				} else if (checkbox.checked == false) {
@@ -1316,15 +1316,15 @@ class List {
 						if (task.id == checkboxId) {
 							task.completed = false;
 						}
-					})
+					});
 					if ((chartSelection.value === "tasks-completed") || (chartSelection.value === "tasks-completed-today")) {
-						list.setDataToLocalStorage()
+						list.setDataToLocalStorage();
 						location.reload();
 					}
 				}
-				list.setDataToLocalStorage()
+				list.setDataToLocalStorage();
 			})
-		})
+		});
 	}
 	/**
 	 * This method listens for clicks or enters on the delete task option.
@@ -1348,12 +1348,12 @@ class List {
 									confirmDeletionModal.style.display = "block";
 									messageElement.textContent = `Are you sure you want to delete ${taskNameToDelete}?`;
 								}
-							})
-						})
+							});
+						});
 					}
-				})
-			})
-		})
+				});
+			});
+		});
 	}
 	/**
 	 * This method is all taken exactly as written from the tippy.js documentation including the hideOnPopperBlur plugin directly below.
@@ -1492,7 +1492,7 @@ function clearChartArea() {
 		d3.select(chartSvg).remove();
 	}
 	if (circleLeg) {
-		circleLeg.forEach(leg => leg.remove())
+		circleLeg.forEach(leg => leg.remove());
 	}
 	if (completedTaskList) {
 		completedTaskList.remove();
@@ -1516,21 +1516,21 @@ function clearChartArea() {
  *   
  */
 function selectChart(data) {
-	clearChartArea()
+	clearChartArea();
 	var width = function() {
 		if (window.innerWidth < 576) {
-			return 300
+			return 300;
 		} else if (window.innerWidth > 575) {
-			return 550
+			return 550;
 		}
 	};
 	var height = function() {
 		if (window.innerWidth < 576) {
-			return 250
+			return 250;
 		} else if (window.innerWidth > 575) {
-			return 320
+			return 320;
 		}
-	}
+	};
 	var radius = 150;
 	var donutWidth = 75;
 	var color = d3.scaleOrdinal().range(["#33A8C7", "#52E3E1", "#A0E426", "#FDF148", "#FFAB00", "#F77976", "#F050AE", "#D883FF", "#9336FD"]);
@@ -1538,24 +1538,24 @@ function selectChart(data) {
 		if (window.innerWidth < 576) {
 			return 'translate(' + 200 + ',' + 155 + ')';
 		} else if (window.innerWidth > 575) {
-			return 'translate(' + (305) + ',' + (155) + ')'
+			return 'translate(' + (305) + ',' + (155) + ')';
 		}
-	})
+	});
 	var arc = d3.arc().innerRadius(donutWidth).outerRadius(radius);
 	var pie = d3.pie().value(function(d) {
-		return d.totalTimeFocusedOnTask
+		return d.totalTimeFocusedOnTask;
 	}).sort(null); //stops the chart sorting in order of size. 
 	var legendRectSize = 14;
 	var legendSpacing = 7;
 	var div = d3.select("body").append("div").attr("class", "tooltip-donut").style("opacity", 0);
 	var path = svg.selectAll("path").data(pie(data)).enter().append("path").attr("d", arc).attr("fill", function(d) {
-		return color(d.data.taskDescription)
+		return color(d.data.taskDescription);
 	}).attr("stroke", "white").on('mouseover', function(event, d, i) {
 		d3.select(this).transition().duration('50').attr('opacity', '.85');
 		//Makes the new div appear on hover:
 		div.transition().duration(50).style("opacity", 1);
-		let task = d.data.taskDescription
-		let longTime = d.data.totalTimeFocusedOnTaskLongForm
+		let task = d.data.taskDescription;
+		let longTime = d.data.totalTimeFocusedOnTaskLongForm;
 		div.html(task + "<br>" + longTime) //put label to display here
 			.style("left", (event.pageX + 10) + "px").style("top", (event.pageY - 15) + "px");
 	}).on('mouseout', function(event, d, i) {
@@ -1592,7 +1592,7 @@ function selectChart(data) {
 		if (legendItems.length > 6) {
 			return legendItems.length * 30;
 		}
-	})
+	});
 }
 /**
  * This code runs whenever a user uses the dropdown chart selection menu.
@@ -1627,10 +1627,10 @@ d3.select('#chart-selections').on("change", function(event) {
 		completedTaskList(totalTimeFocusedOnEachTaskToday);
 		let completedTaskExists = document.querySelector('.completed-task');
 		if (!completedTaskExists) {
-			messageDiv.innerHTML = `<h2>You have not marked any tasks as completed today.</h2>`
+			messageDiv.innerHTML = `<h2>You have not marked any tasks as completed today.</h2>`;
 		}
 	}
-})
+});
 /**
  * This function returns an array with 
  * It looks at the taskList in local storage and it loops through the timeSegments array in each task in that list. 
@@ -1707,12 +1707,12 @@ function completedTaskList(data) {
 	let comTaskListDiv = document.querySelector('.completed-task-list');
 	taskList.forEach(function(task) {
 		if (task.completed === true) {
-			comTaskListDiv.innerHTML += `<li class="completed-task">${task.taskDescription}</li>`
+			comTaskListDiv.innerHTML += `<li class="completed-task">${task.taskDescription}</li>`;
 		}
-	})
+	});
 	let completedTasksExist = document.querySelector('.completed-task');
 	if (completedTasksExist == null) {
-		messageDiv.innerHTML = `<h2>You have not marked any tasks as complete.</h2>`
+		messageDiv.innerHTML = `<h2>You have not marked any tasks as complete.</h2>`;
 	}
 	comTasksDiv.innerHTML += `</ol>`;
 }
@@ -1730,9 +1730,9 @@ function responsivefy(svg) {
 	// resize svg on inital page load
 	svg.attr('viewBox', function() {
 		if (window.innerWidth < 576) {
-			return `0 0 ${width} ${height + 70}`
+			return `0 0 ${width} ${height + 70}`;
 		} else if (window.innerWidth > 575) {
-			return `0 0 ${width} ${height}`
+			return `0 0 ${width} ${height}`;
 		}
 	}).attr('preserveAspectRatio', 'xMinYMid').call(resize);
 	// add a listener so the chart will be resized

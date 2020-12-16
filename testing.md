@@ -705,7 +705,6 @@ In summary the HTML validates perfectly, with the exceptions of the empty headin
 
 - All anchors and links were valid.
 
-
 ## CSS
 
 ## [W3 CSS Validator](https://jigsaw.w3.org/css-validator/)
@@ -718,7 +717,15 @@ In summary the HTML validates perfectly, with the exceptions of the empty headin
 
 - The rest of the code validated.
 
+## JavaScript
 
+## [JSHint](https://jshint.com/)
+
+- Ran all functions through JSHint and its primary complaint was to do with how much of my code was written is ES6. The use of const & let and template literals. 
+
+- I found no substantive errors using this tool. 
+
+- Mostly it enabled me to spot the hundreds of semi-colons I had omitted, which I corrected. 
 
 
 # Mobile Testing

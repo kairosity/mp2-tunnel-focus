@@ -1194,7 +1194,7 @@ class List {
                     <p class="total-task-time">${taskList[i].totalTimeFocusedOnTaskLongForm}</p>
                     <input class="taskCheckbox" type="checkbox" tabindex=0 checked>
                     <li class="task-description completed" id="${taskList[i].id}">${taskList[i].taskDescription}</li>
-                    <a class="task-stopwatch task-list-icon"><i class="fas fa-stopwatch start-stopwatch" tabindex=0 title="start stopwatch"></i><span class="sr-only">Start Stopwatch</span></a>
+                    <a class="task-stopwatch task-list-icon" aria-label="start stopwatch"><i class="fas fa-stopwatch start-stopwatch" tabindex=0 ></i></a>
                     <a class="task-options task-list-icon" aria-label="task-options-ellipsis" tabindex=0><i class="fas fa-ellipsis-v task-options-icon"></i></a>
                 </div>`;
 			} else if (taskList[i].completed === false) {
@@ -1202,7 +1202,7 @@ class List {
                     <p class="total-task-time">${taskList[i].totalTimeFocusedOnTaskLongForm}</p>
                     <input class="taskCheckbox" type="checkbox" tabindex=0>
                     <li class="task-description" id="${taskList[i].id}">${taskList[i].taskDescription}</li>
-                    <a class="task-stopwatch task-list-icon"><i class="fas fa-stopwatch start-stopwatch" tabindex=0 title="start stopwatch" ></i><span class="sr-only">Start Stopwatch</span></a>
+                    <a class="task-stopwatch task-list-icon" aria-label="start stopwatch"><i class="fas fa-stopwatch start-stopwatch" tabindex=0  ></i></a>
                     <a class="task-options task-list-icon" tabindex=0><i class="fas fa-ellipsis-v task-options-icon"></i></a>
                 </div>`;
 			}
@@ -1247,7 +1247,7 @@ class List {
                     <p class="total-task-time">${newTask.totalTimeFocusedOnTaskLongForm}</p>
                     <input class="taskCheckbox" type="checkbox" tabindex=0>
                     <li class="task-description" id="${newTask.id}">${newTask.taskDescription}</li>
-                    <a class="task-stopwatch task-list-icon" ><i class="fas fa-stopwatch start-stopwatch" tabindex=0 title="start stopwatch" ></i><span class="sr-only">Start Stopwatch</span></a>
+                    <a class="task-stopwatch task-list-icon" aria-label="start stopwatch" ><i class="fas fa-stopwatch start-stopwatch" tabindex=0 ></i></a>
                     <a class="task-options task-list-icon" tabindex=0><i class="fas fa-ellipsis-v task-options-icon"></i></a>
                 </div>`;
 				document.querySelector('#new-task-input').value = "";

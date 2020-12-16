@@ -681,7 +681,14 @@ __FUNCTION SUMMARY:__ This function is taken from Ben Clinkenbeard's Blog Articl
 ## [W3C HTML Validator](https://validator.w3.org/)
 
 - Warning 1: ```Consider avoiding viewport values that prevent users from resizing documents.```
-    The line referred to was explicitly written to avoid an annoying zooming effect on certain mobile browsers. So unfortunate, but I felt that user experience was improved by my code, so I've left it in.
+    The line referred to was explicitly written to avoid an annoying zooming effect on certain mobile browsers. So I felt that user experience was improved by my code, so I've left it in.
+
+- Warning 2: ```The document is not mappable to XML 1.0 due to two consecutive hyphens in a comment.```
+    This was because I prefered the look of look comments of the type: <!---------------------- Comment ---------------------->
+    But I changed them back to regular comments to allow mapping to XML
+
+- Error 1: ```An element with the attribute tabindex must not appear as a descendant of the a element.```
+    The anchor tag in this case was unneccesary, so I changed it to a <div>.
 
 ## [W3C Link Checker](https://validator.w3.org/checklink)
 

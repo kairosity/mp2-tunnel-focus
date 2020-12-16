@@ -1,152 +1,138 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0 maximum-scale=1.0,user-scalable=0">
-    <link rel="stylesheet" href="https://unpkg.com/tippy.js@6/animations/scale.css"/>
-    <link rel="stylesheet" href="assets/css/style.css">
-    <title>Tunnel Focus: Time Your Tasks</title>
+	<meta charset="UTF-8">
+	<meta content="width=device-width, initial-scale=1.0 maximum-scale=1.0,user-scalable=0" name="viewport">
+	<link href="https://unpkg.com/tippy.js@6/animations/scale.css" rel="stylesheet">
+	<link href="assets/css/style.css" rel="stylesheet">
+	<title>Tunnel Focus: Time Your Tasks</title>
 </head>
-
 <body>
-    <!-- PAGE CONTAINER DIV -->
-    <div class="page-container grid-overlord"> 
-     
-    <!-- HEADER -->
-        <header class="main-header">
-            <h1 class="main-heading">Tunnel Focus</h1>
-            <h2 class="sub-heading">Time Your Tasks</h2>
-            <div id="info"><i class="far fa-question-circle" tabindex="0"></i></div>
-        </header>
-    <!-- TIMER -->
-         <div class="timer-container" role="dialog"> 
-            <h2 class="timer-task-description"></h2>     
-            <div class="outer-timer-box">
-            <div class="timer-box">
-                <h2 id="hours"></h2>
-                <h2>:</h2>
-                <h2 id="minutes"></h2>
-                <h2>:</h2>
-                <h2 id="seconds"></h2>
-            </div>
-                <div class="timer-controls">
-                    <a href="#" id="alarm-on" class="alarm"><i class="fas fa-bell"></i></a>
-                    <a href="#" id="pause"><i class="fas fa-pause"></i></a>
-                    <a href="#" id="play"><i class="fas fa-play"></i></a>
-                    <a href="#" id="reset"><i class="fas fa-history"></i></a>
-                </div>
-            </div>
-            <button id="save-time-to-task">Save Time To Task</button>
-            <button class="close-timer-x" tabindex="0"><i class="fas fa-times"></i></button>
-        </div>
-    <!-- TASK LIST -->
-        <div class="list-container">
-            <div class="add-new-task">
-                <input type="text" id="new-task-input" placeholder="Type to add a new task..." autofocus >
-                <button id="add-new-task"><i class="fas fa-plus add-new-task-plus-icon"></i></button>
-            </div>
-             <a href="#charts-start" id="skip-tasks" tabindex="0">Skip Tasks</a>
-            <div id="list">          
-            </div>
-        </div>
-    <!-- OPTIONS POPOVER NAVIGATION -->
-                <div class="popover-wrapper" id="popover">
-                    <div class="popover-box">
-                        <ul class="task-options-list">
-                            <li class="task-option edit-task-option" tabindex="0"><i class="far fa-edit task-icon task-edit-icon"></i>Edit Task</li>
-                            <li class="task-option delete-task-option" tabindex="0"><i class="fas fa-trash-alt task-icon task-delete-icon"></i>Delete Task</li><li class="line-here"></li>
-                            <li class="task-option countdown15-task-option" tabindex="0"><i class="fas fa-hourglass-half task-icon countdown15-timer-icon"></i>Countdown 15 Mins</li>
-                            <li class="task-option countdown25-task-option" tabindex="0"><i class="fas fa-hourglass-half task-icon countdown25-timer-icon"></i>Countdown 25 Mins</li>
-                        </ul>
-                    </div>
-                </div>
-    <!-- MODALS -->
-   <!-- APP INFORMATION MODAL -->
-                <div id="information-modal" class="modal">
-                    <div class="information-modal-content">
-                        <h2>Welcome to Tunnel Focus!</h2>
-                        <h3>The task list you can time.</h3>
-                        <div class="info-grid">
-                            <i class="fas fa-stopwatch info-task-icon"></i><p> This is the stopwatch timer, it is open ended and counts up from 0. Every 30 minutes it will beep once.</p>
-                            <i class="fas fa-ellipsis-v info-task-icon"></i><p> This is the options icon, click it to view more options.</p>
-                            <i class="fas fa-hourglass-half info-task-icon info-countdown15-timer-icon"></i><p> There are 2 countdown timers 15 minutes & 25 minutes, in keeping with pomodoro best practices.</p>
-                            <i class="far fa-edit info-task-icon info-task-edit-icon"></i><p> The "Edit Task" option allows you to manually edit the task description & the amount of time spent on that task.</p>
-                            <i class="fas fa-trash-alt info-task-icon info-task-delete-icon"></i><p> Delete completed tasks that you no longer want to view by clicking "Delete Task".</p>
-                            <i class="fas fa-bell info-task-icon"></i><p> When the timer is active, clicking the bell will mute the alarm.</p>
-                            <i class="fas fa-pause info-task-icon"></i><p> If you need a break mid-task, you can pause & then play the timer again from where you left off.</p>
-                            <i class="fas fa-history info-task-icon"></i><p> You can reset your time.</p>
-                        </div>
-                        <p class="info-last-line">Enjoy being more productive!</p>
-                        <button class="close-timer-x close-info-x" tabindex="0"><i class="fas fa-times"></i></button>
-                    </div>
-                </div>
-    <!-- SAVE TIME TO TASK MODAL -->
-                <div id="save-time-to-task-modal">
-                    <div class="sttt-modal-content">
-                        <p class="sttt-modal-p">Do you want to save ${thistime} to ${thistask}?</p>
-                        <button class="sttt-confirm-button sttt-modal-btn" tabindex="0">Yes, Save</button>
-                        <button class="sttt-negate-button sttt-modal-btn" tabindex="0">No, Cancel</button>
-                    </div>
-                </div>
-    <!-- COUNTDOWN ENDED MODAL -->
-               <div id="countdown-ended-modal">
-                    <div class="countdown-ended-modal-content">
-                        <p class="ce-modal-p">Congrats! You've worked for the full ${countdowntime} minutes! Do you want to save those ${countdownminutes} minutes to the task: ${}?</p>
-                        <button class="ce-confirm-button ce-modal-btn" tabindex="0">Yes, Save</button>
-                        <button class="ce-negate-button ce-modal-btn" tabindex="0">No, Cancel</button>
-                    </div>
-                </div>
-    <!-- CLOSE TIMER MODAL -->
-                <div id="close-timer-modal" class="modal">
-                    <div class="modal-content">
-                        <p class="close-timer-modal-p">Are you sure you want to exit the timer without saving?</p>
-                        <button class="confirm-button close-timer-modal-btn" tabindex="0">Yes, Exit</button>
-                        <button class="negate-button close-timer-modal-btn" tabindex="0">No, Cancel</button>
-                    </div>
-                </div>
-    <!-- CONFIRM DELETION MODAL -->
-                <div id="confirm-deletion-modal" class="modal">
-                    <div class="confirm-deletion-modal-content">
-                        <p class="confirm-deletion-modal-p">Are you sure you want to delete ${thistask}?</p>
-                        <button class="deletion-confirm-button confirm-deletion-modal-btn" tabindex="0">Yes</button>
-                        <button class="deletion-negate-button confirm-deletion-modal-btn" tabindex="0">No</button>
-                    </div>
-                </div>
-    <!-- "PLEASE ENTER A VALID TASK" MODAL-->
-                <div id="enter-task-modal" class="modal">
-                    <div class="modal-content">
-                        <p class="close-timer-modal-p">Please enter a valid task.</p>
-                        <button class="confirm-button close-timer-modal-btn valid-task-confirm-button" tabindex="0">Ok, will do!</button>
-                    </div>
-                </div>
-    <!-- PRODUCTIVITY CHARTS -->
-        <div class="focus-summary-container" > 
-            <div class="chart-header">
-                <h2 class="chart-heading">Productivity Charts</h2>
-            </div>
-            <div id="charts-start" class="custom-select" tabindex="-1">
-                <select name="chart-selections" id="chart-selections" tabindex="0">
-                    <option id="total-time-focused" value="total-time-focused-on-each-task">Total Time Focused on Each Task</option>
-                    <option id="total-time-focused-today" value="total-time-focused-on-each-task-today">Total time Focused on Each Task Today</option>
-                    <option value="tasks-completed">Tasks Completed</option>
-                    <option value="tasks-completed-today">Tasks Completed Today</option>
-                </select>
-            </div>
-                <div id="charts">
-                    <div class="chart-message"></div>
-                    <div class="completed-tasks"></div>
-                    <div class="chart-area"></div>
-                    <svg class="legend-area"></svg>
-                </div>
-        </div>
-    <!-- FOOTER -->
-    <footer></footer>   
-    </div> 
-    <script src="https://kit.fontawesome.com/a27a231c02.js"></script>
-    <script src="https://unpkg.com/@popperjs/core@2/dist/umd/popper.min.js"></script>
-    <script src="https://unpkg.com/tippy.js@6/dist/tippy-bundle.umd.js"></script>
-    <script src="https://d3js.org/d3.v6.js"></script>  
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="assets/js/app.js"></script>
+	<!-- PAGE CONTAINER DIV -->
+	<div class="page-container grid-overlord">
+		<!-- HEADER -->
+		<header class="main-header">
+			<h1 class="main-heading">Tunnel Focus</h1>
+			<h2 class="sub-heading">Time Your Tasks</h2>
+			<div id="info">
+				<i class="far fa-question-circle" tabindex="0"></i>
+			</div>
+		</header><!-- TIMER -->
+		<div class="timer-container" role="dialog">
+			<h2 class="timer-task-description"></h2>
+			<div class="outer-timer-box">
+				<div class="timer-box">
+					<h2 id="hours"></h2>
+					<h2>:</h2>
+					<h2 id="minutes"></h2>
+					<h2>:</h2>
+					<h2 id="seconds"></h2>
+				</div>
+				<div class="timer-controls">
+					<a class="alarm" href="#" id="alarm-on"><i class="fas fa-bell"></i></a> <a href="#" id="pause"><i class="fas fa-pause"></i></a> <a href="#" id="play"><i class="fas fa-play"></i></a> <a href="#" id="reset"><i class="fas fa-history"></i></a>
+				</div>
+			</div><button id="save-time-to-task">Save Time To Task</button> <button class="close-timer-x" tabindex="0"><i class="fas fa-times"></i></button>
+		</div><!-- TASK LIST -->
+		<div class="list-container">
+			<div class="add-new-task">
+				<input autofocus="" id="new-task-input" placeholder="Type to add a new task..." type="text"> <button id="add-new-task"><i class="fas fa-plus add-new-task-plus-icon"></i></button>
+			</div><a href="#charts-start" id="skip-tasks" tabindex="0">Skip Tasks</a>
+			<div id="list"></div>
+		</div><!-- OPTIONS POPOVER NAVIGATION -->
+		<div class="popover-wrapper" id="popover">
+			<div class="popover-box">
+				<ul class="task-options-list">
+					<li class="task-option edit-task-option" tabindex="0"><i class="far fa-edit task-icon task-edit-icon"></i>Edit Task</li>
+					<li class="task-option delete-task-option" tabindex="0"><i class="fas fa-trash-alt task-icon task-delete-icon"></i>Delete Task</li>
+					<li class="line-here"></li>
+					<li class="task-option countdown15-task-option" tabindex="0"><i class="fas fa-hourglass-half task-icon countdown15-timer-icon"></i>Countdown 15 Mins</li>
+					<li class="task-option countdown25-task-option" tabindex="0"><i class="fas fa-hourglass-half task-icon countdown25-timer-icon"></i>Countdown 25 Mins</li>
+				</ul>
+			</div>
+		</div><!-- MODALS -->
+		<!-- APP INFORMATION MODAL -->
+		<div class="modal" id="information-modal">
+			<div class="information-modal-content">
+				<h2>Welcome to Tunnel Focus!</h2>
+				<h3>The task list you can time.</h3>
+				<div class="info-grid">
+					<i class="fas fa-stopwatch info-task-icon"></i>
+					<p>This is the stopwatch timer, it is open ended and counts up from 0. Every 30 minutes it will beep once.</p><i class="fas fa-ellipsis-v info-task-icon"></i>
+					<p>This is the options icon, click it to view more options.</p><i class="fas fa-hourglass-half info-task-icon info-countdown15-timer-icon"></i>
+					<p>There are 2 countdown timers 15 minutes & 25 minutes, in keeping with pomodoro best practices.</p><i class="far fa-edit info-task-icon info-task-edit-icon"></i>
+					<p>The "Edit Task" option allows you to manually edit the task description & the amount of time spent on that task.</p><i class="fas fa-trash-alt info-task-icon info-task-delete-icon"></i>
+					<p>Delete completed tasks that you no longer want to view by clicking "Delete Task".</p><i class="fas fa-bell info-task-icon"></i>
+					<p>When the timer is active, clicking the bell will mute the alarm.</p><i class="fas fa-pause info-task-icon"></i>
+					<p>If you need a break mid-task, you can pause & then play the timer again from where you left off.</p><i class="fas fa-history info-task-icon"></i>
+					<p>You can reset your time.</p>
+				</div>
+				<p class="info-last-line">Enjoy being more productive!</p><button class="close-timer-x close-info-x" tabindex="0"><i class="fas fa-times"></i></button>
+			</div>
+		</div><!-- SAVE TIME TO TASK MODAL -->
+		<div id="save-time-to-task-modal">
+			<div class="sttt-modal-content">
+				<p class="sttt-modal-p">Do you want to save ${thistime} to ${thistask}?</p><button class="sttt-confirm-button sttt-modal-btn" tabindex="0">Yes, Save</button> <button class="sttt-negate-button sttt-modal-btn" tabindex="0">No, Cancel</button>
+			</div>
+		</div><!-- COUNTDOWN ENDED MODAL -->
+		<div id="countdown-ended-modal">
+			<div class="countdown-ended-modal-content">
+				<p class="ce-modal-p">Congrats! You've worked for the full ${countdowntime} minutes! Do you want to save those ${countdownminutes} minutes to the task: ${}?</p><button class="ce-confirm-button ce-modal-btn" tabindex="0">Yes, Save</button> <button class="ce-negate-button ce-modal-btn" tabindex="0">No, Cancel</button>
+			</div>
+		</div><!-- CLOSE TIMER MODAL -->
+		<div class="modal" id="close-timer-modal">
+			<div class="modal-content">
+				<p class="close-timer-modal-p">Are you sure you want to exit the timer without saving?</p><button class="confirm-button close-timer-modal-btn" tabindex="0">Yes, Exit</button> <button class="negate-button close-timer-modal-btn" tabindex="0">No, Cancel</button>
+			</div>
+		</div><!-- CONFIRM DELETION MODAL -->
+		<div class="modal" id="confirm-deletion-modal">
+			<div class="confirm-deletion-modal-content">
+				<p class="confirm-deletion-modal-p">Are you sure you want to delete ${thistask}?</p><button class="deletion-confirm-button confirm-deletion-modal-btn" tabindex="0">Yes</button> <button class="deletion-negate-button confirm-deletion-modal-btn" tabindex="0">No</button>
+			</div>
+		</div><!-- "PLEASE ENTER A VALID TASK" MODAL-->
+		<div class="modal" id="enter-task-modal">
+			<div class="modal-content">
+				<p class="close-timer-modal-p">Please enter a valid task.</p><button class="confirm-button close-timer-modal-btn valid-task-confirm-button" tabindex="0">Ok, will do!</button>
+			</div>
+		</div><!-- PRODUCTIVITY CHARTS -->
+		<div class="focus-summary-container">
+			<div class="chart-header">
+				<h2 class="chart-heading">Productivity Charts</h2>
+			</div>
+			<div class="custom-select" id="charts-start" tabindex="-1">
+				<select id="chart-selections" name="chart-selections" tabindex="0">
+					<option id="total-time-focused" value="total-time-focused-on-each-task">
+						Total Time Focused on Each Task
+					</option>
+					<option id="total-time-focused-today" value="total-time-focused-on-each-task-today">
+						Total time Focused on Each Task Today
+					</option>
+					<option value="tasks-completed">
+						Tasks Completed
+					</option>
+					<option value="tasks-completed-today">
+						Tasks Completed Today
+					</option>
+				</select>
+			</div>
+			<div id="charts">
+				<div class="chart-message"></div>
+				<div class="completed-tasks"></div>
+				<div class="chart-area"></div><svg class="legend-area"></svg>
+			</div>
+		</div><!-- FOOTER -->
+		<footer></footer>
+	</div>
+	<script src="https://kit.fontawesome.com/a27a231c02.js">
+	</script> 
+	<script src="https://unpkg.com/@popperjs/core@2/dist/umd/popper.min.js">
+	</script> 
+	<script src="https://unpkg.com/tippy.js@6/dist/tippy-bundle.umd.js">
+	</script> 
+	<script src="https://d3js.org/d3.v6.js">
+	</script> 
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
+	</script> 
+	<script src="assets/js/app.js">
+	</script>
 </body>
 </html>

@@ -676,6 +676,32 @@ __FUNCTION SUMMARY:__ This function builds up the two lists: "Tasks Completed" a
 
 __FUNCTION SUMMARY:__ This function is taken from Ben Clinkenbeard's Blog Article and originally written by Brendan Sudol. It effectively makes the charts responsive to window size changes and I use it as a filler function in between my media queries that change the sizing of the charts. 
 
+# Code Validators
+
+## [W3C HTML Validator](https://validator.w3.org/)
+
+- Warning 1: ```Consider avoiding viewport values that prevent users from resizing documents.```
+    The line referred to was explicitly written to avoid an annoying zooming effect on certain mobile browsers. So unfortunate, but I felt that user experience was improved by my code, so I've left it in.
+
+## [W3C Link Checker](https://validator.w3.org/checklink)
+
+- All anchors and links were valid.
+
+
+## CSS
+
+## [W3 CSS Validator](https://jigsaw.w3.org/css-validator/)
+
+- One 'Value Error' was thrown by the validator referencing my checkbox linear gradient. Saying that 
+    ```"Value Error : background too few values for the property linear-gradient )"```
+    However as [this discussion](https://stackoverflow.com/questions/12537546/w3-css-validation-value-error-for-gradients/12537684) explains this has more to do with the communication between the working version of CSS3 & the validator.
+
+- A number of warnings were thrown by the validator referencing my vendor extensions. But as the [following discussion](https://stackoverflow.com/questions/52490004/what-are-all-of-these-w3c-css-validation-warnings-about) illustrates, this is to be expected.
+
+- The rest of the code validated.
+
+
+
 
 # Mobile Testing
 

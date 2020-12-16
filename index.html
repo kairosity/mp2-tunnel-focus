@@ -9,16 +9,16 @@
 </head>
 
 <body>
-    <!------------------------------------------------------------------------ PAGE CONTAINER DIV -->
+    <!-- PAGE CONTAINER DIV -->
     <div class="page-container grid-overlord"> 
      
-    <!------------------------------------------------------------------------ HEADER -------------->
+    <!-- HEADER -->
         <header class="main-header">
             <h1 class="main-heading">Tunnel Focus</h1>
             <h2 class="sub-heading">Time Your Tasks</h2>
             <a id="info"><i class="far fa-question-circle" tabindex="0"></i></a>
         </header>
-    <!------------------------------------------------------------------------ TIMER --------------->
+    <!-- TIMER -->
          <div class="timer-container" role="dialog"> 
             <h2 id="" class="timer-task-description"></h2>     
             <div class="outer-timer-box">
@@ -39,7 +39,7 @@
             <button id="save-time-to-task">Save Time To Task</button>
             <button class="close-timer-x" tabindex="0"><i class="fas fa-times"></i></button>
         </div>
-    <!------------------------------------------------------------------------ TASK LIST ----------->
+    <!-- TASK LIST -->
         <div class="list-container">
             <div class="add-new-task">
                 <input type="text" id="new-task-input" placeholder="Type to add a new task..." autofocus >
@@ -49,7 +49,7 @@
             <div id="list">          
             </div>
         </div>
-    <!---------------------------------------------------------------- OPTIONS POPOVER NAVIGATION ---->
+    <!-- OPTIONS POPOVER NAVIGATION -->
                 <div class="popover-wrapper" id="popover">
                     <div class="popover-box">
                         <ul class="task-options-list">
@@ -60,9 +60,8 @@
                         </ul>
                     </div>
                 </div>
-    <!------------------------------------------------------------------------ MODALS --------------->
-
-    <!--------------------------------------------------------------------- APP INFORMATION MODAL ----->
+    <!-- MODALS -->
+   <!-- APP INFORMATION MODAL -->
                 <div id="information-modal" class="modal">
                     <div class="information-modal-content">
                         <h2>Welcome to Tunnel Focus!</h2>
@@ -81,7 +80,7 @@
                         <button class="close-timer-x close-info-x" tabindex="0"><i class="fas fa-times"></i></button>
                     </div>
                 </div>
-    <!-------------------------------------------------------------------- SAVE TIME TO TASK MODAL --->
+    <!-- SAVE TIME TO TASK MODAL -->
                 <div id="save-time-to-task-modal">
                     <div class="sttt-modal-content">
                         <p class="sttt-modal-p">Do you want to save ${thistime} to ${thistask}?</p>
@@ -89,15 +88,15 @@
                         <button class="sttt-negate-button sttt-modal-btn" tabindex="0">No, Cancel</button>
                     </div>
                 </div>
-    <!-------------------------------------------------------------------- COUNTDOWN ENDED MODAL ----->
-                <div id="countdown-ended-modal">
+    <!-- COUNTDOWN ENDED MODAL -->
+               <div id="countdown-ended-modal">
                     <div class="countdown-ended-modal-content">
                         <p class="ce-modal-p">Congrats! You've worked for the full ${countdowntime} minutes! Do you want to save those ${countdownminutes} minutes to the task: ${}?</p>
                         <button class="ce-confirm-button ce-modal-btn" tabindex="0">Yes, Save</button>
                         <button class="ce-negate-button ce-modal-btn" tabindex="0">No, Cancel</button>
                     </div>
                 </div>
-    <!-------------------------------------------------------------------- CLOSE TIMER MODAL --------->
+    <!-- CLOSE TIMER MODAL -->
                 <div id="close-timer-modal" class="modal">
                     <div class="modal-content">
                         <p class="close-timer-modal-p">Are you sure you want to exit the timer without saving?</p>
@@ -105,7 +104,7 @@
                         <button class="negate-button close-timer-modal-btn" tabindex="0">No, Cancel</button>
                     </div>
                 </div>
-    <!------------------------------------------------------------------- CONFIRM DELETION MODAL ----->
+    <!-- CONFIRM DELETION MODAL -->
                 <div id="confirm-deletion-modal" class="modal">
                     <div class="confirm-deletion-modal-content">
                         <p class="confirm-deletion-modal-p">Are you sure you want to delete ${thistask}?</p>
@@ -113,14 +112,14 @@
                         <button class="deletion-negate-button confirm-deletion-modal-btn" tabindex="0">No</button>
                     </div>
                 </div>
-    <!--------------------------------------------------------- "PLEASE ENTER A VALID TASK" MODAL ----->
+    <!-- "PLEASE ENTER A VALID TASK" MODAL-->
                 <div id="enter-task-modal" class="modal">
                     <div class="modal-content">
                         <p class="close-timer-modal-p">Please enter a valid task.</p>
                         <button class="confirm-button close-timer-modal-btn valid-task-confirm-button" tabindex="0">Ok, will do!</button>
                     </div>
-                </div> 
-    <!-------------------------------------------------------------------------- PRODUCTIVITY CHARTS ----->
+                </div>
+    <!-- PRODUCTIVITY CHARTS -->
         <div class="focus-summary-container" > 
             <div class="chart-header">
                 <h2 class="chart-heading">Productivity Charts</h2>
@@ -140,7 +139,7 @@
                     <svg class="legend-area"></svg>
                 </div>
         </div>
-    <!--------------------------------------------------------------------------------------- FOOTER ----->  
+    <!-- FOOTER -->
     <footer></footer>   
     </div> 
 

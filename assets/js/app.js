@@ -1192,7 +1192,7 @@ class List {
 			if (taskList[i].completed === true) {
 				document.getElementById('list').innerHTML += `<div class="task">
                     <p class="total-task-time">${taskList[i].totalTimeFocusedOnTaskLongForm}</p>
-                    <input class="taskCheckbox" type="checkbox" tabindex=0 checked>
+                    <input class="taskCheckbox" type="checkbox" tabindex=0 aria-label="checkbox" checked>
                     <li class="task-description completed" id="${taskList[i].id}">${taskList[i].taskDescription}</li>
                     <a class="task-stopwatch task-list-icon" aria-hidden="false" aria-label="start stopwatch" href="#"><i class="fas fa-stopwatch start-stopwatch" tabindex=0 ></i></a>
                     <a class="task-options task-list-icon" aria-label="task-options-ellipsis" tabindex=0><i class="fas fa-ellipsis-v task-options-icon"></i></a>
@@ -1200,7 +1200,7 @@ class List {
 			} else if (taskList[i].completed === false) {
 				document.getElementById('list').innerHTML += `<div class="task">
                     <p class="total-task-time">${taskList[i].totalTimeFocusedOnTaskLongForm}</p>
-                    <input class="taskCheckbox" type="checkbox" tabindex=0>
+                    <input class="taskCheckbox" type="checkbox" tabindex=0 aria-label="checkbox">
                     <li class="task-description" id="${taskList[i].id}">${taskList[i].taskDescription}</li>
                     <a class="task-stopwatch task-list-icon" aria-hidden="false" aria-label="start stopwatch" href="#"><i class="fas fa-stopwatch start-stopwatch" tabindex=0  ></i></a>
                     <a class="task-options task-list-icon" tabindex=0><i class="fas fa-ellipsis-v task-options-icon"></i></a>
@@ -1245,7 +1245,7 @@ class List {
 				list.taskList.push(newTask);
 				document.getElementById('list').innerHTML += `<div class="task">
                     <p class="total-task-time">${newTask.totalTimeFocusedOnTaskLongForm}</p>
-                    <input class="taskCheckbox" type="checkbox" tabindex=0>
+                    <input class="taskCheckbox" type="checkbox" tabindex=0 aria-label="checkbox">
                     <li class="task-description" id="${newTask.id}">${newTask.taskDescription}</li>
                     <a class="task-stopwatch task-list-icon" aria-hidden="false" aria-label="start stopwatch" href="#" ><i class="fas fa-stopwatch start-stopwatch" tabindex=0 ></i></a>
                     <a class="task-options task-list-icon" tabindex=0><i class="fas fa-ellipsis-v task-options-icon"></i></a>

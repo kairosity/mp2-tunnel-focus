@@ -699,7 +699,7 @@ __FUNCTION SUMMARY:__ This function is taken from Ben Clinkenbeard's Blog Articl
 - Error 2: ``` Element span not allowed as child of element ul in this context.```
     The span tag was not needed and was changed to an <li> tag. 
 
-
+In summary the HTML validates perfectly, with the exceptions of the empty heading warnings & the viewport values which I have chosen to ignore for enhanced usability.
 
 ## [W3C Link Checker](https://validator.w3.org/checklink)
 

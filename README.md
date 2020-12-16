@@ -422,6 +422,9 @@ This website was developed using GitPod in a Chrome browser and commits were pus
 - ### **[Audio tag information](https://medium.com/better-programming/everything-about-the-audio-tag-in-html-and-javascript-c531d3bb882a)**
     Useful information about using the AUDIO tag.
 
+- ### **[Autoprefixer](https://autoprefixer.github.io/)
+    Used to ensure cross-browser compatibility for my CSS code.
+
 ## 3. JavaScript
 
 - ### **[OOP in JavaScript: Made Super Simple](https://www.youtube.com/watch?v=PFmuCDHHpwk)**

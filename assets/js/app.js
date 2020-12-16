@@ -3,6 +3,7 @@ var taskToDel = "";
 let confirmDeletionModal = document.getElementById('confirm-deletion-modal');
 let confirmDeletionBtn = document.querySelector('.deletion-confirm-button');
 let negateDeletionBtn = document.querySelector('.deletion-negate-button');
+// --------------------------------------GLOBAL EVENT LISTENERS--------------------------//
 confirmDeletionBtn.addEventListener('click', confirmDeletion);
 negateDeletionBtn.addEventListener('click', negateDeletion);
 // --------------------------------------GLOBAL FUNCTIONS-------------------------------//
@@ -1030,45 +1031,61 @@ function countdownClickStartHelper(countdownType, countdownNumber){
         alarmToggle();
         editTask();
 }
-// Thank you to Wilson Lee on Stack Overflow for this code - attributed in README. 
+/**
+ * This method converts seconds into long form time. 
+ * Thank you to Wilson Lee on Stack Overflow for this code - attributed in README. 
+ */
 convertSecondsToTime(seconds){ 
     let hoursConverted = Math.floor(seconds / 3600);
     let minutesConverted = Math.floor(seconds % 3600 / 60);
     let secondsConverted = Math.floor(seconds % 3600 % 60);
     return `${hoursConverted}hrs ${minutesConverted}mins ${secondsConverted}secs`;
 }
+/**
+ * This method adds an overlay to the page making certain elements inaccessible to the user.
+ */
 addOverlay(){
     let pageBody = document.getElementsByTagName('BODY')[0]
     let overlayEl = document.createElement("DIV");
     overlayEl.setAttribute("class", "overlay");
     pageBody.appendChild(overlayEl);
     }
+/**
+ * This method removes the overlay.
+ */
 removeOverlay(){
     let overlay = document.querySelector('.overlay');
     let pageBody = document.getElementsByTagName('BODY')[0];
     pageBody.removeChild(overlay);
     }
+/**
+* This method adds a silent alarm class to the overlay. 
+*/
 addSilentAlarm(){
     let overlay = document.querySelector('.overlay');
     overlay.removeAttribute("class", "overlay");
     overlay.setAttribute("class", "silent-alarm");
 }
+/**
+* This method removes the silent alarm class from the overlay. 
+*/
 removeSilentAlarm(){
     let silentAlarm = document.querySelector('.silent-alarm');
     let pageBody = document.getElementsByTagName('BODY')[0];
     pageBody.removeChild(silentAlarm);
 }
+/**
+* This method makes a number of elements inaccessible to keyboard users.  
+*/
 makeArrayElementsNotKeyboardTabbable(){
     const addNewTaskButton = document.querySelector('#add-new-task');
     const newTaskInput = document.querySelector('#new-task-input');
     const arrayOfCheckboxes = document.querySelectorAll('.taskCheckbox');
-    // const arrayOfSortIcons = document.querySelectorAll('.task-sort');
     const arrayOfOptionIcons = document.querySelectorAll('.task-options');
     let startStopwatchButtonArray = document.querySelectorAll('.start-stopwatch');
     const skipTasks = document.querySelector('#skip-tasks');
     let chartsSelectBox = document.querySelector('#chart-selections');
     let infoIcon = document.querySelector('.fa-question-circle');
-
     newTaskInput.setAttribute("tabindex", "-1");
     addNewTaskButton.setAttribute("tabindex", "-1");
     arrayOfCheckboxes.forEach(function(checkbox){
@@ -1077,17 +1094,16 @@ makeArrayElementsNotKeyboardTabbable(){
         startStopwatchButtonArray.forEach(function(stopwatch){
         stopwatch.setAttribute("tabindex", "-1")
     });   
-    //     arrayOfSortIcons.forEach(function(sorticon){
-    //     sorticon.setAttribute("tabindex", "-1")
-    // });
     arrayOfOptionIcons.forEach(function(optionicon){
         optionicon.setAttribute("tabindex", "-1")
     });
     skipTasks.setAttribute("tabindex", "-1");
     chartsSelectBox.setAttribute("tabindex", "-1");
-    infoIcon.setAttribute("tabindex", "-1");
-    
+    infoIcon.setAttribute("tabindex", "-1");  
 }
+/**
+* This method makes a number of elements accessible again to keyboard users.  
+*/
 makeArrayElementsKeyboardTabbableAgain(){
     const addNewTaskButton = document.querySelector('#add-new-task');
     const newTaskInput = document.querySelector('#new-task-input');
@@ -1098,32 +1114,31 @@ makeArrayElementsKeyboardTabbableAgain(){
     const skipTasks = document.querySelector('#skip-tasks');
     let chartsSelectBox = document.querySelector('#chart-selections');
     let infoIcon = document.querySelector('.fa-question-circle');
-
     newTaskInput.setAttribute("tabindex", "0");
     addNewTaskButton.setAttribute("tabindex", "0");
     arrayOfCheckboxes.forEach(function(checkbox){
         checkbox.setAttribute("tabindex", "0")
     });  
-        startStopwatchButtonArray.forEach(function(stopwatch){
-        stopwatch.setAttribute("tabindex", "0")
+    startStopwatchButtonArray.forEach(function(stopwatch){
+    stopwatch.setAttribute("tabindex", "0")
     });   
-        arrayOfSortIcons.forEach(function(sorticon){
-        sorticon.setAttribute("tabindex", "0")
-    });
     arrayOfOptionIcons.forEach(function(optionicon){
         optionicon.setAttribute("tabindex", "0")
     });
     skipTasks.setAttribute("tabindex", "0");
     chartsSelectBox.setAttribute("tabindex", "0");
-    infoIcon.setAttribute("tabindex", "0");
-          
+    infoIcon.setAttribute("tabindex", "0");       
 }
-
-appInformation() {
-    //Event Listener when clicking on question mark. 
+/**
+ * This method brings up the information modal when the question mark is clicked. 
+ * An overlay is added. 
+ * Elements are made not keyboard tabbable.
+ * The modal is brought in front of the page.
+ * If the X close button is clicked the pages reverts as it was before.
+ */
+appInformation() { 
     let infoIcon = document.querySelector('.fa-question-circle');
     let infoModal = document.querySelector('#information-modal');
-
     infoIcon.addEventListener('keyup', function(event){
             if(event.keyCode === 13){
                 infoIcon.click();
@@ -1133,9 +1148,7 @@ appInformation() {
         timer.addOverlay();
         timer.makeArrayElementsNotKeyboardTabbable();
         infoModal.style.zIndex = 1001;
-
         let closeButton = document.querySelector('.close-info-x');
-
         closeButton.addEventListener('click', function(){
             timer.removeOverlay();
             timer.makeArrayElementsKeyboardTabbableAgain();
@@ -1143,14 +1156,13 @@ appInformation() {
         })
     })
 }
-
 }
 class Task {
     constructor(taskDescription){
-        this.taskDescription = taskDescription; //obvz - the only essential prop to create a new task obj.
+        this.taskDescription = taskDescription; 
         this.id = null;
         this.completed = false; 
-        this.totalTimeFocusedOnTask = 0; //running total of time focused on a specific task saved in seconds. 
+        this.totalTimeFocusedOnTask = 0;
         this.totalTimeFocusedOnTaskLongForm = timer.convertSecondsToTime(this.totalTimeFocusedOnTask);
         this.timeSegments = [];
     }
@@ -1162,7 +1174,10 @@ class List {
         this.addNewTask();
         this.toggleTaskComplete(this.taskList);    
     }
-    //takes all the tasks stored in taskList and adds them to HTML on page load.
+/**
+ * This takes all the tasks stored in taskList and adds them to the DOM on page load using a loop.
+ * The logic is divided into tasks that are completed and tasks that are not completed.
+ */
     buildTaskList(){
         let taskList = this.taskList;
         for (let i=0; i<taskList.length; i++){
@@ -1188,36 +1203,39 @@ class List {
         }
         this.toggleTaskComplete();
     }
-    /* listens for a click event on the add new task button and then adds the value of the input to both the taskList 
-    AND it writes it to the HTML. As long as the value is not null or an empty string. It then clears the input box ready 
+/**
+ * This method listens for a click event on the add new task button and then adds the value of the input to both the taskList 
+    and it writes it to the DOM.
+ * As long as the value is not null or an empty string. It then clears the input box ready 
     for a new task.
-    */
+ * The function then uses the regex myTrim to remove any whitespaces from before or after the task that is inputted. (attributed in README)
+ * The function creates a new Task object & sets its properties - the new task description will be whatever the user enters into the input.
+ * The new task id will always be the length of the taskList saved in localStorage.
+ * The totalTimeFocused on that task starts at 0.
+ * Then the new task is added to both the taskList array and to the DOM. 
+ * The input is then cleared and ready to accept more new tasks.
+ * If when the user attempts to enter a task, the entry is not deemed valid, then a modal will pop up asking the user to enter a valid task. 
+ */
     addNewTask(){
         const addNewTaskButton = document.querySelector('#add-new-task');
         const newTaskInput = document.querySelector('#new-task-input');
-
         newTaskInput.addEventListener('keyup', function(event){
             if(event.keyCode === 13){
                 event.preventDefault();
                 addNewTaskButton.click();
             }
         })
-        addNewTaskButton.addEventListener('click', function(){ //event listener working. 
-            
+        addNewTaskButton.addEventListener('click', function(){
             let newTaskInputValue = newTaskInput.value;
-
             function myTrim(x) {
             return x.replace(/^\s+|\s+$/gm,'');
             }
-
             newTaskInputValue = myTrim(newTaskInputValue);
-
             if((newTaskInputValue !== null) && (newTaskInputValue !== "") ){        
-                let newTask = new Task(newTaskInputValue); //creates a new Task obj. & sets its props.
-                newTask.id = list.taskList.length; //it will always be 1to1.
+                let newTask = new Task(newTaskInputValue); 
+                newTask.id = list.taskList.length;
                 newTask.totalTimeFocusedOnTask = 0;
-                list.taskList.push(newTask); //adds the new task into the taskList array.
-                //adds the task to the list in html  
+                list.taskList.push(newTask);
                 document.getElementById('list').innerHTML +=
                 `<div class="task">
                     <p class="total-task-time">${newTask.totalTimeFocusedOnTaskLongForm}</p>
@@ -1226,39 +1244,38 @@ class List {
                     <a class="task-stopwatch task-list-icon" ><i class="fas fa-stopwatch start-stopwatch" tabindex=0 ></i></i></a>
                     <a class="task-options task-list-icon" tabindex=0><i class="fas fa-ellipsis-v task-options-icon"></i></a>
                 </div>`;
-
-               //clears the input value
                 document.querySelector('#new-task-input').value = "";
-
-                //calls these functions so they are operational on the new task.
-                list.toggleTaskComplete(list.taskList); //checks for completion tasks when new tasks are added.
+                list.toggleTaskComplete(list.taskList);
                 list.deleteTask();
                 list.dynamicPopoverNav();
                 timer.timers();
                 list.setDataToLocalStorage();
-                location.reload(); 
-               
-            } else if ((newTaskInputValue === "") || (newTaskInputValue === null)){
-                
+                location.reload();     
+            } else if ((newTaskInputValue === "") || (newTaskInputValue === null)){      
                 let addValidTaskModal = document.getElementById('enter-task-modal');
                 addValidTaskModal.style.display = "block";
                 timer.makeArrayElementsNotKeyboardTabbable();
                 let okButton = document.querySelector('.valid-task-confirm-button');
-
-                okButton.addEventListener('click', function(){
-                
+                okButton.addEventListener('click', function(){      
                 addValidTaskModal.style.display = "none";
                 timer.makeArrayElementsKeyboardTabbableAgain();  
-
             })  
         }
     })
 }
+/**
+ * This method listens for checkbox clicks or enters on a specific task.
+ * If a change is detected, the method checks to see if the checkbox is checked.
+ * If it is checked then the class .completed is added and the attribute "checked" is set to true. 
+ * A date and time of the checking is also set into variables.
+ * Then the id of that task is compared to the ids of the tasks in the taskList and when they match those variables are recorded to that taskList task along with the task's new 'completed' status.
+ * When a task is checked as completed this method also checks to see if the user has got either of the completed tasks lists opened via the charts section, and if that is the case, then this method reloads the page, so as to update those lists.
+ * If the user has unchecked a task then the above steps are run in the opposite manner, completed is removed as an attribute and the completed class is also removed. The same steps apply if the user is viewing one of the completed lists in the charts section. 
+ * The changes are saved to localStorage. 
+ */
     toggleTaskComplete(){
-        //listen for checkbox clicks on specific task.
         const arrayOfCheckboxes = document.querySelectorAll('.taskCheckbox');
         arrayOfCheckboxes.forEach(function(checkbox){  
-            
             let checkboxId = checkbox.nextElementSibling.id;
             let chartSelection = document.getElementById('chart-selections');
             checkbox.addEventListener('change', function(){ 
@@ -1267,27 +1284,22 @@ class List {
                     checkbox.setAttribute("checked", true); 
                     let dateStamp = new Date();
                     let localTime = dateStamp.toLocaleTimeString();
-                    let localDate = dateStamp.toLocaleDateString();
-                        
+                    let localDate = dateStamp.toLocaleDateString();      
                     list.taskList.forEach(function(task){
                         if (task.id == checkboxId){ 
                             task.completed = true;
-                            task.timeSegments.push({id:task.id, timeToAdd:0, dateStamp, localTime, localDate, taskDescription: task.taskDescription});
-                            // list.taskList[id].timeSegments.push({id, timeToAdd, dateStamp, taskDescription, localDate, localTime});   
+                            task.timeSegments.push({id:task.id, timeToAdd:0, dateStamp, localTime, localDate, taskDescription: task.taskDescription});  
                         }
                     })           
                     if ((chartSelection.value === "tasks-completed") || (chartSelection.value === "tasks-completed-today")) {
                         list.setDataToLocalStorage()
                         location.reload();
                     }
-            
                 } else if (checkbox.checked == false){
-                    checkbox.nextElementSibling.classList.remove('completed'); //I think this is causing the issue? 
-                     
+                    checkbox.nextElementSibling.classList.remove('completed');   
                     list.taskList.forEach(function(task){
                         if (task.id == checkboxId){
-                            task.completed = false;
-                            
+                            task.completed = false;    
                         }
                     })
                     if ((chartSelection.value === "tasks-completed") || (chartSelection.value === "tasks-completed-today")) {
@@ -1297,50 +1309,29 @@ class List {
                     }
                     list.setDataToLocalStorage()
                 })       
-            })
-            
-        }
-        
-
+            })   
+        }    
+/**
+ * This method listens for clicks or enters on the delete task option.
+ * If it detects one, it brings up a modal asking the user if they are certain they want to delete that task.
+ * Then the global event listeners take over and run the confirm or negate deletion functions.
+ */
     deleteTask(){
         const ellipsisArray = document.querySelectorAll('.task-options');
-        //for each ellipsis icon on the main page attach two listeners - one for clicks, one for keyboard
         ellipsisArray.forEach(function(ellipsis){
             ['click','keyup'].forEach(function(evt){
-
-                //for each of those add a handler on the specific ellipsis icon clicked and attach 2 event handlers - one for clicks and one for the tab key
                 ellipsis.addEventListener(evt, function(elipEvent){
                     if((evt === 'click') || (elipEvent.keyCode === 9)) {
-
-                        //For the delete task button inside the selected ellipsis
                          const deleteTaskButton = document.querySelector('.delete-task-option');
-                         
-                         //for either a click or keyup record the specific event (e) that was clicked on
                         ['click','keyup'].forEach(function(e){ 
-                            //add an event listener to that specific delete button pertaining to that ellipsis and if the event is a click or an enter key then run the logic: 
                             deleteTaskButton.addEventListener(e, function(event){
                                 if((e === 'click') || (event.keyCode === 13)) {
-
-                                    
                                     taskToDel = event.target.closest('.task');
-                                    
-                                    
-                                    // let confirmDeletionModal = document.getElementById('confirm-deletion-modal');
-                                   
                                     let messageElement = document.querySelector('.confirm-deletion-modal-p');
                                     let taskNameToDelete = taskToDel.children[2].textContent;  
-                                    console.log(`${taskNameToDelete}  1st pass`);  
-
                                     timer.makeArrayElementsNotKeyboardTabbable();
-
-                                    //Bring up the modal
                                     confirmDeletionModal.style.display = "block";
                                     messageElement.textContent = `Are you sure you want to delete ${taskNameToDelete}?`;
-                                     
-                                    
-                                    
-                                    
-                                    // list.setDataToLocalStorage();
                                 }
                             })
                         })
@@ -1348,9 +1339,13 @@ class List {
                 })
             })
         }) 
-    } 
+    }
+/**
+ * This method is all taken exactly as written from the tippy.js documentation including the hideOnPopperBlur plugin directly below.
+ * It shows and hides the popover navigation using mouse and keyboard events.
+ * It has been modified to suit this application, but overall the code comes directly from tippy.js  
+ */
         dynamicPopoverNav(){   
-            // This code is all taken exactly as written from the tippy.js documentation including the hideOnPopperBlur plugin directly below 
             const popover = document.getElementById('popover');
             const hideOnPopperBlur = {
                 name: 'hideOnPopperBlur',
@@ -1371,7 +1366,6 @@ class List {
                     };
                 },
                 };
-
             const hideOnEsc = {
                 name: 'hideOnEsc',
                 defaultValue: true,
@@ -1391,7 +1385,6 @@ class List {
                     };
                 },
             };
-
             const hideOnOptionSelect = {
                 name: 'hideOnOptionSelect',
                 defaultValue: true,
@@ -1406,7 +1399,6 @@ class List {
                         hide();
                     }
                     }
-
                     return {
                     onShow() {
                         document.addEventListener('click', onSelect);
@@ -1417,7 +1409,6 @@ class List {
                     };
                 },
             };
-
             tippy('.task-options', {
                 allowHTML: true, 
                 content: popover.innerHTML,
@@ -1434,52 +1425,55 @@ class List {
                 plugins: [hideOnPopperBlur, hideOnEsc, hideOnOptionSelect], 
             });         
         }
-
         setDataToLocalStorage(){
             window.localStorage.setItem("taskList", JSON.stringify(list.taskList));
         }
    }
 let list = new List();
 let timer = new Timer();
-//call these functions so they are operational on the list that is built from local storage.
 list.deleteTask();
 list.dynamicPopoverNav();
 timer.initialiseTimer();
 timer.timers();
 timer.appInformation();
 
-/************************************************ CHARTS & D3.js  **************************************************/
+// --------------------------------------CHARTS & D3.js-------------------------------//
 
-
-var totalTimeFocusedOnEachTask = list.taskList; //dataset 1 - total time spent on each task.
-var totalTimeFocusedOnEachTaskToday =  getTodayTasks(); //dataset 2 total time spent on each task today.
-
+var totalTimeFocusedOnEachTask = list.taskList;
+var totalTimeFocusedOnEachTaskToday =  getTodayTasks();
 var messageDiv = document.querySelector('.chart-message');
 clearChartArea()
-
+/**
+ * This function checks to see if there is time already recorded on a particular task.
+ * If the totalTimeFocusedOnTask is not equal to 0 then the function returns true.
+ */
 function timeOnTaskExists(){   
     var isThereTimeOnThisTask;
     var taskArray = list.taskList;
-
-            for (let i=0; i<taskArray.length; i++){
-                if (taskArray[i].totalTimeFocusedOnTask !== 0) {
-                isThereTimeOnThisTask = true;
-                break;
-                } 
-            } return isThereTimeOnThisTask;
-        }
-
+    for (let i=0; i<taskArray.length; i++){
+        if (taskArray[i].totalTimeFocusedOnTask !== 0) {
+        isThereTimeOnThisTask = true;
+        break;
+        } 
+    } return isThereTimeOnThisTask;
+}
+/**
+ * This runs on page load and it sets the chart default.
+ * If any of the tasks have time stored on them then the first chart is shown.
+ * Otherwise a message is shown that tells the user they have not timed any tasks yet.
+ */
 if(timeOnTaskExists() === true){
    selectChart(totalTimeFocusedOnEachTask);
 } else {
   messageDiv.innerHTML = `<h2 class="no-timed-tasks">You have not timed any tasks yet.</h2>`;  
 }
- 
+/**
+ * This function clears the chart area of any svgs, legends or lists.
+ */
 function clearChartArea(){
     var chartSvg = document.querySelector('.chart-svg');
     var circleLeg = document.querySelectorAll('.circle-legend');
     let completedTaskList = document.querySelector('.completed-task-list');
-
      if(chartSvg){
         d3.select(chartSvg).remove(); 
         }
@@ -1490,10 +1484,25 @@ function clearChartArea(){
         completedTaskList.remove();
     }
 }
-
+/**
+ * This function is the main d3.js data function.
+ * It takes a data set as a parameter.
+ * It clears the chart area to get it ready to draw in a chart.
+ * It starts by setting a different chart width & height depending on how wide the user's screen is.
+ * It sets the donut chart's radius and the colour range for the data slices.
+ * The chart parameters are set using various d3 attributes and their location on the page is modified slightly using translate, again depending on screen width. 
+ * The arc & pie methods of d3.js are invoked to begin building the charts.
+ * The pie method uses the data given to the function and it is told to use the totalTimeFocusedOnTask property to build the slices.
+ * Then tooltips are created and set to appear and disappear on hover & mouseout.
+ * They are set to show taskDescription & the totalTimeFocusedOnTask.
+ * The legend is defined and placed and the same colour range is assigned to it. 
+ * The circles & keys are positioned and set.
+ * The legend labels are positioned - if the screen size is less than 781, then the legend task description is truncated at 15 characters, at larger screen sizes this is extended to 25 characters.
+ * The legend box's height is dynamically set depending on how many items are added to it.
+ *   
+ */
 function selectChart(data){
     clearChartArea()
-
     var width = function(){
         if(window.innerWidth < 576){
                 return 300
@@ -1511,8 +1520,8 @@ function selectChart(data){
     var radius = 150;
     var donutWidth = 75;
     var color = d3.scaleOrdinal()
-        .range(["#33A8C7", "#52E3E1", "#A0E426", "#FDF148", "#FFAB00", "#F77976", "#F050AE", "#D883FF", "#9336FD"]); //colours for slices/ arcs
-    var svg = d3.select('.chart-area') //select the charts div
+        .range(["#33A8C7", "#52E3E1", "#A0E426", "#FDF148", "#FFAB00", "#F77976", "#F050AE", "#D883FF", "#9336FD"]); 
+    var svg = d3.select('.chart-area') 
         .append("svg") 
         .attr("class", "chart-svg")
         .attr("width", width)
@@ -1526,14 +1535,12 @@ function selectChart(data){
                  return 'translate(' + (305) + ',' + (155) + ')'
             }
         })
-
     var arc = d3.arc()
         .innerRadius(donutWidth)
-        .outerRadius(radius);
-        
+        .outerRadius(radius);     
     var pie = d3.pie()
         .value(function(d){
-            return d.totalTimeFocusedOnTask //what data will the chart use to create the slices.
+            return d.totalTimeFocusedOnTask
         })
         .sort(null); //stops the chart sorting in order of size. 
     var legendRectSize = 14;
@@ -1541,7 +1548,6 @@ function selectChart(data){
     var div = d3.select("body").append("div")
      .attr("class", "tooltip-donut")
      .style("opacity", 0);
-
     var path = svg.selectAll("path")
         .data(pie(data)) 
         .enter()
@@ -1551,13 +1557,11 @@ function selectChart(data){
             return color(d.data.taskDescription)
             
         })
-        .attr("stroke", "white")
-       
+        .attr("stroke", "white") 
         .on('mouseover', function (event, d, i) {
         d3.select(this).transition()
             .duration('50')
             .attr('opacity', '.85');
-
         //Makes the new div appear on hover:
         div.transition()
             .duration(50)
@@ -1568,23 +1572,18 @@ function selectChart(data){
             .style("left", (event.pageX + 10) + "px")
             .style("top", (event.pageY - 15) + "px");        
      })
-
      .on('mouseout', function (event, d, i) {
         d3.select(this).transition()
             .duration('50')
             .attr('opacity', '1');  
-        //Makes the new div disappear:
         div.transition()
             .duration('50')
             .style("opacity", 0);
      });
-
     var legendRectSize = 14;
     var legendSpacing = 7;
-  
-    var svgLegend = d3.select('.legend-area');
-        
-    var legend = svgLegend.selectAll('.legend') //the legend and placement
+    var svgLegend = d3.select('.legend-area');      
+    var legend = svgLegend.selectAll('.legend')
         .data(color.domain())
         .enter()
         .append('g')
@@ -1596,14 +1595,12 @@ function selectChart(data){
             var vert = i * height - offset;
             return 'translate(' + horz + ',' + vert + ')';    
         });
-    
-    legend.append('circle') //keys
+    legend.append('circle') 
         .style('fill', color)
         .style('stroke', color)
         .attr('cx', 0)
         .attr('cy', 0)
         .attr('r', '0.5rem'); //size of circles
-
     legend.append('text') //labels
     .data(data)
     .attr('x', legendRectSize + legendSpacing)
@@ -1621,23 +1618,26 @@ function selectChart(data){
         }
         return  `${taskDescrip} : ${d.totalTimeFocusedOnTaskLongForm}`; 
     });
-
     var legendItems = document.querySelectorAll('.circle-legend');
-
-    // dynamically set the height of the legend box depending on how many items are added to it. 
     svgLegend
         .attr('height', function(){
             if (legendItems.length > 6) {
               return legendItems.length * 30;
             }   
-        })
-        
+        })   
 }
+/**
+ * This code runs whenever a user uses the dropdown chart selection menu.
+ * If the option selected is total time focused on each task then the app calls the timeOnTaskExists() function and if there is time recorded on the task then it runs the selectChart() function using the totalTimeFocusedOnTask data and it sets the message to empty.
+ * If there is not time recorded, then it shows a message saying that the user has not timed any tasks yet.
+ * This is repeated for the total time focused on each task today chart selection option, except that the data variable is different.
+ * Both list options call the completedTaskList() functions feeding in the specific list data parameters required.
+ * If the today list is requested the standard message is overwritten to reflect the "todayness" of the request.
+ */
 d3.select('#chart-selections')
     .on("change", function(event){
         var option = event.target.value;
         totalTimeFocusedOnEachTaskToday =  getTodayTasks();
-
         if(option === "total-time-focused-on-each-task"){
             if(timeOnTaskExists() === true){
             selectChart(totalTimeFocusedOnEachTask);
@@ -1661,12 +1661,23 @@ d3.select('#chart-selections')
             let completedTaskExists = document.querySelector('.completed-task');
             if (!completedTaskExists){
                 messageDiv.innerHTML = `<h2>You have not marked any tasks as completed today.</h2>`
-            }
-             
-            
+            }     
         }
     })
-
+/**
+ * This function returns an array with 
+ * It looks at the taskList in local storage and it loops through the timeSegments array in each task in that list. 
+ * If the timeSegment was placed in the timeSegment array "today" then that time Segment is pushed into another array called todaysTasks.
+ * An array of objects is created called temp. 
+ * The todaysTasks array that was just created is looped through and if there is nothing in temp with the same id as the task that is being looked at, then that task is placed in temp as an object:
+ * With the key 0 i.e. {0:{id: "0", timeToAdd: 17}, 1:{Another obj}, 2: {Another Object} }
+ * If there is already a task in there with that id then the current tasks[i] timeToAdd is added to it. e.g. temp.0.timeToAdd + current task's time to Add. 
+ * Another array is created called todaysTasksFiltered and each task in temp is placed therein.
+ * For each task in todaysTasksFiltered this function looks at that task's id and then goes through the list.tasklist array and finds the task with the same id and then check to see whether it is completed or not and sets that in todaysTasksFiltered, alongside the task Description. This was added to ensure that if a task is edited, its task description in any of the today task charts/lists remains up-to-date. 
+ * Then the function sets the totalTimeFocusedOnTask in the todaysTasksFiltered array to the timeToAdd variable ensuring that the totalTime data reflects only the time spent on the task "today".
+ * Then it uses the convertSecondsToTime() function to convert that time to the longform time format.
+ * Then it returns the array for use as a data source.
+ */
 function getTodayTasks(){ 
     let tasks = list.taskList;
     let dateTimeNow = new Date();
@@ -1674,41 +1685,29 @@ function getTodayTasks(){
     let timeNow = dateTimeNow.toLocaleTimeString();
     let todaysTasks = [];
     let i;
-
-    for (i=0; i<tasks.length; i++){
-        
+    for (i=0; i<tasks.length; i++){   
         for (let j=0; j<tasks[i].timeSegments.length; j++){
             let individualTimeSegment = tasks[i].timeSegments[j];
-
             if(individualTimeSegment.localDate === dateNow){
                 todaysTasks.push(individualTimeSegment);
             }
         }
     }
     //The following code was written by user2736012 on Stack Overflow and altered (spread operator) by myself - link in Readme. 
-    //1. if there is nothing in temp with this id then put the whole task in there as an object.
-    //2 Puts the task in the temp object as an object with the key 0 i.e. {0:{id: "0", timeToAdd: 17}, 1:{Another obj}, 2: {Another Object} }
-    //3.if there is already a task in there with that id then add the current tasks[i] timeToAdd to it. 
-        //temp.0.timeToAdd + current task's time to Add. 
-
     var temp = {};
     var task = null;
     for(i=0; i < todaysTasks.length; i++) {
         task = {...todaysTasks[i]}; 
-        if(!temp[task.id]) { //1
-            temp[task.id] = task; //2
+        if(!temp[task.id]) { 
+            temp[task.id] = task; 
         } else {
-            temp[task.id].timeToAdd += task.timeToAdd;//3
+            temp[task.id].timeToAdd += task.timeToAdd;
         }
     }
     var todaysTasksFiltered = [];
     for (var prop in temp){
         todaysTasksFiltered.push(temp[prop]);
     }
-
-    //for each task in todaysTasksFiltered look at that tasks id and then go through the list.tasklist array and find the task with the same id and then check to see whether it is completed or not. 
-   
-
     for (let i=0; i<todaysTasksFiltered.length; i++){
         for (let j=0; j< list.taskList.length; j++){
             if(todaysTasksFiltered[i].id == list.taskList[j].id){
@@ -1717,54 +1716,47 @@ function getTodayTasks(){
             }
         }
     }
-
     todaysTasksFiltered.forEach(task => task.totalTimeFocusedOnTask = task.timeToAdd);
-    
     todaysTasksFiltered.forEach(task => task.totalTimeFocusedOnTaskLongForm = timer.convertSecondsToTime(task.totalTimeFocusedOnTask));
     return todaysTasksFiltered;
-    
 }
-
+/**
+ * This function writes out a list of completed tasks either in full or for "today" dependent on the data fed to it.
+ * It starts by clearing the chart area to make space for the list. 
+ * Then it sets the message to empty.
+ * Then it builds the list into the DOM, for each task in the data with a completed property it adds an <li> element on the page using that task's taskDescription property to identify it.
+ * If no tasks are completed it shows a message to that effect.
+ */
 function completedTaskList(data){
-    
     clearChartArea();
     messageDiv.innerHTML = "";
-
     let legendArea = document.querySelector('.legend-area');
-    
     legendArea.setAttribute("width", 0);
     legendArea.setAttribute("height", 0);
     let taskList = data;
     let comTasksDiv = document.querySelector('.completed-tasks');
     comTasksDiv.innerHTML += `<ol class="completed-task-list">`;
-    let comTaskListDiv = document.querySelector('.completed-task-list');
-     
+    let comTaskListDiv = document.querySelector('.completed-task-list');  
     taskList.forEach(function(task){
         if(task.completed === true){
             comTaskListDiv.innerHTML+= `<li class="completed-task">${task.taskDescription}</li>`
         }
     })
-    //Check if any of the tasks are checked as completed
     let completedTasksExist = document.querySelector('.completed-task');
-    
-    //If no tasks are completed show a message to that effect
     if (completedTasksExist == null){
         messageDiv.innerHTML = `<h2>You have not marked any tasks as complete.</h2>`
     }
     comTasksDiv.innerHTML += `</ol>`;
 }
-
-/* The below function is taken from Ben Clinkenbeard's Blog Article and originally written by Brendan Sudol (attributed in README) */
+/**
+ * This function makes the svg charts fully responsive in between the width & height attributes that were set in the chart creation function. It just ensures that the charts always look their best.
+ * The function is taken from Ben Clinkenbeard's Blog Article and originally written by Brendan Sudol (attributed in README) 
+ */
 function responsivefy(svg) {
-  // container will be the DOM element
-  // that the svg is appended to
-  // we then measure the container
-  // and find its aspect ratio
   const container = d3.select(svg.node().parentNode),
       width = parseInt(svg.style('width'), 10),
       height = parseInt(svg.style('height'), 10),
       aspect = width / height;
- 
   // set viewBox attribute to the initial size
   // control scaling with preserveAspectRatio
   // resize svg on inital page load
@@ -1777,13 +1769,11 @@ function responsivefy(svg) {
   })
       .attr('preserveAspectRatio', 'xMinYMid')
       .call(resize);
- 
   // add a listener so the chart will be resized
   d3.select(window).on(
       'resize.' + container.attr('id'), 
       resize
   );
-
   function resize() {
       const w = parseInt(container.style('width'));
       svg.attr('width', w);
@@ -1791,14 +1781,4 @@ function responsivefy(svg) {
   }
 
 }
-
-/* The resize code below that specifically targets screen width change. 
-Taken from: https://stackoverflow.com/questions/10750603/detect-a-window-width-change-but-not-a-height-change */
-// window.onresize = function() {
-//     let lastWidth;
-// 	if (window.innerWidth != lastWidth) {
-// 		location.reload();
-// 		lastWidth = window.innerWidth;
-// 	}
-// };
 

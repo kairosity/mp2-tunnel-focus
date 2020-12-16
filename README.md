@@ -358,6 +358,9 @@ Another issue I found when testing the application using only a keyboard was tha
 
 - ### **[How to focus in an input box on page load](https://stackoverflow.com/questions/4331022/focus-input-box-on-load)**
     Used to ensure that users did not have to hit tab or use the mouse each time they wanted to add new tasks.
+
+- ### **[Regex to remove whitespace from an input ](https://stackoverflow.com/questions/49209362/what-is-the-meaning-of-s-s-gm-in-javascript#:~:text=The%20function%20call%20return%20x,replaced%20by%20empty%20string%20''%20.)**
+    I used this in the addNewTask() method.
     
 # Deployment
 

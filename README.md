@@ -541,6 +541,9 @@ This website was developed using GitPod in a Chrome browser and commits were pus
 - ### **[DirtyMarkup Formatter](https://www.10bestdesign.com/dirtymarkup/)**
     Used to prettify my HTML, CSS & JS code.
 
+- ### **[Chrome Screen Reader Extension](https://chrome.google.com/webstore/detail/screen-reader/kgejglhpjiefppelpmljglcjbhoiplfn/related)**
+    Used to ensure great accessibility for users who rely on screen readers.
+
 # Technology Used
 
 - HTML

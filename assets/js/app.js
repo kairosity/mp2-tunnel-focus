@@ -480,9 +480,9 @@ class Timer {
 			minutesHtml.innerHTML = `${minutes}`;
 			hoursHtml.innerHTML = `0${hours}`;
 			//Find the id of the task clicked on.
-			let parentDiv = event.target.closest('.task');
-			let taskToTargetId = parentDiv.children[2].id;
-			let taskToTargetDescription = parentDiv.children[2].textContent;
+			let tasksParentDiv = event.target.closest('.task');
+			let taskToTargetId = tasksParentDiv.children[2].id;
+			let taskToTargetDescription = tasksParentDiv.children[2].textContent;
 			if ((!playing) && (seconds == 0) && (minutes == countdownNumber) && (hours == 0) && (playButton.style.display == '')) {
 				timerContainer.style.display = 'flex';
 				let timerContainerTitle = `Countdown ${countdownNumber}`;
@@ -642,17 +642,17 @@ class Timer {
 			countdownEndedModal.style.display = "block";
 			let confirmButton = document.querySelector('.ce-confirm-button');
 			let negateButton = document.querySelector('.ce-negate-button');
-			let messageElement = document.querySelector('.ce-modal-p');
+			let countdownEndedMessageElement = document.querySelector('.ce-modal-p');
 			let typeOfTimer = document.querySelector('.timer-title');
 			let thisTask = timerTitle.textContent;
 			if (typeOfTimer.textContent == "Countdown 15") {
-				messageElement.textContent = `Congrats! You've worked for the full 15 minutes! Do you want to save 15 minutes to the task: ${thisTask}?`;
+				countdownEndedMessageElement.textContent = `Congrats! You've worked for the full 15 minutes! Do you want to save 15 minutes to the task: ${thisTask}?`;
 				if (alarmButton.innerHTML == `<i class="fas fa-bell-slash" aria-hidden="true"></i>`) {
 					timer.addSilentAlarm();
 				}
 				clearInterval(countdownInt);
 			} else if (typeOfTimer.textContent == "Countdown 25") {
-				messageElement.textContent = `Congrats! You've worked for the full 25 minutes! Do you want to save 25 minutes to the task: ${thisTask}?`;
+				countdownEndedMessageElement.textContent = `Congrats! You've worked for the full 25 minutes! Do you want to save 25 minutes to the task: ${thisTask}?`;
 				if (alarmButton.innerHTML == `<i class="fas fa-bell-slash" aria-hidden="true"></i>`) {
 					timer.addSilentAlarm();
 				}
@@ -769,7 +769,7 @@ class Timer {
 				saveTimeToTaskModal.style.display = "block";
 				let confirmButton = document.querySelector('.sttt-confirm-button');
 				let negateButton = document.querySelector('.sttt-negate-button');
-				let messageElement = document.querySelector('.sttt-modal-p');
+				let saveTimeToTaskMessageElement = document.querySelector('.sttt-modal-p');
 				let typeOfTimer = document.querySelector('.timer-title');
 				let alarmButton = document.querySelector('#alarm-on');
 				let pauseButton = document.querySelector('#pause');
@@ -782,17 +782,17 @@ class Timer {
 					playButton.style.display = "inline-block";
 				}
 				if (typeOfTimer.textContent == "Stopwatch") {
-					messageElement.textContent = `Do you want to save ${hours} hours ${minutes} minutes & ${seconds} seconds to your task: "${thisTask}"? `;
+					saveTimeToTaskMessageElement.textContent = `Do you want to save ${hours} hours ${minutes} minutes & ${seconds} seconds to your task: "${thisTask}"? `;
 					clearInterval(stopwatch);
 				} else if (typeOfTimer.textContent == "Countdown 15") {
 					let timeToAddInSecs = countdown15TimeToAdd(hours, minutes, seconds);
 					let timeInsert = timer.convertSecondsToTime(timeToAddInSecs);
-					messageElement.textContent = `Do you want to save ${timeInsert} to to your task: "${thisTask}"? `;
+					saveTimeToTaskMessageElement.textContent = `Do you want to save ${timeInsert} to to your task: "${thisTask}"? `;
 					clearInterval(countdownInt);
 				} else if (typeOfTimer.textContent == "Countdown 25") {
 					let timeToAddInSecs = countdown25TimeToAdd(hours, minutes, seconds);
 					let timeInsert = timer.convertSecondsToTime(timeToAddInSecs);
-					messageElement.textContent = `Do you want to save ${timeInsert} to to to your task: "${thisTask}"? `;
+					saveTimeToTaskMessageElement.textContent = `Do you want to save ${timeInsert} to to to your task: "${thisTask}"? `;
 					clearInterval(countdownInt);
 				}
 				confirmButton.addEventListener('click', function() {
@@ -829,7 +829,6 @@ class Timer {
 		 * Then it creates a new entry in the time Segments array of objects and includes: id, time, date & task description information for use with the charts & lists. 
 		 */
 		function saveTimeToTask(id, seconds) {
-			var minutesInSeconds;
 			let typeOfTimer = document.querySelector('.timer-title');
 			let timeToAdd;
 			if (typeOfTimer.textContent == "Countdown 15") {
@@ -1118,7 +1117,6 @@ class Timer {
 		const addNewTaskButton = document.querySelector('#add-new-task');
 		const newTaskInput = document.querySelector('#new-task-input');
 		const arrayOfCheckboxes = document.querySelectorAll('.taskCheckbox');
-		const arrayOfSortIcons = document.querySelectorAll('.task-sort');
 		const arrayOfOptionIcons = document.querySelectorAll('.task-options');
 		let startStopwatchButtonArray = document.querySelectorAll('.start-stopwatch');
 		const skipTasks = document.querySelector('#skip-tasks');
@@ -1342,11 +1340,11 @@ class List {
 							deleteTaskButton.addEventListener(e, function(event) {
 								if ((e === 'click') || (event.keyCode === 13)) {
 									taskToDel = event.target.closest('.task');
-									let messageElement = document.querySelector('.confirm-deletion-modal-p');
+									let deleteConfirmationMessageElement = document.querySelector('.confirm-deletion-modal-p');
 									let taskNameToDelete = taskToDel.children[2].textContent;
 									timer.makeArrayElementsNotKeyboardTabbable();
 									confirmDeletionModal.style.display = "block";
-									messageElement.textContent = `Are you sure you want to delete ${taskNameToDelete}?`;
+									deleteConfirmationMessageElement.textContent = `Are you sure you want to delete ${taskNameToDelete}?`;
 								}
 							});
 						});
@@ -1405,12 +1403,12 @@ class List {
 				hide
 			}) {
 				function onSelect(event) {
-					const editTaskOpt = document.querySelector('.edit-task-option');
-					const deleteTaskOpt = document.querySelector('.delete-task-option');
-					const countdown15TaskOpt = document.querySelector('.countdown15-task-option');
-					const countdown25TaskOpt = document.querySelector('.countdown25-task-option');
-					const manualEditTaskOpt = document.querySelector('.edit-task-time-task-option');
-					if ((event.target == editTaskOpt) || (event.target == deleteTaskOpt) || (event.target == countdown15TaskOpt) || (event.target == countdown25TaskOpt) || (event.target == manualEditTaskOpt)) {
+					const editTaskOption = document.querySelector('.edit-task-option');
+					const deleteTaskOption = document.querySelector('.delete-task-option');
+					const countdown15TaskOption = document.querySelector('.countdown15-task-option');
+					const countdown25TaskOption = document.querySelector('.countdown25-task-option');
+					const manualEditTaskOption = document.querySelector('.edit-task-time-task-option');
+					if ((event.target == editTaskOption) || (event.target == deleteTaskOption) || (event.target == countdown15TaskOption) || (event.target == countdown25TaskOption) || (event.target == manualEditTaskOption)) {
 						hide();
 					}
 				}
@@ -1454,7 +1452,7 @@ timer.appInformation();
 // --------------------------------------CHARTS & D3.js-------------------------------//
 var totalTimeFocusedOnEachTask = list.taskList;
 var totalTimeFocusedOnEachTaskToday = getTodayTasks();
-var messageDiv = document.querySelector('.chart-message');
+var emptyChartMessage = document.querySelector('.chart-message');
 clearChartArea()
 /**
  * This function checks to see if there is time already recorded on a particular task.
@@ -1479,7 +1477,7 @@ function timeOnTaskExists() {
 if (timeOnTaskExists() === true) {
 	selectChart(totalTimeFocusedOnEachTask);
 } else {
-	messageDiv.innerHTML = `<h2 class="no-timed-tasks">You have not timed any tasks yet.</h2>`;
+	emptyChartMessage.innerHTML = `<h2 class="no-timed-tasks">You have not timed any tasks yet.</h2>`;
 }
 /**
  * This function clears the chart area of any svgs, legends or lists.
@@ -1608,18 +1606,18 @@ d3.select('#chart-selections').on("change", function(event) {
 	if (option === "total-time-focused-on-each-task") {
 		if (timeOnTaskExists() === true) {
 			selectChart(totalTimeFocusedOnEachTask);
-			messageDiv.innerHTML = "";
+			emptyChartMessage.innerHTML = "";
 		} else {
 			clearChartArea();
-			messageDiv.innerHTML = `<h2 class="no-timed-tasks">You have not timed any tasks yet.</h2>`;
+			emptyChartMessage.innerHTML = `<h2 class="no-timed-tasks">You have not timed any tasks yet.</h2>`;
 		}
 	} else if (option === "total-time-focused-on-each-task-today") {
 		if (timeOnTaskExists() === true) {
 			selectChart(totalTimeFocusedOnEachTaskToday);
-			messageDiv.innerHTML = "";
+			emptyChartMessage.innerHTML = "";
 		} else {
 			clearChartArea();
-			messageDiv.innerHTML = `<h2 class="no-timed-tasks">You have not timed any tasks today.</h2>`;
+			emptyChartMessage.innerHTML = `<h2 class="no-timed-tasks">You have not timed any tasks today.</h2>`;
 		}
 	} else if (option === "tasks-completed") {
 		completedTaskList(list.taskList);
@@ -1627,7 +1625,7 @@ d3.select('#chart-selections').on("change", function(event) {
 		completedTaskList(totalTimeFocusedOnEachTaskToday);
 		let completedTaskExists = document.querySelector('.completed-task');
 		if (!completedTaskExists) {
-			messageDiv.innerHTML = `<h2>You have not marked any tasks as completed today.</h2>`;
+			emptyChartMessage.innerHTML = `<h2>You have not marked any tasks as completed today.</h2>`;
 		}
 	}
 });
@@ -1649,7 +1647,7 @@ function getTodayTasks() {
 	let tasks = list.taskList;
 	let dateTimeNow = new Date();
 	let dateNow = dateTimeNow.toLocaleDateString();
-	let timeNow = dateTimeNow.toLocaleTimeString();
+	// let timeNow = dateTimeNow.toLocaleTimeString(); DELETE THIS
 	let todaysTasks = [];
 	let i;
 	for (i = 0; i < tasks.length; i++) {
@@ -1697,24 +1695,24 @@ function getTodayTasks() {
  */
 function completedTaskList(data) {
 	clearChartArea();
-	messageDiv.innerHTML = "";
+	emptyChartMessage.innerHTML = "";
 	let legendArea = document.querySelector('.legend-area');
 	legendArea.setAttribute("width", 0);
 	legendArea.setAttribute("height", 0);
 	let taskList = data;
-	let comTasksDiv = document.querySelector('.completed-tasks');
-	comTasksDiv.innerHTML += `<ol class="completed-task-list">`;
-	let comTaskListDiv = document.querySelector('.completed-task-list');
+	let completedTasksDiv = document.querySelector('.completed-tasks');
+	completedTasksDiv.innerHTML += `<ol class="completed-task-list">`;
+	let completedTaskListDiv = document.querySelector('.completed-task-list');
 	taskList.forEach(function(task) {
 		if (task.completed === true) {
-			comTaskListDiv.innerHTML += `<li class="completed-task">${task.taskDescription}</li>`;
+			completedTaskListDiv.innerHTML += `<li class="completed-task">${task.taskDescription}</li>`;
 		}
 	});
 	let completedTasksExist = document.querySelector('.completed-task');
 	if (completedTasksExist == null) {
-		messageDiv.innerHTML = `<h2>You have not marked any tasks as complete.</h2>`;
+		emptyChartMessage.innerHTML = `<h2>You have not marked any tasks as complete.</h2>`;
 	}
-	comTasksDiv.innerHTML += `</ol>`;
+	completedTasksDiv.innerHTML += `</ol>`;
 }
 /**
  * This function makes the svg charts fully responsive in between the width & height attributes that were set in the chart creation function. It just ensures that the charts always look their best.

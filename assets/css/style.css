@@ -253,10 +253,6 @@
 	-webkit-box-pack: center;
 	-ms-flex-pack: center;
 	justify-content: center;
-	/* -webkit-box-shadow: 0px 6px 0px 0px rgba(0,0,0,1);
-    -moz-box-shadow: 0px 6px 0px 0px rgba(0,0,0,1);
-    box-shadow: 0px 6px 0px 0px rgba(0,0,0,1);
-    border-radius: 8px; */
 }
 .main-heading {
 	font-family: "Secular One", sans-serif;
@@ -299,9 +295,7 @@ h2.sub-heading {
 	transform: translateY(-50%);
 	overflow: auto;
 	background-color: rgb(0, 0, 0);
-	/* Fallback color */
 	background-color: rgba(0, 0, 0, 0.4);
-	/* Black w/ opacity */
 }
 .information-modal-content {
 	font-family: "Heebo", sans-serif;
@@ -507,7 +501,6 @@ h2.sub-heading {
 	transition: all 500ms;
 }
 /* Button behaviour when hovering & clicking */
-
 #add-new-task:hover, .close-timer-x:hover, #save-time-to-task:hover {
 	-webkit-box-shadow: 7px 12px 0px 0px rgba(0, 0, 0, 1);
 	box-shadow: 7px 12px 0px 0px rgba(0, 0, 0, 1);
@@ -705,7 +698,6 @@ h2.sub-heading {
 	outline: none;
 }
 /* Make the placeholder text larger */
-
 #new-task-input::-webkit-input-placeholder {
 	font-size: 1rem;
 	font-family: "Heebo", sans-serif;
@@ -736,7 +728,6 @@ h2.sub-heading {
 	font-size: 1.5em;
 }
 /* Add New Task Button */
-
 #add-new-task {
 	border-radius: 50%;
 	background-color: var(--sun-yellow);
@@ -789,12 +780,10 @@ h2.sub-heading {
 	margin-top: 20px;
 }
 /* Each new task line */
-
 .task {
 	font-size: 1.2em;
 	padding-top: 0.5em;
 	padding-bottom: 0.7em;
-	/* padding-left: 0.5em; */
 	display: -ms-grid;
 	display: grid;
 	list-style-type: none;
@@ -808,27 +797,6 @@ h2.sub-heading {
 	-ms-flex-pack: center;
 	justify-content: center;
 }
-/* .task:not(:last-child):after {
-  content:'';
-  display:inline-block;
-  width:100%; 
-  height:100%;
-  border-bottom:1px solid var(--pure-black);
-  grid-column: 1 / 7;
-  margin-top: 11px;
-} */
-
-/* .task:last-child:after{
-    content: '';
-    display:inline-block;
-    width:100%; 
-    height:100%;
-    border-bottom:0px solid var(--pure-black);
-    grid-column: 1 / 7;
-    margin-bottom: -27px;
-    
-} */
-
 .task:last-child {
 	padding-bottom: 0.1em;
 }
@@ -838,7 +806,6 @@ li.task-description {
 	font-weight: 400;
 }
 /* Custom code to style checkboxes - code from Milos Protic's article on same */
-
 .taskCheckbox {
 	height: 20px;
 	width: 20px;
@@ -952,9 +919,6 @@ input.editedTask {
 	font-size: 0.7em;
 	border: var(--pure-black) solid 2px;
 	border-radius: 8px;
-	/* -webkit-box-shadow: 1.5px 3px 0px 0px rgba(0,0,0,1);
-    -moz-box-shadow: 1.5px 3px 0px 0px rgba(0,0,0,1);
-    box-shadow: 1.5px 3px 0px 0px rgba(0,0,0,1); */
 	-webkit-transition: all 1000ms;
 	-o-transition: all 1000ms;
 	transition: all 1000ms;
@@ -1017,9 +981,6 @@ input.editedTask:focus {
 	padding: 1em;
 	background-color: var(--pure-white);
 	justify-items: center;
-	/* -webkit-box-shadow: 8px 10px 0px 0px rgba(0,0,0,1);
-    -moz-box-shadow: 8px 10px 0px 0px rgba(0,0,0,1);
-    box-shadow: 8px 10px 0px 0px rgba(0,0,0,1); */
 }
 input.editTime {
 	height: 35px;
@@ -1028,9 +989,6 @@ input.editTime {
 	font-size: 0.9em;
 	border: var(--pure-black) solid 2px;
 	border-radius: 8px;
-	/* -webkit-box-shadow: 1.5px 3px 0px 0px rgba(0,0,0,1);
-    -moz-box-shadow: 1.5px 3px 0px 0px rgba(0,0,0,1);
-    box-shadow: 1.5px 3px 0px 0px rgba(0,0,0,1); */
 	-webkit-transition: all 1000ms;
 	-o-transition: all 1000ms;
 	transition: all 1000ms;
@@ -1049,7 +1007,6 @@ input.editTime:focus {
 	flex-basis: 100%;
 	text-align: center;
 	padding: 1em;
-	/* font-size: 0.7em; */
 }
 .edit-time-hours-label, .edit-time-minutes-label, .edit-time-seconds-label {
 	color: var(--pure-black);
@@ -1101,7 +1058,6 @@ input.editTime:focus {
 	background-color: var(--sun-yellow);
 	padding: 0.4em;
 	width: 40%;
-	/* flex-basis: 20%; */
 	margin: 10px 0 10px 0;
 	color: var(--pure-black);
 	font-family: "Heebo", sans-serif;
@@ -1109,9 +1065,6 @@ input.editTime:focus {
 	font-weight: 400;
 	border: 2px solid var(--pure-black);
 	border-radius: 8px;
-	/* -webkit-box-shadow: 1.5px 3px 0px 0px rgba(0,0,0,1);
-    -moz-box-shadow: 1.5px 3px 0px 0px rgba(0,0,0,1);
-    box-shadow: 1.5px 3px 0px 0px rgba(0,0,0,1); */
 	-webkit-transition: all 1000ms;
 	-o-transition: all 1000ms;
 	transition: all 1000ms;
@@ -1226,11 +1179,6 @@ input.editTime:focus {
 	-webkit-box-align: center;
 	-ms-flex-align: center;
 	align-items: center;
-	/* -webkit-box-shadow: 3px 5px 0px 0px rgba(0,0,0,1);
-    -moz-box-shadow: 3px 5px 0px 0px rgba(0,0,0,1);
-    box-shadow: 3px 5px 0px 0px rgba(0,0,0,1);
-    border-radius: 8px;
-    border: 2px solid var(--pure-black); */
 	margin-bottom: 50px;
 	padding: 0.6em;
 }
@@ -1395,7 +1343,6 @@ div.tooltip-donut {
 /*----------------------------------------------------------- Modals  */
 
 /* Modal Framework */
-
 .modal, #save-time-to-task-modal, #countdown-ended-modal, #enter-task-modal, #confirm-deletion-modal {
 	display: none;
 	position: fixed;
@@ -1406,12 +1353,9 @@ div.tooltip-donut {
 	height: 100%;
 	overflow: auto;
 	background-color: rgb(0, 0, 0);
-	/* Fallback color */
 	background-color: rgba(0, 0, 0, 0.4);
-	/* Black w/ opacity */
 }
 /* Modal Content/Box */
-
 .modal-content, .sttt-modal-content, .countdown-ended-modal-content, .confirm-deletion-modal-content {
 	background-color: var(--sun-yellow);
 	margin: 15% auto;
@@ -1433,7 +1377,6 @@ div.tooltip-donut {
 	box-shadow: 3px 5px 0px 0px rgba(0, 0, 0, 1);
 }
 /* Modal Buttons */
-
 .close-timer-modal-btn, .sttt-modal-btn, .ce-modal-btn, .confirm-deletion-modal-btn {
 	width: 120px;
 	padding: 5px 14px;
@@ -1454,14 +1397,12 @@ div.tooltip-donut {
 	box-shadow: 5px 9px 0px 0px rgba(0, 0, 0, 1);
 }
 /* The 'Yes, Exit' Button */
-
 .confirm-button, .sttt-confirm-button, .ce-confirm-button, .deletion-confirm-button {
 	background-color: var(--pure-white);
 	color: var(--pure-black);
 	border: 2px solid var(--pure-black);
 }
 /* The 'No, Cancel' Button */
-
 .negate-button, .sttt-negate-button, .ce-negate-button, .deletion-negate-button {
 	background-color: var(--pure-black);
 	color: var(--pure-white);
@@ -1617,7 +1558,6 @@ footer {
 		border: 2px solid var(--pure-black);
 		border-radius: 8px;
 		width: 350px;
-		/* height: 150px; */
 		-webkit-box-shadow: 3px 5px 0px 0px rgba(0, 0, 0, 1);
 		box-shadow: 3px 5px 0px 0px rgba(0, 0, 0, 1);
 	}
@@ -1648,11 +1588,6 @@ footer {
 	}
 	/*----------------------------------------------------------- Charts - Small Screens  */
 	#charts {
-		/* border: 2px solid var(--pure-black);
-    border-radius: 8px;
-    -webkit-box-shadow: 3px 5px 0px 0px rgba(0,0,0,1);
-    -moz-box-shadow: 3px 5px 0px 0px rgba(0,0,0,1);
-    box-shadow: 3px 5px 0px 0px rgba(0,0,0,1); */
 		margin-bottom: 50px;
 		width: 70%;
 	}

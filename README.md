@@ -294,6 +294,12 @@ While verbose and winding, this was definitely preferable to writing out the exa
 ### 2. Skip Tasks 
 Another issue I found when testing the application using only a keyboard was that it was infuriating when you had a long task list and you wanted to toggle charts, to have to tab through each individual task and all its associated options. To circumvent this issue, I included a "Skip Tasks" link that becomes visible only when the site is navigated using a keyboard.  
 
+### 3. Aria-Labels
+Wherever possible, I included aria-labels & titles to elements to ensure that screen readers delivered the correct information to users. 
+
+### 4. Zoom
+I ensured that the website was usable for those hard of vision by making sure that users can view and use it comfortably at up to 200% zoom as per web standards.
+
 # Future Release Features
 
 1. Connecting to a database and creating user accounts with proper storage and retrieval of data. 
@@ -314,6 +320,7 @@ Another issue I found when testing the application using only a keyboard was tha
 1. I've realised over the course of building this application that the way I structured my event listeners (nestled inside object methods) was needlessly complex and led itself to some irritating bugs that needed fixes in the form of bind & unbind methods. I think for future projects I would separate out my classes from event listeners more definitively for this reason. 
 
 2. Automated testing for this application was tricky, and I think would be easier for a more purely functional ty for a less OOP application and 
+
 
 # Attribution
 

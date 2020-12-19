@@ -793,6 +793,13 @@ It scored well on both measures:
 ### SEO:
 ![lighthouse-seo](assets/misc-images/lighthouse-seo.png)
 
+## Web.Dev Measure
+
+Oddly enough (because they are essentially the same tool) the site's performace suffered on the web.dev measure, but the points minused were mostly to do with all the unused D3.js code.
+It also wanted me to minify my JavaScript, which can be easily done at a later date. 
+
+![webdev-measure](assets/misc-images/webdev-measure.png)
+
 # Mobile Testing
 
 A rather unpleasant surprise I had halfway through designing the application was that the Chrome Dev Tools mobile emulator is not that good at emulating mobiles. Many of the application's features that worked fine in the emulator did not work or worked badly on mobile. I was able to fix all of these, but it highlighted the difficulties inherent in designing for mobile without constantly pushing to GitHub, making the site live and checking how it really works. 

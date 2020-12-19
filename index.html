@@ -18,7 +18,8 @@
 			<div id="info">
 				<i class="far fa-question-circle" tabindex="0" aria-label="Information Button"></i>
 			</div>
-		</header><!-- TIMER -->
+        </header>
+        <!-- TIMER -->
 		<div class="timer-container" role="dialog">
 			<h2 class="timer-task-description"></h2>
 			<div class="outer-timer-box">
@@ -33,13 +34,15 @@
 					<a class="alarm" href="#" id="alarm-on"><i class="fas fa-bell"></i></a> <a href="#" id="pause"><i class="fas fa-pause"></i></a> <a href="#" id="play"><i class="fas fa-play"></i></a> <a href="#" id="reset"><i class="fas fa-history"></i></a>
 				</div>
 			</div><button id="save-time-to-task">Save Time To Task</button> <button class="close-timer-x" tabindex="0"><i class="fas fa-times"></i></button>
-		</div><!-- TASK LIST -->
+        </div>
+        <!-- TASK LIST -->
 		<div class="list-container">
 			<div class="add-new-task">
 				<input autofocus="" id="new-task-input" placeholder="Type to add a new task..." type="text"> <button id="add-new-task" title="add new task button"><i class="fas fa-plus add-new-task-plus-icon" title="add new task"></i></button><span class="sr-only">Add New Task Button</span>
 			</div><a href="#charts-start" id="skip-tasks" tabindex="0">Skip Tasks</a>
 			<div id="list"></div>
-		</div><!-- OPTIONS POPOVER NAVIGATION -->
+        </div>
+        <!-- OPTIONS POPOVER NAVIGATION -->
 		<div class="popover-wrapper" id="popover">
 			<div class="popover-box">
 				<ul class="task-options-list">
@@ -50,7 +53,8 @@
 					<li class="task-option countdown25-task-option" tabindex="0"><i class="fas fa-hourglass-half task-icon countdown25-timer-icon"></i>Countdown 25 Mins</li>
 				</ul>
 			</div>
-		</div><!-- MODALS -->
+        </div>
+        <!-- MODALS -->
 		<!-- APP INFORMATION MODAL -->
 		<div class="modal" id="information-modal">
 			<div class="information-modal-content">
@@ -69,32 +73,38 @@
 				</div>
 				<p class="info-last-line">Enjoy being more productive!</p><button class="close-timer-x close-info-x" tabindex="0"><i class="fas fa-times"></i></button>
 			</div>
-		</div><!-- SAVE TIME TO TASK MODAL -->
+        </div>
+        <!-- SAVE TIME TO TASK MODAL -->
 		<div id="save-time-to-task-modal">
 			<div class="sttt-modal-content">
 				<p class="sttt-modal-p">Do you want to save ${thistime} to ${thistask}?</p><button class="sttt-confirm-button sttt-modal-btn" tabindex="0">Yes, Save</button> <button class="sttt-negate-button sttt-modal-btn" tabindex="0">No, Cancel</button>
 			</div>
-		</div><!-- COUNTDOWN ENDED MODAL -->
+        </div>
+        <!-- COUNTDOWN ENDED MODAL -->
 		<div id="countdown-ended-modal">
 			<div class="countdown-ended-modal-content">
 				<p class="ce-modal-p">Congrats! You've worked for the full ${countdowntime} minutes! Do you want to save those ${countdownminutes} minutes to the task: ${}?</p><button class="ce-confirm-button ce-modal-btn" tabindex="0">Yes, Save</button> <button class="ce-negate-button ce-modal-btn" tabindex="0">No, Cancel</button>
 			</div>
-		</div><!-- CLOSE TIMER MODAL -->
+        </div>
+        <!-- CLOSE TIMER MODAL -->
 		<div class="modal" id="close-timer-modal">
 			<div class="modal-content">
 				<p class="close-timer-modal-p">Are you sure you want to exit the timer without saving?</p><button class="confirm-button close-timer-modal-btn" tabindex="0">Yes, Exit</button> <button class="negate-button close-timer-modal-btn" tabindex="0">No, Cancel</button>
 			</div>
-		</div><!-- CONFIRM DELETION MODAL -->
+        </div>
+        <!-- CONFIRM DELETION MODAL -->
 		<div class="modal" id="confirm-deletion-modal">
 			<div class="confirm-deletion-modal-content">
 				<p class="confirm-deletion-modal-p">Are you sure you want to delete ${thistask}?</p><button class="deletion-confirm-button confirm-deletion-modal-btn" tabindex="0">Yes</button> <button class="deletion-negate-button confirm-deletion-modal-btn" tabindex="0">No</button>
 			</div>
-		</div><!-- "PLEASE ENTER A VALID TASK" MODAL-->
+        </div>
+        <!-- "PLEASE ENTER A VALID TASK" MODAL-->
 		<div class="modal" id="enter-task-modal">
 			<div class="modal-content">
 				<p class="close-timer-modal-p">Please enter a valid task.</p><button class="confirm-button close-timer-modal-btn valid-task-confirm-button" tabindex="0">Ok, will do!</button>
 			</div>
-		</div><!-- PRODUCTIVITY CHARTS -->
+        </div>
+        <!-- PRODUCTIVITY CHARTS -->
 		<div class="focus-summary-container">
 			<div class="chart-header">
 				<h2 class="chart-heading">Productivity Charts</h2>
@@ -120,7 +130,8 @@
 				<div class="completed-tasks"></div>
 				<div class="chart-area"></div><svg class="legend-area"></svg>
 			</div>
-		</div><!-- FOOTER -->
+        </div>
+        <!-- FOOTER -->
 		<footer></footer>
 	</div>
 	<script src="https://kit.fontawesome.com/a27a231c02.js">

@@ -727,6 +727,9 @@ In summary the HTML validates perfectly, with the exceptions of the empty headin
 
 - Mostly it enabled me to spot the hundreds of semi-colons I had omitted, which I corrected. 
 
+## Web Dev Tools tests
+
+I ran my finished application through both Lighthouse & web.dev Measure, both very useful tools for gauging usability and site performance. 
 
 # Mobile Testing
 

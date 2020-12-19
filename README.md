@@ -432,6 +432,9 @@ This website was developed using GitPod in a Chrome browser and commits were pus
 - ### **[Autoprefixer](https://autoprefixer.github.io/)
     Used to ensure cross-browser compatibility for my CSS code.
 
+- ### **[Overriding button styles](https://css-tricks.com/overriding-default-button-styles/)**
+    Used to transform <a> links into buttons and re-style them. 
+
 ## 3. JavaScript
 
 - ### **[OOP in JavaScript: Made Super Simple](https://www.youtube.com/watch?v=PFmuCDHHpwk)**

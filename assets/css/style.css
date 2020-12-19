@@ -860,35 +860,38 @@ li.task-description {
 .start-stopwatch, .task-options-icon {
 	cursor: pointer;
 }
-.sort-tasks-icon {
-	cursor: -webkit-grab;
-	cursor: grab;
+.task button.task-list-icon{
+    border: none;
+    outline: none;
+    background-color: transparent;
+    appearance: none;
+    font-size: 1em;
 }
-.task:nth-of-type(9n+1) {
+.task:nth-of-type(9n+1) button {
 	color: var(--dark-blue);
 }
-.task:nth-of-type(9n+2) {
+.task:nth-of-type(9n+2) button {
 	color: var(--light-blue);
 }
-.task:nth-of-type(9n+3) {
+.task:nth-of-type(9n+3) button{
 	color: var(--grass-green);
 }
-.task:nth-of-type(9n+4) {
+.task:nth-of-type(9n+4) button{
 	color: var(--sun-yellow);
 }
-.task:nth-of-type(9n+5) {
+.task:nth-of-type(9n+5) button {
 	color: var(--orange);
 }
-.task:nth-of-type(9n+6) {
+.task:nth-of-type(9n+6) button {
 	color: var(--coral);
 }
-.task:nth-of-type(9n+7) {
+.task:nth-of-type(9n+7) button {
 	color: var(--happy-pink);
 }
-.task:nth-of-type(9n+8) {
+.task:nth-of-type(9n+8) button {
 	color: var(--purple-blush);
 }
-.task:nth-of-type(9n+9) {
+.task:nth-of-type(9n+9) button {
 	color: var(--strong-lavendar);
 }
 li.task-description {

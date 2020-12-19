@@ -276,7 +276,10 @@ h2.sub-heading {
 	top: 15px;
 	right: 15px;
 	font-size: 2em;
-	cursor: pointer;
+    cursor: pointer;
+    border: none;
+    outline: none;
+    background-color: transparent;
 }
 #information-modal {
 	width: 85%;
@@ -426,9 +429,12 @@ h2.sub-heading {
 	-ms-grid-column-align: center;
 	justify-self: center;
 }
-.timer-controls a {
+.timer-controls button {
 	color: var(--pure-white);
-	font-size: 2em;
+    font-size: 2em;
+    outline: none;
+    border: none;
+    background-color: transparent;
 }
 .timer-box h2 {
 	font-family: "Heebo", sans-serif;
@@ -1089,7 +1095,14 @@ input.editTime:focus {
 	outline: var(--dark-blue) dashed 4px;
 }
 /*----------------------------------------------------------- Charts   */
-
+#chart-label,
+#chart-selections-label,
+#total-time-focused-label,
+#total-time-focused-today-label,
+#tasks-completed-label,
+#tasks-completed-today-label{
+    display: none;
+}
 .focus-summary-container {
 	-ms-grid-row: 7;
 	-ms-grid-row-span: 1;

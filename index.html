@@ -15,9 +15,9 @@
 		<header class="main-header">
 			<h1 class="main-heading">Tunnel Focus</h1>
 			<h2 class="sub-heading">Time Your Tasks</h2>
-			<div id="info">
-				<i class="far fa-question-circle" tabindex="0" aria-label="Information Button"></i>
-			</div>
+			<button id="info" tabindex="0" aria-label="Information Button" >
+				<i class="far fa-question-circle"  ></i>
+            </button>
         </header>
         <!-- TIMER -->
 		<div class="timer-container" role="dialog">
@@ -31,14 +31,14 @@
 					<h2 id="seconds"></h2>
 				</div>
 				<div class="timer-controls">
-					<a class="alarm" href="#" id="alarm-on"><i class="fas fa-bell"></i></a> <a href="#" id="pause"><i class="fas fa-pause"></i></a> <a href="#" id="play"><i class="fas fa-play"></i></a> <a href="#" id="reset"><i class="fas fa-history"></i></a>
+					<button class="alarm"  id="alarm-on" aria-label="alarm toggle"><i class="fas fa-bell"></i></button> <button id="pause" aria-label="pause timer"><i class="fas fa-pause"></i></button> <button  id="play" aria-label="play timer"><i class="fas fa-play" ></i></button> <button id="reset" aria-label="reset timer"><i class="fas fa-history"></i></button>
 				</div>
-			</div><button id="save-time-to-task">Save Time To Task</button> <button class="close-timer-x" tabindex="0"><i class="fas fa-times"></i></button>
+			</div><button id="save-time-to-task">Save Time To Task</button> <button class="close-timer-x" tabindex="0" aria-label="close timer"><i class="fas fa-times"></i></button>
         </div>
         <!-- TASK LIST -->
 		<div class="list-container">
 			<div class="add-new-task">
-				<input autofocus="" id="new-task-input" placeholder="Type to add a new task..." type="text"> <button id="add-new-task" title="add new task button"><i class="fas fa-plus add-new-task-plus-icon" title="add new task"></i></button><span class="sr-only">Add New Task Button</span>
+				<input autofocus="" id="new-task-input" placeholder="Type to add a new task..." aria-label="type to add a new task" type="text"> <button id="add-new-task" title="add new task"><i class="fas fa-plus add-new-task-plus-icon" title="add new task"></i></button>
 			</div><a href="#charts-start" id="skip-tasks" tabindex="0">Skip Tasks</a>
 			<div id="list"></div>
         </div>
@@ -71,7 +71,7 @@
 					<p>If you need a break mid-task, you can pause & then play the timer again from where you left off.</p><i class="fas fa-history info-task-icon"></i>
 					<p>You can reset your time.</p>
 				</div>
-				<p class="info-last-line">Enjoy being more productive!</p><button class="close-timer-x close-info-x" tabindex="0"><i class="fas fa-times"></i></button>
+				<p class="info-last-line">Enjoy being more productive!</p><button class="close-timer-x close-info-x" aria-label="close information box" tabindex="0"><i class="fas fa-times"></i></button>
 			</div>
         </div>
         <!-- SAVE TIME TO TASK MODAL -->
@@ -108,23 +108,29 @@
 		<div class="focus-summary-container">
 			<div class="chart-header">
 				<h2 class="chart-heading">Productivity Charts</h2>
-			</div>
-			<div class="custom-select" id="charts-start" tabindex="-1">
+            </div>
+            <label id="chart-label" for="charts-start">Charts Form</label>
+			<form class="custom-select" id="charts-start" tabindex="-1">     
 				<select id="chart-selections" name="chart-selections" tabindex="0">
+                    <label id="chart-selections-label" for="chart-selections">Productivity Charts: Select a chart</label> 
+                    <label id="total-time-focused-label" for="total-time-focused"> A chart showing the total time focused on each task</label>
 					<option id="total-time-focused" value="total-time-focused-on-each-task">
 						Total Time Focused on Each Task
-					</option>
+                    </option>
+                    <label id="total-time-focused-today-label" for="total-time-focused-today"> A chart showing the total time focused on each task today</label>
 					<option id="total-time-focused-today" value="total-time-focused-on-each-task-today">
 						Total time Focused on Each Task Today
-					</option>
+                    </option>
+                    <label id="tasks-completed-label" for="tasks-completed"> A list showing all the tasks completed</label>
 					<option value="tasks-completed">
 						Tasks Completed
-					</option>
+                    </option>
+                     <label id="tasks-completed-today-label" for="tasks-completed-today"> A list showing all the tasks completed today</label>
 					<option value="tasks-completed-today">
 						Tasks Completed Today
 					</option>
 				</select>
-			</div>
+			</form>
 			<div id="charts">
 				<div class="chart-message"></div>
 				<div class="completed-tasks"></div>

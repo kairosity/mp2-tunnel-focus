@@ -7,14 +7,17 @@
 - **To be able to easily and clearly understand the purpose of this web application.**
     - The sub-heading provides a succint synopsis of the raison d'etre of the application.
     - The new task entry input also explicitly tells the user what is expected of them, and how to do it: "Type to add a new task..."
+    - I've included a question-mark icon in the upper right-hand corner of the header that opens a modal that explains the application icons, and what their functions are more explicitly just in case a user is uncertain. 
 - **To be able to quickly and easily understand how to navigate the application.**
     - When the user launches the application for the first time, all they see is the heading and the sub-heading and the suggestion of adding a new task. Once they do that they see the time summary associated with that task, a stopwatch icon & an ellipsis icon.
-    - The icons avail of metaphorical thinking in that they clearly represent what they do. The only two icons without further verbal explanations are the elipsis and the stopwatch.
+    - The icons avail of metaphorical thinking in that they clearly represent what they do. The only two icons without immediate further verbal explanations are the elipsis and the stopwatch.
         1. The elipsis is well established as leading to further options, therefore does not require further explanation.
         2. Since the sub-heading of the app, is "time your tasks" it is reasonable to expect the user to assume the stopwatch has something to do with timing their tasks. If they click it and discover that it counts upwards and they wanted to count downwards, they can easily cancel the operation and choose one of the countdown timers from the options menu.
     - All the menu options have icons & written explanations of what they do. 
+    - As mentioned above I've also included further information about how everything works in detail in the information modal. 
 - **For the application to be visually appealing and have a clean interface that is easy to view.**
     - I've designed the application with a bright clean faux retro interface that is easy to view and navigate. 
+    - I've also used Chrome's Web Disability simulator to ensure that the application looks as good as possible for visually challenged users such as various manifestations of colour blindness.
 
 ## General User Goals
 
@@ -32,36 +35,76 @@
 
 - **To be able to pause the focus timer if I take a break.**
     - The pause button is clearly visible on the timer modal that appears when the timer is summoned. When the pause is clicked or selected, it disappears and the play button takes its place.
-- **I want to be able to reset the focus timer for that particular segment of time, if for whatever reason I don't actually focus on work.**
+- **To be able to reset the focus timer for that particular segment of time, if for whatever reason I don't actually focus on work.**
     - The reset button is also clearly visible within the timer modal and when clicked it resets the timer to 00:00:00.
 
-- **I want to be able to start a countdown timer for work on a particular task.**
-- **I want to be able to select whether the countdown timer runs for 15 or 25 minutes.**
+- **To be able to start a countdown timer for work on a particular task.**
+- **To be able to select whether the countdown timer runs for 15 or 25 minutes.**
     - Both of the above are intuitively achieved by selecting either "Countdown 15 Mins" or "Countdown 25 Mins" from the options menu.
-- **When the countdown timer ends, I want to be alerted with an audio alarm and/or a visual display.**
+- **When the countdown timer ends, to be alerted with an audio alarm and/or a visual display.**
     - An audio alarm automatically plays as default on termination of the countdown period.
-- **As a user with a small sleeping child, I want to have the option of turning off the audio alarm and relying on just 
-a visual indication that the countdown is over.**
+- **To have the option of turning off the audio alarm and relying on a visual indication that the countdown is over.**
     - If the alarm bell button is clicked, the alarm is muted and instead of an audio alarm, the screen displays a loop of changing colours, easily visible to peripheral vision.
 
-- As a user, I want to be able to start an open-ended timer for longer sessions working on a particular task.
-- I want to be alerted after every 30 minutes working with the open-ended timer.
-- If I forget that the open-ended timer is running, I want to be able to delete that segment of time and not have it added to the total
-time spent focused on that task.  
+- **To be able to start an open-ended timer for longer sessions working on a particular task.**
+    - This is achieved by clicking the start stopwatch icon on the main task list. 
 
-- I want to know how much time I have spent on each task today.
-- I want to know how much time I have spent on each task overall. 
-- I want to know how much time I have spent focused and working today.
-- I would like to see this information displayed in pleasing and easy to comprehend charts and visuals.
-- I would like to see a list of what tasks I completed today.
+- **To be alerted after every 30 minutes working with the open-ended timer.**
+    - When the stopwatch timer is playing, it beeps once every 30 minutes.
+
+- **If a user forgets that the open-ended timer is running, to be able to delete that segment of time and not have it added to the total time spent focused on that task.**
+    - A user can achieve this by either just not saving the time recorded to the task. Just by clicking the X close button and confirming that they don't wish to save that timed segment. 
+    - They can also go to the "Edit Task" option and manually edit the amount of time that is saved to a particular task. 
+
+- **To know how much time has been spent on each task today.**
+    - This information is available in the productivity charts section, by selecting "Total Time Focused On Each Task Today"
+- **To know how much time has been spent on each task overall.**
+    - This information is available by selecting the productivity chart titled "Total Time Focused On Each Task".
+- **To know how much time has been spent focused and working today.**
+    - This feature was not implemented in this version of the application, but would be relatively easy to implement for a later release.
+- **To see this information displayed in pleasing and easy to comprehend charts and visuals.**
+
+    - The charts are easy to select, understand and view.
+
+- **To see a list of what tasks I completed today.**
+    - This is achieved by selecting "Tasks Completed Today" from the dropdown charts menu. 
+
+## Returning User Goals
+
+- **For tasks to be stored and recalled when I navigate to the webpage.**
+    - This happens automatically using local storage and requires no user input.
+- **For all the specifics associated with the tasks to be loaded correctly and accurately.**
+    - Again this is automatic and works perfectly.
+
+## Accessibility User Goals
+
+- **As a user who is __*hard of hearing*__, there should be a visual display when the countdown timer ends.**
+    - There is a colour-based mute alarm that alerts aurally challenged users to the end of the countdown. 
+- **As a user who is __*colourblind*__, the colours used should employ sufficient contrast so that any visual cues are apparent to me.**
+    - That was taken into account at the wireframing stage of design and rechecked using Chrome's Web Disability Simulator. Here are some of the very useful screenshot examples of how the application is viewed by colourblind users:
+
+### Total Colourblindness:
+![total-colourblindness](assets/misc-images/total-colourblindness.png)
+
+### Yellow-blue Colourblindness:
+![yellow-blue-colourblindness](assets/misc-images/yellow-blue-colourblindness.png)
+
+### Red-green Colourblindness:
+![red-green-colourblindness](assets/misc-images/red-green-colourblindness.png)
+
+- Most pertinently none of the application interactions depend on the user being able to correctly discern between colours and the charts contain 2 different legends which I think sufficiently illustrates which tasks are associated with which donut slice.
+
+- **As a user who is __*physically impaired*__: to be able to use the keyboard to navigate and fully interact with the application.**
+    - The application is fully accessible for users who only use the keyboard. 
+    - The tab-index of elements has been carefully managed to ensure maximum user experience in this arena.
+
+- As a user who uses __*screen reader technology*__ the screen reader should be able to access all the controls and elements of the page and describe them to be correctly. 
+    - Aria-labels have been added to all important elements that need to be read aloud to users. 
+    - Elements have been semantically written so as to ensure the best possible experience for screen reader-dependent users. 
 
 # Manual Testing
 
 Continuous manual testing of all functions happened during development. Any time functionality was added or changed, I went through the entire application and tried to break it by doing all possible actions out of the normal logical flow of the application. This is how the majority of the bugs and issues were discovered in CSS, JavaScript & HTML.
-
-# Automated Unit Testing with Jasmine
-
-Unit testing with Jasmine for this project was nothing short of exasperating. As the project is Object Oriented, I found writing simple functional unit tests nearly impossible. I tried setting up an empty SpecRunner.html file as instructed in the Jasmine docs, but I could not get the tests to read the necessary html in order for them to run successfully. I then used Jasmine-jQuery to attempt to avail of fixtures, and while the fixtures did seem to render, the tests would only function if run against my complete page. Finally the only way I was able to avail of unit testing was to duplicate my rough draft html in SpecRunner.html and then to run appSpec.js against that. My reasoning being that I can run the unit tests in SpecRunner.html and still have a clean index.html to view and undertake the manual testing. This is undoubtedly not the correct way of doing things, but it was the only way I could find to integrate the testing into my project. Ultimately though the bulk of all testing for this application was centered on thorough manual testing. 
 
 # Browser Testing
 
@@ -167,8 +210,6 @@ These are a series of functions that take care of the timing logic.
 - ## countUp() 
 
     __FUNCTION SUMMARY:__ This function starts counting up from wherever the seconds, minutes and hours variables are at, be that 00:00:00 or after having been paused in the middle of a timing segment. When it is called, the seconds variable is incremented by 1, if the seconds variable is at 60, it is reset to 0. The same logic is applied to minutes. The hours variable increases ad infinitum. Three DOM variables are used to represent this logic in the DOM. This function is then called within a setInterval function within a function called StopWatchPlay() and it is called once every second, thus updating the timer.
-
-    ### __*Issues encountered through testing*__
 
     __ISSUE 1:__ When creating my Timer object, I tried initialising the times to 00:00:00 and discovered that ```"Octal literals are not allowed in strict mode."``` 
     This refers to prefixing numbers with 0. 
@@ -694,10 +735,10 @@ __FUNCTION SUMMARY:__ This function is taken from Ben Clinkenbeard's Blog Articl
     I was unaware of this, but I removed it.
 
 - Error 1: ```An element with the attribute tabindex must not appear as a descendant of the a element.```
-    The anchor tag in this case was unneccesary, so I changed it to a <div>.
+    The anchor tag in this case was unneccesary, so I changed it to a ```<div>```.
 
 - Error 2: ``` Element span not allowed as child of element ul in this context.```
-    The span tag was not needed and was changed to an <li> tag. 
+    The span tag was not needed and was changed to a ```<li>``` tag. 
 
 In summary the HTML validates perfectly, with the exceptions of the empty heading warnings & the viewport values which I have chosen to ignore for enhanced usability.
 
@@ -717,7 +758,7 @@ In summary the HTML validates perfectly, with the exceptions of the empty headin
 
 - The rest of the code validated.
 
-## JavaScript
+## JavaScript
 
 ## [JSHint](https://jshint.com/)
 
@@ -729,7 +770,28 @@ In summary the HTML validates perfectly, with the exceptions of the empty headin
 
 ## Web Dev Tools tests
 
-I ran my finished application through both Lighthouse & web.dev Measure, both very useful tools for gauging usability and site performance. 
+I ran my finished application through both Lighthouse & web.dev Measure, both very useful tools for gauging usability and site performance.
+
+It scored well on both measures:
+
+## Lighthouse
+
+### Overall Scores:
+
+![lighthouse-desktop-summary](assets/misc-images/lighthouse-desktop-summary.png)
+
+### Performance:
+![lighthouse-performance](assets/misc-images/lighthouse-performance.png)
+
+### Accessibility:
+
+![lighthouse-accessibility](assets/misc-images/lighthouse-accessibility.png)
+
+### Best Practices:
+![lighthouse-best-practices](assets/misc-images/lighthouse-best-practices.png)
+
+### SEO:
+![lighthouse-seo](assets/misc-images/lighthouse-seo.png)
 
 # Mobile Testing
 

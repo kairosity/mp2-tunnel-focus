@@ -62,7 +62,8 @@ __*As a returning user:*__
 
 - As a user who is __*hard of hearing*__, I want there to be a visual display when the countdown timer ends. 
 - As a user who is __*colourblind*__, I want the colours used to employ sufficient contrast so that any visual cues are apparent to me.
-- As a user who is __*physically impaired*__ I want to be able to use the keyboard to navigate and fully interact with the application. 
+- As a user who is __*physically impaired*__ I want to be able to use the keyboard to navigate and fully interact with the application.
+- As a user who uses __*screen reader technology*__ I want my screen reader to be able to access all the controls and elements of the page and describe them to be correctly.  
 
 ## Strategy
 
@@ -294,8 +295,8 @@ While verbose and winding, this was definitely preferable to writing out the exa
 ### 2. Skip Tasks 
 Another issue I found when testing the application using only a keyboard was that it was infuriating when you had a long task list and you wanted to toggle charts, to have to tab through each individual task and all its associated options. To circumvent this issue, I included a "Skip Tasks" link that becomes visible only when the site is navigated using a keyboard.  
 
-### 3. Aria-Labels
-Wherever possible, I included aria-labels & titles to elements to ensure that screen readers delivered the correct information to users. 
+### 3. Screen Reader Accessibility 
+Although not a perfect application, I used the Chrome Screen Reader to get an idea of how the website would be interacted with by screen reader users. The Chrome offering is nowhere near as complete, or accurate as more professional screen readers, however it did allow me to see where my application was falling down in terms of what elements were not labelled or semantically described correctly. Wherever possible, I fixed these issues by including aria-labels & titles to elements. I also redesigned many parts of the application to use buttons instead of <a> tags, as buttons are automatically described by screen readers and <a> tags are not. This was especially important for the task options & timer controls. 
 
 ### 4. Zoom
 I ensured that the website was usable for those hard of vision by making sure that users can view and use it comfortably at up to 200% zoom as per web standards.
@@ -528,7 +529,7 @@ This website was developed using GitPod in a Chrome browser and commits were pus
 - ### **[Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/)**
     More specifications about commits.
 
-- ## **[Working with Branches in Git and GitHub](https://thenewstack.io/dont-mess-with-the-master-working-with-branches-in-git-and-github/)**
+- ### **[Working with Branches in Git and GitHub](https://thenewstack.io/dont-mess-with-the-master-working-with-branches-in-git-and-github/)**
     An introduction to branches. 
 
 ## 5. Frameworks
@@ -553,6 +554,12 @@ This website was developed using GitPod in a Chrome browser and commits were pus
 
 - ### **[Chrome Screen Reader Extension](https://chrome.google.com/webstore/detail/screen-reader/kgejglhpjiefppelpmljglcjbhoiplfn/related)**
     Used to ensure great accessibility for users who rely on screen readers.
+
+- ### **[Web Disability Simulator](https://chrome.google.com/webstore/detail/web-disability-simulator/olioanlbgbpmdlgjnnampnnlohigkjla?hl=en)**
+    Super tool for testing your site for accessibility. Particular excellent for colourblindness testing.
+
+- ### **[Accessibility Developer Guide](https://www.accessibility-developer-guide.com/introduction/)**
+    One of the best guides to accessibility and ARIA that I've found.
 
 # Technology Used
 

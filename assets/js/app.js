@@ -1145,7 +1145,7 @@ class Timer {
 	 * If the X close button is clicked the pages reverts as it was before.
 	 */
 	appInformation() {
-		let infoIcon = document.querySelector('.fa-question-circle');
+		let infoIcon = document.querySelector('#info');
 		let infoModal = document.querySelector('#information-modal');
 		infoIcon.addEventListener('keyup', function(event) {
 			if (event.keyCode === 13) {

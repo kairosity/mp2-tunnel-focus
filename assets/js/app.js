@@ -1340,23 +1340,27 @@ class List {
 			['click', 'keyup'].forEach(function(evt) {
 				ellipsis.addEventListener(evt, function(elipEvent) {
 					if ((evt === 'click') || (elipEvent.keyCode === 9)) {
-						const deleteTaskButton = document.querySelector('.delete-task-option');
-						['click', 'keyup'].forEach(function(e) {
-							deleteTaskButton.addEventListener(e, function(event) {
-								if ((e === 'click') || (event.keyCode === 13)) {
+                        const deleteTaskButton = document.querySelector('.delete-task-option');
+                        $(deleteTaskButton).bind('click keyup', function(event) {
+                            if ((event.type === 'click') || (event.type === 'keyup') && (event.keyCode === 13)) {
+						// ['click', 'keyup'].forEach(function(e) {
+							// deleteTaskButton.addEventListener(e, function(event) {
+								// if ((e === 'click') || (event.keyCode === 13)) {
 									taskToDel = event.target.closest('.task');
 									let deleteConfirmationMessageElement = document.querySelector('.confirm-deletion-modal-p');
 									let taskNameToDelete = taskToDel.children[2].textContent;
 									timer.makeArrayElementsNotKeyboardTabbable();
 									confirmDeletionModal.style.display = "block";
-									deleteConfirmationMessageElement.textContent = `Are you sure you want to delete ${taskNameToDelete}?`;
-								}
+                                    deleteConfirmationMessageElement.textContent = `Are you sure you want to delete ${taskNameToDelete}?`;
+                                    $(this).unbind('click');
+                                    $(this).unbind('keyup');
+                                }
+                                
 							});
-						});
-					}
+						}
+					});
 				});
 			});
-		});
 	}
 	/**
 	 * This method is all taken exactly as written from the tippy.js documentation including the hideOnPopperBlur plugin directly below.

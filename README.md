@@ -9,7 +9,9 @@ Focusing in small bursts and maintaining intense focus for small periods of time
 
 This web application has been conceptualised and designed around that premise: small bursts of 
 productivity which added together result in successfully completed tasks and projects. Tunnel Focus works as a simple task manager, except that it also keeps track of 
-how long a user works on a particular task. As such it can be used to help with and encourage an Agile approach to development or any other area that requires task management.  
+how long a user works on a particular task. As such it can be used to help with and encourage an Agile approach to development or any other area that requires task management. 
+
+It combines a stopwatch timer with two pomodoro timers, one for 15 minutes & one for 25 minutes. It was designed to only accomodate these two time segments specifically because they have been studied as being the most effective time periods for human bursts of focus. 
 
 # UX
 
@@ -225,6 +227,8 @@ I designed the application to be bright and a little bit fun, as the concept of 
 
 I used a recurring design theme of hard box shadows on almost all the component frame elements of the design. The modals, the task list, the headers, the chart frame and all the buttons. I liked the faux-retro look of the hard shadows, especially paired with soft 8px-15px border radiuses. 
 
+I then paired these back on mobile screens during the build process, as I felt the hard edges and borders made the site look a tad busy on smaller screens. 
+
 ### Colour Palette 
 I wanted a bright, fresh and clean somewhat retro look, using bold and happy colours. The two main accent colours are bright yellow and a light bright blue/cyan, with the remaining colours used for small details and for the different charts slices. 
 ![palette](assets/misc-images/color-palette.png)
@@ -269,6 +273,66 @@ For all other fonts, I used another Google Font called Heebo, which is a clean a
 - A chart to show how long you spent on each task in the past 24hours.
 - A chart to show the full length of time spent on each task.
 - A list of all completed tasks. 
+
+# Mobile-first Responsivity
+
+This site was designed with a mobile-first approach in mind. As the bulk of the application takes place on a simple one page layout, and the interactions use modals, there were only a few subtle changes between breakpoints.  
+
+## Mobile/xs & sm breakpoints
+
+- The main task list is centered in mobile and the feeling of space and minimalism is enhanced by the absence of any borders. 
+- The header takes up a small amount of room. 
+- Everything is easily accessible and easy to view. 
+<p align="center">
+  <img src="assets/misc-images/mobile-main-list2.png">
+</p>
+
+- The charts on mobile are stacked on top of the legend and they are styled so that they fit perfectly on the page.
+<p align="center">
+  <img src="assets/misc-images/mobile-charts.png">
+</p>
+
+- The completed task lists are also centered and fit snugly on the page.
+<p align="center">
+  <img src="assets/misc-images/mobile-lists2.png">
+</p>
+
+- The timer is centered and takes up 100% of the mobile width.
+<p align="center">
+  <img src="assets/misc-images/mobile-timer.png">
+</p>
+
+- The modals rise to the top of the mobile view and they sit on a darkened overlay.
+
+<p align="center">
+  <img src="assets/misc-images/mobile-save-time.png">
+</p>
+
+## iPads & md breakpoints
+
+- The main task list has a retro border around it on ipad & medium screens as there is sufficient space to accomodate that design choice comfortably.
+- The task list takes up a smaller % ratio on the page and more of the application is visible at once.
+<p align="center">
+  <img src="assets/misc-images/ipad-main.png">
+</p>
+
+- On the iPad in vertical view the charts still stack over their legend. 
+<p align="center">
+  <img src="assets/misc-images/ipad-charts.png">
+</p>
+
+- However in landscape orientation they sit side by side as below:
+
+<p align="center">
+  <img src="assets/misc-images/ipad-charts-landscape.png">
+</p>
+
+- Completed tasks are listed in the chart area and are centered in their div.
+<p align="center">
+  <img src="assets/misc-images/ipad-completed-lists.png">
+</p>
+
+
 
 # Accessibility
 

@@ -31,18 +31,20 @@ function confirmDeletion() {
 	for (let i = 0; i < arrOfDomTasks.length; i++) {
 		arrOfDomTasks[i].id = i.toString();
 	}
-	confirmDeletionModal.style.display = "none";
+    confirmDeletionModal.style.display = "none";
 	list.setDataToLocalStorage();
-	timer.makeArrayElementsKeyboardTabbableAgain();
+    timer.makeArrayElementsKeyboardTabbableAgain();
+    location.reload();
 }
 /**
  * This function runs when a user cancels a task deletion. 
  * It hides the delete task modal and sets the global variable of taskToDel back to empty. 
  */
 function negateDeletion() {
-	confirmDeletionModal.style.display = "none";
+    confirmDeletionModal.style.display = "none";
 	timer.makeArrayElementsKeyboardTabbableAgain();
-	taskToDel = "";
+    taskToDel = "";
+    location.reload();
 }
 // --------------------------------------CLASSES-------------------------------//
 class Timer {
@@ -302,8 +304,8 @@ class Timer {
 		 * This function sets the initial countdown for the 15 minute countdown timer and then calls the countdown timer function.
 		 */
 		function countDown15Play() {
-			seconds = 3;
-			minutes = 0; //CHANGE HERE WHEN TESTING
+			seconds = 0;
+			minutes = 15; //CHANGE HERE WHEN TESTING
 			hours = 0;
 			countdown();
 		}
@@ -735,7 +737,8 @@ class Timer {
 					}
 					removeTimerFromDom();
 					timer.removeOverlay();
-					timer.makeArrayElementsKeyboardTabbableAgain();
+                    timer.makeArrayElementsKeyboardTabbableAgain();
+                    location.reload();
 				});
 				negateButton.addEventListener('click', function() {
 					closeTimerModal.style.display = "none";
@@ -814,7 +817,7 @@ class Timer {
 				});
 				negateButton.addEventListener('click', function() {
 					saveTimeToTaskModal.style.display = "none";
-					makeElementsTabbable(saveButton, alarmButton, pauseButton, playButton, resetButton, closeTimerX);
+                    makeElementsTabbable(saveButton, alarmButton, pauseButton, playButton, resetButton, closeTimerX);
 				});
 				return playing = false;
 			});
@@ -941,7 +944,7 @@ class Timer {
 									document.getElementById('editSeconds').after(editTaskSaveButton);
 									editTaskSaveButton.after(editTaskCancelButton);
 									let editTaskName = document.querySelector('.edit-time-task-description');
-									editTaskName.scrollIntoView(); //check this
+									editTaskName.scrollIntoView();
 									let taskTextToEdit = editTaskName.innerText;
 									//Create Edit Task Name Input & populate with task name.
 									const editTaskNameInput = document.createElement("INPUT");
@@ -1155,12 +1158,14 @@ class Timer {
 		infoIcon.addEventListener('click', function() {
 			timer.addOverlay();
 			timer.makeArrayElementsNotKeyboardTabbable();
-			infoModal.style.zIndex = 1001;
+            infoModal.style.zIndex = 1001;
+            infoModal.style.display = "table";
 			let closeButton = document.querySelector('.close-info-x');
 			closeButton.addEventListener('click', function() {
 				timer.removeOverlay();
 				timer.makeArrayElementsKeyboardTabbableAgain();
-				infoModal.style.zIndex = -900;
+                infoModal.style.zIndex = -900;
+                infoModal.style.display = "none";
 			});
 		});
 	}

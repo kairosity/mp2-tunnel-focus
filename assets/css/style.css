@@ -285,7 +285,7 @@ h2.sub-heading {
 	width: 85%;
 	height: 250px;
 	margin: 0 auto;
-	display: table;
+	display: none;
 	z-index: -3900;
 	position: absolute;
 	left: 0;
@@ -873,31 +873,31 @@ li.task-description {
     appearance: none;
     font-size: 1em;
 }
-.task:nth-of-type(9n+1) button {
+.task:nth-of-type(9n+1) button.task-list-icon {
 	color: var(--dark-blue);
 }
-.task:nth-of-type(9n+2) button {
+.task:nth-of-type(9n+2) button.task-list-icon {
 	color: var(--light-blue);
 }
-.task:nth-of-type(9n+3) button{
+.task:nth-of-type(9n+3) button.task-list-icon{
 	color: var(--grass-green);
 }
-.task:nth-of-type(9n+4) button{
+.task:nth-of-type(9n+4) button.task-list-icon {
 	color: var(--sun-yellow);
 }
-.task:nth-of-type(9n+5) button {
+.task:nth-of-type(9n+5) button.task-list-icon {
 	color: var(--orange);
 }
-.task:nth-of-type(9n+6) button {
+.task:nth-of-type(9n+6) button.task-list-icon {
 	color: var(--coral);
 }
-.task:nth-of-type(9n+7) button {
+.task:nth-of-type(9n+7) button.task-list-icon {
 	color: var(--happy-pink);
 }
-.task:nth-of-type(9n+8) button {
+.task:nth-of-type(9n+8) button.task-list-icon {
 	color: var(--purple-blush);
 }
-.task:nth-of-type(9n+9) button {
+.task:nth-of-type(9n+9) button.task-list-icon {
 	color: var(--strong-lavendar);
 }
 li.task-description {
@@ -1350,7 +1350,8 @@ div.tooltip-donut {
 	margin: 0 auto;
 	padding: 1em;
 	font-family: "Heebo", sans-serif;
-	font-size: 1em;
+    font-size: 1em;
+    grid-column: 1;
 }
 ::marker {
 	color: var(--dark-blue);
@@ -1433,7 +1434,7 @@ footer {
 	background-color: var(--sun-yellow);
 	padding: 2rem;
 	position: absolute;
-	bottom: -25px;
+	bottom: -100px;
 	left: 0;
 	right: 0;
 	height: 60px;
@@ -1639,7 +1640,7 @@ footer {
 	#information-modal {
 		width: 650px;
 		height: 250px;
-		top: 27%;
+		top: 32%;
 	}
 	/*----------------------------------------------------------- Skip Tasks Medium Screens  */
 	#skip-tasks {

@@ -1355,14 +1355,14 @@ class List {
 					if ((evt === 'click') || (elipEvent.keyCode === 9)) {
                         const deleteTaskButton = document.querySelectorAll('.delete-task-option'); //mobile issue is that it is NOT capturing this button.
 
-                        deleteTaskButton[0].addEventListener('keyup', function(event) {
+                        deleteTaskButton[1].addEventListener('keyup', function(event) {
                                 if (event.keyCode === 13) {
                                     event.preventDefault();
                                     deleteTaskButton.click();                           
                                 }
                             });
                         alert("Here 1")
-                        deleteTaskButton[0].addEventListener('click', function() {
+                        deleteTaskButton[1].addEventListener('click', function() {
                             alert("Clicked on delete");
 									taskToDel = event.target.closest('.task');
 									let deleteConfirmationMessageElement = document.querySelector('.confirm-deletion-modal-p');

@@ -1353,7 +1353,7 @@ class List {
 			['click', 'keyup'].forEach(function(evt) {
 				ellipsis.addEventListener(evt, function(elipEvent) {     
 					if ((evt === 'click') || (elipEvent.keyCode === 9)) {
-                        const deleteTaskButton = document.querySelector('.delete-task-option'); //mobile issue is that it is NOT capturing this button.
+                        const deleteTaskButton = document.getElementById('delete-task-button'); //mobile issue is that it is NOT capturing this button.
 
                         deleteTaskButton.addEventListener('keyup', function(event) {
                                 if (event.keyCode === 13) {

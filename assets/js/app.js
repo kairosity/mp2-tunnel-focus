@@ -1344,7 +1344,7 @@ class List {
 					if ((evt === 'click') || (elipEvent.keyCode === 9)) {
                         // const deleteTaskButton = document.querySelector('.delete-task-option');
                        
-                        $('.delete-task-option').bind('click keyup', function(event) {
+                        $('.delete-task-option').on('click keyup', function(event) {
                             alert("Here 1");
                             if ((event.type === 'click') || (event.type === 'keyup') && (event.keyCode === 13)) {
                                 alert("Here 2");

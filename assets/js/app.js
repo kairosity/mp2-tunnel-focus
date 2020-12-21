@@ -1336,15 +1336,15 @@ class List {
 	 */
 	deleteTask() {
         const ellipsisArray = document.querySelectorAll('.task-options');
-        alert(ellipsisArray.length);
+        
 		ellipsisArray.forEach(function(ellipsis) {
 			['click', 'keyup'].forEach(function(evt) {
 				ellipsis.addEventListener(evt, function(elipEvent) {
-                    alert(evt);
+                    
 					if ((evt === 'click') || (elipEvent.keyCode === 9)) {
-                        const deleteTaskButton = document.querySelector('.delete-task-option');
-                        alert(deleteTaskButton);
-                        $(deleteTaskButton).bind('click keyup', function(event) {
+                        // const deleteTaskButton = document.querySelector('.delete-task-option');
+                       
+                        $('.delete-task-option').bind('click keyup', function(event) {
                             alert("Here 1");
                             if ((event.type === 'click') || (event.type === 'keyup') && (event.keyCode === 13)) {
                                 alert("Here 2");

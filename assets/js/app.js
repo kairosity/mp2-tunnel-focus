@@ -1335,10 +1335,6 @@ class List {
 	 * Then the global event listeners take over and run the confirm or negate deletion functions.
 	 */
 	deleteTask() {
-        var taskToDel = "";
-        var confirmDeletionModal = document.getElementById('confirm-deletion-modal');
-        let confirmDeletionBtn = document.querySelector('.deletion-confirm-button');
-        let negateDeletionBtn = document.querySelector('.deletion-negate-button');
 		const ellipsisArray = document.querySelectorAll('.task-options');
 		ellipsisArray.forEach(function(ellipsis) {
 			['click', 'keyup'].forEach(function(evt) {
@@ -1356,8 +1352,8 @@ class List {
 									confirmDeletionModal.style.display = "block";
                                     deleteConfirmationMessageElement.textContent = `Are you sure you want to delete ${taskNameToDelete}?`;
                                     timer.makeArrayElementsNotKeyboardTabbable();
-                                    // $(this).unbind('click');
-                                    // $(this).unbind('keyup');
+                                    $(this).unbind('click');
+                                    $(this).unbind('keyup');
                                 }
                                 
 							});

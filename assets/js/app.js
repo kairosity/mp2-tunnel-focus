@@ -1349,11 +1349,11 @@ class List {
 									taskToDel = event.target.closest('.task');
 									let deleteConfirmationMessageElement = document.querySelector('.confirm-deletion-modal-p');
 									let taskNameToDelete = taskToDel.children[2].textContent;
-									timer.makeArrayElementsNotKeyboardTabbable();
 									confirmDeletionModal.style.display = "block";
                                     deleteConfirmationMessageElement.textContent = `Are you sure you want to delete ${taskNameToDelete}?`;
-                                    $(this).unbind('click');
-                                    $(this).unbind('keyup');
+                                    timer.makeArrayElementsNotKeyboardTabbable();
+                                    // $(this).unbind('click');
+                                    // $(this).unbind('keyup');
                                 }
                                 
 							});

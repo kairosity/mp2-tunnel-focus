@@ -1352,20 +1352,22 @@ class List {
 			['click', 'keyup'].forEach(function(evt) {
 				ellipsis.addEventListener(evt, function(elipEvent) {     
 					if ((evt === 'click') || (elipEvent.keyCode === 9)) {
-                        const deleteTaskButton = document.querySelector('.delete-task-option');
+                        const deleteTaskButton = document.querySelectorAll('.delete-task-option');
+                        console.log(deleteTaskButton)
 
-                        deleteTaskButton.addEventListener('keyup', function(event) {
+                        deleteTaskButton[0].addEventListener('keyup', function(event) {
                                 if (event.keyCode === 13) {
                                     event.preventDefault();
-                                    deleteTaskButton.click();
+                                    deleteTaskButton.click();                           
                                 }
                             });
-
-                        deleteTaskButton.addEventListener('click', function() {
+                        alert("Here 1")
+                        deleteTaskButton[0].addEventListener('click', function() {
+                            alert("Clicked on delete");
 									taskToDel = event.target.closest('.task');
 									let deleteConfirmationMessageElement = document.querySelector('.confirm-deletion-modal-p');
                                     let taskNameToDelete = taskToDel.children[2].textContent;
-                                    confirmDeletionModal.style.zIndex = "1003";
+                                    // confirmDeletionModal.style.zIndex = "1003";
 									confirmDeletionModal.style.display = "block";
                                     deleteConfirmationMessageElement.textContent = `Are you sure you want to delete ${taskNameToDelete}?`;
                                     timer.makeArrayElementsNotKeyboardTabbable();

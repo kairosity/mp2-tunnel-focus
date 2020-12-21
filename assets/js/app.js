@@ -1353,24 +1353,48 @@ class List {
 			['click', 'keyup'].forEach(function(evt) {
 				ellipsis.addEventListener(evt, function(elipEvent) {     
 					if ((evt === 'click') || (elipEvent.keyCode === 9)) {
-                        const deleteTaskButton = document.querySelectorAll('.delete-task-option'); //mobile issue is that it is NOT capturing this button.
+                        const deleteTaskButton = document.querySelector('.delete-task-option'); //mobile issue is that it is NOT capturing this button.
 
-                        deleteTaskButton[1].addEventListener('keyup', function(event) {
+                        deleteTaskButton.addEventListener('keyup', function(event) {
                                 if (event.keyCode === 13) {
                                     event.preventDefault();
                                     deleteTaskButton.click();                           
                                 }
                             });
                         alert("Here 1")
-                        deleteTaskButton[1].addEventListener('click', function() {
+                        deleteTaskButton.addEventListener('click', function() {
                             alert("Clicked on delete");
-									taskToDel = event.target.closest('.task');
-									let deleteConfirmationMessageElement = document.querySelector('.confirm-deletion-modal-p');
-                                    let taskNameToDelete = taskToDel.children[2].textContent;
-                                    // confirmDeletionModal.style.zIndex = "1003";
-									confirmDeletionModal.style.display = "block";
-                                    deleteConfirmationMessageElement.textContent = `Are you sure you want to delete ${taskNameToDelete}?`;
-                                    timer.makeArrayElementsNotKeyboardTabbable();
+                                    taskToDel = event.target.closest('.task');
+                                    let taskToDeleteId = taskToDel.children[2].id;
+
+                                    taskToDel.remove();
+                                    //Removes the Task from the taskList array.
+                                    list.taskList.splice(list.taskList.findIndex(task => task.id == taskToDeleteId), 1);
+                                    //resets the Task object ids & timeSegment ids to run from 0 upwards.
+                                    let tList = list.taskList;
+                                    for (let i = 0; i < tList.length; i++) {
+                                        tList[i].id = i;
+                                        for (let j = 0; j < tList[i].timeSegments.length; j++) {
+                                            tList[i].timeSegments[j].id = i;
+                                        }
+                                    }
+                                    //resets the ids of the DOM tasks to link up with the tasks in local Storage so they all sync. 
+                                    let arrOfDomTasks = document.querySelectorAll('.task-description');
+                                    for (let i = 0; i < arrOfDomTasks.length; i++) {
+                                        arrOfDomTasks[i].id = i.toString();
+                                    }
+                                    // confirmDeletionModal.style.display = "none";
+                                    list.setDataToLocalStorage();
+                                    // timer.makeArrayElementsKeyboardTabbableAgain();
+                                    location.reload();
+                                    
+
+									// let deleteConfirmationMessageElement = document.querySelector('.confirm-deletion-modal-p');
+                                    // let taskNameToDelete = taskToDel.children[2].textContent;
+                                    // // confirmDeletionModal.style.zIndex = "1003";
+									// confirmDeletionModal.style.display = "block";
+                                    // deleteConfirmationMessageElement.textContent = `Are you sure you want to delete ${taskNameToDelete}?`;
+                                    // timer.makeArrayElementsNotKeyboardTabbable();
                                 });
                                 
 							}

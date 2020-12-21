@@ -518,6 +518,7 @@ class Timer {
                                 }
                             });
 							countdown15Button.addEventListener('click', function() {
+                                    alert("clicked on countdown15")
 									alarm.play();
 									alarm.pause();
 									countdownClickStartHelper("countdown15", 15);
@@ -1352,8 +1353,7 @@ class List {
 			['click', 'keyup'].forEach(function(evt) {
 				ellipsis.addEventListener(evt, function(elipEvent) {     
 					if ((evt === 'click') || (elipEvent.keyCode === 9)) {
-                        const deleteTaskButton = document.querySelectorAll('.delete-task-option');
-                        console.log(deleteTaskButton)
+                        const deleteTaskButton = document.querySelectorAll('.delete-task-option'); //mobile issue is that it is NOT capturing this button.
 
                         deleteTaskButton[0].addEventListener('keyup', function(event) {
                                 if (event.keyCode === 13) {

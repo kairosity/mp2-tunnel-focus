@@ -1335,10 +1335,12 @@ class List {
 	 * Then the global event listeners take over and run the confirm or negate deletion functions.
 	 */
 	deleteTask() {
-		const ellipsisArray = document.querySelectorAll('.task-options');
+        const ellipsisArray = document.querySelectorAll('.task-options');
+        alert(ellipsisArray.length);
 		ellipsisArray.forEach(function(ellipsis) {
 			['click', 'keyup'].forEach(function(evt) {
 				ellipsis.addEventListener(evt, function(elipEvent) {
+                    alert(evt);
 					if ((evt === 'click') || (elipEvent.keyCode === 9)) {
                         const deleteTaskButton = document.querySelector('.delete-task-option');
                         $(deleteTaskButton).bind('click keyup', function(event) {

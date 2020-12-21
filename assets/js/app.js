@@ -1342,10 +1342,10 @@ class List {
 					if ((evt === 'click') || (elipEvent.keyCode === 9)) {
                         const deleteTaskButton = document.querySelector('.delete-task-option');
                         $(deleteTaskButton).bind('click keyup', function(event) {
+                            alert("Here 1");
                             if ((event.type === 'click') || (event.type === 'keyup') && (event.keyCode === 13)) {
-						// ['click', 'keyup'].forEach(function(e) {
-							// deleteTaskButton.addEventListener(e, function(event) {
-								// if ((e === 'click') || (event.keyCode === 13)) {
+                                alert("Here 2");
+                
 									taskToDel = event.target.closest('.task');
 									let deleteConfirmationMessageElement = document.querySelector('.confirm-deletion-modal-p');
 									let taskNameToDelete = taskToDel.children[2].textContent;

@@ -1212,16 +1212,16 @@ class List {
                     <p class="total-task-time">${taskList[i].totalTimeFocusedOnTaskLongForm}</p>
                     <input class="taskCheckbox" type="checkbox" tabindex=0 aria-label="checkbox" checked>
                     <li class="task-description completed" id="${taskList[i].id}">${taskList[i].taskDescription}</li>
-                    <button class="task-stopwatch task-list-icon" aria-hidden="false" aria-label="start stopwatch"><i class="fas fa-stopwatch start-stopwatch" tabindex=0  ></i></button>
-                    <button class="task-options task-list-icon" aria-hidden="false" aria-label="more options"" tabindex=0><i class="fas fa-ellipsis-v task-options-icon"></i></button>
+                    <a class="task-stopwatch task-list-icon" aria-hidden="false" aria-label="start stopwatch"><i class="fas fa-stopwatch start-stopwatch" tabindex=0  ></i></a>
+                    <a class="task-options task-list-icon" aria-hidden="false" aria-label="more options"" tabindex=0><i class="fas fa-ellipsis-v task-options-icon"></i></a>
                 </div>`;
 			} else if (taskList[i].completed === false) {
 				document.getElementById('list').innerHTML += `<div class="task">
                     <p class="total-task-time">${taskList[i].totalTimeFocusedOnTaskLongForm}</p>
                     <input class="taskCheckbox" type="checkbox" tabindex=0 aria-label="checkbox">
                     <li class="task-description" id="${taskList[i].id}">${taskList[i].taskDescription}</li>
-                    <button class="task-stopwatch task-list-icon" aria-hidden="false" aria-label="start stopwatch" ><i class="fas fa-stopwatch start-stopwatch" tabindex=0   ></i></button>
-                    <button class="task-options task-list-icon" tabindex=0 aria-hidden="false" aria-label="more options"><i class="fas fa-ellipsis-v task-options-icon"></i></button>
+                    <a class="task-stopwatch task-list-icon" aria-hidden="false" aria-label="start stopwatch" ><i class="fas fa-stopwatch start-stopwatch" tabindex=0   ></i></a>
+                    <a class="task-options task-list-icon" tabindex=0 aria-hidden="false" aria-label="more options"><i class="fas fa-ellipsis-v task-options-icon"></i></a>
                 </div>`;
 			}
 		}
@@ -1265,8 +1265,8 @@ class List {
                     <p class="total-task-time">${newTask.totalTimeFocusedOnTaskLongForm}</p>
                     <input class="taskCheckbox" type="checkbox" tabindex=0 aria-label="checkbox">
                     <li class="task-description" id="${newTask.id}">${newTask.taskDescription}</li>
-                    <button class="task-stopwatch task-list-icon" aria-hidden="false" aria-label="start stopwatch"  ><i class="fas fa-stopwatch start-stopwatch" aria-label="start stopwatch"  tabindex=0 ></i></button>
-                    <button class="task-options task-list-icon" tabindex=0 aria-hidden="false" aria-label="more options"><i class="fas fa-ellipsis-v task-options-icon"></i></button>
+                    <a class="task-stopwatch task-list-icon" aria-hidden="false" aria-label="start stopwatch"  ><i class="fas fa-stopwatch start-stopwatch" aria-label="start stopwatch"  tabindex=0 ></i></a>
+                    <a class="task-options task-list-icon" tabindex=0 aria-hidden="false" aria-label="more options"><i class="fas fa-ellipsis-v task-options-icon"></i></a>
                 </div>`;
 				document.querySelector('#new-task-input').value = "";
 				list.toggleTaskComplete(list.taskList);
@@ -1353,50 +1353,23 @@ class List {
 			['click', 'keyup'].forEach(function(evt) {
 				ellipsis.addEventListener(evt, function(elipEvent) {     
 					if ((evt === 'click') || (elipEvent.keyCode === 9)) {
-                        const deleteTaskButton = document.getElementById('delete-task-button'); //mobile issue is that it is NOT capturing this button.
-
+                        var deleteTaskButton = document.getElementById('delete-task-button'); 
                         deleteTaskButton.addEventListener('keyup', function(event) {
                                 if (event.keyCode === 13) {
                                     event.preventDefault();
                                     deleteTaskButton.click();                           
                                 }
                             });
-                        alert("Here 1")
+                        alert(deleteTaskButton)
                         deleteTaskButton.addEventListener('click', function() {
                             alert("Clicked on delete");
-                                    taskToDel = event.target.closest('.task');
-                                    let taskToDeleteId = taskToDel.children[2].id;
-
-                                    taskToDel.remove();
-                                    //Removes the Task from the taskList array.
-                                    list.taskList.splice(list.taskList.findIndex(task => task.id == taskToDeleteId), 1);
-                                    //resets the Task object ids & timeSegment ids to run from 0 upwards.
-                                    let tList = list.taskList;
-                                    for (let i = 0; i < tList.length; i++) {
-                                        tList[i].id = i;
-                                        for (let j = 0; j < tList[i].timeSegments.length; j++) {
-                                            tList[i].timeSegments[j].id = i;
-                                        }
-                                    }
-                                    //resets the ids of the DOM tasks to link up with the tasks in local Storage so they all sync. 
-                                    let arrOfDomTasks = document.querySelectorAll('.task-description');
-                                    for (let i = 0; i < arrOfDomTasks.length; i++) {
-                                        arrOfDomTasks[i].id = i.toString();
-                                    }
-                                    // confirmDeletionModal.style.display = "none";
-                                    list.setDataToLocalStorage();
-                                    // timer.makeArrayElementsKeyboardTabbableAgain();
-                                    location.reload();
-                                    
-
-									// let deleteConfirmationMessageElement = document.querySelector('.confirm-deletion-modal-p');
-                                    // let taskNameToDelete = taskToDel.children[2].textContent;
-                                    // // confirmDeletionModal.style.zIndex = "1003";
-									// confirmDeletionModal.style.display = "block";
-                                    // deleteConfirmationMessageElement.textContent = `Are you sure you want to delete ${taskNameToDelete}?`;
-                                    // timer.makeArrayElementsNotKeyboardTabbable();
+                                    taskToDel = event.target.closest('.task');    
+									let deleteConfirmationMessageElement = document.querySelector('.confirm-deletion-modal-p');
+                                    let taskNameToDelete = taskToDel.children[2].textContent;
+									confirmDeletionModal.style.display = "block";
+                                    deleteConfirmationMessageElement.textContent = `Are you sure you want to delete ${taskNameToDelete}?`;
+                                    timer.makeArrayElementsNotKeyboardTabbable();
                                 });
-                                
 							}
 						});
 					});

@@ -866,38 +866,38 @@ li.task-description {
 .start-stopwatch, .task-options-icon {
 	cursor: pointer;
 }
-.task button.task-list-icon{
+.task .task-list-icon{
     border: none;
     outline: none;
     background-color: transparent;
     appearance: none;
     font-size: 1em;
 }
-.task:nth-of-type(9n+1) button.task-list-icon {
+.task:nth-of-type(9n+1) .task-list-icon {
 	color: var(--dark-blue);
 }
-.task:nth-of-type(9n+2) button.task-list-icon {
+.task:nth-of-type(9n+2) .task-list-icon {
 	color: var(--light-blue);
 }
-.task:nth-of-type(9n+3) button.task-list-icon{
+.task:nth-of-type(9n+3) .task-list-icon{
 	color: var(--grass-green);
 }
-.task:nth-of-type(9n+4) button.task-list-icon {
+.task:nth-of-type(9n+4) .task-list-icon {
 	color: var(--sun-yellow);
 }
-.task:nth-of-type(9n+5) button.task-list-icon {
+.task:nth-of-type(9n+5) .task-list-icon {
 	color: var(--orange);
 }
-.task:nth-of-type(9n+6) button.task-list-icon {
+.task:nth-of-type(9n+6) .task-list-icon {
 	color: var(--coral);
 }
-.task:nth-of-type(9n+7) button.task-list-icon {
+.task:nth-of-type(9n+7) .task-list-icon {
 	color: var(--happy-pink);
 }
-.task:nth-of-type(9n+8) button.task-list-icon {
+.task:nth-of-type(9n+8) .task-list-icon {
 	color: var(--purple-blush);
 }
-.task:nth-of-type(9n+9) button.task-list-icon {
+.task:nth-of-type(9n+9) .task-list-icon {
 	color: var(--strong-lavendar);
 }
 li.task-description {

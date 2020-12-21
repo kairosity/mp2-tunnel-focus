@@ -1,6 +1,6 @@
 // --------------------------------------GLOBAL VARIABLES-------------------------------//
 var taskToDel = "";
-let confirmDeletionModal = document.getElementById('confirm-deletion-modal');
+var confirmDeletionModal = document.getElementById('confirm-deletion-modal');
 let confirmDeletionBtn = document.querySelector('.deletion-confirm-button');
 let negateDeletionBtn = document.querySelector('.deletion-negate-button');
 // --------------------------------------GLOBAL EVENT LISTENERS--------------------------//

@@ -509,9 +509,15 @@ class Timer {
 				['click', 'keyup'].forEach(function(evt) {
 					ellipsis.addEventListener(evt, function(elipEvent) {
 						if ((evt === 'click') || (elipEvent.keyCode === 9)) {
-							const countdown15Button = document.querySelector('.countdown15-task-option');
-							$(countdown15Button).bind('click keyup', function(event) {
-								if ((event.type === 'click') || (event.keyCode === 13)) {
+                            const countdown15Button = document.querySelector('.countdown15-task-option');
+
+                            countdown15Button.addEventListener('keyup', function(event) {
+                                if (event.keyCode === 13) {
+                                    event.preventDefault();
+                                    countdown15Button.click();
+                                }
+                            });
+							countdown15Button.addEventListener('click', function() {
 									alarm.play();
 									alarm.pause();
 									countdownClickStartHelper("countdown15", 15);
@@ -519,14 +525,11 @@ class Timer {
 									pauseOnClick(countdownInt);
 									resetTime(countdownInt);
 									closeTimer();
-								}
-								$(this).unbind('click');
-								$(this).unbind('keyup');
-							});
-						}
+								});
+							}
+						});
 					});
 				});
-			});
 		}
 		/**
 		 * This function listens for clicks/enters on the 25 minute countdown timer icon.
@@ -534,27 +537,33 @@ class Timer {
 		 * It also makes all associated countdown functions available: (pause, play, reset & close).
 		 */
 		function countDown25ClickStart() {
+
 			const ellipsisArray = document.querySelectorAll('.task-options');
 			ellipsisArray.forEach(function(ellipsis) {
 				['click', 'keyup'].forEach(function(evt) {
 					ellipsis.addEventListener(evt, function(elipEvent) {
 						if ((evt === 'click') || (elipEvent.keyCode === 9)) {
-							const countdown25Button = document.querySelector('.countdown25-task-option');
-							$(countdown25Button).bind('click keyup', function(event) {
-								if ((event.type === 'click') || (event.keyCode === 13)) {
+                            const countdown25Button = document.querySelector('.countdown25-task-option');
+
+                            countdown25Button.addEventListener('keyup', function(event) {
+                                if (event.keyCode === 13) {
+                                    event.preventDefault();
+                                    countdown25Button.click();
+                                }
+                            });
+							countdown25Button.addEventListener('click', function() {
+
 									countdownClickStartHelper("countdown25", 25);
 									countDown25Play();
 									pauseOnClick(countdownInt);
 									resetTime(countdownInt);
 									closeTimer();
-								}
-								$(this).unbind('click');
-								$(this).unbind('keyup');
-							});
-						}
+								});
+								
+							};
+						});
 					});
 				});
-			});
 		}
 		/**
 		 * This function plays whichever timer is open when the play button is selected/clicked. 
@@ -915,9 +924,15 @@ class Timer {
 				['click', 'keyup'].forEach(function(evt) {
 					ellipsis.addEventListener(evt, function(elipEvent) {
 						if ((evt === 'click') || (elipEvent.keyCode === 9)) {
-							const manuallyEditTimeButton = document.querySelector('.edit-task-option');
-							$(manuallyEditTimeButton).bind('click keyup', function(event) {
-								if ((event.type === 'click') || (event.type === 'keyup') && (event.keyCode === 13)) {
+                            const manuallyEditTimeButton = document.querySelector('.edit-task-option');
+
+                            manuallyEditTimeButton.addEventListener('keyup', function(event) {
+                                if (event.keyCode === 13) {
+                                    event.preventDefault();
+                                    manuallyEditTimeButton.click();
+                                }
+                            });
+							manuallyEditTimeButton.addEventListener('click', function() {
 									let fullTaskLine = event.target.closest('.task');
 									let taskToTargetId = fullTaskLine.children[2].id;
 									let taskToTarget = fullTaskLine.children[2];
@@ -1026,14 +1041,11 @@ class Timer {
 										list.setDataToLocalStorage();
 										location.reload();
 									});
-									$(this).unbind('click');
-									$(this).unbind('keyup');
-								}
-							});
-						}
+								});
+							}
+						});
 					})
 				})
-			})
 		}
 		countDown15ClickStart();
 		countDown25ClickStart();
@@ -1341,8 +1353,15 @@ class List {
 				ellipsis.addEventListener(evt, function(elipEvent) {     
 					if ((evt === 'click') || (elipEvent.keyCode === 9)) {
                         const deleteTaskButton = document.querySelector('.delete-task-option');
-                        $(deleteTaskButton).bind('click', function(event) { 
-                            if ((event.type === 'click')) {
+
+                        deleteTaskButton.addEventListener('keyup', function(event) {
+                                if (event.keyCode === 13) {
+                                    event.preventDefault();
+                                    deleteTaskButton.click();
+                                }
+                            });
+
+                        deleteTaskButton.addEventListener('click', function() {
 									taskToDel = event.target.closest('.task');
 									let deleteConfirmationMessageElement = document.querySelector('.confirm-deletion-modal-p');
                                     let taskNameToDelete = taskToDel.children[2].textContent;
@@ -1350,15 +1369,12 @@ class List {
 									confirmDeletionModal.style.display = "block";
                                     deleteConfirmationMessageElement.textContent = `Are you sure you want to delete ${taskNameToDelete}?`;
                                     timer.makeArrayElementsNotKeyboardTabbable();
-                                    $(this).unbind('click');
-                                    $(this).unbind('keyup');
-                                }
+                                });
                                 
-							});
-						}
+							}
+						});
 					});
 				});
-			});
 	}
 	/**
 	 * This method is all taken exactly as written from the tippy.js documentation including the hideOnPopperBlur plugin directly below.

@@ -193,9 +193,9 @@ class Timer {
 			button.setAttribute("class", `edit-time-${buttonType}-button`);
 			button.setAttribute("type", "submit");
 			if (buttonType == "save") {
-				button.textContent = "Save New Total Time";
+				button.textContent = "Save";
 			} else if (buttonType == "cancel") {
-				button.textContent = "Cancel Changes & Exit";
+				button.textContent = "Cancel";
 			}
 			return button;
 		}

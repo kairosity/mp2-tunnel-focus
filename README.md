@@ -44,7 +44,7 @@ __*As a first time user:*__
 - I want to be able to start a countdown timer for work on a particular task.
 - I want to be able to select whether the countdown timer runs for 15 or 25 minutes.
 - When the countdown timer ends, I want to be alerted with an audio alarm and/or a visual display. 
-- As a user with a small sleeping child, I want to have the option of turning off the audio alarm and relying on just 
+- I want to have the option of turning off the audio alarm and relying on just 
 a visual indication that the countdown is over.
 
 - As a user, I want to be able to start an open-ended timer for longer sessions working on a particular task.
@@ -79,15 +79,14 @@ __*As a returning user:*__
 - Create a product that is intuitive and useful for anyone working on a particular set of tasks. 
 - Create a product that is scalable and has potential to develop further into a fully blown application with database storage. 
 - Create an application that has clean lines and is minimal in design. 
-- Bright toned design, whites, light greys and an accent colour or two.
+- Bright toned design, whites, light greys and bright and cheery accent colours. 
 - Encourage the use of sprint methodology when working to complete tasks.
 
 ### __*Target Users*__
 The target users are people working on a series of tasks and particularly people employing a sprint methodology for task completion. 
 
 ### __*Research*__
-I researched other task managers online and found a number that have similar functionality, but all were behind paywalls. I could not find a free and simple
-task manager with timer functionality
+I researched other task managers online and found a number that have similar functionality, but all were behind paywalls. I could not find a free and simple task manager with timer functionality. This was actually something I had also looked for before designing this application. 
 
 
 ## Scope
@@ -142,62 +141,86 @@ that can be broken into smaller tasks. Because I got back such a wide variety of
 
 ### Application Sections
 
-- I have designed this as a relatively simple application with 1 view on desktop screens and two main views on medium and mobile screens.
+- The original structure for this application was to have 1 view on desktop screens and two main views on mobile, but as the application evolved through development, that changed and the mobile version was altered to fit desktop as well. So the structure across the board is based on 1 main view and multiple modal views as the user interacts with the application's features.
 
-__*Mobile & Medium Screens*__ 
+**Main View:**
 
-- The list is featured first on the landing page and underneath it the daily task time chart is visible when the user scrolls down.
-- Above that chart there is a drop-down arrow that links to the other chart that illustrates the total time spent on each of the tasks.
-- When a user clicks to start the timer, it opens in a new window that displays just the timer. I vacillated between this design and making the timer
-smaller to fit on the page with the task list as it is on larger screens, but I liked the simplicity of this for mobile, as the whole raison d'etre of the application is to focus on one task at a time, thus the user should not need to see anything else on their mobile screen when they are focusing on the task being timed.
+1. Header with Headings & button for more detailed information about the application. 
 
-**View 1:**
+2. An "add new task" input element with a plus button.
 
-__*Page top*__
+3. The task list area.
 
-1. Header and application heading.
-2. The task list.
-3. The daily task time summary chart, starting at 0:00AM. (With a dropdown menu link to load the other summaries)*
-4. Footer.
+    Incorporating the task line when a user adds a task.
+    The task line features:
 
-* These are links to subviews which will open in this location on the page, but replace the other charts. Only one chart or summary will be displayed at a time. 
+    - The total amount of time saved to that particular task.
+    - A checkbox to check the task as complete.
+    - The task name / description.
+    - The "start stopwatch" task timer icon. 
+    - An ellipsis icon that opens a popover modal displaying more options. 
 
-**View 2:**
+    Those options include:
+    - Edit Task: which opens a modal. 
+    - Delete task: which opens a mini confirmation modal.
+    - 15 minute countdown / pomodoro timer. 
+    - 25 minute countdown / pomodoro timer.  
 
-1. The timer. This will open based on the task that triggered it. It will have the name of the task above the time displayed. There will be an X to close the page and save the time to the task object. 
+4. Productivity charts heading. 
 
-**Sub-Views**
-These replace view1-item3 (the chart under the task list). They are all contained in the drop-down menu.
+5. Productivity charts / completed tasks lists. 
 
-1. The summary chart of the total time spent per task.
-2. A list of tasks completed that day.
-3. A list of all the tasks completed.
+6. Footer Area.
 
-__*Desktop*__
+<p align="center">
+  <img src="assets/misc-images/main-view.png">
+</p>
 
-**View 1:**
+This view is the same regardless of whether a user is on mobile or desktop screens. Only the styles are altered to ensure a great user experience, but the structure is identical. During the design process I realised that having two different structures for mobile & desktop could lead to confusion and a less than ideal UX. 
 
-__*Page top*__
-1. Header and application title.
-2. The timer (only when clicked on).
-3. The task list
-4. The task charts and task completion summaries laid out side by side, dashboard style.
-5. Footer
+**Modal / Feature Views**
 
-- When the user clicks to start any of the timers, the timer will appear above the task list. 
-- When the user clicks to close the timer, the user will be asked whether or not to save the time into the task. This is designed as such to avoid situations whereby the user hits the timer accidentally, or starts the timer and then gets distracted and doesn't spend the time on the task.  
+1. Timer View: A yellow overlay covers the rest of the application and the timer sits on top of it. The user can only interact with the timer when the timer is open. This is in keeping with how the application is supposed to be used. As it's all about tunnel focus, the ability to interact with other elements of the application when a specific task is being timed would not be in keeping with the ethos of the application. 
 
-- The desktop/large screens UI structure is based on the idea of a dashboard layout, but instead of filling all the white space as is customary with dashboards, I wanted to keep the task list center stage, to re-emphasize the "Focus" aspect of the application. This strategy also ensures that the design remains clean and visually uncomplicated. 
+<p align="center">
+  <img src="assets/misc-images/timer-modal.png">
+</p>
+
+2. Edit Task View: Similar to the timer, this view is also a modal sitting on top of an overlay. A user can edit the task name and the amount of time associated with that task. 
+
+3. Chart Views: These all really happen on the main view, however the charts themselves change depending on which chart / list is selected. 
+
+The UI structure is based on the idea of a dashboard layout, but instead of filling all the white space as is customary with dashboards, I wanted to keep the task list center stage, to re-emphasize the "Focus" aspect of the application. This strategy also ensures that the design remains clean and visually uncomplicated. 
 
 ### Website Flow
 
-As I've just outlined, most of this application takes place on one main page, with the exception of the timer on mobile and ipad-sized screens which opens a separate view that covers the screen. The idea is that when a user starts the timer, they will be initiating a burst of productivity that does not require them to use their mobile phone or ipad. The only information available to them from the mobile should be the time spent on that particular task. 
-
-For desktop, I thought that a separate page for the timer, would be unnecessary navigation, as the user will likely minimise the page anyway, while they work on the task at hand. 
+As I've just outlined, most of this application takes place on one main page, with modals for the timer feature and edit task. The idea is that when a user starts the timer, they will be initiating a burst of productivity that will take up their entire focus.  
 
 The flow is very much focused around the task list and the timer. The charts are a point of interest and reference, but they are scrolled down to, as they need not take center stage. 
 
+The structure here is somewhat non-linear, but it is so simple that conceptualisation is of limited use for this particular application. 
+
 ### Interaction Design
+
+My guiding principle when designing and then re-designing and modifying my original concept was to keep this application simple and effective at doing what it does. "As simple as possible, but no simpler." (Einstein)
+
+I wanted especially to combine a minimalism of design with a minimalism and clarity of interaction, and although I did include an information modal as an informative fallback, I don't think it was necessary, as I believe the interaction design is clean and intuitive. 
+
+The interaction is consistent and predictable, once a user works their way through all the options once, it is easily learned and easy to remember, even for a first time user. 
+
+The **only** tiny aspect that I believe might need to be "learned" is that the stopwatch timer on the task line counts up and not down like the two pomodoro timers. I was aware of this small ambiguity but decided against including any greater clarification for the simple reason that once it is clicked, its function is quickly apparent. "Stopwatch" is written clearly across the top of the timer, and the user will see the time counting upwards. If they had not intended to start timing that task, they can easily cancel out of the timer by using the conventional X button in the top right hand corner.
+
+Which brings me to another strong aspect of my interaction design, I've chosen to include small modals that confirm all the user's decisions. When a user clicks to "Save Time To Task" a modal appears that asks them to confirm that save. When they go to delete a task, they are also prompted to confirm the deletion. This both anticipates user errors and avoids the frustration of them accidentally deleting a task or exiting a timer **and** it enhances user trust in the application. 
+
+Within these confirmation modals I've also included specific information i.e. the task name & (for the save time function) the amount of time to be saved. This communicates and reinforces what they are doing in an elegant and detailed manner that enhances both usability, UX & trust in the application. 
+
+Initially I also had the idea of including affirmations API that would bring up inspiring work related quotes as the timer was running, but I then felt that was uneccesarily complicated and somewhat removed from the whole point of the application which is to focus on only one thing. 
+
+
+
+
+
+
 ### Information Architecture
 
 
@@ -236,6 +259,8 @@ I then paired these back on mobile screens during the build process, as I felt t
 ### Colour Palette 
 I wanted a bright, fresh and clean somewhat retro look, using bold and happy colours. The two main accent colours are bright yellow and a light bright blue/cyan, with the remaining colours used for small details and for the different charts slices. 
 ![palette](assets/misc-images/color-palette.png)
+
+Yellow was specifically chosen as it has been scientifically shown to increase both positivity and creative thought in humans. Psychologically it is the colour of thought and it promotes creativity with action, without inducing hunger (like red). 
 
 ### Typography 
 

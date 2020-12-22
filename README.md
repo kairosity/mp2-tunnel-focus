@@ -5,17 +5,17 @@ Tunnel Focus is a browser based task manager with a difference.
 A key methodology of Agile Development is breaking large projects up into smaller tasks as a way to get things done efficiently. 
 
 For many people focusing on a task "until it's done" is not the most efficient way to complete it, as your mind can wander and concentration can lag.
-Focusing in small bursts and maintaining intense focus for small periods of time, punctuated by regular breaks can yield massive benefits in terms of work effiency.
+Focusing in small bursts and maintaining intense focus for small periods of time, punctuated by regular breaks can yield massive benefits in terms of work efficiency.
 
 This web application has been conceptualised and designed around that premise: small bursts of 
 productivity which added together result in successfully completed tasks and projects. Tunnel Focus works as a simple task manager, except that it also keeps track of 
-how long a user works on a particular task. As such it can be used to help with and encourage an Agile approach to development or any other area that requires task management. 
+how long a user works on a particular task. As such, it can be used to help with and encourage an Agile approach to development or any other area that requires task management. 
 
-It combines a stopwatch timer with two pomodoro timers, one for 15 minutes & one for 25 minutes. It was designed to only accomodate these two time segments specifically because they have been studied as being the most effective time periods for human bursts of focus. 
+It combines a stopwatch timer with two pomodoro timers, one for 15 minutes and one for 25 minutes. It was specifically designed to only accommodate these two time segments because they have been [studied and shown](https://www.sciencedaily.com/releases/2011/02/110208131529.htm) to be the most effective time periods for human bursts of focus. 
 
-<p align="center">
-  <img src="assets/misc-images/tunnel-focus-multi-device-view.png">
-</p>
+<a href="https://kairosity.github.io/mp2-tunnel-focus/"><img src="assets/misc-images/tunnel-focus-multi-device-view.png"></a>
+
+## [View the Live Website Here](https://kairosity.github.io/mp2-tunnel-focus/)
 
 # UX
 

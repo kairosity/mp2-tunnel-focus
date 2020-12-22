@@ -38,7 +38,8 @@
 	grid-template-columns: repeat(12, 1fr);
 	-ms-grid-rows: 150px auto auto 1fr;
 	grid-template-rows: 150px auto auto 1fr;
-	position: relative;
+    position: relative;
+    min-height: 100vh;
 }
 .page-container>*:nth-child(1) {
 	-ms-grid-row: 1;
@@ -290,7 +291,7 @@ h2.sub-heading {
 	position: absolute;
 	left: 0;
 	right: 0;
-	top: 50%;
+	margin-top: 680px;
 	border: 3px solid;
 	border-radius: 8px;
 	-webkit-transform: translateY(-50%);
@@ -1432,23 +1433,24 @@ div.tooltip-donut {
 
 footer {
 	background-color: var(--sun-yellow);
-	padding: 2rem;
+	padding: 0;
 	position: absolute;
 	bottom: -100px;
 	left: 0;
 	right: 0;
-	height: 60px;
+    height: 90px;
+    margin-top: 60px;
 }
-@media screen and (min-width: 342px) {
+@media screen and (max-width: 300px) and (min-width: 250px)  {
 	/*----------------------------------------------------------- Information Modal Small Screens  */
 	#information-modal {
-		top: 45%;
+		margin-top: 820px;
 	}
 }
-@media screen and (min-width: 395px) {
+@media screen and (min-width: 372px) {
 	/*----------------------------------------------------------- Information Modal Small Screens  */
 	#information-modal {
-		top: 40%;
+		margin-top: 550px;
 	}
 }
 /*----------------------------------------------------------- MEDIA QUERIES: Small Screens   */
@@ -1468,7 +1470,7 @@ footer {
 	#information-modal {
 		width: 85%;
 		height: 250px;
-		top: 32%;
+		margin-top: 500px;
 	}
 	/*----------------------------------------------------------- Timer Small Screens  */
 	.close-timer-x {
@@ -1640,7 +1642,7 @@ footer {
 	#information-modal {
 		width: 650px;
 		height: 250px;
-		top: 32%;
+		margin-top: 450px;
 	}
 	/*----------------------------------------------------------- Skip Tasks Medium Screens  */
 	#skip-tasks {

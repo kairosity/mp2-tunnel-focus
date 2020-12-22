@@ -1353,16 +1353,14 @@ class List {
 			['click', 'keyup'].forEach(function(evt) {
 				ellipsis.addEventListener(evt, function(elipEvent) {     
 					if ((evt === 'click') || (elipEvent.keyCode === 9)) {
-                        var deleteTaskButton = document.getElementById('delete-task-button'); 
+                        const deleteTaskButton = document.querySelector('.delete-task-option'); 
                         deleteTaskButton.addEventListener('keyup', function(event) {
                                 if (event.keyCode === 13) {
                                     event.preventDefault();
                                     deleteTaskButton.click();                           
                                 }
                             });
-                        alert(deleteTaskButton)
                         deleteTaskButton.addEventListener('click', function() {
-                            alert("Clicked on delete");
                                     taskToDel = event.target.closest('.task');    
 									let deleteConfirmationMessageElement = document.querySelector('.confirm-deletion-modal-p');
                                     let taskNameToDelete = taskToDel.children[2].textContent;

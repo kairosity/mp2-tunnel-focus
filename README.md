@@ -13,6 +13,10 @@ how long a user works on a particular task. As such it can be used to help with 
 
 It combines a stopwatch timer with two pomodoro timers, one for 15 minutes & one for 25 minutes. It was designed to only accomodate these two time segments specifically because they have been studied as being the most effective time periods for human bursts of focus. 
 
+<p align="center">
+  <img src="assets/misc-images/tunnel-focus-multi-device-view.png">
+</p>
+
 # UX
 
 ## User Stories 

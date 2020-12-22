@@ -1348,7 +1348,7 @@ div.tooltip-donut {
 	text-align: left;
 	-ms-flex-item-align: start;
 	align-self: flex-start;
-	margin: 0 auto;
+	margin: 0 1em;
 	padding: 1em;
 	font-family: "Heebo", sans-serif;
     font-size: 1em;
@@ -1440,6 +1440,29 @@ footer {
 	right: 0;
     height: 90px;
     margin-top: 60px;
+}
+
+/*---------------------------------------------------- Custom 404 Page */
+
+.body-404 {
+    text-align: center;
+}
+.instruction-404 {
+    font-family: "Heebo", sans-serif;
+    font-size: 2em;
+    color: var(--pure-black);
+    padding: 1.5em;
+}
+.button-404 {
+    background-color: var(--sun-yellow);
+    color: var(--pure-black);
+    transition: 0.4s ease-in transform;
+    padding: 1em;
+}
+.button-404:hover {
+    background-color: var(--light-blue);
+    color: var(--pure-black);
+    transform: scale(1.1)
 }
 @media screen and (max-width: 300px) and (min-width: 250px)  {
 	/*----------------------------------------------------------- Information Modal Small Screens  */

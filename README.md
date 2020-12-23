@@ -136,6 +136,32 @@ that can be broken into smaller tasks. Because I got back such a wide variety of
 2.| Wage calculations for users who work by the hour/time period |1 | 2 | 3
 3.| Display weather for the day at the top of the screen |1 | 3 | 4
  
+ The scope was eventually narrowed down to include the following from each section: 
+
+    __*TASK LIST FUNCTIONALITY & FEATURES*__
+    1. Add tasks to the tasklist
+    2. Edit tasks
+    3. Delete tasks 
+    4. Check tasks as completed 
+
+    __*TASK TIMER FUNCTIONALITY & FEATURES*__
+    1. Pomodoro style timer of 25 minutes
+    2. Pomodoro style timer of 15 minutes
+    3. Stopwatch open-ended timer
+    4. Focus reminder beeps on the stopwatch timer after every 30 minutes.  
+    5. Alarms when the countdown timers finish - both audio & visual options (not in original scope plan). 
+
+    __*TASK CHARTS FUNCTIONALITY & FEATURES*__
+    1. A Chart showing the time focused on each task "today" (charts & displays were merged as both would have been overkill)
+    2. A Chart showing the time focused on each task overall
+    3. A list of tasks completed today.
+    4. A list of tasks completed overall. 
+    
+    None of the additional functionality / features were included in the final application's scope.
+
+
+I kept the scope quite tight to the basic functionality of the application and while there is scope for expansion, I like the narrow nature of the features because I think it achieves what it sets out to do cleanly and effectively. 
+
 
 ## Structure
 
@@ -172,19 +198,12 @@ that can be broken into smaller tasks. Because I got back such a wide variety of
 
 6. Footer Area.
 
-<p align="center">
-  <img src="assets/misc-images/main-view.png">
-</p>
 
 This view is the same regardless of whether a user is on mobile or desktop screens. Only the styles are altered to ensure a great user experience, but the structure is identical. During the design process I realised that having two different structures for mobile & desktop could lead to confusion and a less than ideal UX. 
 
 **Modal / Feature Views**
 
 1. Timer View: A yellow overlay covers the rest of the application and the timer sits on top of it. The user can only interact with the timer when the timer is open. This is in keeping with how the application is supposed to be used. As it's all about tunnel focus, the ability to interact with other elements of the application when a specific task is being timed would not be in keeping with the ethos of the application. 
-
-<p align="center">
-  <img src="assets/misc-images/timer-modal.png">
-</p>
 
 2. Edit Task View: Similar to the timer, this view is also a modal sitting on top of an overlay. A user can edit the task name and the amount of time associated with that task. 
 
@@ -198,7 +217,7 @@ As I've just outlined, most of this application takes place on one main page, wi
 
 The flow is very much focused around the task list and the timer. The charts are a point of interest and reference, but they are scrolled down to, as they need not take center stage. 
 
-The structure here is somewhat non-linear, but it is so simple that conceptualisation is of limited use for this particular application. 
+The structure here is somewhat non-linear, but it is so simple that the linear/non-linear conceptualisation is of limited use.
 
 ### Interaction Design
 
@@ -212,26 +231,42 @@ The **only** tiny aspect that I believe might need to be "learned" is that the s
 
 Which brings me to another strong aspect of my interaction design, I've chosen to include small modals that confirm all the user's decisions. When a user clicks to "Save Time To Task" a modal appears that asks them to confirm that save. When they go to delete a task, they are also prompted to confirm the deletion. This both anticipates user errors and avoids the frustration of them accidentally deleting a task or exiting a timer **and** it enhances user trust in the application. 
 
+<p align="center">
+  <img src="assets/misc-images/save-time-modal.png">
+  <img src="assets/misc-images/exit-timer-modal.png">
+  <img src="assets/misc-images/delete-confirmation.png">
+</p>
+
 Within these confirmation modals I've also included specific information i.e. the task name & (for the save time function) the amount of time to be saved. This communicates and reinforces what they are doing in an elegant and detailed manner that enhances both usability, UX & trust in the application. 
 
-Initially I also had the idea of including affirmations API that would bring up inspiring work related quotes as the timer was running, but I then felt that was uneccesarily complicated and somewhat removed from the whole point of the application which is to focus on only one thing. 
+To further assure users and increase positive UX, I've included some subtle but fun hover effects on almost all of my buttons and icons. The task line icons and the timer icons tilt and scale up ever so slightly when hovered, the popover navigation includes a yellow background on hovera and almost all of the buttons (with the exception of the information button) have an animated box shadow effect when hovered, finally the checkboxes increase in size and display a rainbow effect. These hover effects add a fun twist to the application and they work to further affirm a user's interaction decisions. 
 
+The information button was excluded from having any hover effects, because it is not an integral part of the application, and is only present as a fallback, or should a user want more detailed information. 
 
-
-
+As an aside, I initially also had the idea of including an affirmations API that would bring up inspiring work related quotes as the timer was running, but I then felt that was unneccesarily complicated and somewhat removed from the whole point of the application, which is to focus on only one thing at a time. 
 
 
 ### Information Architecture
 
+The structure is a sort of blend of the dashboard build with hub & spoke. The main page is a dashboard, with lists & charts and information, but when you time a task, the user opens up a modal and when they close that modal they are brought back to the main view. In any future releases I would forsee keeping that main dashboard view and any new features being added as further spokes off that main page. 
 
 ## Skeleton
 
-- On desktop - hierarchical tree structure top to bottom. 
-- On mobile more of a new page experience - spoke and hub. Timer opens a new frame / window. As do charts. 
-- This was for display purposes as well. - Too hard to view everything in the one window and unlike a typical website, the application does not espouse 
-a scrolling interaction. It is more functional, therefore when you click on a timer, the timer functionality must appear. It would not be ok to have to scroll or look
-for the timer. 
+As aforementioned the dashboard/hub & spoke hybrid built has lent itself to an application that I believe is clear and efficiently does what it sets out to do without confusing the user. 
 
+### Reassuring Conventions
+
+- The purpose of the application is clear from the landing page, both the headings and the "Type to add a new task" input, leave no room for confusion. 
+
+- To double-down on this clarity and as a fallback for the super uncertain user, I have also included an informational modal that is accessible by clicking on the question mark icon in the upper right hand corner of the header. 
+
+- The page elements have been grouped together in logical segments and the most important element (the task list) takes centre stage with the charts below it and the timers open on top of it. 
+
+- Visually the colours and bright, but clean and I have limited the features to those necessary to achieve a timed task list. Keeping it simple decreases the cognitive load on the user and increases UX. 
+
+- Thankfully font awesome includes some brilliant icons that enabled me to represent the various features using strong metaphorical concepts further simplifying and enhancing user decision-making and understanding.
+
+### Wireframes
 
 [My full Figma workspace for this project including wireframes, mockups, colour palette & typography, can be viewed here.](https://www.figma.com/file/3LBKUPc79uP1qAKMfSBXKs/Wireframes1?node-id=0%3A1)
 
@@ -258,6 +293,7 @@ I then paired these back on mobile screens during the build process, as I felt t
 
 ### Colour Palette 
 I wanted a bright, fresh and clean somewhat retro look, using bold and happy colours. The two main accent colours are bright yellow and a light bright blue/cyan, with the remaining colours used for small details and for the different charts slices. 
+
 ![palette](assets/misc-images/color-palette.png)
 
 Yellow was specifically chosen as it has been scientifically shown to increase both positivity and creative thought in humans. Psychologically it is the colour of thought and it promotes creativity with action, without inducing hunger (like red). 
@@ -297,11 +333,174 @@ For all other fonts, I used another Google Font called Heebo, which is a clean a
 
 # Features
 
-- If you write your task in without capitalizing the first letter, it does that for you.
-- Affirmations API is fed in under Timer. 
-- A chart to show how long you spent on each task in the past 24hours.
-- A chart to show the full length of time spent on each task.
-- A list of all completed tasks. 
+## 1. Landing Page / Main Page
+
+The main page is the springboard for all the features, it contains the task list and the input to add new tasks, as well as the charts that track time on those tasks. It is fully responsive but that will be demonstrated further in the mobile-first responsivity section of this readme.
+
+<p align="center">
+  <img src="assets/misc-images/main-view.png">
+</p>
+
+### Design 
+
+The main view was designed to be somewhat minimalist, yet bright and with happy pops of colour. The design and navigation centres around the task list which is easy and uncomplicated to use. 
+
+Underneath the task list the user scrolls down to the productivity charts which only show up once the user adds a task and records some time on that task.
+
+## 2. Information Modal 
+
+I've included information on all the application's features as an explanatory fallback, and this modal is accessed by clicking on the question mark icon in the upper right hand corner.
+
+<p align="center">
+  <img src="assets/misc-images/information-modal.png">
+</p>
+
+## 3. Adding a task to the list
+
+This is the first feature the user will see on the landing page, and the most important as the task list is the basis for the rest of the features. The input to add new tasks features the direction "Type to add a new task..." underlined and followed by a + button. All of which is simple and intuitive for the user. When a task is added, the task list is created, with all attendant features. 
+
+<p align="center">
+  <img src="assets/misc-images/new-task.png">
+</p>
+
+### Special Features 
+
+- A task can be added by clicking the + button with the mouse *or* by pressing enter on the keyboard. 
+- The cursor will automatically go back into the input field, making it easy to add multiple tasks quickly. 
+- If the user adds unnecessary white space to the beginning or end of the task, it will be automatically removed. 
+- If the user fails to add a task, they will be prompted to "Please enter a valid task". 
+
+<p align="center">
+  <img src="assets/misc-images/enter-valid-task.png">
+</p>
+
+
+## 4. Editing a task
+
+Both the task name / description and/or the amount of time associated with focus on that task can be fully edited and changes saved.
+
+### Special Features 
+
+- The time can be modified using the mouse and keyboard to enter new numbers.
+- OR it can be modified using the tab key and the up & down arrows. 
+- OR it can be modified by clicking on the small arrows inside the time inputs. 
+
+<p align="center">
+  <img src="assets/misc-images/edittask-modal.png">
+</p>
+
+## 5. Deleting a task 
+
+Users can choose to delete any of their tasks whether or not they are completed. 
+
+### Special Features 
+
+- Users are prompted to confirm that they definitely want to delete a specific task. 
+- This handles user errors gracefully and stops a user from accidentally deleting a task they wanted to keep. 
+
+<p align="center">
+  <img src="assets/misc-images/delete-confirmation.png">
+</p>
+
+## 6. Checking a task as complete
+
+Every task on the task list has a checkbox next to its task description, allowing the user to toggle the completed status of a task on and off, as desired. 
+
+### Special Features 
+
+- When the checkbox is hovered over with the mouse it scales up in size and turns rainbow-coloured. 
+- When tasks are checked, a tick fills the checkbox and a line is drawn through the task description. 
+
+<p align="center">
+  <img src="assets/misc-images/checkboxes.png">
+</p>
+
+## 7. Navigation
+
+Other than the stopwatch timer, the rest of the navigation options are available by clicking the ellipsis dots on a particular task. 
+
+### Special Features 
+
+- The popover is fully responsive, works well on smaller devices and has been customised to react appropriately to user interaction, both via mouse and keyboard.
+- It is also ARIA friendly, and screen reader compatible. 
+- When an option is hovered over by the mouse, its background turns yellow. 
+-  I included a plugin called hideOnPopperBlur which was part of the tippy.js package and that ensured that only one popover could be opened at any one time, so when another element is tabbed to, the popover disappears.
+- When an option is selected via click or enter, the popover automatically disappears. This was custom coded as my own plugin called 'hideOnOptionSelect', as the tippy.js code did not default to that functionality.
+
+These customisations enhance the navigation UX and ensure its smooth and accessible functioning. 
+
+(More detail on both of these popover customisations in the testing.md file under the dynamicPopoverNav() section.)
+
+<p align="center">
+  <img src="assets/misc-images/navigation.png">
+</p>
+
+## 8. Timers - Stopwatch, Countdown 15 & Countdown 25 
+
+The timers all share the same modal design, but their title and functionality changes depending on what timer is selected. 
+
+### Special Features 
+
+- The first text on the timer tells the user what timer they are using: 'Stopwatch', 'Countdown 15' or 'Countdown 25'.
+- Under that, the task description is displayed.
+- The stopwatch timer counts up from 0.
+- The stopwatch timer beeps once every 30 minutes to remind the user of the passage of time. 
+- The countdown timers count down from 15 & 25 minutes respectively. 
+- When the countdown timers get to 0, an audio alarm plays.
+- If the alarm toggle button (the bell) is muted on the stopwatch timer, the beep is *not* triggered every 30 minutes.
+- If the alarm toggle button is muted on the countdown timers, the audio alarm does not play, but a visual silent alarm does play when the countdown ends. 
+- The countdown silent alarm phases through different colours to alert the user that the countdown is completed. 
+- When the countdown is complete, the user is asked to confirm that they wish to save the full countdown time to that particular task. They can choose to save or to cancel. 
+- The pause button pauses all of the timers. 
+- Likewise the play button starts them again from when they were paused. For the stopwatch timer the play button continues the count up, for the countdown timers, the play button continues the count down. 
+- The reset button resets the stopwatch timer to 0, and the countdown timers to 15 minutes & 25 minutes respectively. 
+- If the user clicks the X button in the top right hand corner, they are prompted to confirm that they wish to exit the timer without saving the time to the task. 
+- If the user clicks the "Save time to task" button, they are asked to confirm that they want to save that particular amount of time to that specific task. Both the time and task description are named explicitly in the confirmation modal. 
+- If the user clicks the "Save time to task" button but does not pause the timer first, the timer will pause automatically. 
+- In contrast, if the user clicks the X button, the timer keeps running in the background while the user responds to that modal.  
+
+<p align="center">
+  <img src="assets/misc-images/timer-modal.png">
+</p>
+
+## 8. Productivity Charts
+
+### Design
+
+The charts were designed to scroll down to, more to show a general comparison between time spent on various tasks. As the specific amount of time spent on each task can be viewed on the main task list, the charts are meant to be comparative in nature. 
+
+They are screen reader & keyboard friendly and the dropdown select options can be accessed using mouse or keyboard (space bar and down/up arrows).
+
+### The Charts
+
+1. Total Time Focused On Each Task
+    - shows the total time the user has timed or logged (using the edit task option) on each task.
+    - The time is recorded and stored in seconds, but displayed in long form in the format hrs, mins, secs.
+
+2. Total Time Focused On Each Task Today
+    - shows the time recorded on each task if that time was recorded on the date that it is being viewed on, or 'today'.
+
+3. Tasks Completed
+    - A list of all tasks checked off. 
+
+4. Tasks Completed Today
+    - A list of all tasks checked off, when the last completion tick was recorded on 'todays' date.
+
+### Special Features 
+
+- Hovering the mouse over any of the donut slices brings up a tooltip that shows the task description & the time spent on that task.
+- The legend truncates long and wordy task descriptions to the first 15 / 25 characters to ensure nice formatting whatever the device screen size.
+- If the user checks off a task while viewing one of the completed task lists, the page will reload in order to update that information. (This is not ideal functionality and is listed as one of the 'issues' / elements where there is room for improvement), but it does have the effect of ensuring an accurate representation of the data.
+- When you add a new task, a legend for that task is automatically created on the charts, even if there is no time recorded on that task. This aids in the comparative representation.
+
+<p align="center">
+  <img src="assets/misc-images/donut-chart-tooltip.png">
+</p>
+
+<p align="center">
+  <img src="assets/misc-images/chart-view.png">
+</p>
+
 
 # Mobile-first Responsivity
 
@@ -362,7 +561,6 @@ This site was designed with a mobile-first approach in mind. As the bulk of the 
 </p>
 
 
-
 # Accessibility
 
 Ensuring that the entire application is keyboard accessible was very important from the outset and each function and section of the application was coded with full keyboard functionality in mind. 
@@ -389,12 +587,12 @@ While verbose and winding, this was definitely preferable to writing out the exa
 Another issue I found when testing the application using only a keyboard was that it was infuriating when you had a long task list and you wanted to toggle charts, to have to tab through each individual task and all its associated options. To circumvent this issue, I included a "Skip Tasks" link that becomes visible only when the site is navigated using a keyboard.  
 
 ### 3. Screen Reader Accessibility 
-Although not a perfect application, I used the Chrome Screen Reader to get an idea of how the website would be interacted with by screen reader users. The Chrome offering is nowhere near as complete, or accurate as more professional screen readers, however it did allow me to see where my application was falling down in terms of what elements were not labelled or semantically described correctly. Wherever possible, I fixed these issues by including aria-labels & titles to elements. I also redesigned many parts of the application to use buttons instead of <a> tags, as buttons are automatically described by screen readers and <a> tags are not. This was especially important for the task options & timer controls. 
+Although not a perfect application, I used the Chrome Screen Reader to get an idea of how the website would be interacted with by screen reader users. The Chrome offering is nowhere near as complete, or accurate as more professional screen readers, however it did allow me to see where my application was falling down in terms of what elements were not labelled or semantically described correctly. Wherever possible, I fixed these issues by including aria-labels & titles to elements. I also redesigned many parts of the application to use buttons instead of ```<a>``` tags, as buttons are automatically described by screen readers and ```<a>``` tags are not. This was especially important for the task options & timer controls. 
 
 ### 4. Zoom
 I ensured that the website was usable for those hard of vision by making sure that users can view and use it comfortably at up to 200% zoom as per web standards.
 
-# Future Release Features
+# Potential Features for Future Releases
 
 1. Connecting to a database and creating user accounts with proper storage and retrieval of data. 
 2. Connect up API for Google Calendar. 
@@ -402,8 +600,9 @@ I ensured that the website was usable for those hard of vision by making sure th
 4. Adding project / category functionality. 
 5. Wage calculations for people who are paid per hour/ on a time basis. Very useful for freelancers who operate by time expended.
 6. Daily/weekly/monthly view of time spent working on each task/project. - Automated graphs with D3.js
-7. Speech to text functionality for adding tasks to the list.
+7. Speech to text functionality for adding tasks to the list and making the application more accessible. 
 8. Daily task time targets. So that the user can set a time goal on a task, and then work towards reaching it. 
+
 # Testing
 
 [Please click here to read all the testing documentation.](testing.md)
@@ -411,9 +610,11 @@ I ensured that the website was usable for those hard of vision by making sure th
 
 # Issues / Room For Improvement
 
-1. I've realised over the course of building this application that the way I structured my event listeners (nestled inside object methods) was needlessly complex and led itself to some irritating bugs that needed fixes in the form of bind & unbind methods. I think for future projects I would separate out my classes from event listeners more definitively for this reason. 
+1. I've realised over the course of building this application that the way I structured my event listeners (nestled inside object methods) was needlessly complex and led itself to some irritating bugs that needed fixes in the form of bind & unbind methods, and then eventually page reloads. I think for future projects I would separate out my classes from event listeners more definitively for this reason. 
 
-2. Automated testing for this application was tricky, and I think would be easier for a more purely functional ty for a less OOP application and 
+2. To further the above point, I would also be tempted to move more towards a purely functional approach for my next project, as I believe that would make automated testing easier, as well as streamlining and uncomplicating the structure of the code. 
+
+3. The donut chart hover effects are not keyboard friendly, and while that same information is available to view in the legend, I would ideally like every aspect of the website to be keyboard accessible. 
 
 
 # Attribution

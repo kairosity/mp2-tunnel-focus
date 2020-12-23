@@ -283,7 +283,7 @@ class Timer {
 				hours = hours + 1;
 			}
 			if (alarmButton.innerHTML == `<i class="fas fa-bell" aria-hidden="true"></i>`) {
-				if ((minutes % 2 === 0) && (minutes !== 0) && (seconds === 0)) {
+				if ((minutes % 30 === 0) && (minutes !== 0) && (seconds === 0)) {
 					beep.play();
 				}
 			}
@@ -510,7 +510,6 @@ class Timer {
 					ellipsis.addEventListener(evt, function(elipEvent) {
 						if ((evt === 'click') || (elipEvent.keyCode === 9)) {
                             const countdown15Button = document.querySelector('.countdown15-task-option');
-
                             countdown15Button.addEventListener('keyup', function(event) {
                                 if (event.keyCode === 13) {
                                     event.preventDefault();
@@ -518,7 +517,6 @@ class Timer {
                                 }
                             });
 							countdown15Button.addEventListener('click', function() {
-                                    alert("clicked on countdown15")
 									alarm.play();
 									alarm.pause();
 									countdownClickStartHelper("countdown15", 15);

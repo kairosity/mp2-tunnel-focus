@@ -415,8 +415,13 @@ __FIX 5:__ I added the following if statement within the editTask() method:
             if (totalTimeToAdd !== 0) {
                 list.taskList[taskToTargetId].timeSegments.push({id, timeToAdd, dateStamp, taskDescription, localDate, localTime});
             }    
-Thus ensuring that if no time is added, but the task description is edited, the name will change correctly, but the task will not appear in the "today" chart legend.             
+Thus ensuring that if no time is added, but the task description is edited, the name will change correctly, but the task will not appear in the "today" chart legend.  
 
+__ISSUE 6:__ The bind() & unbind() jQuery methods that I integrated to fix ISSUE 1, worked a treat, except that because they have been deprecated, they were throwing the following TypeError in the console:
+
+![console-typeerror](assets/misc-images/console-error-bind.png)
+
+__FIX 6:__ I re-jigged the way I wrote all of the functions that relied on bind & unbind and I included a location.reload() command when I needed to "unbind" event listeners. I'm aware that this is less than ideal, especially since one of the benefits of JS is that pages don't need to be reloaded that often, but my method did avoid errors in the console, so that was the trade-off. For future releases I will further investigate methods of avoiding event listener bugs without resorting to reloading.
 
 ## editTask() 
 *Original Method integrated with the above*
@@ -564,7 +569,7 @@ __FIX 2:__ I debugged this using the Chrome JavaScript debugger, and the breakpo
 
 __ISSUE 3:__ When I tested my (almost) finalised application on mobile I found that the "delete task" link did not work. It worked perfectly in the browser & in the mobile mock up of Chrome Dev Tools, but clicking the delete task link on mobile or ipad devices had no effect. 
 
-__FIX 3:__ I backtracked through my commits and eventually discovered that changing the "more options" ellipsis from an <a> tag to a <button> to enhance ARIA accessibility was to blame. As a fix, I just reverted back to an <a> tag although semantically perhaps not completely accurate. As a compromise I have ensured that all the <a> links have ARIA labels that clearly describe their purpose.  
+__FIX 3:__ I backtracked through my commits and eventually discovered that changing the "more options" ellipsis from an ```<a>``` tag to a ```<button>``` to enhance ARIA accessibility was to blame. As a fix, I just reverted back to an ```<a>``` tag although semantically perhaps not completely accurate. As a compromise I have ensured that all the ```<a>``` links have ARIA labels that clearly describe their purpose.  
 
 ## dynamicPopoverNav()
 __METHOD SUMMARY__: This code creates and sets the options for the tippy.js popover box that this application uses for presenting the various options to the user. The code is taken directly from the tippy.js documentation.
@@ -656,13 +661,9 @@ __ISSUE 3__: The legend box proved difficult to position correctly depending on 
 
 __FIX 3__: I included a function that set the height property of the legend dynamically if there were more than 6 items in the list. 
 
-__ISSUE 4__: The legend was not centered on small to medium sized screens. 
+__ISSUE 4__: When a user selects a chart / list on mobile it zooms in to the selection, but did not zoom out again to the normal view. 
 
-__FIX 4__: UNFIXED AS YET.
-
-__ISSUE 5__: When a user selects a chart / list on mobile it zooms in to the selection, but did not zoom out again to the normal view. 
-
-__FIX 5__: I found a solution by Warren Chandler (attributed in README) that added some scale attributes to the application's meta tag, as below: 
+__FIX 4__: I found a solution by Warren Chandler (attributed in README) that added some scale attributes to the application's meta tag, as below: 
 
 ```< meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0,user-scalable=0"/>```
 

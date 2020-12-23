@@ -508,29 +508,39 @@ This site was designed with a mobile-first approach in mind. As the bulk of the 
 
 ## Mobile/xs & sm breakpoints
 
-- The main task list is centered in mobile and the feeling of space and minimalism is enhanced by the absence of any borders. 
-- The header takes up a small amount of room. 
+- The **main task list** is centered in mobile and the feeling of space and minimalism is enhanced by the absence of any borders. 
+- The **header** takes up a small amount of room. 
 - Everything is easily accessible and easy to view. 
 <p align="center">
   <img src="assets/misc-images/mobile-main-list2.png">
 </p>
 
-- The charts on mobile are stacked on top of the legend and they are styled so that they fit perfectly on the page.
+- The **charts** on mobile are stacked on top of the legend and they are styled so that they fit perfectly on the page.
 <p align="center">
   <img src="assets/misc-images/mobile-charts.png">
 </p>
 
-- The completed task lists are also centered and fit snugly on the page.
+- The **completed task lists** are also centered and fit snugly on the page.
 <p align="center">
   <img src="assets/misc-images/mobile-lists2.png">
 </p>
 
-- The timer is centered and takes up 100% of the mobile width.
+- The **timer** is centered and takes up 100% of the mobile width.
 <p align="center">
   <img src="assets/misc-images/mobile-timer.png">
 </p>
 
-- The modals rise to the top of the mobile view and they sit on a darkened overlay.
+- The **editTask()** function is small and tidy on mobile in vertical orientation and takes up more space on landscape, but is the ideal size to edit and take in all the information. 
+
+<p align="center">
+  <img src="assets/misc-images/edit-mobile-vertical.png">
+</p>
+
+<p align="center">
+  <img src="assets/misc-images/edit-mobile-landscape.png">
+</p>
+
+- The **modals** rise to the top of the mobile view and they sit on a darkened overlay.
 
 <p align="center">
   <img src="assets/misc-images/mobile-save-time.png">
@@ -538,13 +548,13 @@ This site was designed with a mobile-first approach in mind. As the bulk of the 
 
 ## iPads & md breakpoints
 
-- The main task list has a retro border around it on ipad & medium screens as there is sufficient space to accomodate that design choice comfortably.
+- The **main task list** is given a retro border on ipad & medium screens as there is sufficient space to accomodate that design choice comfortably.
 - The task list takes up a smaller % ratio on the page and more of the application is visible at once.
 <p align="center">
   <img src="assets/misc-images/ipad-main.png">
 </p>
 
-- On the iPad in vertical view the charts still stack over their legend. 
+- On the iPad in vertical view the **charts** still stack over their legend. 
 <p align="center">
   <img src="assets/misc-images/ipad-charts.png">
 </p>
@@ -555,9 +565,34 @@ This site was designed with a mobile-first approach in mind. As the bulk of the 
   <img src="assets/misc-images/ipad-charts-landscape.png">
 </p>
 
-- Completed tasks are listed in the chart area and are centered in their div.
+- **Completed tasks** are listed in the chart area and are centered in their div.
 <p align="center">
   <img src="assets/misc-images/ipad-completed-lists.png">
+</p>
+
+## Desktops, lg & xl breakpoints
+
+As illustrated below, the application on desktops and large screens has the same design and layout as on landscape medium screens, just with a little more white space and room to manoevre. 
+
+The **charts** and their **legends** sit next to each other as on medium screens and landscape orientated iPad sized devices.
+
+If I decide to implement some of the future release ideas, I will move the layout towards a more traditional dashboard layout on larger screen widths. So for instance, the charts might share their screen real estate with other features to their left and right. But for now, I like the feeling of space and clarity and ease of access that all the features have. 
+
+<p align="center">
+  <img src="assets/misc-images/main-view.png">
+</p>
+
+The **Edit task** modal has more space to stretch out on larger screens as below:
+
+<p align="center">
+  <img src="assets/misc-images/edit-large-screens.png">
+</p>
+
+
+And finally, on large screens, the **Timer** has more space around it and centres itself on the page as below:
+
+<p align="center">
+  <img src="assets/misc-images/timer-large.png">
 </p>
 
 

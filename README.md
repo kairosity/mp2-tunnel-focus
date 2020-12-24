@@ -17,6 +17,80 @@ It combines a stopwatch timer with two pomodoro timers, one for 15 minutes and o
 
 ## [View the Live Website Here](https://kairosity.github.io/mp2-tunnel-focus/)
 
+# Table Of Contents
+
+- [1. UX](#ux)
+  * [User Stories](#user-stories)
+      - [*First Time User Stories*](#first-time-user-stories)
+      - [*Returning User Stories*](#returning-user-stories)
+      - [*Accessibility User Stories*](#accessibility-user-stories)
+  * [Strategy](#strategy)
+      - [*Project Goals*](#project-goals)
+      - [*Target Users*](#target-users)
+      - [*Research*](#research)
+  * [Scope](#scope)
+    - [*Core Theme*](#core-theme)
+    - [*Scope Feature Ideas Table*](#scope-feature-list-table)
+    - [*Scope Final Features*](#scope-final-features)
+  * [Structure](#structure)
+      - [*Application Sections*](#application-sections)
+      - [*Website Flow*](#website-flow)
+      - [*Interaction Design*](#interaction-design)
+      - [*Information Architecture*](#information-architecture)
+  * [Skeleton](#skeleton)
+      - [*Reassuring Conventions*](#reassuring-conventions)
+      - [*Wireframes*](#wireframes)
+  * [Surface](#surface)
+      - [*Design Considerations*](#design-considerations)
+      - [*Colour Palette*](#colour-palette)
+      - [*Typography*](#typography)
+      - [*Design Mockups*](#design-mockups)
+- [2. Features](#features)
+    - [Landing Page](#1.-landing-page)
+        - [*Landing Page Design*](#landing-page-design)
+    - [Information Modal](#2.-information-modal)
+    - [Adding a task to the list](#3.-adding-a-task-to-the-list)
+         - [*Task Addition Special Features*](#task-addition-special-features)
+    - [Editing a task](#4.-editing-a-task)
+         - [*Task Edit Special Features*](#task-edit-special-features)
+     - [Deleting a task](#5.-deleting-a-task)
+         - [*Task Deletion Special Features*](#task-deletion-special-features)
+    - [Checking a task as Complete](#6.-checking-a-task-as-complete)
+         - [*Task Completion Special Features*](#task-completion-special-features)
+     - [Navigation](#7.-navigation)
+         - [*Navigation Special Features*](#navigation-special-features)
+    - [Timers. Stopwatch and Countdowns](#8.-timers.-stopwatch-and-countdowns)
+        - [*Timer Special Features*](#timer-special-features)
+    - [Productivity Charts](#9.-productivity-charts)
+        - [*Chart Design*](#chart-design)
+        - [*Chart Substance*](#chart-substance)
+        - [*Charts Special Features*](#charts-special-features)
+- [3. Mobile-First Responsivity](#mobile-first-responsivity)
+    - [Mobile xs and sm breakpoints](#mobile-xs-and-sm-breakpoints)
+    - [iPads and md breakpoints](#ipads-and-md-breakpoints)
+    - [Desktops lg and xl breakpoints](#desktops-lg-and-xl-breakpoints)
+- [4. Accessibility](#accessibility)
+    - [Event Listeners](#1.-event-listeners)
+    - [Skip Tasks](#2.-skip-tasks)
+    - [Screen Reader Accessibility](#3.-screen-reader-accessibility)
+    - [Zoom Ratio](#4.-zoom-ratio)
+- [5. Potential Features for Future Releases](#potential-features-for-future-releases)
+- [6. Testing](#testing)
+- [7. Issues and Room for Improvement](#issues-and-room-for-improvement)
+- [8. Attribution](#attribution)
+- [9. Deployment](#deployment)
+    - [Publishing to Github Pages](#publishing-to-github-pages)
+- [10. Tools and Other Resources Used](#tools-and-other-resources-used)
+    - [Design](#1.-design)
+    - [HTML and CSS](#2.-html-and-css)
+    - [JavaScript](#3.-javascript)
+    - [D3.js](#4.-d3.js)
+    - [Git and GitHub](#5.-git-and-github)
+    - [Frameworks](#6.-frameworks)
+    - [General](#7.-general)
+- [11. Technology Used](#technology-used)
+- [12. Acknowledgements](#acknowledgments) 
+
 # UX
 
 ## User Stories 
@@ -91,6 +165,7 @@ I researched other task managers online and found a number that have similar fun
 
 ## Scope
 
+### Core theme
 The basis for this application's scope, was actually to create an app I wanted to use for my own projects. I've used a variety of task managers over the years, 
 and have always reverted to just writing lists on paper, which I still believe is a powerful method for many reasons. 
 
@@ -103,6 +178,8 @@ So the basic and general scope for this project is:
 To further define both the task list functionality and features for the timer and the task manager components, I began by sketching out exactly what I would like to use and then I
 spoke to friends in various creative and professional industries to see what ideas they could contribute. A timer functionality is most attractive to users who work on a varied list of projects 
 that can be broken into smaller tasks. Because I got back such a wide variety of feature requests I sketched out the feature list chart displayed below to help me decide on what to include.
+
+### Scope Feature Ideas Table
 
 #|Opportunity/Potential Feature | Importance | Viability | Score
 ---|------------ | -------------|--------------|------------------
@@ -136,28 +213,31 @@ that can be broken into smaller tasks. Because I got back such a wide variety of
 2.| Wage calculations for users who work by the hour/time period |1 | 2 | 3
 3.| Display weather for the day at the top of the screen |1 | 3 | 4
  
+
+### Scope Final Features
+
  The scope was eventually narrowed down to include the following from each section: 
 
-    __*TASK LIST FUNCTIONALITY & FEATURES*__
-    1. Add tasks to the tasklist
-    2. Edit tasks
-    3. Delete tasks 
-    4. Check tasks as completed 
+__*TASK LIST FUNCTIONALITY & FEATURES*__
+1. Add tasks to the tasklist
+2. Edit tasks
+3. Delete tasks 
+4. Check tasks as completed 
 
-    __*TASK TIMER FUNCTIONALITY & FEATURES*__
-    1. Pomodoro style timer of 25 minutes
-    2. Pomodoro style timer of 15 minutes
-    3. Stopwatch open-ended timer
-    4. Focus reminder beeps on the stopwatch timer after every 30 minutes.  
-    5. Alarms when the countdown timers finish - both audio & visual options (not in original scope plan). 
+__*TASK TIMER FUNCTIONALITY & FEATURES*__
+1. Pomodoro style timer of 25 minutes
+2. Pomodoro style timer of 15 minutes
+3. Stopwatch open-ended timer
+4. Focus reminder beeps on the stopwatch timer after every 30 minutes.  
+5. Alarms when the countdown timers finish - both audio & visual options (not in original scope plan). 
 
-    __*TASK CHARTS FUNCTIONALITY & FEATURES*__
-    1. A Chart showing the time focused on each task "today" (charts & displays were merged as both would have been overkill)
-    2. A Chart showing the time focused on each task overall
-    3. A list of tasks completed today.
-    4. A list of tasks completed overall. 
-    
-    None of the additional functionality / features were included in the final application's scope.
+__*TASK CHARTS FUNCTIONALITY & FEATURES*__
+1. A Chart showing the time focused on each task "today" (charts & displays were merged as both would have been overkill)
+2. A Chart showing the time focused on each task overall
+3. A list of tasks completed today.
+4. A list of tasks completed overall. 
+
+None of the additional functionality / features were included in the final application's scope.
 
 
 I kept the scope quite tight to the basic functionality of the application and while there is scope for expansion, I like the narrow nature of the features because I think it achieves what it sets out to do cleanly and effectively. 
@@ -333,7 +413,7 @@ For all other fonts, I used another Google Font called Heebo, which is a clean a
 
 # Features
 
-## 1. Landing Page / Main Page
+## 1. Landing Page
 
 The main page is the springboard for all the features, it contains the task list and the input to add new tasks, as well as the charts that track time on those tasks. It is fully responsive but that will be demonstrated further in the mobile-first responsivity section of this readme.
 
@@ -341,7 +421,7 @@ The main page is the springboard for all the features, it contains the task list
   <img src="assets/misc-images/main-view.png">
 </p>
 
-### Design 
+### Landing Page Design 
 
 The main view was designed to be somewhat minimalist, yet bright and with happy pops of colour. The design and navigation centres around the task list which is easy and uncomplicated to use. 
 
@@ -363,7 +443,7 @@ This is the first feature the user will see on the landing page, and the most im
   <img src="assets/misc-images/new-task.png">
 </p>
 
-### Special Features 
+### Task Addition Special Features 
 
 - A task can be added by clicking the + button with the mouse *or* by pressing enter on the keyboard. 
 - The cursor will automatically go back into the input field, making it easy to add multiple tasks quickly. 
@@ -379,7 +459,7 @@ This is the first feature the user will see on the landing page, and the most im
 
 Both the task name / description and/or the amount of time associated with focus on that task can be fully edited and changes saved.
 
-### Special Features 
+### Task Edit Special Features 
 
 - The time can be modified using the mouse and keyboard to enter new numbers.
 - OR it can be modified using the tab key and the up & down arrows. 
@@ -393,7 +473,7 @@ Both the task name / description and/or the amount of time associated with focus
 
 Users can choose to delete any of their tasks whether or not they are completed. 
 
-### Special Features 
+### Task Deletion Special Features 
 
 - Users are prompted to confirm that they definitely want to delete a specific task. 
 - This handles user errors gracefully and stops a user from accidentally deleting a task they wanted to keep. 
@@ -406,7 +486,7 @@ Users can choose to delete any of their tasks whether or not they are completed.
 
 Every task on the task list has a checkbox next to its task description, allowing the user to toggle the completed status of a task on and off, as desired. 
 
-### Special Features 
+### Task Completion Special Features 
 
 - When the checkbox is hovered over with the mouse it scales up in size and turns rainbow-coloured. 
 - When tasks are checked, a tick fills the checkbox and a line is drawn through the task description. 
@@ -419,7 +499,7 @@ Every task on the task list has a checkbox next to its task description, allowin
 
 Other than the stopwatch timer, the rest of the navigation options are available by clicking the ellipsis dots on a particular task. 
 
-### Special Features 
+### Navigation Special Features 
 
 - The popover is fully responsive, works well on smaller devices and has been customised to react appropriately to user interaction, both via mouse and keyboard.
 - It is also ARIA friendly, and screen reader compatible. 
@@ -435,11 +515,11 @@ These customisations enhance the navigation UX and ensure its smooth and accessi
   <img src="assets/misc-images/navigation.png">
 </p>
 
-## 8. Timers - Stopwatch, Countdown 15 & Countdown 25 
+## 8. Timers. Stopwatch and Countdowns
 
 The timers all share the same modal design, but their title and functionality changes depending on what timer is selected. 
 
-### Special Features 
+### Timer Special Features 
 
 - The first text on the timer tells the user what timer they are using: 'Stopwatch', 'Countdown 15' or 'Countdown 25'.
 - Under that, the task description is displayed.
@@ -463,15 +543,15 @@ The timers all share the same modal design, but their title and functionality ch
   <img src="assets/misc-images/timer-modal.png">
 </p>
 
-## 8. Productivity Charts
+## 9. Productivity Charts
 
-### Design
+### Chart Design
 
 The charts were designed to scroll down to, more to show a general comparison between time spent on various tasks. As the specific amount of time spent on each task can be viewed on the main task list, the charts are meant to be comparative in nature. 
 
 They are screen reader & keyboard friendly and the dropdown select options can be accessed using mouse or keyboard (space bar and down/up arrows).
 
-### The Charts
+### Chart Substance
 
 1. Total Time Focused On Each Task
     - shows the total time the user has timed or logged (using the edit task option) on each task.
@@ -485,8 +565,9 @@ They are screen reader & keyboard friendly and the dropdown select options can b
 
 4. Tasks Completed Today
     - A list of all tasks checked off, when the last completion tick was recorded on 'todays' date.
+    - OR when a task has already been marked as completed, but then the user goes and records more time on that task 'today'. Logically, that task is then completed 'today'.
 
-### Special Features 
+### Charts Special Features 
 
 - Hovering the mouse over any of the donut slices brings up a tooltip that shows the task description & the time spent on that task.
 - The legend truncates long and wordy task descriptions to the first 15 / 25 characters to ensure nice formatting whatever the device screen size.
@@ -506,7 +587,7 @@ They are screen reader & keyboard friendly and the dropdown select options can b
 
 This site was designed with a mobile-first approach in mind. As the bulk of the application takes place on a simple one page layout, and the interactions use modals, there were only a few subtle changes between breakpoints.  
 
-## Mobile/xs & sm breakpoints
+## Mobile xs and sm breakpoints
 
 - The **main task list** is centered in mobile and the feeling of space and minimalism is enhanced by the absence of any borders. 
 - The **header** takes up a small amount of room. 
@@ -546,7 +627,7 @@ This site was designed with a mobile-first approach in mind. As the bulk of the 
   <img src="assets/misc-images/mobile-save-time.png">
 </p>
 
-## iPads & md breakpoints
+## iPads and md breakpoints
 
 - The **main task list** is given a retro border on ipad & medium screens as there is sufficient space to accomodate that design choice comfortably.
 - The task list takes up a smaller % ratio on the page and more of the application is visible at once.
@@ -570,7 +651,7 @@ This site was designed with a mobile-first approach in mind. As the bulk of the 
   <img src="assets/misc-images/ipad-completed-lists.png">
 </p>
 
-## Desktops, lg & xl breakpoints
+## Desktops lg and xl breakpoints
 
 As illustrated below, the application on desktops and large screens has the same design and layout as on landscape medium screens, just with a little more white space and room to manoevre. 
 
@@ -601,7 +682,7 @@ And finally, on large screens, the **Timer** has more space around it and centre
 Ensuring that the entire application is keyboard accessible was very important from the outset and each function and section of the application was coded with full keyboard functionality in mind. 
 
 ### 1. Event Listeners 
-One particular roadblock I encountered when doing so was working out how to code behaviour based on two event listeners without having to duplicate large amounts of code.
+One particular roadblock I encountered when ensuring great keyboard accessibility was working out how to code behaviour based on two event listeners without having to duplicate large amounts of code.
 
 I eventually found [this](https://stackoverflow.com/questions/11845678/adding-multiple-event-listeners-to-one-element) code online that helped me craft that functionality, which removed a huge amount of duplication. 
 
@@ -621,10 +702,10 @@ While verbose and winding, this was definitely preferable to writing out the exa
 ### 2. Skip Tasks 
 Another issue I found when testing the application using only a keyboard was that it was infuriating when you had a long task list and you wanted to toggle charts, to have to tab through each individual task and all its associated options. To circumvent this issue, I included a "Skip Tasks" link that becomes visible only when the site is navigated using a keyboard.  
 
-### 3. Screen Reader Accessibility 
+### 3. Screen Reader Accessibility 
 Although not a perfect application, I used the Chrome Screen Reader to get an idea of how the website would be interacted with by screen reader users. The Chrome offering is nowhere near as complete, or accurate as more professional screen readers, however it did allow me to see where my application was falling down in terms of what elements were not labelled or semantically described correctly. Wherever possible, I fixed these issues by including aria-labels & titles to elements. I also redesigned many parts of the application to use buttons instead of ```<a>``` tags, as buttons are automatically described by screen readers and ```<a>``` tags are not. This was especially important for the task options & timer controls. 
 
-### 4. Zoom
+### 4. Zoom Ratio
 I ensured that the website was usable for those hard of vision by making sure that users can view and use it comfortably at up to 200% zoom as per web standards.
 
 # Potential Features for Future Releases
@@ -643,7 +724,7 @@ I ensured that the website was usable for those hard of vision by making sure th
 [Please click here to read all the testing documentation.](testing.md)
 
 
-# Issues / Room For Improvement
+# Issues and Room For Improvement
 
 1. I've realised over the course of building this application that the way I structured my event listeners (nestled inside object methods) was needlessly complex and led itself to some irritating bugs that needed fixes in the form of bind & unbind methods, and then eventually page reloads. I think for future projects I would separate out my classes from event listeners more definitively for this reason. 
 
@@ -703,7 +784,7 @@ I ensured that the website was usable for those hard of vision by making sure th
 
 This website was developed using GitPod in a Chrome browser and commits were pushed to a GitHub repository. This site is currently hosted on GitHub pages.
 
-## How I Published to GitHub Pages:
+## Publishing to GitHub Pages
 
 1. I went to the main page of my GitHub repository.
 2. I clicked on the "Settings" tab on the main horizontal tab bar.
@@ -721,7 +802,7 @@ This website was developed using GitPod in a Chrome browser and commits were pus
 
 5. Site Published.
 
-# Tools & Other Resources Used 
+# Tools and Other Resources Used 
 
 ## 1. Design 
 
@@ -748,7 +829,7 @@ This website was developed using GitPod in a Chrome browser and commits were pus
 - ### **[Are there devices narrower than 320px (and data on their usage for web browsing)?](https://ux.stackexchange.com/questions/74798/are-there-devices-narrower-than-320px-and-data-on-their-usage-for-web-browsing)**
     Information on responsive design re: smallest screen width to design for.
 
-## 2. HTML & CSS
+## 2. HTML and CSS
 
 - ### **[CSS Tooltip](https://www.w3schools.com/css/css_tooltip.asp)**
     W3Schools information about using and writing CSS tooltips.
@@ -759,11 +840,11 @@ This website was developed using GitPod in a Chrome browser and commits were pus
 - ### **[Audio tag information](https://medium.com/better-programming/everything-about-the-audio-tag-in-html-and-javascript-c531d3bb882a)**
     Useful information about using the AUDIO tag.
 
-- ### **[Autoprefixer](https://autoprefixer.github.io/)
+- ### **[Autoprefixer](https://autoprefixer.github.io/)**
     Used to ensure cross-browser compatibility for my CSS code.
 
 - ### **[Overriding button styles](https://css-tricks.com/overriding-default-button-styles/)**
-    Used to transform <a> links into buttons and re-style them. 
+    Used to transform ```<a>``` links into buttons and re-style them. 
 
 ## 3. JavaScript
 
@@ -850,7 +931,7 @@ This website was developed using GitPod in a Chrome browser and commits were pus
 - ### **[D3.js Tutorials: Part 11 - Donut Charts](https://www.youtube.com/watch?v=0KB1tKCs7qE&list=PLEDbaVSIL58PGP65y3kkZse02s79BCbsp&index=12)**
     Great online series on D3.js
     
-## 4. Git & GitHub
+## 5. Git and GitHub
 
 - ### **[How to Write a Git Commit Message - Chris Beams](https://chris.beams.io/posts/git-commit/)**
     Great post about writing commits for Git.
@@ -861,12 +942,12 @@ This website was developed using GitPod in a Chrome browser and commits were pus
 - ### **[Working with Branches in Git and GitHub](https://thenewstack.io/dont-mess-with-the-master-working-with-branches-in-git-and-github/)**
     An introduction to branches. 
 
-## 5. Frameworks
+## 6. Frameworks
 
 - ### **[tippy.js](https://atomiks.github.io/tippyjs/v6/getting-started/)**
     A wonderful JavaScript framework for tooltips, popovers, dropdowns & menus. Best thing since sliced bread.
 
-## 6. General
+## 7. General
 
 - ### **[Debugging in Chrome](https://javascript.info/debugging-chrome)**
     Information about Chrome Debugging tools. 
@@ -903,5 +984,9 @@ This website was developed using GitPod in a Chrome browser and commits were pus
 
 # Acknowledgements
 
-Thanks To Tutor Support specifically; Haley who helped me crack a particularly stubborn bug in the Manual Time Edit Function, 
-Igor who gave me some great direction v-a-v Jasmine Testing & Stephen who helped me extract elements of my deleteTask() function to the global space to fix an addEventListener issue.  
+Thanks to tutor Support specifically: 
+- Haley who helped me crack a particularly stubborn bug in the Manual Time Edit Function and 
+- Stephen who helped me extract elements of my deleteTask() function to the global space to fix an addEventListener issue.  
+
+Thanks to the Code Institute Slack Community for their resources and information. <br>
+Thank you to my Code Institute mentor [Oluwafemi Medale](https://github.com/omedale) for his invaluable insight and instruction. 

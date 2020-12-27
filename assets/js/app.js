@@ -543,7 +543,6 @@ class Timer {
 					ellipsis.addEventListener(evt, function(elipEvent) {
 						if ((evt === 'click') || (elipEvent.keyCode === 9)) {
                             const countdown25Button = document.querySelector('.countdown25-task-option');
-
                             countdown25Button.addEventListener('keyup', function(event) {
                                 if (event.keyCode === 13) {
                                     event.preventDefault();

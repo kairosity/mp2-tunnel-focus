@@ -70,10 +70,17 @@ It combines a stopwatch timer with two pomodoro timers, one for 15 minutes and o
     - [iPads and md breakpoints](#ipads-and-md-breakpoints)
     - [Desktops lg and xl breakpoints](#desktops-lg-and-xl-breakpoints)
 - [4. Accessibility](#accessibility)
-    - [Event Listeners](#1.-event-listeners)
-    - [Skip Tasks](#2.-skip-tasks)
-    - [Screen Reader Accessibility](#3.-screen-reader-accessibility)
-    - [Zoom Ratio](#4.-zoom-ratio)
+    - [Keyboard Accessibility](#keyboard-accessibility)
+        - [Event Listeners](#1.-event-listeners)
+        - [Skip Tasks](#2.-skip-tasks)
+        - [Focus Highlights](#3.-focus-highlights)
+    - [Visual Accessibility](#visual-accessibility)
+        - [Screen Readers](#1.-screen-readers)
+        - [Zoom Ratio](#2.-zoom-ratio)
+        - [Colourblindness](#3.-colourblindness)
+    - [Auditory Accessibility](#auditory)
+    - [Cognitive Accessibility](#cognitive)
+    - [Bandwidth Accessibility](#bandwidth)
 - [5. Potential Features for Future Releases](#potential-features-for-future-releases)
 - [6. Testing](#testing)
 - [7. Issues and Room for Improvement](#issues-and-room-for-improvement)
@@ -457,7 +464,7 @@ This is the first feature the user will see on the landing page, and the most im
 
 ## 4. Editing a task
 
-Both the task name / description and/or the amount of time associated with focus on that task can be fully edited and changes saved.
+Both the task name / description and/or the amount of time associated with focus on that task can be fully edited and changes are saved.
 
 ### Task Edit Special Features 
 
@@ -476,7 +483,8 @@ Users can choose to delete any of their tasks whether or not they are completed.
 ### Task Deletion Special Features 
 
 - Users are prompted to confirm that they definitely want to delete a specific task. 
-- This handles user errors gracefully and stops a user from accidentally deleting a task they wanted to keep. 
+- This handles user errors gracefully and stops a user from accidentally deleting a task they wanted to keep.
+- The delete task confirmation modal also includes the specific task name/description of the task to be deleted, this further wards against accidental deletion by the user.  
 
 <p align="center">
   <img src="assets/misc-images/delete-confirmation.png">
@@ -505,12 +513,12 @@ Other than the stopwatch timer, the rest of the navigation options are available
 - It is also ARIA friendly, and screen reader compatible. 
 - When an option is hovered over by the mouse, its background turns yellow. 
 -  I included a plugin called hideOnPopperBlur which was part of the tippy.js package and that ensured that only one popover could be opened at any one time, so when another element is tabbed to, the popover disappears.
-- When an option is selected via click or enter, the popover automatically disappears. This was custom coded as my own plugin called 'hideOnOptionSelect', as the tippy.js code did not default to that functionality.
-- Separate from the popover, there is a "Skip tasks" link for keyboard users, the idea here is that because there are 6 tabbable options per task, and there could potentially be many many tasks in a list, a keyboard user could get very frustrated if they were trying to access the charts, as these come after the tasks in the tab order. The "Skip Tasks" link is invisible to mouse users, but it comes after the "Add new task" button for keyboard users. It is a very important accessibility navigation feature. 
+- When an option is selected via click or enter, the popover automatically disappears. This is my own plugin called 'hideOnOptionSelect', as the tippy.js code did not default to that functionality.
+- Separate from the popover, there is a "Skip tasks" link for keyboard users, the idea here is that because there are 6 tabbable options per task, and there could potentially be many many tasks in a list, a keyboard user could get very frustrated if they were trying to access the charts as these come after the tasks in the tab order. The "Skip Tasks" link is invisible to mouse users, but it comes after the "Add new task" button for keyboard users. It is a very important accessibility navigation feature. 
 
 These customisations enhance the navigation UX and ensure its smooth and accessible functioning. 
 
-(More detail on both of these popover customisations in the testing.md file under the dynamicPopoverNav() section.)
+(More detail on both of the popover customisations can be found in the testing.md file under the dynamicPopoverNav() section).
 
 <p align="center">
   <img src="assets/misc-images/navigation.png">
@@ -586,9 +594,14 @@ They are screen reader & keyboard friendly and the dropdown select options can b
   <img src="assets/misc-images/chart-view.png">
 </p>
 
-## 10. 404 Page
+## 10. Custom 404 Page
 
 The application has a custom 404 page in the same style as the rest of the application, with a customised message telling the user where they strayed from, and a link for them to click to get back quickly, without having to use the back button. 
+
+<p align="center">
+  <img src="assets/misc-images/custom-404.png">
+</p>
+
 
 # Mobile-first Responsivity
 
@@ -686,7 +699,8 @@ And finally, on large screens, the **Timer** has more space around it and centre
 
 # Accessibility
 
-Ensuring that the entire application is keyboard accessible was very important from the outset and each function and section of the application was coded with full keyboard functionality in mind. 
+## Keyboard Accessibility
+I really wanted to ensure that the entire application was keyboard accessible. Every function and section of the application was coded with full keyboard functionality in mind. 
 
 ### 1. Event Listeners 
 One particular roadblock I encountered when ensuring great keyboard accessibility was working out how to code behaviour based on two event listeners without having to duplicate large amounts of code.
@@ -695,25 +709,57 @@ I eventually found [this](https://stackoverflow.com/questions/11845678/adding-mu
 
 This got extra complex when I needed to nest two of these event arrays within each other in order to access items in the options menu popover. It eventually worked like this: 
 
-            ellipsisArray.forEach(function(ellipsis){
-            ['click','keyup'].forEach(function(evt){
-                ellipsis.addEventListener(evt, function(elipEvent){
-                    if((evt === 'click') || (elipEvent.keyCode === 9)) {
-                        const countdown15Button = document.querySelector('.countdown15-task-option');
-                        ['click','keyup'].forEach(function(e){
-                            countdown15Button.addEventListener(e, function(event){
-                                if((e === 'click') || (event.keyCode === 13)) { 
-                                    REST OF LOGIC HERE }
-While verbose and winding, this was definitely preferable to writing out the exact same logic twice, once for click events and once for keyup events. 
+            const ellipsisArray = document.querySelectorAll('.task-options');
+			ellipsisArray.forEach(function(ellipsis) {
+				['click', 'keyup'].forEach(function(evt) {
+					ellipsis.addEventListener(evt, function(elipEvent) {
+						if ((evt === 'click') || (elipEvent.keyCode === 9)) {
+                            const countdown25Button = document.querySelector('.countdown25-task-option');
+                            countdown25Button.addEventListener('keyup', function(event) {
+                                if (event.keyCode === 13) {
+                                    event.preventDefault();
+                                    countdown25Button.click();
+                                }
+                            });
+							countdown25Button.addEventListener('click', function() {
+                                REST OF LOGIC HERE....
+
+While somewhat winding, this was definitely preferable to writing out the exact same logic twice, once for click events and once for keyup events. 
 
 ### 2. Skip Tasks 
-Another issue I found when testing the application using only a keyboard was that it was infuriating when you had a long task list and you wanted to toggle charts, to have to tab through each individual task and all its associated options. To circumvent this issue, I included a "Skip Tasks" link that becomes visible only when the site is navigated using a keyboard.  
+Another issue I found when testing the application using only a keyboard was that it was infuriating when you had a long task list and you wanted to toggle charts, to have to tab through each individual task and all its associated options. To circumvent this issue, I included a "Skip Tasks" link that becomes visible only when the site is navigated using a keyboard. 
+ 
+### 3. Focus Highlights
+I have ensured that it is obvious when the keyboard has tabbed over a particular element by making the focus & active properties stand out.
 
-### 3. Screen Reader Accessibility 
-Although not a perfect application, I used the Chrome Screen Reader to get an idea of how the website would be interacted with by screen reader users. The Chrome offering is nowhere near as complete, or accurate as more professional screen readers, however it did allow me to see where my application was falling down in terms of what elements were not labelled or semantically described correctly. Wherever possible, I fixed these issues by including aria-labels & titles to elements. I also redesigned many parts of the application to use buttons instead of ```<a>``` tags, as buttons are automatically described by screen readers and ```<a>``` tags are not. This was especially important for the task options & timer controls. 
+<p align="center">
+  <img src="assets/misc-images/keyboard-focus.png">
+</p>
 
-### 4. Zoom Ratio
-I ensured that the website was usable for those hard of vision by making sure that users can view and use it comfortably at up to 200% zoom as per web standards.
+## Visual Accessibility
+
+### 1. Screen Readers 
+Although not a perfect testing application, I used the Chrome Screen Reader to get an idea of how the website would be interacted with by screen reader users. The Chrome offering is nowhere near as complete, or accurate as more professional screen readers, however it did allow me to see where my application was falling down in terms of what elements were not labelled or semantically described correctly. Wherever possible, I fixed these issues by including aria-labels & titles to elements. 
+
+I also tried to redesign many parts of the application to use buttons instead of ```<a>``` tags, as buttons are automatically described by screen readers and ```<a>``` tags are not. However, I then found that this completely stopped parts of my application working on mobile, so unfortunately in some cases, I had to step it back and return to using ```<a>``` tags, but whenever possible I have used the correct semantic elements for screen readers. 
+
+### 2. Zoom Ratio
+I ensured that the application was accessible for users who need to increase the zoom ratio of the page. It can be viewed and used comfortably at up to 200% zoom as per web standards.
+
+### 3. Colourblindness 
+I used Chrome's [Web Disability Simulator](https://chrome.google.com/webstore/detail/web-disability-simulator/olioanlbgbpmdlgjnnampnnlohigkjla?hl=en) to test the application for all kinds of colourblindness as well as for users with other vision issues. I ensured that no functionality was intrinsically tied to colour perception. 
+
+## Auditory
+
+My countdown timer features a silent alarm for users who don't want an audio alarm to ring, but this also doubles as an alarm for users with aural accessibility issues. 
+
+## Cognitive
+
+To make the application as cognitively accessible as possible, I have ensured the design is clean and effective, without over-simplifying functionality. 
+
+## Bandwidth
+
+Using a variet of web development tools (further outlined in the testing.md doc) I have ensured that the application's performance runs as fast as possible, to make it accessible to users with slow bandwidth.
 
 # Potential Features for Future Releases
 

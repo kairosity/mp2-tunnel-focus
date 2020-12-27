@@ -492,7 +492,7 @@ h2.sub-heading {
 	margin-bottom: 20px;
 	font-size: 1.3em;
 }
-#save-time-to-task {
+#save-time-to-task, .button-404 {
 	background-color: var(--sun-yellow);
 	padding: 1em;
 	color: var(--pure-black);
@@ -508,7 +508,7 @@ h2.sub-heading {
 	transition: all 500ms;
 }
 /* Button behaviour when hovering & clicking */
-#add-new-task:hover, .close-timer-x:hover, #save-time-to-task:hover {
+#add-new-task:hover, .close-timer-x:hover, #save-time-to-task:hover, .button-404:hover {
 	-webkit-box-shadow: 7px 12px 0px 0px rgba(0, 0, 0, 1);
 	box-shadow: 7px 12px 0px 0px rgba(0, 0, 0, 1);
 	color: var(--pure-black);
@@ -516,12 +516,12 @@ h2.sub-heading {
 	-ms-transform: scale(1.01);
 	transform: scale(1.01);
 }
-#add-new-task:active, .close-timer-x:active, #save-time-to-task:active {
+#add-new-task:active, .close-timer-x:active, #save-time-to-task:active, .button-404:active {
 	-webkit-box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 1);
 	box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 1);
 	outline: none;
 }
-#add-new-task:focus, .close-timer-x:focus, #save-time-to-task:focus {
+#add-new-task:focus, .close-timer-x:focus, #save-time-to-task:focus, .button-404:focus {
 	outline: var(--sun-yellow) dashed 4px;
 }
 .silent-alarm {
@@ -1448,9 +1448,15 @@ footer {
     text-align: center;
     background-color: var(--sun-yellow);
 }
-.instruction-404 {
+.title-404 {
     font-family: "Heebo", sans-serif;
     font-size: 2em;
+    color: var(--pure-black);
+    padding: 1.5em;
+}
+.instruction-404 {
+    font-family: "Heebo", sans-serif;
+    font-size: 1.6em;
     color: var(--pure-black);
     padding: 1.5em;
 }

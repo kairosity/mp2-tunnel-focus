@@ -1,4 +1,36 @@
-# **Tunnel Focus Application Testing**
+# **Tunnel Focus Application: Testing**
+
+# Testing Table Of Contents
+
+* [User Story Testing](#user-story-testing)
+  * [First Time User Goals](#first-time-user-goals)
+  * [General User Goals](#general-user-goals)
+  * [Returning User Goals](#returning-user-goals)
+  * [Accessibility User Goals](#accessibility-user-goals)
+      - [*Total Colourblindness Visual*](#total-colourblindness-visual)
+      - [*Yellow-blue Colourblindness Visual*](#yellow-blue-colourblindness-visual)
+      - [*Red-Green Colourblindness Visual*](#red-green-colourblindness-visual)
+* [Manual Testing Approaches](#manual-testing-approaches)
+* [Browser Testing](#browser-testing)
+    - [Desktop Browser Testing](#desktop-browser-testing)
+    - [Mobile Browser Testing](#mobile-browser-testing)
+    - [A Note on Mobile Testing](#a-note-on-mobile-testing)
+* [Application Structure](#application-structure)
+* [JavaScript Testing](#javascript-testing)
+    - [*Timer Class*](#timer-class)
+        - [*Helper Functions*](#helper-functions)
+        - [*Timing Functions*](#timing-functions)
+        - [*Structural Functions*](#structural-functions)
+    - [*Task Class*](#task-class)
+    - [*List Class*](#list-class)
+    - [*Productivity Chart Functions*](#productivity-chart-functions)
+* [Code Validators](#code-validators)
+    - [*HTML Validators*](#html-validators)
+    - [*CSS Validators*](#css-validators)
+    - [*JavaScript Validators*](#javascript-validators)
+* [Web Development Tools Testing](#web-development-tools-testing)
+    - [Lighthouse](#lighthouse)
+    - [web dev Measure](#web-dev-measure)
 
 # User Story Testing
 
@@ -83,13 +115,13 @@
 - **As a user who is __*colourblind*__, the colours used should employ sufficient contrast so that any visual cues are apparent to me.**
     - That was taken into account at the wireframing stage of design and rechecked using Chrome's Web Disability Simulator. Here are some of the very useful screenshot examples of how the application is viewed by colourblind users:
 
-### Total Colourblindness:
+### Total Colourblindness Visual
 ![total-colourblindness](assets/misc-images/total-colourblindness.png)
 
-### Yellow-blue Colourblindness:
+### Yellow-blue Colourblindness Visual
 ![yellow-blue-colourblindness](assets/misc-images/yellow-blue-colourblindness.png)
 
-### Red-green Colourblindness:
+### Red-green Colourblindness Visual
 ![red-green-colourblindness](assets/misc-images/red-green-colourblindness.png)
 
 - Most pertinently none of the application interactions depend on the user being able to correctly discern between colours and the charts contain 2 different legends which I think sufficiently illustrates which tasks are associated with which donut slice.
@@ -102,28 +134,111 @@
     - Aria-labels have been added to all important elements that need to be read aloud to users. 
     - Elements have been semantically written so as to ensure the best possible experience for screen reader-dependent users. 
 
-# Manual Testing
+# Manual Testing Approaches
 
 Continuous manual testing of all functions happened during development. Any time functionality was added or changed, I went through the entire application and tried to break it by doing all possible actions out of the normal logical flow of the application. This is how the majority of the bugs and issues were discovered in CSS, JavaScript & HTML.
 
+- I tested the website layout at various breakpoints using Chrome Developer Tools, as well as the Responsive Viewer Chrome plugin, to make sure it looked good on all screen sizes. 
+
+- I tested the application and all its functions on the selection of phones and iPads available in my home, as well as asking friends and family with different devices to test it on theirs.
+
+- I did more robust browser & device testing using [Browser Stack](https://www.browserstack.com/) which is a super nifty application.
+
 # Browser Testing
 
-The application was tested on all major browsers with the exception of Internet Explorer, as its usage is so low and it is due to be completely retired early next year. 
+The application was tested on all major browsers with the exception of Internet Explorer, as its usage is so low and it is due to be completely retired early next year.
 
-# Application Logic / Structure
+Here are the results of the browser testing using [Browser Stack](https://www.browserstack.com/)
+
+## Desktop Browser Testing
+
+| OS  | Browser | Version | Design Check | Functionality Check | 
+| ---- | ------- | ------- | :---: | :---: |
+| **Windows 7, 8, 8.1 & 10**   | *Microsoft Edge*  |  87 (latest) | ✓ | ✓
+|   |   | 86 | ✓ | ✓
+|   |   | 85 | ✓ | ✓
+|   |   | 84 | ✓ | ✓
+|   |   | 83 | ✓ | ✓
+|   |   | 82 | ✓ | ✓
+|   |   | 81 | ✓ | ✓
+|   |   | 80 | ✓ | ✓
+| ↓  |  ↓ | 18 | X | X
+| **Windows 7, 8, 8.1 & 10 &**  | *Firefox*  |  84 (latest)| ✓ | ✓
+|  **Mac OSX Mavericks and Newer** |   | 83 | ✓ | ✓
+|   |   | 82 | ✓ | ✓
+|   |   | 81 | ✓ | ✓
+|   |   | 80 | ✓ | ✓
+|   |   | 79 | ✓ | ✓
+|   |   | 78 | ✓ | ✓
+| ↑  |  ↑  | 66 | ✓ | ✓
+| ↓  |  ↓  | 65 | X | X
+| **Windows 7, 8, 8.1 & 10 &**   | *Chrome*  |  87 (latest)
+| **Mac OSX Mavericks and Newer**  |   | 86 | ✓ | ✓
+|   |   | 85 | ✓ | ✓
+|   |   | 84 | ✓ | ✓
+|   |   | 83 | ✓ | ✓
+|   |   | 82 | ✓ | ✓
+|   |   | 81 | ✓ | ✓
+|   |   | 80 | ✓ | ✓
+| ↑ | ↑  | 61 | ✓ | ✓
+| ↓ | ↓  | 60 | X | X
+| **Windows 7, 8, 8.1 & 10 &**  | *Opera*  |  73 (latest) | ✓ | ✓
+| **Mac OSX Mavericks and Newer**  |   | 72 | ✓ | ✓
+|   |   | 71 | ✓ | ✓
+|   |   | 68 | ✓ | ✓
+|   |   | 67 | ✓ | ✓
+|   |   | 66 | ✓ | ✓
+|   |   | 65 | ✓ | ✓
+|  ↑ |  ↑ | 48 | ✓ | ✓
+|  ↓  |  ↓  | 47 | X | X
+
+For Mac systems nothing older than OSX Mavericks could sucessfully run the application, and for Windows nothing older than Windows 7. 
+
+- On Windows desktops it worked perfectly on all versions of Microsoft Edge from 80 upwards.
+- On Windows & Mac desktops it worked on all versions of Firefox from v66 upwards.
+- On Windows & Mac desktops it worked on all versions of Chrome from v61 upwards.
+- On Windows & Mac desktops it worked on all versions of Opera from v48 upwards. 
+
+## Mobile Browser Testing
+
+| Mobile Device  | OS  | Browser | Design Check | Functionality Check | 
+| ---- | ------- | ------- | :---: | :---: |
+| **iPhone & iPad**   | 14  |  Safari & Chrome | ✓ | ✓
+|   | 13  | Safari & Chrome | ✓ | ✓
+|   | 12 | Safari & Chrome | ✓ | ✓
+|   | 11  | Safari | ✓ | ✓
+| ↓   | 10  | Safari | X | X
+| ↓   | 11  | Chrome | X | X
+| **Samsung Galaxy S20, S9, S8, S10+, S10e, S9+, S8+, S7, S6, S5, S4, A51, A11, A10, A8, Note 20 - Note3**  | *10, 9, 8, 7, 6, 5, 4.4, 4.3*  |  Chrome, Firefox, Samsung Internet & UC Browser| ✓ | ✓
+|  **Google Pixel 5, 4, 3a, 3, 2, Pixel, PixelXL, Nexus6P, Nexus 6, 5, 9, 7** | 11, 10, 9, 8, 7.1, 7, 6, 5, 4.4, 5.1, 6  | Chrome, Firefox & UC Browser | ✓ | ✓
+|  **OnePlus 8, 7T, 7, 6T** | 10, 9  | Chrome, Firefox & UC Browser | ✓ | ✓
+|  **Moto G7 Play, Moto X 2nd Gen, Moto G 2nd Gen** | 9, 6, 5  | Chrome, Firefox & UC Browser | ✓ | ✓
+
+As the above demonstrates there are issues running the application on Apple devices from versions 10 & 11 and older (depending on whether a user is using Safari or Chrome).
+
+Androids are far more backwards compatible, and using Browser Stack I found zero incompatibility testing the devices and OSs listed above.
+
+## A Note on Mobile Testing
+
+A rather unpleasant surprise I had halfway through designing the application was that the Chrome Dev Tools mobile emulator is not that good at emulating mobiles. Many of the application's features that worked fine in the emulator did not work or worked badly on mobile. I was able to fix all of these, but it highlighted the difficulties inherent in designing for mobile without constantly pushing to GitHub, making the site live and checking how it really works.
+
+In order to test accurately for mobile, I cloned my application into a separate gitHub app, and whenever I found a tough mobile bug that required multiple tiny commits and pushing the application live for each one, I used the cloned application. This way the commit history was not flooded with hundreds of useless commits that explained very little of the actual coding process. 
+
+# Application Structure
 
 This task manager application is based on the principles of Object-Oriented Programming. Its logic is structured around 3 objects that interact: a Task object, a List object and a Timer object. 
-In its incipient stages I had sketched out functionality based on a series of functions and event listeners and I saw how quickly that structure becomes unwieldly. The classes I have used compartmentalize the code and make it far easier to manage. I've noticed particularly how useful objects are for maintaining a clean global scope, with almost no variables.
+
+In its incipient stages I had sketched out functionality based on a series of functions and event listeners and I saw how quickly that structure becomes unwieldly. The classes I have used compartmentalize the code and make it far easier to manage. I've noticed particularly how useful objects are for maintaining a clean global scope, with almost no variables. However I think next time I will try a fully functional programming approach in order to compare the two and to make automatic testing more accessible.
 
 # JavaScript Testing
 
-This section will detail each of the class objects that this application is comprised of. It will look at each individual method/function, I will summarise their purpose and how they work, and any issues that arose during testing will be outlined.
+This section will detail each of the classes, properties, methods & functions that this application is comprised of. I will summarise their purpose and how they work, and any issues that arose during testing will be outlined.
 
 ## **Timer Class**
 
 ### *Properties*: 
-- seconds (integer)
-- minutes (integer)
+- seconds (integer)()
+- minutes (integer)()
 - hours (integer)
 
 ### *Methods*:
@@ -285,7 +400,7 @@ __FIX 2:__ It transpires that Chrome and Safari for Mobile don't allow audio to 
 
 __FUNCTION SUMMARY:__ These three functions calculate the amount of time to add to a particular task depending on which type of timer is used. The formula for doing so differs. 
 
-### **Structural functions**
+## **Structural functions**
 These are the functions that take care of the foundations of the timing code. 
 
 - ## stopWatchClickStart()
@@ -726,6 +841,8 @@ __FUNCTION SUMMARY:__ This function is taken from Ben Clinkenbeard's Blog Articl
 
 # Code Validators
 
+## HTML Validators
+
 ## [W3C HTML Validator](https://validator.w3.org/)
 
 - Warning 1: ```Consider avoiding viewport values that prevent users from resizing documents.```
@@ -753,7 +870,7 @@ In summary the HTML validates perfectly, with the exceptions of the empty headin
 
 - All anchors and links were valid.
 
-## CSS
+## CSS Validators
 
 ## [W3 CSS Validator](https://jigsaw.w3.org/css-validator/)
 
@@ -765,7 +882,7 @@ In summary the HTML validates perfectly, with the exceptions of the empty headin
 
 - The rest of the code validated.
 
-## JavaScript
+## JavaScript Validators
 
 ## [JSHint](https://jshint.com/)
 
@@ -775,7 +892,7 @@ In summary the HTML validates perfectly, with the exceptions of the empty headin
 
 - Mostly it enabled me to spot the hundreds of semi-colons I had omitted, which I corrected. 
 
-## Web Dev Tools tests
+# Web Development Tools Testing
 
 I ran my finished application through both Lighthouse & web.dev Measure, both very useful tools for gauging usability and site performance.
 
@@ -800,13 +917,9 @@ It scored well on both measures:
 ### SEO:
 ![lighthouse-seo](assets/misc-images/lighthouse-seo.png)
 
-## Web.Dev Measure
+## Web Dev Measure
 
 Oddly enough (because they are essentially the same tool) the site's performace suffered on the web.dev measure, but the points minused were mostly to do with all the unused D3.js code.
 It also wanted me to minify my JavaScript, which can be easily done at a later date. 
 
 ![webdev-measure](assets/misc-images/webdev-measure.png)
-
-# Mobile Testing
-
-A rather unpleasant surprise I had halfway through designing the application was that the Chrome Dev Tools mobile emulator is not that good at emulating mobiles. Many of the application's features that worked fine in the emulator did not work or worked badly on mobile. I was able to fix all of these, but it highlighted the difficulties inherent in designing for mobile without constantly pushing to GitHub, making the site live and checking how it really works. 

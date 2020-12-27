@@ -506,6 +506,7 @@ Other than the stopwatch timer, the rest of the navigation options are available
 - When an option is hovered over by the mouse, its background turns yellow. 
 -  I included a plugin called hideOnPopperBlur which was part of the tippy.js package and that ensured that only one popover could be opened at any one time, so when another element is tabbed to, the popover disappears.
 - When an option is selected via click or enter, the popover automatically disappears. This was custom coded as my own plugin called 'hideOnOptionSelect', as the tippy.js code did not default to that functionality.
+- Separate from the popover, there is a "Skip tasks" link for keyboard users, the idea here is that because there are 6 tabbable options per task, and there could potentially be many many tasks in a list, a keyboard user could get very frustrated if they were trying to access the charts, as these come after the tasks in the tab order. The "Skip Tasks" link is invisible to mouse users, but it comes after the "Add new task" button for keyboard users. It is a very important accessibility navigation feature. 
 
 These customisations enhance the navigation UX and ensure its smooth and accessible functioning. 
 
@@ -513,6 +514,9 @@ These customisations enhance the navigation UX and ensure its smooth and accessi
 
 <p align="center">
   <img src="assets/misc-images/navigation.png">
+</p>
+<p align="center">
+  <img src="assets/misc-images/skip-tasks.png">
 </p>
 
 ## 8. Timers. Stopwatch and Countdowns
@@ -582,6 +586,9 @@ They are screen reader & keyboard friendly and the dropdown select options can b
   <img src="assets/misc-images/chart-view.png">
 </p>
 
+## 10. 404 Page
+
+The application has a custom 404 page in the same style as the rest of the application, with a customised message telling the user where they strayed from, and a link for them to click to get back quickly, without having to use the back button. 
 
 # Mobile-first Responsivity
 
@@ -732,6 +739,7 @@ I ensured that the website was usable for those hard of vision by making sure th
 
 3. The donut chart hover effects are not keyboard friendly, and while that same information is available to view in the legend, I would ideally like every aspect of the website to be keyboard accessible. 
 
+4. The method I used to create a custom 404 page works fine, but with the caveat that if a user types a trailing '/' after typing in the incorrect URL the custom 404 page is unstyled. Additionally, if other characters are typed after the final URL but without the original trailing / - then the default 404 page is shown. In both these instances, the user is still shown a 404 page, just a less aesthetically pleasing one.
 
 # Attribution
 
@@ -970,6 +978,11 @@ This website was developed using GitPod in a Chrome browser and commits were pus
 
 - ### **[Accessibility Developer Guide](https://www.accessibility-developer-guide.com/introduction/)**
     One of the best guides to accessibility and ARIA that I've found.
+
+- ### **[Browser Stack](https://www.browserstack.com/)**
+    Used for browser testing. 
+
+
 
 # Technology Used
 

@@ -64,6 +64,132 @@ class Timer {
 		secondsHtml.innerHTML = `0${this.seconds}`;
 		minutesHtml.innerHTML = `0${this.minutes}`;
 		hoursHtml.innerHTML = `0${this.hours}`;
+    }
+    /**
+	 * This method converts seconds into long form time. 
+	 * Thank you to Wilson Lee on Stack Overflow for this code - attributed in README. 
+	 */
+	convertSecondsToTime(seconds) {
+		let hoursConverted = Math.floor(seconds / 3600);
+		let minutesConverted = Math.floor(seconds % 3600 / 60);
+		let secondsConverted = Math.floor(seconds % 3600 % 60);
+		return `${hoursConverted}hrs ${minutesConverted}mins ${secondsConverted}secs`;
+	}
+	/**
+	 * This method adds an overlay to the page making certain elements inaccessible to the user.
+	 */
+	addOverlay() {
+		let pageBody = document.getElementsByTagName('BODY')[0];
+		let overlayEl = document.createElement("DIV");
+		overlayEl.setAttribute("class", "overlay");
+		pageBody.appendChild(overlayEl);
+	}
+	/**
+	 * This method removes the overlay.
+	 */
+	removeOverlay() {
+		let overlay = document.querySelector('.overlay');
+		let pageBody = document.getElementsByTagName('BODY')[0];
+		pageBody.removeChild(overlay);
+	}
+	/**
+	 * This method adds a silent alarm class to the overlay. 
+	 */
+	addSilentAlarm() {
+		let overlay = document.querySelector('.overlay');
+		overlay.removeAttribute("class", "overlay");
+		overlay.setAttribute("class", "silent-alarm");
+	}
+	/**
+	 * This method removes the silent alarm class from the overlay. 
+	 */
+	removeSilentAlarm() {
+		let silentAlarm = document.querySelector('.silent-alarm');
+		let pageBody = document.getElementsByTagName('BODY')[0];
+		pageBody.removeChild(silentAlarm);
+	}
+	/**
+	 * This method makes a number of elements inaccessible to keyboard users.  
+	 */
+	makeArrayElementsNotKeyboardTabbable() {
+		const addNewTaskButton = document.querySelector('#add-new-task');
+		const newTaskInput = document.querySelector('#new-task-input');
+		const arrayOfCheckboxes = document.querySelectorAll('.taskCheckbox');
+		const arrayOfOptionIcons = document.querySelectorAll('.task-options');
+		let startStopwatchButtonArray = document.querySelectorAll('.start-stopwatch');
+		const skipTasks = document.querySelector('#skip-tasks');
+		let chartsSelectBox = document.querySelector('#chart-selections');
+		let infoIcon = document.querySelector('.fa-question-circle');
+		newTaskInput.setAttribute("tabindex", "-1");
+		addNewTaskButton.setAttribute("tabindex", "-1");
+		arrayOfCheckboxes.forEach(function(checkbox) {
+			checkbox.setAttribute("tabindex", "-1");
+		});
+		startStopwatchButtonArray.forEach(function(stopwatch) {
+			stopwatch.setAttribute("tabindex", "-1");
+		});
+		arrayOfOptionIcons.forEach(function(optionicon) {
+			optionicon.setAttribute("tabindex", "-1");
+		});
+		skipTasks.setAttribute("tabindex", "-1");
+		chartsSelectBox.setAttribute("tabindex", "-1");
+		infoIcon.setAttribute("tabindex", "-1");
+	}
+	/**
+	 * This method makes a number of elements accessible again to keyboard users.  
+	 */
+	makeArrayElementsKeyboardTabbableAgain() {
+		const addNewTaskButton = document.querySelector('#add-new-task');
+		const newTaskInput = document.querySelector('#new-task-input');
+		const arrayOfCheckboxes = document.querySelectorAll('.taskCheckbox');
+		const arrayOfOptionIcons = document.querySelectorAll('.task-options');
+		let startStopwatchButtonArray = document.querySelectorAll('.start-stopwatch');
+		const skipTasks = document.querySelector('#skip-tasks');
+		let chartsSelectBox = document.querySelector('#chart-selections');
+		let infoIcon = document.querySelector('.fa-question-circle');
+		newTaskInput.setAttribute("tabindex", "0");
+		addNewTaskButton.setAttribute("tabindex", "0");
+		arrayOfCheckboxes.forEach(function(checkbox) {
+			checkbox.setAttribute("tabindex", "0");
+		});
+		startStopwatchButtonArray.forEach(function(stopwatch) {
+			stopwatch.setAttribute("tabindex", "0");
+		});
+		arrayOfOptionIcons.forEach(function(optionicon) {
+			optionicon.setAttribute("tabindex", "0");
+		});
+		skipTasks.setAttribute("tabindex", "0");
+		chartsSelectBox.setAttribute("tabindex", "0");
+		infoIcon.setAttribute("tabindex", "0");
+	}
+    /**
+	 * This method brings up the information modal when the question mark is clicked. 
+	 * An overlay is added. 
+	 * Elements are made not keyboard tabbable.
+	 * The modal is brought in front of the page.
+	 * If the X close button is clicked the pages reverts as it was before.
+	 */
+	appInformation() {
+		let infoIcon = document.querySelector('#info');
+		let infoModal = document.querySelector('#information-modal');
+		infoIcon.addEventListener('keyup', function(event) {
+			if (event.keyCode === 13) {
+				infoIcon.click();
+			}
+		});
+		infoIcon.addEventListener('click', function() {
+			timer.addOverlay();
+			timer.makeArrayElementsNotKeyboardTabbable();
+            infoModal.style.zIndex = 1001;
+            infoModal.style.display = "table";
+			let closeButton = document.querySelector('.close-info-x');
+			closeButton.addEventListener('click', function() {
+				timer.removeOverlay();
+				timer.makeArrayElementsKeyboardTabbableAgain();
+                infoModal.style.zIndex = -900;
+                infoModal.style.display = "none";
+			});
+		});
 	}
 	timers() {
 		// --------------------------------------TIMER CLASS VARIABLES-------------------------------//
@@ -536,7 +662,6 @@ class Timer {
 		 * It also makes all associated countdown functions available: (pause, play, reset & close).
 		 */
 		function countDown25ClickStart() {
-
 			const ellipsisArray = document.querySelectorAll('.task-options');
 			ellipsisArray.forEach(function(ellipsis) {
 				['click', 'keyup'].forEach(function(evt) {
@@ -1053,132 +1178,7 @@ class Timer {
 		alarmToggle();
 		editTask();
 	}
-	/**
-	 * This method converts seconds into long form time. 
-	 * Thank you to Wilson Lee on Stack Overflow for this code - attributed in README. 
-	 */
-	convertSecondsToTime(seconds) {
-		let hoursConverted = Math.floor(seconds / 3600);
-		let minutesConverted = Math.floor(seconds % 3600 / 60);
-		let secondsConverted = Math.floor(seconds % 3600 % 60);
-		return `${hoursConverted}hrs ${minutesConverted}mins ${secondsConverted}secs`;
-	}
-	/**
-	 * This method adds an overlay to the page making certain elements inaccessible to the user.
-	 */
-	addOverlay() {
-		let pageBody = document.getElementsByTagName('BODY')[0];
-		let overlayEl = document.createElement("DIV");
-		overlayEl.setAttribute("class", "overlay");
-		pageBody.appendChild(overlayEl);
-	}
-	/**
-	 * This method removes the overlay.
-	 */
-	removeOverlay() {
-		let overlay = document.querySelector('.overlay');
-		let pageBody = document.getElementsByTagName('BODY')[0];
-		pageBody.removeChild(overlay);
-	}
-	/**
-	 * This method adds a silent alarm class to the overlay. 
-	 */
-	addSilentAlarm() {
-		let overlay = document.querySelector('.overlay');
-		overlay.removeAttribute("class", "overlay");
-		overlay.setAttribute("class", "silent-alarm");
-	}
-	/**
-	 * This method removes the silent alarm class from the overlay. 
-	 */
-	removeSilentAlarm() {
-		let silentAlarm = document.querySelector('.silent-alarm');
-		let pageBody = document.getElementsByTagName('BODY')[0];
-		pageBody.removeChild(silentAlarm);
-	}
-	/**
-	 * This method makes a number of elements inaccessible to keyboard users.  
-	 */
-	makeArrayElementsNotKeyboardTabbable() {
-		const addNewTaskButton = document.querySelector('#add-new-task');
-		const newTaskInput = document.querySelector('#new-task-input');
-		const arrayOfCheckboxes = document.querySelectorAll('.taskCheckbox');
-		const arrayOfOptionIcons = document.querySelectorAll('.task-options');
-		let startStopwatchButtonArray = document.querySelectorAll('.start-stopwatch');
-		const skipTasks = document.querySelector('#skip-tasks');
-		let chartsSelectBox = document.querySelector('#chart-selections');
-		let infoIcon = document.querySelector('.fa-question-circle');
-		newTaskInput.setAttribute("tabindex", "-1");
-		addNewTaskButton.setAttribute("tabindex", "-1");
-		arrayOfCheckboxes.forEach(function(checkbox) {
-			checkbox.setAttribute("tabindex", "-1");
-		});
-		startStopwatchButtonArray.forEach(function(stopwatch) {
-			stopwatch.setAttribute("tabindex", "-1");
-		});
-		arrayOfOptionIcons.forEach(function(optionicon) {
-			optionicon.setAttribute("tabindex", "-1");
-		});
-		skipTasks.setAttribute("tabindex", "-1");
-		chartsSelectBox.setAttribute("tabindex", "-1");
-		infoIcon.setAttribute("tabindex", "-1");
-	}
-	/**
-	 * This method makes a number of elements accessible again to keyboard users.  
-	 */
-	makeArrayElementsKeyboardTabbableAgain() {
-		const addNewTaskButton = document.querySelector('#add-new-task');
-		const newTaskInput = document.querySelector('#new-task-input');
-		const arrayOfCheckboxes = document.querySelectorAll('.taskCheckbox');
-		const arrayOfOptionIcons = document.querySelectorAll('.task-options');
-		let startStopwatchButtonArray = document.querySelectorAll('.start-stopwatch');
-		const skipTasks = document.querySelector('#skip-tasks');
-		let chartsSelectBox = document.querySelector('#chart-selections');
-		let infoIcon = document.querySelector('.fa-question-circle');
-		newTaskInput.setAttribute("tabindex", "0");
-		addNewTaskButton.setAttribute("tabindex", "0");
-		arrayOfCheckboxes.forEach(function(checkbox) {
-			checkbox.setAttribute("tabindex", "0");
-		});
-		startStopwatchButtonArray.forEach(function(stopwatch) {
-			stopwatch.setAttribute("tabindex", "0");
-		});
-		arrayOfOptionIcons.forEach(function(optionicon) {
-			optionicon.setAttribute("tabindex", "0");
-		});
-		skipTasks.setAttribute("tabindex", "0");
-		chartsSelectBox.setAttribute("tabindex", "0");
-		infoIcon.setAttribute("tabindex", "0");
-	}
-	/**
-	 * This method brings up the information modal when the question mark is clicked. 
-	 * An overlay is added. 
-	 * Elements are made not keyboard tabbable.
-	 * The modal is brought in front of the page.
-	 * If the X close button is clicked the pages reverts as it was before.
-	 */
-	appInformation() {
-		let infoIcon = document.querySelector('#info');
-		let infoModal = document.querySelector('#information-modal');
-		infoIcon.addEventListener('keyup', function(event) {
-			if (event.keyCode === 13) {
-				infoIcon.click();
-			}
-		});
-		infoIcon.addEventListener('click', function() {
-			timer.addOverlay();
-			timer.makeArrayElementsNotKeyboardTabbable();
-            infoModal.style.zIndex = 1001;
-            infoModal.style.display = "table";
-			let closeButton = document.querySelector('.close-info-x');
-			closeButton.addEventListener('click', function() {
-				timer.removeOverlay();
-				timer.makeArrayElementsKeyboardTabbableAgain();
-                infoModal.style.zIndex = -900;
-                infoModal.style.display = "none";
-			});
-		});
-	}
+	
 }
 class Task {
 	constructor(taskDescription) {

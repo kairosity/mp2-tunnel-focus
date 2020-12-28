@@ -17,13 +17,62 @@
     - [A Note on Mobile Testing](#a-note-on-mobile-testing)
 * [Application Structure](#application-structure)
 * [JavaScript Testing](#javascript-testing)
-    - [*Timer Class*](#timer-class)
-        - [*Helper Functions*](#helper-functions)
-        - [*Timing Functions*](#timing-functions)
-        - [*Structural Functions*](#structural-functions)
-    - [*Task Class*](#task-class)
-    - [*List Class*](#list-class)
-    - [*Productivity Chart Functions*](#productivity-chart-functions)
+    - [_**Delete Task Global Functions**_](#delete-task-global-functions)
+        - [confirmDeletion()](#confirmdeletion())
+        - [negateDeletion()](#negatedeletion())
+    - [_**Timer Class**_](#timer-class)
+        - [Timer.initialiseTimer()](#initialisetimer())
+        - [Timer.timers()](#timers())
+        - [Timer.convertSecondsToTime(seconds)](#convertsecondstotime(seconds))
+        - [Timer.addOverlay()](#addoverlay())
+        - [Timer.removeOverlay()](#removeoverlay())
+        - [Timer.addSilentAlarm()](#addsilentalarm())
+        - [Timer.removeSilentAlarm()](#removesilentalarm())
+        - [Timer.makeElementsNotKeyboardTabbable()](#makeelementsnotkeyboardtabbable())
+        - [Timer.makeElementsKeyboardTabbableAgain()](#makeelementskeyboardtabbableagain())
+        - [Timer.appInformation()](#appinformation())
+        - [_**Helper Functions**_](#helper-functions)
+            - [removeTimerFromDom()](#removetimerfromdom())
+            - [createTimerTitle()](#createtimertitle())
+            - [formatTime()](#formattime())
+            - [resetCountdownHtml()](#resetcountdownhtml())
+            - [scrollElementIntoView()](#scrollelementintoview())
+        - [_**Timing Functions**_](#timing-functions)
+            - [countUp()](#countup())
+            - [stopWatchPlay()](#stopwatchplay())
+            - [countDown15Play()](#countdown15play())
+            - [countDown25Play()](#countdown25play())
+            - [countdown()](#countdown())
+            - [countDownFunction()](#countdownfunction())
+        - [_**Structural Functions**_](#structural-functions)
+            - [stopWatchClickStart()](#stopwatchclickstart())
+            - [countdownClickStartHelper()](#countdownclickstarthelper())
+            - [countDown15ClickStart()](#countdown15clickstart())
+            - [countDown25ClickStart()](#countdown25clickstart())
+            - [playOnClick()](#playonclick())
+            - [pauseOnClick(intervalToPause)](#pauseonclick(intervaltopause))
+            - [resetTime()](#resettime())
+            - [resetTimes()](#resettimes())
+            - [countdownEnded()](#countdownended())
+            - [closeTimer()](#closetimer())
+            - [saveTimeButton()](#savetimebutton())
+            - [saveTimeToTask()](#savetimetotask())
+            - [alarmToggle()](#alarmtoggle())
+            - [editTask()](#edittask())
+    - [_**Task Class**_](#task-class)
+    - [_**List Class**_](#list-class)
+        - [List.buildTaskList()](#buildtasklist())
+        - [List.addNewTask()](#addnewtask())
+        - [List.toggleTaskComplete()](#toggletaskcomplete())
+        - [List.deleteTask()](#deletetask())
+        - [List.dynamicPopoverNav()](#dynamicpopovernav())
+        - [List.setDataToLocalStorage()](#setdatatolocalstorage())
+    - [_**Productivity Chart Functions**_](#productivity-chart-functions)
+        - [clearChartArea()](#clearchartarea())
+        - [selectChart(data)](#selectchart(data))
+        - [getTodayTasks()](#gettodaytasks())
+        - [completedTaskList(data)](#completedtasklist(data))
+        - [responsivefy(svg)](#responsivefy(svg))
 * [Code Validators](#code-validators)
     - [*HTML Validators*](#html-validators)
     - [*CSS Validators*](#css-validators)
@@ -41,9 +90,11 @@
     - The new task entry input also explicitly tells the user what is expected of them, and how to do it: "Type to add a new task..."
     - I've included a question-mark icon in the upper right-hand corner of the header that opens a modal that explains the application icons, and what their functions are more explicitly just in case a user is uncertain. 
 - **To be able to quickly and easily understand how to navigate the application.**
-    - When the user launches the application for the first time, all they see is the heading and the sub-heading and the suggestion of adding a new task. Once they do that they see the time summary associated with that task, a stopwatch icon & an ellipsis icon.
-    - The icons avail of metaphorical thinking in that they clearly represent what they do. The only two icons without immediate further verbal explanations are the elipsis and the stopwatch.
-        1. The elipsis is well established as leading to further options, therefore does not require further explanation.
+    - When the user launches the application for the first time, all they see is the heading and the sub-heading and the suggestion of adding a new task. 
+    - As abovementioned the "add new task" input's purpose is abundantly clear.
+    - Once they add a task, they see the time summary associated with that task, a stopwatch icon & an ellipsis icon.
+    - The icons avail of metaphorical thinking in that their purpose is clearly represented by their illustration. The only two icons without immediate further verbal explanations are the elipsis and the stopwatch.
+        1. The elipsis is a well established image for "more options", therefore does not require further explanation.
         2. Since the sub-heading of the app, is "time your tasks" it is reasonable to expect the user to assume the stopwatch has something to do with timing their tasks. If they click it and discover that it counts upwards and they wanted to count downwards, they can easily cancel the operation and choose one of the countdown timers from the options menu.
     - All the menu options have icons & written explanations of what they do. 
     - As mentioned above I've also included further information about how everything works in detail in the information modal. 
@@ -228,17 +279,34 @@ In order to test accurately for mobile, I cloned my application into a separate 
 
 This task manager application is based on the principles of Object-Oriented Programming. Its logic is structured around 3 objects that interact: a Task object, a List object and a Timer object. 
 
-In its incipient stages I had sketched out functionality based on a series of functions and event listeners and I saw how quickly that structure becomes unwieldly. The classes I have used compartmentalize the code and make it far easier to manage. I've noticed particularly how useful objects are for maintaining a clean global scope, with almost no variables. However I think next time I will try a fully functional programming approach in order to compare the two and to make automatic testing more accessible.
+In its incipient stages I had sketched out functionality based on a series of functions and event listeners and I saw how quickly that structure becomes unwieldly. I decided on creating he classes I have used to compartmentalize the code. I've noticed particularly how useful objects are for maintaining a clean global scope, however I do think that for the next project I develop I will try a fully functional programming approach in order to compare the two and to make automatic testing more accessible.
 
 # JavaScript Testing
 
 This section will detail each of the classes, properties, methods & functions that this application is comprised of. I will summarise their purpose and how they work, and any issues that arose during testing will be outlined.
 
+## **Delete Task Global Functions**
+
+- confirmDeletion()
+- negateDeletion()
+
+## confirmDeletion()
+
+__FUNCTION SUMMARY:__ This function identifies the id of the task chosen for deletion, then removes that task from the DOM and then removes that task from localStorage. Then it loops through the task object ids and the timeSegment ids to reset them to run from 0 upwards. Then to ensure synchronization with the DOM tasks, it resets their ids as well. Then the delete task confirmation modal is hidden, and the changes are saved.  
+
+__ISSUE 1:__ When this function was part of a longer deleteTask() method on the List object, the event listener on confirm deletion was carrying and running through the method twice, causing mayhem. 
+
+__FIX 1:__ In consultation with tutor support, this function was removed as a method on the List object and placed in the global scope in order to stop the event listeners from carrying and looping through the deleteTask() function twice. 
+
+## negateDeletion()
+
+__FUNCTION SUMMARY:__ This function cancels the delete operation and resets the taskToDel to an empty string.
+
 ## **Timer Class**
 
 ### *Properties*: 
-- seconds (integer)()
-- minutes (integer)()
+- seconds (integer)
+- minutes (integer)
 - hours (integer)
 
 ### *Methods*:
@@ -286,35 +354,62 @@ This section will detail each of the classes, properties, methods & functions th
 - makeElementsNotKeyboardTabbable()
 - makeElementsKeyboardTabbableAgain()
 
-## Timer.initialiseTimer():
+## initialiseTimer()
 This method is called on page load and all it does is ensure that we don't see "::" (as below) when the timer is called up for the first time. Instead it formats a nice row of 0s: 00:00:00
 
 ![timer-init](assets/misc-images/timer-initialisation.png)
 
 
-## Timer.timers():
+## timers()
 This method encapsulates all the timer functions. It it not meant to be called on the object as a method per se, more it acts as a convenient storage facility for the group of functions that power the timers. 
+
+## convertSecondsToTime(seconds)
+
+__FUNCTION SUMMARY:__ Takes one parameter (seconds) and converts them into hours, minutes and seconds in a human readable format. The code was taken from a Stack Overflow question and is referenced in the attribution section of this README. 
+
+__ISSUE 1:__ I could not call this method from within other functions in this class. timer.convertSecondsToTime would not work. I kept getting a ```"Uncaught ReferenceError: convertSecondsToTime is not defined"```
+
+__FIX 1:__ I had instantiated a local variable called timer and used it to refer to the timer container in the DOM. So calling timer.convertSecondsToTime() when trying to refer to an instance of the Timer Object called timer, was not actually doing that and was indeed not defined. Changing the variable name to timerContainer fixed the issue. 
+
+## addOverlay()
+## removeOverlay() 
+
+__FUNCTION SUMMARY:__ This function appends a div with the class 'overlay' to the body of the page. This overlay sits on top of the page at z-index: 1000 effectively disabling the page contents. removeOverlay() reverses the function.
+
+## addSilentAlarm() 
+## removeSilentAlarm()
+
+__FUNCTION SUMMARY:__ This function creates a silent alarm of flashing colours for users who want to be alerted in a more subtle manner. It works simply by removing the overlay class and adding the silent-alarm class which is defined in CSS code as an infinite animation scrolling through all the colours in the app's colour theme. The rather slow 15 second animation time, is to avoid strobing. I took the CSS for the animation structure from Zak's codepen (attributed in README).
+
+## makeElementsNotKeyboardTabbable() 
+## makeElementsKeyboardTabbableAgain()
+
+__FUNCTION SUMMARY:__ These functions solved the issue of when an option was opened for example "edit task" - the user could break the application by tabbing through elements in the background, even when the yellow overlay was applied. makeElementsNotKeyboardTabbable() goes through each of the background elements and sets: `"tabindex", "-1"` and makeElementKeyboardTabbableAgain() does the opposite. 
+
+## appInformation()
+
+__FUNCTION SUMMARY:__ This method brings up the information modal when the question mark icon is clicked on. When the modal X button is clicked, the modal closes again. 
 
 ## **Helper functions**
 These are a series of functions that I've used to make the code more modular and easier to read by sectioning off code used more than once into smaller functions. 
 
-- ## removeTimerFromDom()
+## removeTimerFromDom()
 
 __FUNCTION SUMMARY:__ This removes the timer from the DOM when the user is finished using it. It is called when a user saves a recently timed time to a task, or when a user presses the X button on the timer. 
 
-- ## createTimerTitle()
+## createTimerTitle()
 
 __FUNCTION SUMMARY:__ This function was used because the steps it contains were repeated for each of the types of timers (countdown15, countdown25 and stopwatch). It adds the type of timer as a ```<h2>``` and it adds a type specific id that is used by various functions to identify which of the three timer types is being used. 
 
-- ## formatTime()
+## formatTime()
 
 __FUNCTION SUMMARY:__ This formats the time displayed by the timer into the 00:00:00 format. If the time in hours, minutes or seconds is less than 10 it adds a leading 0.
 
-- ## resetCountdownHtml()
+## resetCountdownHtml()
 
 __FUNCTION SUMMARY:__ This resets the countdown timer display to either 15 or 25, it is different from the stopwatch reset, for obvious reasons. 
 
-- ## scrollElementIntoView()
+## scrollElementIntoView()
 
 __FUNCTION SUMMARY:__ This scrolls the targeted element into view smoothly.
 
@@ -322,57 +417,58 @@ __FUNCTION SUMMARY:__ This scrolls the targeted element into view smoothly.
 ## **Timing functions**
 These are a series of functions that take care of the timing logic. 
 
-- ## countUp() 
+## countUp() 
 
-    __FUNCTION SUMMARY:__ This function starts counting up from wherever the seconds, minutes and hours variables are at, be that 00:00:00 or after having been paused in the middle of a timing segment. When it is called, the seconds variable is incremented by 1, if the seconds variable is at 60, it is reset to 0. The same logic is applied to minutes. The hours variable increases ad infinitum. Three DOM variables are used to represent this logic in the DOM. This function is then called within a setInterval function within a function called StopWatchPlay() and it is called once every second, thus updating the timer.
+__FUNCTION SUMMARY:__ This function starts counting up from wherever the seconds, minutes and hours variables are at, be that 00:00:00 or after having been paused in the middle of a timing segment. When it is called, the seconds variable is incremented by 1, if the seconds variable is at 60, it is reset to 0. The same logic is applied to minutes. The hours variable increases ad infinitum. Three DOM variables are used to represent this logic in the DOM. This function is then called within a setInterval function within a function called StopWatchPlay() and it is called once every second, thus updating the timer.
 
-    __ISSUE 1:__ When creating my Timer object, I tried initialising the times to 00:00:00 and discovered that ```"Octal literals are not allowed in strict mode."``` 
-    This refers to prefixing numbers with 0. 
+__ISSUE 1:__ When creating my Timer object, I tried initialising the times to 00:00:00 and discovered that ```"Octal literals are not allowed in strict mode."``` 
+This refers to prefixing numbers with 0. 
 
-    __FIX 1:__ I used template literals to add leading 0s for numbers less than 9. 
+__FIX 1:__ I used template literals to add leading 0s for numbers less than 9. 
 
-    __ISSUE 2:__ Even though I initialised the time properties to integers - when they are written dynamically in the DOM they are converted to strings. Here is an example of 
-    one of the unanticipated side-effects of this:
+__ISSUE 2:__ Even though I initialised the time properties to integers - when they are written dynamically in the DOM they are converted to strings. Here is an example of 
+one of the unanticipated side-effects of this:
 
-    ![issue2](assets/misc-images/timer-issue-1.png)
+![issue2](assets/misc-images/timer-issue-1.png)
 
-    __FIX 2:__ I found that for the purpose of this application it's fine that the html representation of time is in string form. The conversion  to strings is automatic, 
-    and when I work with the total time I will convert those strings back to numbers. To fix the multiplying 1s, I left the conversion from strings to numbers up to the browser.
+__FIX 2:__ I found that for the purpose of this application it's fine that the html representation of time is in string form. The conversion  to strings is automatic, 
+and when I work with the total time I will convert those strings back to numbers. To fix the multiplying 1s, I left the conversion from strings to numbers up to the browser.
 
-    __ISSUE 3:__ The stopwatch timer was working perfectly for counting seconds, but when it got to 59 minutes & 59 seconds it then showed: 00:60:00 for a second before changing to 01:00:01.
-    ![issue3](assets/misc-images/timer-issue-3.png)![issue3](assets/misc-images/timer-issue-2.png)
+__ISSUE 3:__ The stopwatch timer was working perfectly for counting seconds, but when it got to 59 minutes & 59 seconds it then showed: 00:60:00 for a second before changing to 01:00:01.
+![issue3](assets/misc-images/timer-issue-3.png)![issue3](assets/misc-images/timer-issue-2.png)
 
-    __FIX:__ I had written an IF / ELSE IF statement for my timing logic:
+__FIX:__ I had written an IF / ELSE IF statement for my timing logic:
 
 
-            if(seconds >= 60){
-                seconds = 0;
-                minutes = minutes + 1;
-            } else if(minutes >= 60){
-                minutes = 0;
-                hours = hours + 1;
-            }
+        if(seconds >= 60){
+            seconds = 0;
+            minutes = minutes + 1;
+        } else if(minutes >= 60){
+            minutes = 0;
+            hours = hours + 1;
+        }
 
 The ELSE IF was making it impossible for the seconds to be greater or equal to 60 at the same time as the minutes were greater or equal to 60. 
 So the program was just running the seconds logic first and pushing them to 0 and only then running the minutes logic, at which point minutes were already at 60.
 
 
-            if(seconds >= 60){
-                seconds = 0;
-                minutes = minutes + 1;
-            } 
-            if(minutes >= 60){
-                minutes = 0;
-                hours = hours + 1;
-            }
+        if(seconds >= 60){
+            seconds = 0;
+            minutes = minutes + 1;
+        } 
+        if(minutes >= 60){
+            minutes = 0;
+            hours = hours + 1;
+        }
 
 Changing the code to two IF statements as above, fixed the issue.
 
-- ## stopWatchPlay()
+## stopWatchPlay()
 
  __FUNCTION SUMMARY:__ Uses a setInterval to calls the countUp() function every second to update the time variables and the html time representation elements.
 
-- ## countDown15Play() & countDown25Play()
+## countDown15Play()
+## countDown25Play()
 
 __FUNCTION SUMMARY:__ These are the functions that call the interval timing functions (countdown() & countdown25SetInterval()) that work in concert to countdown from 15 & 25 minutes. When the seconds and minutes get to less than 0, the alarm plays, with or without sound, depending on the user's choice, and the countdownEnded() function is called.  
 
@@ -380,11 +476,11 @@ __ISSUE 1:__ As the seconds, minutes and hours are initialised to 0, I had diffi
 
 __FIX 1:__ I had to nest the functions within countDown15Play() & countDown25Play() in order to use *that* as the local scope in which to initialise minutes to 15 & 25 respectively. 
 
- ## countdown()
+ ## countdown()
 
  __FUNCTION SUMMARY:__ This function runs the countDownFunction() every second.
 
-## countDownFunction()
+## countDownFunction()
 
 __FUNCTION SUMMARY:__ This is the actual countdown function that changes the timing variables every second and outlines the rules for when to alter the minutes (hours don't come into play as our two countdown timers only run for 15 and 25 minutes).
 
@@ -403,7 +499,7 @@ __FUNCTION SUMMARY:__ These three functions calculate the amount of time to add 
 ## **Structural functions**
 These are the functions that take care of the foundations of the timing code. 
 
-- ## stopWatchClickStart()
+## stopWatchClickStart()
 
 __FUNCTION SUMMARY:__ This is a click event listener on the stopwatch icons attached to each task in the task list. When clicked it starts the stopWatch timer *on that task* as long as certain conditions are met. The function is also responsible for taking the associated task description and playing it above the timer, so the user always has a reference of what task is being timed. This event listener also invokes stopWatchPause(), resetStopWatch() & playOnClick(stopWatchPlay) to access those functions from within its remit.
 
@@ -420,32 +516,33 @@ __FIX 1:__ The fix was to add a boolean variable called "playing" that I use any
 
  __FIX 3:__ These issues and others were rendered obsolete when I included addOverlay() to the program, which effectively makes it impossible for a user to click on any other timer functions while the timer is running.
 
-- ## countdownClickStartHelper(countdownType, countdownNumber)
+## countdownClickStartHelper()
 
-__FUNCTION SUMMARY:__ This function collates all elements and functions common to both countdownClickStart functions (detailed below) in one function in order to refactor code an save space.
+__FUNCTION SUMMARY:__  This function collates all elements and functions common to both countdownClickStart functions (detailed below) in one function in order to refactor code an save space. It takes two parameters: countdownClickStartHelper(countdownType, countdownNumber)
 
 
-- ## countDown15ClickStart() & countDown25ClickStart()
+## countDown15ClickStart()
+## countDown25ClickStart()
 
 __FUNCTION SUMMARY:__ These functions are click event listeners on the countdown timer icons in each task's popover menu box. When clicked the countdown timer is automatically started for 15 or 25 minutes. The countDownPlay(), pauseOnClick(), resetTime() & closeTimer() functions are available from within these functions. 
 
-- ## playOnClick() 
+## playOnClick() 
 
 __FUNCTION SUMMARY:__ Listens for the play button to be clicked and then I use the timer titles to determine which timer is sitting ready to be played. I then pass all associated necessary functions into the if/else if statement so that the correct countdown, pause and reset functions are available from within the playing state. When the play button is clicked this function also removes the play button and shows the pause one. 
 
-- ## pauseOnClick(intervalToPause) 
+## pauseOnClick(intervalToPause) 
 
 __FUNCTION SUMMARY:__ Listens for clicks on the pause button and stops whichever interval timer is passed into the function.
 
-- ## resetTime()
+## resetTime()
 
 __FUNCTION SUMMARY:__ Listens for clicks on the reset button and clears whatever time interval function is passed into it. It also calls resetTimes() which resets all time variables to either 0, 15 minutes or 25 minutes, as well as stopping the timer. 
 
-- ## resetTimes() 
+## resetTimes() 
 
 __FUNCTION SUMMARY:__ Used in conjunction with resetStopWatch() to clear the time variables and reset the DOM timer representation as well. It uses the timer title to determine what number to reset the timers to. The countdown timer reset futher calls on resetCountdownHtml().
 
-- ## countdownEnded() 
+## countdownEnded() 
 
 __FUNCTION SUMMARY:__ When either of the countdown timers reach 0 seconds and 0 minutes, this function is invoked. A modal pops up asking the user if they would like to save the full time to their task. If they click ok - it saves, otherwise it does not.
 
@@ -461,7 +558,7 @@ __FUNCTION SUMMARY:__ When either of the countdown timers reach 0 seconds and 0 
                                     alarm.pause()
 To both the countDown15ClickStart() & countDown25ClickStart() functions, as per information found on Stack Overflow. (attributed in readme)
 
-- ## closeTimer() 
+## closeTimer() 
 
 __FUNCTION SUMMARY:__ This closes down the timer and removes it from sight when the X button is clicked. 
 
@@ -469,7 +566,8 @@ __ISSUE 1:__ If the user clicks the close button and the timer was in the middle
 
  __FIX 1:__ I instituted an if/else if statement that would pause the particular interval being used before the timer container is removed from the DOM.
 
-- ## saveTimeButton() & saveTimeToTask()
+## saveTimeButton() 
+## saveTimeToTask()
     
 __FUNCTION(S) SUMMARY:__ The saveTimeButton first listens for a click event on the saveButton to save the currently timed time into two different task object properties as well as updating the time based elements in the DOM. 
 
@@ -483,12 +581,12 @@ The saveTimeToTask function also calls upon the two countdown15TimeToAdd() & cou
 
 When it has determined the amount of time in seconds to add to the task, it then uses timer.convertSecondsToTime to convert that to a long form time that is stored on the task object and displayed before each task in the task list. 
 
-- ## alarmToggle() 
+## alarmToggle() 
 
 __FUNCTION SUMMARY:__ This function changes the alarm icon on click and associated on/off classes.
 
-- ## editTask() 
-    ### *( originally manualTaskTimeEdit()  )*
+## editTask() 
+### *( originally manualTaskTimeEdit()  )*
 
 __FUNCTION SUMMARY:__ This function allows the user to manually edit a task input or completely alter the amount of time spent working on a particular task. It listens for clicks on its associated icon and then uses the long form time that is displayed next to the task and splits it up into its integer components, creating new inputs to display these for alteration. When the user is ready to save the new time input they can click on the save button and the function translates the new time first to seconds to save on the task and then into the long form again to save to the task as well. Following a suggestion by my mentor I also merged my code from the editTask() function into this one to have just one edit method. 
 
@@ -550,26 +648,7 @@ __ISSUE 1:__ Once the user had clicked to "edit task" button, they were free to 
 __FIX 1:__ I added a conditional that only allowed the edit method to be called if the save button was not already in the DOM: ```if (!document.querySelector('.save-button')){```
 
 
-- ## Timer.convertSecondsToTime(seconds)
-
-__FUNCTION SUMMARY:__ Takes in seconds and converts them into hours, minutes and seconds in a human readable format. The code was taken from a Stack Overflow question and is referenced in the attribution section of this README. 
-
-__ISSUE 1:__ I could not call this method from within other functions in this class. timer.convertSecondsToTime would not work. I kept getting a ```"Uncaught ReferenceError: convertSecondsToTime is not defined"```
-
-__FIX 1:__ I had instantiated a local variable called timer and used it to refer to the timer container in the DOM. So calling timer.convertSecondsToTime() when trying to refer to an instance of the Timer Object called timer, was not actually doing that and was indeed not defined. Changing the variable name to timerContainer fixed the issue. 
-
-- ## addOverlay() & removeOverlay(); 
-
-__FUNCTION SUMMARY:__ This function appends a div with the class 'overlay' to the body of the page. This overlay sits on top of the page at z-index: 1000 effectively disabling the page contents. removeOverlay() reverses the function.
-
-- ## addSilentAlarm() & removeSilentAlarm()
-
-__FUNCTION SUMMARY:__ This function creates a silent alarm of flashing colours for users who want to be alerted in a more subtle manner. It works simply by removing the overlay class and adding the silent-alarm class which is defined in CSS code as an infinite animation scrolling through all the colours in the app's colour theme. The rather slow 15 second animation time, is to avoid strobing. I took the CSS for the animation structure from Zak's codepen (attributed in README).
-
-- ## makeElementsNotKeyboardTabbable() && makeElementKeyboardTabbableAgain();
-
-__FUNCTION SUMMARY:__ These functions solved the issue of when an option was opened for example "edit task" - the user could break the application by tabbing through elements in the background, even when the yellow overlay was applied. makeElementsNotKeyboardTabbable() goes through each of the background elements and sets: `"tabindex", "-1"` and makeElementKeyboardTabbableAgain() does the opposite. 
-
+---
 
 ## Task Class
 
@@ -582,6 +661,7 @@ __FUNCTION SUMMARY:__ These functions solved the issue of when an option was ope
 - totalTimeFocusedOnTaskLongForm (string);
 - timeSegments (array)
 
+---
 
 ## List Class
 ### *Properties*: 
@@ -595,7 +675,6 @@ __FUNCTION SUMMARY:__ These functions solved the issue of when an option was ope
 - deleteTask()
 - dynamicPopoverNav()
 - setDataToLocalStorage()
-
 
 ## buildTaskList()
 
@@ -838,6 +917,7 @@ __FUNCTION SUMMARY:__ This function builds up the two lists: "Tasks Completed" a
 ## responsivefy(svg)
 
 __FUNCTION SUMMARY:__ This function is taken from Ben Clinkenbeard's Blog Article and originally written by Brendan Sudol. It effectively makes the charts responsive to window size changes and I use it as a filler function in between my media queries that change the sizing of the charts. 
+
 
 # Code Validators
 

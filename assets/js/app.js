@@ -518,7 +518,6 @@ class Timer {
 				return timeToAdd;
 			}
 		}
-
 		function countdown25TimeToAdd(hours, minutes, seconds) {
 			var minutesInSeconds = minutes * 60;
 			if ((seconds == -1) && (minutesInSeconds == 0)) {

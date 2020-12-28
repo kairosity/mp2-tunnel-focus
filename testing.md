@@ -22,7 +22,6 @@
         - [negateDeletion()](#negatedeletion())
     - [_**Timer Class**_](#timer-class)
         - [Timer.initialiseTimer()](#initialisetimer())
-        - [Timer.timers()](#timers())
         - [Timer.convertSecondsToTime(seconds)](#convertsecondstotime(seconds))
         - [Timer.addOverlay()](#addoverlay())
         - [Timer.removeOverlay()](#removeoverlay())
@@ -31,12 +30,21 @@
         - [Timer.makeElementsNotKeyboardTabbable()](#makeelementsnotkeyboardtabbable())
         - [Timer.makeElementsKeyboardTabbableAgain()](#makeelementskeyboardtabbableagain())
         - [Timer.appInformation()](#appinformation())
+        - [Timer.timers()](#timers())
         - [_**Helper Functions**_](#helper-functions)
             - [removeTimerFromDom()](#removetimerfromdom())
             - [createTimerTitle()](#createtimertitle())
             - [formatTime()](#formattime())
             - [resetCountdownHtml()](#resetcountdownhtml())
             - [scrollElementIntoView()](#scrollelementintoview())
+            - [makeElementsUntabbable()](#makeelementsuntabbable())
+            - [makeElementsTabbable()](#makeelementstabbable())
+            - [hideTaskIcons()](#hidetaskicons())
+            - [showTaskIcons()](#showtaskicons())
+            - [createButton(buttonType)](#creatbutton())
+            - [makeTimeNumbersFromStrings(arrayOfStringTimes, arrayOfNumberTimes)](#maketimenumbersfromstrings())
+            - [createNewInputsForManualTimeEdit(measureOfTime, timeVariableToEdit, longFormTime)](#createnewinputsformanualtimeedit())
+            - [removeEditOptionElements(taskLine, saveButton, cancelButton, longFormTime)](#removeeditoptionelements())
         - [_**Timing Functions**_](#timing-functions)
             - [countUp()](#countup())
             - [stopWatchPlay()](#stopwatchplay())
@@ -44,6 +52,9 @@
             - [countDown25Play()](#countdown25play())
             - [countdown()](#countdown())
             - [countDownFunction()](#countdownfunction())
+            - [countdown15TimeToAdd()](#countdown15timetoadd())
+            - [countdown25TimeToAdd()](#countdown25timetoadd())
+            - [stopwatchTimeToAdd()](#stopwatchtimetoadd())
         - [_**Structural Functions**_](#structural-functions)
             - [stopWatchClickStart()](#stopwatchclickstart())
             - [countdownClickStartHelper()](#countdownclickstarthelper())
@@ -68,6 +79,7 @@
         - [List.dynamicPopoverNav()](#dynamicpopovernav())
         - [List.setDataToLocalStorage()](#setdatatolocalstorage())
     - [_**Productivity Chart Functions**_](#productivity-chart-functions)
+        - [timeOnTaskExists()](#timeontaskexists())
         - [clearChartArea()](#clearchartarea())
         - [selectChart(data)](#selectchart(data))
         - [getTodayTasks()](#gettodaytasks())
@@ -311,6 +323,14 @@ __FUNCTION SUMMARY:__ This function cancels the delete operation and resets the 
 
 ### *Methods*:
 - initialiseTimer()
+- convertSecondsToTime(seconds)
+- addOverlay()
+- removeOverlay()
+- addSilentAlarm()
+- removeSilentAlarm()
+- makeElementsNotKeyboardTabbable()
+- makeElementsKeyboardTabbableAgain()
+- appInformation()
 - timers()
 
 ### *Helper Functions*:
@@ -319,6 +339,14 @@ __FUNCTION SUMMARY:__ This function cancels the delete operation and resets the 
 - formatTime()
 - resetCountdownHtml()
 - scrollElementIntoView()
+- makeElementsUntabbable()
+- makeElementsTabbable()
+- hideTaskIcons()
+- showTaskIcons()
+- createButton(buttonType)
+- makeTimeNumbersFromStrings(arrayOfStringTimes, arrayOfNumberTimes)
+- createNewInputsForManualTimeEdit(measureOfTime, timeVariableToEdit, longFormTime)
+- removeEditOptionElements(taskLine, saveButton, cancelButton, longFormTime)
 
 ### *Timing Functions*:
 - countUp()
@@ -346,22 +374,12 @@ __FUNCTION SUMMARY:__ This function cancels the delete operation and resets the 
 - saveTimeToTask(id, seconds)
 - alarmToggle()
 - editTask()
-- convertSecondsToTime(seconds)
-- addOverlay()
-- removeOverlay()
-- addSilentAlarm()
-- removeSilentAlarm()
-- makeElementsNotKeyboardTabbable()
-- makeElementsKeyboardTabbableAgain()
 
 ## initialiseTimer()
 This method is called on page load and all it does is ensure that we don't see "::" (as below) when the timer is called up for the first time. Instead it formats a nice row of 0s: 00:00:00
 
 ![timer-init](assets/misc-images/timer-initialisation.png)
 
-
-## timers()
-This method encapsulates all the timer functions. It it not meant to be called on the object as a method per se, more it acts as a convenient storage facility for the group of functions that power the timers. 
 
 ## convertSecondsToTime(seconds)
 
@@ -390,6 +408,11 @@ __FUNCTION SUMMARY:__ These functions solved the issue of when an option was ope
 
 __FUNCTION SUMMARY:__ This method brings up the information modal when the question mark icon is clicked on. When the modal X button is clicked, the modal closes again. 
 
+## timers()
+This method encapsulates all the timer functions. It it not meant to be called on the object as a method per se, more it acts as a convenient storage facility for the group of functions that power the timers. 
+
+---
+
 ## **Helper functions**
 These are a series of functions that I've used to make the code more modular and easier to read by sectioning off code used more than once into smaller functions. 
 
@@ -405,14 +428,46 @@ __FUNCTION SUMMARY:__ This function was used because the steps it contains were 
 
 __FUNCTION SUMMARY:__ This formats the time displayed by the timer into the 00:00:00 format. If the time in hours, minutes or seconds is less than 10 it adds a leading 0.
 
+It takes three parameters: seconds, minutes, hours.
+
 ## resetCountdownHtml()
 
 __FUNCTION SUMMARY:__ This resets the countdown timer display to either 15 or 25, it is different from the stopwatch reset, for obvious reasons. 
+
+It takes three parameters: seconds, minutes, hours.
 
 ## scrollElementIntoView()
 
 __FUNCTION SUMMARY:__ This scrolls the targeted element into view smoothly.
 
+## makeElementsUntabbable()
+
+__FUNCTION SUMMARY:__ This function takes an indeterminate number of parameters ```makeElementsUntabbable(...elements)``` and sets their tabindex to -1. 
+
+## makeElementsTabbable()
+
+__FUNCTION SUMMARY:__ This function takes an indeterminate number of parameters ```makeElementsTabbable(...elements)``` and sets their tabindex to 0.
+
+## hideTaskIcons()
+## showTaskIcons()
+
+__FUNCTION SUMMARY:__ These functions hide and show the task icons.
+
+## createButton()
+
+__FUNCTION SUMMARY:__ This function takes one parameter and creates either a save or a cancel button for modals. 
+
+## makeTimeNumbersFromStrings()
+
+__FUNCTION SUMMARY:__ This function takes two parameters ```makeTimeNumbersFromStrings(arrayOfStringTimes, arrayOfNumberTimes)``` and it turns the array of times as strings into and array of times as integers and it formats them correctly for use.
+
+## createNewInputsForManualTimeEdit()
+
+__FUNCTION SUMMARY:__ This function takes three parameters ```createNewInputsForManualTimeEdit(measureOfTime, timeVariableToEdit, longFormTime)``` and uses them to create labels and inputs for each measure of time in the edit task window.
+
+## removeEditOptionElements()
+
+__FUNCTION SUMMARY:__ This function takes four parameters ```removeEditOptionElements(taskLine, saveButton, cancelButton, longFormTime)``` and removes the elements and classes created in the edit task modal, then it restores the original classes, elements and icons. 
 
 ## **Timing functions**
 These are a series of functions that take care of the timing logic. 
@@ -492,9 +547,13 @@ __ISSUE 2:__ The alarm sound doesn't play on mobile or ipad.
 
 __FIX 2:__ It transpires that Chrome and Safari for Mobile don't allow audio to play unless a user has clicked on a button to play audio. It does however work on Firefox for mobile.   UNFIXED
 
-- ## countdown15TimeToAdd(hours, minutes, seconds) & countdown25TimeToAdd(hours, minutes, seconds) & stopwatchTimeToAdd(hours, minutes, seconds)
+## countdown15TimeToAdd() 
+## countdown25TimeToAdd() 
+## stopwatchTimeToAdd()
 
-__FUNCTION SUMMARY:__ These three functions calculate the amount of time to add to a particular task depending on which type of timer is used. The formula for doing so differs. 
+__FUNCTION SUMMARY:__ These three functions all take in three parameters ```(hours, minutes, seconds)``` and then they calculate the amount of time to add to a particular task depending on which type of timer is used. The formula for doing so differs. 
+
+---
 
 ## **Structural functions**
 These are the functions that take care of the foundations of the timing code. 
@@ -829,6 +888,17 @@ __FIX__ 1: I made sure that the method was placed so as to save the entire list 
 
 The chart functions are separate to the OOP approach, but they draw from and integrate into many of the object methods.
 
+- timeOnTaskExists()
+- clearChartArea()
+- selectChart(data)
+- getTodayTasks()
+- completedTaskList(data)
+- responsivefy(svg)
+
+## timeOnTaskExists()
+
+__FUNCTION SUMMARY:__ This function looks to see if there is already time saved to a task, and then it returns true or false.
+
 ## clearChartArea()
 
 __FUNCTION SUMMARY:__ This function looks to see if there is a chart, a circle legend or a list present in the chart area and if there is, it removes them to clear space for a new one to be loaded in. 
@@ -917,7 +987,6 @@ __FUNCTION SUMMARY:__ This function builds up the two lists: "Tasks Completed" a
 ## responsivefy(svg)
 
 __FUNCTION SUMMARY:__ This function is taken from Ben Clinkenbeard's Blog Article and originally written by Brendan Sudol. It effectively makes the charts responsive to window size changes and I use it as a filler function in between my media queries that change the sizing of the charts. 
-
 
 # Code Validators
 

@@ -2,16 +2,16 @@
 ## Code Institute Milestone Project 2: Interactive Front-End Development
 
 Tunnel Focus is a browser based task manager with a difference. 
-A key methodology of Agile Development is breaking large projects up into smaller tasks as a way to get things done efficiently. 
+A key methodology of agile development is breaking large projects up into smaller tasks as a way to get things done efficiently. 
 
 For many people focusing on a task "until it's done" is not the most efficient way to complete it, as your mind can wander and concentration can lag.
 Focusing in small bursts and maintaining intense focus for small periods of time, punctuated by regular breaks can yield massive benefits in terms of work efficiency.
 
 This web application has been conceptualised and designed around that premise: small bursts of 
 productivity which added together result in successfully completed tasks and projects. Tunnel Focus works as a simple task manager, except that it also keeps track of 
-how long a user works on a particular task. As such, it can be used to help with and encourage an Agile approach to development or any other area that requires task management. 
+how long a user works on a particular task. As such, it can be used to help with and encourage an agile approach to development or any other area that requires task management. 
 
-It combines a stopwatch timer with two pomodoro timers, one for 15 minutes and one for 25 minutes. It was specifically designed to only accommodate these two time segments because they have been [studied and shown](https://www.sciencedaily.com/releases/2011/02/110208131529.htm) to be the most effective time periods for human bursts of focus. 
+It combines a stopwatch timer with two pomodoro timers, one for 15 minutes and one for 25 minutes. It was specifically designed to only accommodate these two time segments because they have been [studied and shown](https://www.sciencedaily.com/releases/2011/02/110208131529.htm) to be the most effective time periods for bursts of focus. 
 
 <a href="https://kairosity.github.io/mp2-tunnel-focus/"><img src="assets/misc-images/tunnel-focus-multi-device-view.png"></a>
 
@@ -124,9 +124,8 @@ __*As a first time user:*__
 
 - I want to be able to start a countdown timer for work on a particular task.
 - I want to be able to select whether the countdown timer runs for 15 or 25 minutes.
-- When the countdown timer ends, I want to be alerted with an audio alarm and/or a visual display. 
-- I want to have the option of turning off the audio alarm and relying on just 
-a visual indication that the countdown is over.
+- When the countdown timer ends, I want to be alerted with an audio alarm or a visual display. 
+- I want to have the option of turning off the audio alarm and relying on just a visual indication that the countdown is over.
 
 - As a user, I want to be able to start an open-ended timer for longer sessions working on a particular task.
 - I want to be alerted after every 30 minutes working with the open-ended timer.
@@ -176,8 +175,7 @@ I researched other task managers online and found a number that have similar fun
 The basis for this application's scope, was actually to create an app I wanted to use for my own projects. I've used a variety of task managers over the years, 
 and have always reverted to just writing lists on paper, which I still believe is a powerful method for many reasons. 
 
-However, the one functionality I always felt was lacking from your run-of-the-mill online todo list / task manager, was the ability to time tasks. The internet is replete with 
-todo lists and pomodoro timers and I felt they are most useful when combined. 
+However, the one functionality I always felt was lacking from your run-of-the-mill online todo list / task manager, was the ability to time tasks. The internet is replete with todo lists and pomodoro timers and I felt they are most useful when combined. 
 
 So the basic and general scope for this project is:
 - A todo list with timer functionality. 
@@ -254,11 +252,11 @@ I kept the scope quite tight to the basic functionality of the application and w
 
 ### Application Sections
 
-- The original structure for this application was to have 1 view on desktop screens and two main views on mobile, but as the application evolved through development, that changed and the mobile version was altered to fit desktop as well. So the structure across the board is based on 1 main view and multiple modal views as the user interacts with the application's features.
+The original structure for this application was to have 1 view on desktop screens and two main views on mobile, but as the application evolved through development, that changed and the mobile version was altered to fit desktop as well. So the structure across the board is based on 1 main view and multiple modal views as the user interacts with the application's features.
 
 **Main View:**
 
-1. Header with Headings & button for more detailed information about the application. 
+1. Header with Headings & a button to summon more detailed information about the application's functionality. 
 
 2. An "add new task" input element with a plus button.
 
@@ -308,9 +306,9 @@ The structure here is somewhat non-linear, but it is so simple that the linear/n
 
 ### Interaction Design
 
-My guiding principle when designing and then re-designing and modifying my original concept was to keep this application simple and effective at doing what it does. "As simple as possible, but no simpler." (Einstein)
+My guiding principle when designing and then re-designing and modifying my original concept was to keep this application simple and effective at doing what it does. "As simple as possible, but no simpler."
 
-I wanted especially to combine a minimalism of design with a minimalism and clarity of interaction, and although I did include an information modal as an informative fallback, I don't think it was necessary, as I believe the interaction design is clean and intuitive. 
+I wanted especially to combine a minimalism of design with a minimalism and clarity of interaction, and although I did include an information modal as a fallback, I don't think it was necessary, as I believe the interaction design is clean and intuitive. 
 
 The interaction is consistent and predictable, once a user works their way through all the options once, it is easily learned and easy to remember, even for a first time user. 
 
@@ -332,14 +330,13 @@ The information button was excluded from having any hover effects, because it is
 
 As an aside, I initially also had the idea of including an affirmations API that would bring up inspiring work related quotes as the timer was running, but I then felt that was unneccesarily complicated and somewhat removed from the whole point of the application, which is to focus on only one thing at a time. 
 
-
 ### Information Architecture
 
-The structure is a sort of blend of the dashboard build with hub & spoke. The main page is a dashboard, with lists & charts and information, but when you time a task, the user opens up a modal and when they close that modal they are brought back to the main view. In any future releases I would forsee keeping that main dashboard view and any new features being added as further spokes off that main page. 
+The structure is a sort of blend of the dashboard build with hub & spoke. The main page is a dashboard, with lists & charts and information, but when you time a task, the user opens up a modal and when they close that modal they are brought back to the main view. In any future releases I would forsee keeping the main dashboard view and any new features being added as further spokes off that main page. 
 
 ## Skeleton
 
-As aforementioned the dashboard/hub & spoke hybrid built has lent itself to an application that I believe is clear and efficiently does what it sets out to do without confusing the user. 
+As aforementioned the dashboard/hub & spoke hybrid build has lent itself to an application that I believe is clear and efficiently does what it sets out to do without confusing the user. 
 
 ### Reassuring Conventions
 
@@ -455,7 +452,7 @@ This is the first feature the user will see on the landing page, and the most im
 - A task can be added by clicking the + button with the mouse *or* by pressing enter on the keyboard. 
 - The cursor will automatically go back into the input field, making it easy to add multiple tasks quickly. 
 - If the user adds unnecessary white space to the beginning or end of the task, it will be automatically removed. 
-- If the user fails to add a task, they will be prompted to "Please enter a valid task". 
+- If the user fails to add a task but hits enter or clicks the plus button, they will be prompted to "Please enter a valid task". 
 
 <p align="center">
   <img src="assets/misc-images/enter-valid-task.png">
@@ -759,7 +756,7 @@ To make the application as cognitively accessible as possible, I have ensured th
 
 ## Bandwidth
 
-Using a variet of web development tools (further outlined in the testing.md doc) I have ensured that the application's performance runs as fast as possible, to make it accessible to users with slow bandwidth.
+Using a variety of web development tools (further outlined in the testing.md doc) I have ensured that the application's performance runs as fast as possible, to make it accessible to users with slow bandwidth.
 
 # Potential Features for Future Releases
 
@@ -786,6 +783,8 @@ Using a variet of web development tools (further outlined in the testing.md doc)
 3. The donut chart hover effects are not keyboard friendly, and while that same information is available to view in the legend, I would ideally like every aspect of the website to be keyboard accessible. 
 
 4. The method I used to create a custom 404 page works fine, but with the caveat that if a user types a trailing '/' after typing in the incorrect URL the custom 404 page is unstyled. Additionally, if other characters are typed after the final URL but without the original trailing / - then the default 404 page is shown. In both these instances, the user is still shown a 404 page, just a less aesthetically pleasing one.
+
+5. The silent alarm is useful if the user is using a mobile device to time your tasks while working on a computer or elsewhere. Then they can put their mobile down next to them and the silent alarm will grab their attention. However if they have the task timer minimised on a desktop window, the silent alarm will have no effect. One way forward would be to investigate a silent alarm that can pop out of its window somehow, although I believe many OSs actively try to prevent this because of spammy links.
 
 # Attribution
 
@@ -898,7 +897,7 @@ This website was developed using GitPod in a Chrome browser and commits were pus
     Used to ensure cross-browser compatibility for my CSS code.
 
 - ### **[Overriding button styles](https://css-tricks.com/overriding-default-button-styles/)**
-    Used to transform ```<a>``` links into buttons and re-style them. 
+    Used to transform ```<a>``` links into buttons and re-style them. Ultimately not used.
 
 ## 3. JavaScript
 

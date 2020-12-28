@@ -154,9 +154,11 @@
 - **To know how much time has been spent on each task today.**
     - This information is available in the productivity charts section, by selecting "Total Time Focused On Each Task Today"
 - **To know how much time has been spent on each task overall.**
-    - This information is available by selecting the productivity chart titled "Total Time Focused On Each Task".
+    - This information is listed clearly in the task list on the left of each task.
+    - This information is also available by selecting the productivity chart titled "Total Time Focused On Each Task".
 - **To know how much time has been spent focused and working today.**
-    - This feature was not implemented in this version of the application, but would be relatively easy to implement for a later release.
+    - This feature was not implemented explicitly in this version of the application, but would be relatively easy to implement for a later release.
+    - However at a push if the user really wants to know how much time they have worked today, they could access that information by looking at the "Total Time Focused on Each Task Today" chart and doing some mental arithmetic.
 - **To see this information displayed in pleasing and easy to comprehend charts and visuals.**
 
     - The charts are easy to select, understand and view.

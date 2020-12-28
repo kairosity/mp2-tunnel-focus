@@ -744,7 +744,8 @@ h2.sub-heading {
 	box-shadow: 2px 4px 0px 0px rgba(0, 0, 0, 1);
 	-webkit-transition: all ease-in-out 500ms;
 	-o-transition: all ease-in-out 500ms;
-	transition: all ease-in-out 500ms;
+    transition: all ease-in-out 500ms;
+    cursor: pointer;
 }
 /*----------------------------------------------------------- Focus Overlay  */
 

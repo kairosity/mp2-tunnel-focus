@@ -693,6 +693,11 @@ And finally, on large screens, the **Timer** has more space around it and centre
   <img src="assets/misc-images/timer-large.png">
 </p>
 
+I used the Chrome extension [Responsive Viewer](https://chrome.google.com/webstore/detail/responsive-viewer/inmopeiepgfljkpkidclfgbgbmfcennb?hl=en) as I was developing, to keep checking in with how the application looked on different devices. I found this plugin somewhat more accurate than Chrome dev tools.
+
+<p align="center">
+  <img src="assets/misc-images/responsive-viewer.png">
+</p>
 
 # Accessibility
 
@@ -768,6 +773,7 @@ Using a variety of web development tools (further outlined in the testing.md doc
 6. Daily/weekly/monthly view of time spent working on each task/project. - Automated graphs with D3.js
 7. Speech to text functionality for adding tasks to the list and making the application more accessible. 
 8. Daily task time targets. So that the user can set a time goal on a task, and then work towards reaching it. 
+9. Adding a CSS circular countdown animation to the task timer, that gets smaller by the percentage of time that remains.
 
 # Testing
 

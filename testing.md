@@ -291,7 +291,7 @@ In order to test accurately for mobile, I cloned my application into a separate 
 
 This task manager application is based on the principles of Object-Oriented Programming. Its logic is structured around 3 objects that interact: a Task object, a List object and a Timer object. 
 
-In its incipient stages I had sketched out functionality based on a series of functions and event listeners and I saw how quickly that structure becomes unwieldly. I decided on creating he classes I have used to compartmentalize the code. I've noticed particularly how useful objects are for maintaining a clean global scope, however I do think that for the next project I develop I will try a fully functional programming approach in order to compare the two and to make automatic testing more accessible.
+In its incipient stages I had sketched out functionality based on a series of functions and event listeners and I saw how quickly that structure becomes unwieldly. I decided on creating classes to compartmentalize the code. I've noticed how useful objects are for maintaining a clean global scope, however I do think that for the next project I develop I will try a fully functional programming approach in order to compare the two and to make automatic testing more accessible.
 
 # JavaScript Testing
 
@@ -306,9 +306,9 @@ This section will detail each of the classes, properties, methods & functions th
 
 __FUNCTION SUMMARY:__ This function identifies the id of the task chosen for deletion, then removes that task from the DOM and then removes that task from localStorage. Then it loops through the task object ids and the timeSegment ids to reset them to run from 0 upwards. Then to ensure synchronization with the DOM tasks, it resets their ids as well. Then the delete task confirmation modal is hidden, and the changes are saved.  
 
-__ISSUE 1:__ When this function was part of a longer deleteTask() method on the List object, the event listener on confirm deletion was carrying and running through the method twice, causing mayhem. 
+__ISSUE 1:__ When this section of the function was part of a longer deleteTask() method on the List object, the event listener on confirm deletion was carrying and running through the method twice, causing mayhem. 
 
-__FIX 1:__ In consultation with tutor support, this function was removed as a method on the List object and placed in the global scope in order to stop the event listeners from carrying and looping through the deleteTask() function twice. 
+__FIX 1:__ In consultation with tutor support, this section was removed as a method on the List object and placed in the global scope in order to stop the event listeners from carrying and looping through the deleteTask() function twice. 
 
 ## negateDeletion()
 
@@ -321,7 +321,8 @@ __FUNCTION SUMMARY:__ This function cancels the delete operation and resets the 
 - minutes (integer)
 - hours (integer)
 
-### *Methods*:
+### *Methods*: 
+Timer.
 - initialiseTimer()
 - convertSecondsToTime(seconds)
 - addOverlay()
@@ -383,7 +384,7 @@ This method is called on page load and all it does is ensure that we don't see "
 
 ## convertSecondsToTime(seconds)
 
-__FUNCTION SUMMARY:__ Takes one parameter (seconds) and converts them into hours, minutes and seconds in a human readable format. The code was taken from a Stack Overflow question and is referenced in the attribution section of this README. 
+__FUNCTION SUMMARY:__ Takes one parameter (seconds) and converts them into hours, minutes and seconds in a human readable format. The code was taken from a Stack Overflow question and is referenced in the attribution section of the README.md file. 
 
 __ISSUE 1:__ I could not call this method from within other functions in this class. timer.convertSecondsToTime would not work. I kept getting a ```"Uncaught ReferenceError: convertSecondsToTime is not defined"```
 
@@ -397,12 +398,12 @@ __FUNCTION SUMMARY:__ This function appends a div with the class 'overlay' to th
 ## addSilentAlarm() 
 ## removeSilentAlarm()
 
-__FUNCTION SUMMARY:__ This function creates a silent alarm of flashing colours for users who want to be alerted in a more subtle manner. It works simply by removing the overlay class and adding the silent-alarm class which is defined in CSS code as an infinite animation scrolling through all the colours in the app's colour theme. The rather slow 15 second animation time, is to avoid strobing. I took the CSS for the animation structure from Zak's codepen (attributed in README).
+__FUNCTION SUMMARY:__ This function creates a silent alarm of flashing colours for users who want to be alerted in a more subtle manner, or users with aural accessibility issues. It works simply by removing the overlay class and adding the silent-alarm class which is defined in CSS code as an infinite animation scrolling through all the colours in the app's colour theme. The rather slow 15 second animation time, is to avoid strobing. I took the CSS for the animation structure from Zak's codepen (attributed in README.md).
 
 ## makeElementsNotKeyboardTabbable() 
 ## makeElementsKeyboardTabbableAgain()
 
-__FUNCTION SUMMARY:__ These functions solved the issue of when an option was opened for example "edit task" - the user could break the application by tabbing through elements in the background, even when the yellow overlay was applied. makeElementsNotKeyboardTabbable() goes through each of the background elements and sets: `"tabindex", "-1"` and makeElementKeyboardTabbableAgain() does the opposite. 
+__FUNCTION SUMMARY:__ These functions solved an issue that occurred when an option was opened for example "edit task" - the user could break the application by tabbing through elements in the background, even when the yellow overlay was applied. makeElementsNotKeyboardTabbable() goes through each of the background elements and sets: `"tabindex", "-1"` and makeElementKeyboardTabbableAgain() does the opposite. 
 
 ## appInformation()
 
@@ -455,11 +456,11 @@ __FUNCTION SUMMARY:__ These functions hide and show the task icons.
 
 ## createButton()
 
-__FUNCTION SUMMARY:__ This function takes one parameter and creates either a save or a cancel button for modals. 
+__FUNCTION SUMMARY:__ This function takes one parameter ```(buttonType)``` and creates either a save or a cancel button for modals. 
 
 ## makeTimeNumbersFromStrings()
 
-__FUNCTION SUMMARY:__ This function takes two parameters ```makeTimeNumbersFromStrings(arrayOfStringTimes, arrayOfNumberTimes)``` and it turns the array of times as strings into and array of times as integers and it formats them correctly for use.
+__FUNCTION SUMMARY:__ This function takes two parameters ```makeTimeNumbersFromStrings(arrayOfStringTimes, arrayOfNumberTimes)``` and it turns the 'array of times as strings' into an 'array of times as integers' and it formats them correctly for use.
 
 ## createNewInputsForManualTimeEdit()
 
@@ -470,7 +471,7 @@ __FUNCTION SUMMARY:__ This function takes three parameters ```createNewInputsFor
 __FUNCTION SUMMARY:__ This function takes four parameters ```removeEditOptionElements(taskLine, saveButton, cancelButton, longFormTime)``` and removes the elements and classes created in the edit task modal, then it restores the original classes, elements and icons. 
 
 ## **Timing functions**
-These are a series of functions that take care of the timing logic. 
+These series of functions take care of the timing logic. 
 
 ## countUp() 
 
@@ -481,13 +482,11 @@ This refers to prefixing numbers with 0.
 
 __FIX 1:__ I used template literals to add leading 0s for numbers less than 9. 
 
-__ISSUE 2:__ Even though I initialised the time properties to integers - when they are written dynamically in the DOM they are converted to strings. Here is an example of 
-one of the unanticipated side-effects of this:
+__ISSUE 2:__ Even though I initialised the time properties to integers - when they are written dynamically in the DOM they are converted to strings. Here is an example of one of the unanticipated side-effects of this:
 
 ![issue2](assets/misc-images/timer-issue-1.png)
 
-__FIX 2:__ I found that for the purpose of this application it's fine that the html representation of time is in string form. The conversion  to strings is automatic, 
-and when I work with the total time I will convert those strings back to numbers. To fix the multiplying 1s, I left the conversion from strings to numbers up to the browser.
+__FIX 2:__ I found that for the purpose of this application it's fine that the html representation of time is in string form. The conversion  to strings is automatic, and when I work with the total time I will convert those strings back to numbers. To fix the multiplying 1s, I left the conversion from strings to numbers up to the browser.
 
 __ISSUE 3:__ The stopwatch timer was working perfectly for counting seconds, but when it got to 59 minutes & 59 seconds it then showed: 00:60:00 for a second before changing to 01:00:01.
 ![issue3](assets/misc-images/timer-issue-3.png)![issue3](assets/misc-images/timer-issue-2.png)
@@ -520,7 +519,7 @@ Changing the code to two IF statements as above, fixed the issue.
 
 ## stopWatchPlay()
 
- __FUNCTION SUMMARY:__ Uses a setInterval to calls the countUp() function every second to update the time variables and the html time representation elements.
+ __FUNCTION SUMMARY:__ Uses a setInterval to calls the countUp() function every second to update the time variables and the HTML time representation elements.
 
 ## countDown15Play()
 ## countDown25Play()
@@ -541,11 +540,17 @@ __FUNCTION SUMMARY:__ This is the actual countdown function that changes the tim
 
 __ISSUE 1:__ When the countdown timers ended, the display kicked in when the seconds fall before :00 so the display would show 00:00:0-1 which was not a big deal, but I didn't like the way it looked. 
 
-__FIX 1:__ I just set the ```seconds = 0, minutes = 0 & hours = 0;``` explicitly within the countdown() function before the countdownEnded() function is called, which was where this occured previously.
+__FIX 1:__ I just set the ```seconds = 0, minutes = 0 & hours = 0;``` explicitly within the countdown() function before countdownEnded() is called, which was where this occured previously.
 
 __ISSUE 2:__ The alarm sound doesn't play on mobile or ipad.
 
-__FIX 2:__ It transpires that Chrome and Safari for Mobile don't allow audio to play unless a user has clicked on a button to play audio. It does however work on Firefox for mobile.   UNFIXED
+__FIX 2:__ It transpires that Chrome and Safari for Mobile don't allow audio to play unless a user has clicked on a button to play audio. To get around this I added the following code to the countDownClickStart functions: 
+
+        countdown15Button.addEventListener('click', function() {
+									alarm.play();
+									alarm.pause();
+
+So any time a countdown is started the alarm is set to play as a result of that button click, but then it is immediately paused, because we don't want it to play until the countdown ends. When the countdown ends it plays again, because the mobile OS now sees it as a continuation of something the user already assented to.
 
 ## countdown15TimeToAdd() 
 ## countdown25TimeToAdd() 
@@ -562,7 +567,7 @@ These are the functions that take care of the foundations of the timing code.
 
 __FUNCTION SUMMARY:__ This is a click event listener on the stopwatch icons attached to each task in the task list. When clicked it starts the stopWatch timer *on that task* as long as certain conditions are met. The function is also responsible for taking the associated task description and playing it above the timer, so the user always has a reference of what task is being timed. This event listener also invokes stopWatchPause(), resetStopWatch() & playOnClick(stopWatchPlay) to access those functions from within its remit.
 
-__ISSUE 1:__ There are two separate routes to starting the stopwatch timer. A user can click on the stopwatch icon (and this will always be the first method, as until they click here, the timer box will not be visible). Once the timer is visible, there are two ways to start the timer: the stopwatch icon *and* the play button that appears if the timer has is paused. This caused a bug that meant two or more Interval timers (based on the stopWatchPlay function) could be triggered to run at the same time. This causes the timer to increase the speed at which the seconds and minutes increase, and it ceased being a reliable timer. 
+__ISSUE 1:__ There are two separate routes to starting the stopwatch timer. A user can click on the stopwatch icon (and this will always be the first method, as until they click here, the timer box will not be visible). Once the timer is visible, they can start the timer by clicking the play button that appears if the timer has is paused. This initially caused a bug that meant two or more Interval timers (based on the stopWatchPlay function) could be triggered to run at the same time. This causes the timer to increase the speed at which the seconds and minutes increase, and it ceased being a reliable timer. 
 
 __FIX 1:__ The fix was to add a boolean variable called "playing" that I use anytime the timer is stopped or started. And then to add a small conditional in the stopwatch icon click event handler, that checks whether "playing" is false and if so, it is allowed trigger the stopwatch start function.  
 
@@ -599,23 +604,11 @@ __FUNCTION SUMMARY:__ Listens for clicks on the reset button and clears whatever
 
 ## resetTimes() 
 
-__FUNCTION SUMMARY:__ Used in conjunction with resetStopWatch() to clear the time variables and reset the DOM timer representation as well. It uses the timer title to determine what number to reset the timers to. The countdown timer reset futher calls on resetCountdownHtml().
+__FUNCTION SUMMARY:__ Used in conjunction with resetTime() to clear the time variables and reset the DOM timer representation as well. It uses the timer title to determine what number to reset the timers to. The countdown timer reset futher calls on resetCountdownHtml().
 
 ## countdownEnded() 
 
-__FUNCTION SUMMARY:__ When either of the countdown timers reach 0 seconds and 0 minutes, this function is invoked. A modal pops up asking the user if they would like to save the full time to their task. If they click ok - it saves, otherwise it does not.
-
-  __ISSUE 1:__ When left on another web page or minimised as the timer is running, the timer ticks over for some reason and starts into minus times, as illustrated below: 
-
- __FIX 1:__ ??? 
-
- __ISSUE 2:__ When the countdown ends on a mobile device, the alarm did not play. 
-
- __FIX 2:__ This happens because to protect users from an aural onslaught, mobile browsers have specific rules about unsolicited audio playing, thus audio must be actively triggered by the user, to emulate that situation, I added:
-
-                                    alarm.play()
-                                    alarm.pause()
-To both the countDown15ClickStart() & countDown25ClickStart() functions, as per information found on Stack Overflow. (attributed in readme)
+__FUNCTION SUMMARY:__ When either of the countdown timers reach 0 seconds and 0 minutes, this function is invoked. A modal pops up asking the user if they would like to save the full time to their task. If they click ok, it saves, otherwise it does not.
 
 ## closeTimer() 
 
@@ -624,6 +617,15 @@ __FUNCTION SUMMARY:__ This closes down the timer and removes it from sight when 
 __ISSUE 1:__ If the user clicks the close button and the timer was in the middle of timing, the time would continue adding up. 
 
  __FIX 1:__ I instituted an if/else if statement that would pause the particular interval being used before the timer container is removed from the DOM.
+
+            if (typeOfTimer == "Stopwatch") {
+						intervalToPause = stopwatch;
+					} else if ((typeOfTimer == "Countdown 15") || (typeOfTimer == "Countdown 25")) {
+						intervalToPause = countdownInt;
+					}
+					if (playing) {
+						clearInterval(intervalToPause);
+					}
 
 ## saveTimeButton() 
 ## saveTimeToTask()
@@ -777,14 +779,13 @@ __ISSUE 3:__ When manually testing this function, conjointly with the editTask()
 to edit or delete one of them, the entire app would break as it would not be able to discern between the two and know which to delete or edit. 
 
 __FIX 3:__ My solution was to change from using task descriptions to using ids. The Task object ids are set when they are initialised and they are based on the current length of the taskList array.
-This way the ids will always run from 0 upwards and they will always match the id attributes of their html counterparts, which are set on the ```<li>``` task elements. This solution also led to a series
-of bugs discussed [here](LINK TO delete() bugs).  
+This way the ids will always run from 0 upwards and they will always match the id attributes of their html counterparts, which are set on the ```<li>``` task elements.  
 
 ## toggleTaskComplete()
 
 __METHOD SUMMARY__: This method listens for a change event on the checkboxes. If the change is that the checkbox is 'checked' then the method adds a 'completed' class to the task and sets the checkboxes 'checked' attribute to be 'true'. Variables are then created to display the local time and date for when the task completion happened. The full taskList is then looped through to match the DOM task in question with its corresponding task object, and a number of things happen: 
 1. The task object is marked as completed = true.
-2. The task timeSegments array is added to, with the task id and properties representing the date and time, as well as the taskDescription. This is to get around a bug that happens if a user doesn't add any time to a task, but still decides to mark that task as completed. In the former situation (and without this timeSegment added), the task would not appear in the list of tasks completed 'today', as the dateTime stamp is normally applied to the task object, when time is added. This way, the date is added to the timeSegments array (which is where the function pertaining to the 'today tasks' looks for data) even though timeAdded remains 0. This bug and fix is further clarified in the associated function below. (NAME IT).
+2. The task timeSegments array is added to, with the task id and properties representing the date and time, as well as the taskDescription. This is to get around a bug that happens if a user doesn't add any time to a task, but still decides to mark that task as completed. In the former situation (and without this timeSegment added), the task would not appear in the list of tasks completed 'today', as the dateTime stamp is normally applied to the task object, when time is added. This way, the date is added to the timeSegments array (which is where the function pertaining to the 'today tasks' looks for data) even though timeAdded remains 0. This bug and fix is further clarified in the associated [getTodayTasks()](#gettodaytasks()) function below.
 
 If the checkbox checked is false, the 'completed' class is removed from the tasks classList and the task object is also marked as not completed.
 
@@ -794,8 +795,8 @@ The tasks' new statuses are then saved to local storage.
 ## deleteTask()
 __METHOD SUMMARY__: This method deletes a task both from the taskList object array and from the DOM list of tasks. 
 
-__ISSUE 1:__ When I changed the connection between Task objects and their html representations from the task descriptions to the task ids, it led to 
-the following bug: when a user deletes a task, it is removed from the html and the taskList array. Therefore when a new task in instantiated based on 
+__ISSUE 1:__ When I changed the connection between Task objects and their HTML representations from the task descriptions to the task ids, it led to 
+the following bug: when a user deletes a task, it is removed from the HTML and the taskList array. Therefore when a new task in instantiated based on 
 the length of the taskList array, it is most likely that there will be two tasks with the same id number in the array. Again this would completely break the application.
 
 __FIX 1:__ I fixed this by using two small for loops that run just after tasks are deleted. The first re-numbers the task object ids from 0 upwards: 
@@ -814,7 +815,7 @@ And the second re-numbers the DOM tasks also from 0 upwards:
                         arrOfDomTasks[i].id = i.toString();
                         }
 
-This way the html tasks and Task objects will always have the same ids and can therefore be connected seamlessly.
+This way the HTML tasks and Task objects will always have the same ids and can therefore be connected seamlessly.
 
 __ISSUE 2:__ This solution however, created another bug that behaved oddly. If a user loads a previously saved list from local storage, adds some tasks and then checks off some of the new tasks, and then adds another task, the checkmarks were disappearing on some of the newer additions. They still had a "checked" attribute when investigated and they still had the "complete" class assigned to them to draw the line through them, but the application was not registering the visual checkmark on the page. 
 
@@ -827,7 +828,7 @@ __FIX 3:__ I backtracked through my commits and eventually discovered that chang
 ## dynamicPopoverNav()
 __METHOD SUMMARY__: This code creates and sets the options for the tippy.js popover box that this application uses for presenting the various options to the user. The code is taken directly from the tippy.js documentation.
 
-__ISSUE1:__ The popover. For my application's wireframed design to work, I needed to dynamically summon the navigation popover (containing edit, delete, timers etc...), on a specific task, as all the options relate to a particular task. They are not general. I created an array of ellipsis icons that I iterated through and added an event listener for clicks. When any of the icons were clicked the popover would appear over the associated icon. 
+__ISSUE 1:__ The popover. For my application's wireframed design to work, I needed to dynamically summon the navigation popover (containing edit, delete, timers etc...), on a specific task, as all the options relate to a particular task. They are not general. I created an array of ellipsis icons that I iterated through and added an event listener for clicks. When any of the icons were clicked the popover would appear over the associated icon. 
 I started by using getBoundingClientRect() as illustrated below. 
 
             const ellipsisArray = document.querySelectorAll('.task-options');
@@ -860,7 +861,7 @@ up the page, the location of the popover shifted dramatically. I needed to make 
 playing around with the x & y offsets on the page, and then in an angry burst of stack overflowing, I happened upon tippy.js, which enabled me to implement the exact 
 functionality I wanted in less than 15 minutes. Long live tippy.js
 
-__ISSUE 2:__ While tippy.js is wonderful, I found that the keyboard accessibility would not automatically close the popover from the previous task before opening a new task item further down the list. This led to the following untidy situation, which would be quite irritating for keyboard users: 
+__ISSUE 2:__ While tippy.js is wonderful, I found that the keyboard accessibility would not automatically close the popover from the previous task before opening a new task item further down the list. This led to the following untidy situation, which would be irritating for keyboard users: 
 
 ![tippy-keyboard-access](assets/misc-images/tippy-keyboard-access.png)
 
@@ -886,7 +887,7 @@ __FIX__ 1: I made sure that the method was placed so as to save the entire list 
 
 ## Productivity Chart Functions
 
-The chart functions are separate to the OOP approach, but they draw from and integrate into many of the object methods.
+The chart functions are separate to the OOP approach in order to integrate correctly with D3.js. However they do draw from and integrate into many of the object methods.
 
 - timeOnTaskExists()
 - clearChartArea()
@@ -952,8 +953,11 @@ __ISSUE 1:__ This function introduced me to the concept of 'passing by reference
 5. It successfully sums the first task into a single object displaying 11 seconds worked on the task. 
 
 ![passbyref2](assets/misc-images/passbyref2.png)
-6. The user adds another task and works on it for a number of seconds. 
-7. To update the chart, the user calls getTodayTasks again. 
+
+6. The user adds another task and works on it for a number of seconds.
+
+7. To update the chart, the user calls getTodayTasks again.
+
 8. But now the first task is registering as having 18seconds of total time worked on it. And if we look at the original task object, to our *horror* we see that the function has mutated the original time segment as well. 
 ![passbyref3](assets/misc-images/passbyref3.png)
 ![passbyref4](assets/misc-images/passbyref4.png)

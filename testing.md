@@ -542,6 +542,18 @@ __FUNCTION SUMMARY:__ Used in conjunction with resetTime() to clear the time var
 
 __FUNCTION SUMMARY:__ When either of the countdown timers reach 0 seconds and 0 minutes, this function is invoked. A modal pops up asking the user if they would like to save the full time to their task. If they click ok, it saves, otherwise it does not.
 
+__ISSUE 1:__ With the addition of the silent alarm, the following console error and functional result was occuring when a user timed a task using the silent alarm and *then* clicked on the edit task option:
+
+ <p align="center">
+  <img src="assets/misc-images/edittask-error.png">
+</p>
+
+ __FIX 1:__ I realised that the timer overlay only needed to be removed IF the user was using the audio alarm, not the silent alarm. The following IF statement addition fixed the issue:
+
+                if (alarmButton.innerHTML == `<i class="fas fa-bell" aria-hidden="true"></i>`) {
+					timer.removeOverlay();
+				}
+
 ## closeTimer() 
 
 __FUNCTION SUMMARY:__ This closes down the timer and removes it from sight when the X button is clicked. 

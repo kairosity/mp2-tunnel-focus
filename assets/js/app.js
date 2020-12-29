@@ -784,7 +784,7 @@ class Timer {
 				if (alarmButton.innerHTML == `<i class="fas fa-bell-slash" aria-hidden="true"></i>`) {
 					timer.addSilentAlarm();
 				}
-				clearInterval(countdownInt);
+                clearInterval(countdownInt);
 			} else if (typeOfTimer.textContent == "Countdown 25") {
 				countdownEndedMessageElement.textContent = `Congrats! You've worked for the full 25 minutes! Do you want to save 25 minutes to the task: ${thisTask}?`;
 				if (alarmButton.innerHTML == `<i class="fas fa-bell-slash" aria-hidden="true"></i>`) {
@@ -812,7 +812,8 @@ class Timer {
 				playing = false;
 				seconds = 0;
 				minutes = 0;
-				hours = 0;
+                hours = 0;
+                location.reload();
 			});
 			negateButton.addEventListener('click', function() {
 				if (alarmButton.innerHTML == `<i class="fas fa-bell-slash" aria-hidden="true"></i>`) {
@@ -825,7 +826,8 @@ class Timer {
 				playing = false;
 				seconds = 0;
 				minutes = 0;
-				hours = 0;
+                hours = 0;
+                location.reload();
 			});
 		}
 		/**

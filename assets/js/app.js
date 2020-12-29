@@ -1046,15 +1046,14 @@ class Timer {
 				['click', 'keyup'].forEach(function(evt) {
 					ellipsis.addEventListener(evt, function(elipEvent) {
 						if ((evt === 'click') || (elipEvent.keyCode === 9)) {
-                            const manuallyEditTimeButton = document.querySelector('.edit-task-option');
-
-                            manuallyEditTimeButton.addEventListener('keyup', function(event) {
+                            const manuallyEditTaskButton = document.querySelector('.edit-task-option');
+                            manuallyEditTaskButton.addEventListener('keyup', function(event) {
                                 if (event.keyCode === 13) {
                                     event.preventDefault();
-                                    manuallyEditTimeButton.click();
+                                    manuallyEditTaskButton.click();
                                 }
                             });
-							manuallyEditTimeButton.addEventListener('click', function() {
+							manuallyEditTaskButton.addEventListener('click', function() {
 									let fullTaskLine = event.target.closest('.task');
 									let taskToTargetId = fullTaskLine.children[2].id;
 									let taskToTarget = fullTaskLine.children[2];
@@ -1107,6 +1106,8 @@ class Timer {
 									newTaskLi.setAttribute("id", `${taskToTargetId}`);
 									newTaskLi.textContent = editTaskNameInput.value;
 									editTaskSaveButton.addEventListener('click', function() {
+                                        newTaskLi.textContent = editTaskNameInput.value;
+                                        if ((newTaskLi.textContent !== null) && (newTaskLi.textContent !== "")) {
 										newTaskLi.textContent = editTaskNameInput.value;
 										editTaskNameInput.parentNode.replaceChild(newTaskLi, editTaskNameInput);
 										list.taskList.forEach(task => {
@@ -1151,7 +1152,18 @@ class Timer {
 										timer.removeOverlay();
 										timer.makeArrayElementsKeyboardTabbableAgain();
 										list.setDataToLocalStorage();
-										location.reload();
+                                        location.reload();
+                                    } else if ((newTaskLi.textContent === "") || (newTaskLi.textContent === null)) {
+                                        let addValidTaskModal = document.getElementById('enter-task-modal');
+                                        addValidTaskModal.style.display = "block";
+                                        makeElementsUntabbable(hoursInput, minutesInput, secondsInput, editTaskNameInput, editTaskSaveButton, editTaskCancelButton)
+                                        let okButton = document.querySelector('.valid-task-confirm-button');
+                                        okButton.addEventListener('click', function() {
+                                            addValidTaskModal.style.display = "none";
+                                            makeElementsTabbable(hoursInput, minutesInput, secondsInput, editTaskNameInput, editTaskSaveButton, editTaskCancelButton)
+                                            
+                                        });
+                                    }
 									});
 									editTaskCancelButton.addEventListener('click', function() {
 										let longFormTimeToAdd = list.taskList[taskToTargetId].totalTimeFocusedOnTaskLongForm;

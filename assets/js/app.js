@@ -431,8 +431,8 @@ class Timer {
 		 * This function sets the initial countdown for the 15 minute countdown timer and then calls the countdown timer function.
 		 */
 		function countDown15Play() {
-			seconds = 0;
-			minutes = 15; //CHANGE HERE WHEN TESTING
+			seconds = 4;
+			minutes = 0;
 			hours = 0;
 			countdown();
 		}
@@ -806,9 +806,11 @@ class Timer {
 						timeDisplay.textContent = list.taskList[timerTitle.id].totalTimeFocusedOnTaskLongForm;
 					}
 				}
-				clearInterval(countdownInt);
-				removeTimerFromDom();
-				timer.removeOverlay();
+                clearInterval(countdownInt);   
+                removeTimerFromDom();
+                if (alarmButton.innerHTML == `<i class="fas fa-bell" aria-hidden="true"></i>`) {
+					timer.removeOverlay();
+				}
 				playing = false;
 				seconds = 0;
 				minutes = 0;
@@ -820,9 +822,11 @@ class Timer {
 					timer.removeSilentAlarm();
 				}
 				clearInterval(countdownInt);
-				countdownEndedModal.style.display = "none";
-				removeTimerFromDom();
-				timer.removeOverlay();
+				countdownEndedModal.style.display = "none";  
+                removeTimerFromDom();
+                if (alarmButton.innerHTML == `<i class="fas fa-bell" aria-hidden="true"></i>`) {
+					timer.removeOverlay();
+				}
 				playing = false;
 				seconds = 0;
 				minutes = 0;

@@ -2,21 +2,21 @@
 
 # Testing Table Of Contents
 
-* [User Story Testing](#user-story-testing)
-  * [First Time User Goals](#first-time-user-goals)
-  * [General User Goals](#general-user-goals)
-  * [Returning User Goals](#returning-user-goals)
-  * [Accessibility User Goals](#accessibility-user-goals)
+* [**User Story Testing**](#user-story-testing)
+  * [1. First Time User Goals](#first-time-user-goals)
+  * [2. General User Goals](#general-user-goals)
+  * [3. Returning User Goals](#returning-user-goals)
+  * [4. Accessibility User Goals](#accessibility-user-goals)
       - [*Total Colourblindness Visual*](#total-colourblindness-visual)
       - [*Yellow-blue Colourblindness Visual*](#yellow-blue-colourblindness-visual)
       - [*Red-Green Colourblindness Visual*](#red-green-colourblindness-visual)
 * [**Manual Testing Approaches**](#manual-testing-approaches)
-* [Application Structure](#application-structure)
-* [JavaScript Testing](#javascript-testing)
-    - [_**Delete Task Global Functions**_](#delete-task-global-functions)
+* [1. Application Structure](#application-structure)
+* [2. JavaScript Code Testing](#javascript-code-testing)
+    - [_*2.1 Global Functions*_](#global-functions)
         - [confirmDeletion()](#confirmdeletion())
         - [negateDeletion()](#negatedeletion())
-    - [_**Timer Class**_](#timer-class)
+    - [_*2.2 Timer Class*_](#timer-class)
         - [Timer.initialiseTimer()](#initialisetimer())
         - [Timer.convertSecondsToTime(seconds)](#convertsecondstotime(seconds))
         - [Timer.addOverlay()](#addoverlay())
@@ -27,7 +27,7 @@
         - [Timer.makeElementsKeyboardTabbableAgain()](#makeelementskeyboardtabbableagain())
         - [Timer.appInformation()](#appinformation())
         - [Timer.timers()](#timers())
-        - [_**Helper Functions**_](#helper-functions)
+        - [_*Helper Functions*_](#helper-functions)
             - [removeTimerFromDom()](#removetimerfromdom())
             - [createTimerTitle()](#createtimertitle())
             - [formatTime()](#formattime())
@@ -41,7 +41,7 @@
             - [makeTimeNumbersFromStrings(arrayOfStringTimes, arrayOfNumberTimes)](#maketimenumbersfromstrings())
             - [createNewInputsForManualTimeEdit(measureOfTime, timeVariableToEdit, longFormTime)](#createnewinputsformanualtimeedit())
             - [removeEditOptionElements(taskLine, saveButton, cancelButton, longFormTime)](#removeeditoptionelements())
-        - [_**Timing Functions**_](#timing-functions)
+        - [_*Timing Functions*_](#timing-functions)
             - [countUp()](#countup())
             - [stopWatchPlay()](#stopwatchplay())
             - [countDown15Play()](#countdown15play())
@@ -51,7 +51,7 @@
             - [countdown15TimeToAdd()](#countdown15timetoadd())
             - [countdown25TimeToAdd()](#countdown25timetoadd())
             - [stopwatchTimeToAdd()](#stopwatchtimetoadd())
-        - [_**Structural Functions**_](#structural-functions)
+        - [_*Structural Functions*_](#structural-functions)
             - [stopWatchClickStart()](#stopwatchclickstart())
             - [countdownClickStartHelper()](#countdownclickstarthelper())
             - [countDown15ClickStart()](#countdown15clickstart())
@@ -66,35 +66,36 @@
             - [saveTimeToTask()](#savetimetotask())
             - [alarmToggle()](#alarmtoggle())
             - [editTask()](#edittask())
-    - [_**Task Class**_](#task-class)
-    - [_**List Class**_](#list-class)
+    - [_*2.3 Task Class*_](#task-class)
+    - [_*2.4 List Class*_](#list-class)
         - [List.buildTaskList()](#buildtasklist())
         - [List.addNewTask()](#addnewtask())
         - [List.toggleTaskComplete()](#toggletaskcomplete())
         - [List.deleteTask()](#deletetask())
         - [List.dynamicPopoverNav()](#dynamicpopovernav())
         - [List.setDataToLocalStorage()](#setdatatolocalstorage())
-    - [_**Productivity Chart Functions**_](#productivity-chart-functions)
+    - [_*2.5 Productivity Chart Functions*_](#productivity-chart-functions)
         - [timeOnTaskExists()](#timeontaskexists())
         - [clearChartArea()](#clearchartarea())
         - [selectChart(data)](#selectchart(data))
         - [getTodayTasks()](#gettodaytasks())
         - [completedTaskList(data)](#completedtasklist(data))
         - [responsivefy(svg)](#responsivefy(svg))
-* [Input Validation](#input-validation)
+* [3. Input Validation](#input-validation)
     - [Add New Task Input](#add-new-task-input)
     - [Edit Task Description Input](#edit-task-description-input)
     - [Edit Task Time Inputs](#edit-task-time-inputs)
 * [**Automated Testing Approaches**](#automated-testing-approaches)
-* [Browser Testing](#browser-testing)
+* [1. Browser Testing](#browser-testing)
     - [Desktop Browser Testing](#desktop-browser-testing)
     - [Mobile Browser Testing](#mobile-browser-testing)
     - [A Side Note on Mobile Testing](#a-side-note-on-mobile-testing)
-* [Code Validators](#code-validators)
+* [2. Responsivity Testing](#responsivity-testing)
+* [3. Code Validators](#code-validators)
     - [HTML Validators](#html-validators)
     - [CSS Validators](#css-validators)
     - [JavaScript Validators](#javascript-validators)
-* [Web Development Tools Testing](#web-development-tools-testing)
+* [4. Web Development Tools Testing](#web-development-tools-testing)
     - [Lighthouse](#lighthouse)
     - [web dev Measure](#web-dev-measure)
 
@@ -224,11 +225,11 @@ This task manager application is based on the principles of Object-Oriented Prog
 
 In its incipient stages I had sketched out functionality based on a series of functions and event listeners and I saw how quickly that structure becomes unwieldly. I decided on creating classes to compartmentalize the code. I've noticed how useful objects are for maintaining a clean global scope, however I do think that for the next project I develop I will try a fully functional programming approach in order to compare the two and to make automatic testing more accessible.
 
-# JavaScript Testing
+# JavaScript Code Testing
 
 This section will detail each of the classes, properties, methods & functions that this application is comprised of. I will summarise their purpose and how they work, and any issues that arose during testing will be outlined.
 
-## **Delete Task Global Functions**
+## **GLOBAL FUNCTIONS**
 
 - confirmDeletion()
 - negateDeletion()
@@ -345,7 +346,7 @@ This method encapsulates all the timer functions. It it not meant to be called o
 
 ---
 
-## **Helper functions**
+## **HELPER FUNCTIONS**
 These are a series of functions that I've used to make the code more modular and easier to read by sectioning off code used more than once into smaller functions. 
 
 ## removeTimerFromDom()
@@ -401,7 +402,7 @@ __FUNCTION SUMMARY:__ This function takes three parameters ```createNewInputsFor
 
 __FUNCTION SUMMARY:__ This function takes four parameters ```removeEditOptionElements(taskLine, saveButton, cancelButton, longFormTime)``` and removes the elements and classes created in the edit task modal, then it restores the original classes, elements and icons. 
 
-## **Timing functions**
+## **TIMING FUNCTIONS**
 These series of functions take care of the timing logic. 
 
 ## countUp() 
@@ -491,7 +492,7 @@ __FUNCTION SUMMARY:__ These three functions all take in three parameters ```(hou
 
 ---
 
-## **Structural functions**
+## **STRUCTURAL FUNCTIONS**
 These are the functions that take care of the foundations of the timing code. 
 
 ## stopWatchClickStart()
@@ -1061,6 +1062,23 @@ A rather unpleasant surprise I had halfway through designing the application was
 
 In order to test accurately for mobile, I cloned my application into a separate gitHub app, and whenever I found a tough mobile bug that required multiple tiny commits and pushing the application live for each one, I used the cloned application. This way the commit history was not flooded with hundreds of useless commits that explained very little of the actual coding process. 
 
+# Responsivity Testing
+
+In addition to the browser testing detailed above, I also used Chrome's [Responsive Viewer](https://chrome.google.com/webstore/detail/responsive-viewer/inmopeiepgfljkpkidclfgbgbmfcennb?hl=en) to test the application's features across a range of devices as I developed. This was automated testing insofar as it enabled me to test the application simultaneously on a number of devices, but also manual testing because you have to interact with the features manually. Below is one screenshot from this testing regime:
+
+<p align="center">
+  <img src="assets/misc-images/responsive-viewer.png">
+</p>
+
+Finally I used the standard Chrome Dev Tools Mobile emulator, however as already mentioned, while this tool was fine for testing design across a range of devices, it was bad at emulating functionality. Here are a small selection of screenshots from the Chrome Dev Tools Mobile Device Emulator:
+
+<p align="center">
+  <img src="assets/misc-images/moto.png">
+  <img src="assets/misc-images/nexus.png">
+  <img src="assets/misc-images/iphone.png">
+</p>
+
+
 # Code Validators
 
 ## HTML Validators
@@ -1113,24 +1131,6 @@ In summary the HTML validates perfectly, with the exceptions of the empty headin
 - I found no substantive errors using this tool. 
 
 - Mostly it enabled me to spot the hundreds of semi-colons I had omitted, which I corrected. 
-
-# Responsivity Testing
-
-In addition to the browser testing detailed above, I also used Chrome's [Responsive Viewer](https://chrome.google.com/webstore/detail/responsive-viewer/inmopeiepgfljkpkidclfgbgbmfcennb?hl=en) to test the application's features across a range of devices as I developed. This was automated testing insofar as it enabled me to test the application simultaneously on a number of devices, but also manual testing because you have to interact with the features manually. Below is one screenshot from this testing regime:
-
-<p align="center">
-  <img src="assets/misc-images/responsive-viewer.png">
-</p>
-
-Finally I used the standard Chrome Dev Tools Mobile emulator, however as already mentioned elsewhere, while this tool was fine for testing design across a range of devices, it was bad at emulating functionality. Here are a small selection of screenshots from the Chrome Dev Tools Mobile Device Emulator:
-
-
-<p align="center">
-  <img src="assets/misc-images/moto.png">
-  <img src="assets/misc-images/nexus.png">
-  <img src="assets/misc-images/iphone.png">
-</p>
-
 
 
 # Web Development Tools Testing

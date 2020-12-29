@@ -67,7 +67,7 @@ It combines a stopwatch timer with two pomodoro timers, one for 15 minutes and o
         - [*Charts Special Features*](#charts-special-features)
 - [3. Mobile-First Responsivity](#mobile-first-responsivity)
     - [Mobile xs and sm breakpoints](#mobile-xs-and-sm-breakpoints)
-    - [iPads and md breakpoints](#ipads-and-md-breakpoints)
+    - [Tablets and md breakpoints](#tablets-and-md-breakpoints)
     - [Desktops lg and xl breakpoints](#desktops-lg-and-xl-breakpoints)
 - [4. Accessibility](#accessibility)
     - [Keyboard Accessibility](#keyboard-accessibility)
@@ -651,7 +651,7 @@ This site was designed with a mobile-first approach in mind. As the bulk of the 
   <img src="assets/misc-images/mobile-save-time.png">
 </p>
 
-## iPads and md breakpoints
+## Tablets and md breakpoints
 
 - The **main task list** is given a retro border on ipad & medium screens as there is sufficient space to accomodate that design choice comfortably.
 - The task list takes up a smaller % ratio on the page and more of the application is visible at once.

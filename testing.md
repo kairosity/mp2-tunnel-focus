@@ -10,11 +10,7 @@
       - [*Total Colourblindness Visual*](#total-colourblindness-visual)
       - [*Yellow-blue Colourblindness Visual*](#yellow-blue-colourblindness-visual)
       - [*Red-Green Colourblindness Visual*](#red-green-colourblindness-visual)
-* [Manual Testing Approaches](#manual-testing-approaches)
-* [Browser Testing](#browser-testing)
-    - [Desktop Browser Testing](#desktop-browser-testing)
-    - [Mobile Browser Testing](#mobile-browser-testing)
-    - [A Note on Mobile Testing](#a-note-on-mobile-testing)
+* [**Manual Testing Approaches**](#manual-testing-approaches)
 * [Application Structure](#application-structure)
 * [JavaScript Testing](#javascript-testing)
     - [_**Delete Task Global Functions**_](#delete-task-global-functions)
@@ -89,6 +85,11 @@
     - [Add New Task Input](#add-new-task-input)
     - [Edit Task Description Input](#edit-task-description-input)
     - [Edit Task Time Inputs](#edit-task-time-inputs)
+* [**Automated Testing Approaches**](#automated-testing-approaches)
+* [Browser Testing](#browser-testing)
+    - [Desktop Browser Testing](#desktop-browser-testing)
+    - [Mobile Browser Testing](#mobile-browser-testing)
+    - [A Side Note on Mobile Testing](#a-side-note-on-mobile-testing)
 * [Code Validators](#code-validators)
     - [HTML Validators](#html-validators)
     - [CSS Validators](#css-validators)
@@ -211,87 +212,11 @@ Continuous manual testing of all functions happened during development. Any time
 
 - I tested the application and all its functions on the selection of phones and iPads available in my home, as well as asking friends and family with different devices to test it on theirs.
 
-- I did more robust browser & device testing using [Browser Stack](https://www.browserstack.com/) which is a super nifty application.
+- All inputs were testing manually and their validations were developed based on these tests. 
 
-# Browser Testing
 
-The application was tested on all major browsers with the exception of Internet Explorer, as its usage is so low and it is due to be completely retired early next year.
 
-Here are the results of the browser testing using [Browser Stack](https://www.browserstack.com/)
 
-## Desktop Browser Testing
-
-| OS  | Browser | Version | Design Check | Functionality Check | 
-| ---- | ------- | ------- | :---: | :---: |
-| **Windows 7, 8, 8.1 & 10**   | *Microsoft Edge*  |  87 (latest) | ✓ | ✓
-|   |   | 86 | ✓ | ✓
-|   |   | 85 | ✓ | ✓
-|   |   | 84 | ✓ | ✓
-|   |   | 83 | ✓ | ✓
-|   |   | 82 | ✓ | ✓
-|   |   | 81 | ✓ | ✓
-|   |   | 80 | ✓ | ✓
-| ↓  |  ↓ | 18 | X | X
-| **Windows 7, 8, 8.1 & 10 &**  | *Firefox*  |  84 (latest)| ✓ | ✓
-|  **Mac OSX Mavericks and Newer** |   | 83 | ✓ | ✓
-|   |   | 82 | ✓ | ✓
-|   |   | 81 | ✓ | ✓
-|   |   | 80 | ✓ | ✓
-|   |   | 79 | ✓ | ✓
-|   |   | 78 | ✓ | ✓
-| ↑  |  ↑  | 66 | ✓ | ✓
-| ↓  |  ↓  | 65 | X | X
-| **Windows 7, 8, 8.1 & 10 &**   | *Chrome*  |  87 (latest)
-| **Mac OSX Mavericks and Newer**  |   | 86 | ✓ | ✓
-|   |   | 85 | ✓ | ✓
-|   |   | 84 | ✓ | ✓
-|   |   | 83 | ✓ | ✓
-|   |   | 82 | ✓ | ✓
-|   |   | 81 | ✓ | ✓
-|   |   | 80 | ✓ | ✓
-| ↑ | ↑  | 61 | ✓ | ✓
-| ↓ | ↓  | 60 | X | X
-| **Windows 7, 8, 8.1 & 10 &**  | *Opera*  |  73 (latest) | ✓ | ✓
-| **Mac OSX Mavericks and Newer**  |   | 72 | ✓ | ✓
-|   |   | 71 | ✓ | ✓
-|   |   | 68 | ✓ | ✓
-|   |   | 67 | ✓ | ✓
-|   |   | 66 | ✓ | ✓
-|   |   | 65 | ✓ | ✓
-|  ↑ |  ↑ | 48 | ✓ | ✓
-|  ↓  |  ↓  | 47 | X | X
-
-For Mac systems nothing older than OSX Mavericks could sucessfully run the application, and for Windows nothing older than Windows 7. 
-
-- On Windows desktops it worked perfectly on all versions of Microsoft Edge from 80 upwards.
-- On Windows & Mac desktops it worked on all versions of Firefox from v66 upwards.
-- On Windows & Mac desktops it worked on all versions of Chrome from v61 upwards.
-- On Windows & Mac desktops it worked on all versions of Opera from v48 upwards. 
-
-## Mobile Browser Testing
-
-| Mobile Device  | OS  | Browser | Design Check | Functionality Check | 
-| ---- | ------- | ------- | :---: | :---: |
-| **iPhone & iPad**   | 14  |  Safari & Chrome | ✓ | ✓
-|   | 13  | Safari & Chrome | ✓ | ✓
-|   | 12 | Safari & Chrome | ✓ | ✓
-|   | 11  | Safari | ✓ | ✓
-| ↓   | 10  | Safari | X | X
-| ↓   | 11  | Chrome | X | X
-| **Samsung Galaxy S20, S9, S8, S10+, S10e, S9+, S8+, S7, S6, S5, S4, A51, A11, A10, A8, Note 20 - Note3**  | *10, 9, 8, 7, 6, 5, 4.4, 4.3*  |  Chrome, Firefox, Samsung Internet & UC Browser| ✓ | ✓
-|  **Google Pixel 5, 4, 3a, 3, 2, Pixel, PixelXL, Nexus6P, Nexus 6, 5, 9, 7** | 11, 10, 9, 8, 7.1, 7, 6, 5, 4.4, 5.1, 6  | Chrome, Firefox & UC Browser | ✓ | ✓
-|  **OnePlus 8, 7T, 7, 6T** | 10, 9  | Chrome, Firefox & UC Browser | ✓ | ✓
-|  **Moto G7 Play, Moto X 2nd Gen, Moto G 2nd Gen** | 9, 6, 5  | Chrome, Firefox & UC Browser | ✓ | ✓
-
-As the above demonstrates there are issues running the application on Apple devices from versions 10 & 11 and older (depending on whether a user is using Safari or Chrome).
-
-Androids are far more backwards compatible, and using Browser Stack I found zero incompatibility testing the devices and OSs listed above.
-
-## A Note on Mobile Testing
-
-A rather unpleasant surprise I had halfway through designing the application was that the Chrome Dev Tools mobile emulator is not that good at emulating mobiles. Many of the application's features that worked fine in the emulator did not work or worked badly on mobile. I was able to fix all of these, but it highlighted the difficulties inherent in designing for mobile without constantly pushing to GitHub, making the site live and checking how it really works.
-
-In order to test accurately for mobile, I cloned my application into a separate gitHub app, and whenever I found a tough mobile bug that required multiple tiny commits and pushing the application live for each one, I used the cloned application. This way the commit history was not flooded with hundreds of useless commits that explained very little of the actual coding process. 
 
 # Application Structure
 
@@ -1023,6 +948,119 @@ I didn't include a message to the user if they attempt to input larger or smalle
   <img src="assets/misc-images/edit-range.png">
 </p>
 
+# Automated Testing Approaches
+
+- I did more robust automated browser & device testing using [Browser Stack](https://www.browserstack.com/) which is a super nifty application.
+
+- I testing my HTML, CSS and JavaScript code using automated code validators. 
+
+- I tested the application's responsivity further using Chrome's ["Responsive Viewer"](https://chrome.google.com/webstore/detail/responsive-viewer/inmopeiepgfljkpkidclfgbgbmfcennb?hl=en) plugin.
+
+- I tested various measures of the application's performance using web.dev Measure and Lighthouse for Chrome. These automated tools offered invaluable insight into how to develop the application most effectively. 
+
+# Browser Testing
+
+The application's responsivity and functionality was tested on all major browsers with the exception of Internet Explorer, as its usage is so low and it is due to be completely retired early next year.
+
+Here are the results of the browser testing using [Browser Stack](https://www.browserstack.com/)
+
+## Desktop Browser Testing
+
+| OS  | Browser | Version | Design Check | Functionality Check | 
+| ---- | ------- | ------- | :---: | :---: |
+| **Windows 7, 8, 8.1 & 10**   | *Microsoft Edge*  |  87 (latest) | ✓ | ✓
+|   |   | 86 | ✓ | ✓
+|   |   | 85 | ✓ | ✓
+|   |   | 84 | ✓ | ✓
+|   |   | 83 | ✓ | ✓
+|   |   | 82 | ✓ | ✓
+|   |   | 81 | ✓ | ✓
+|   |   | 80 | ✓ | ✓
+| ↓  |  ↓ | 18 | X | X
+| **Windows 7, 8, 8.1 & 10 &**  | *Firefox*  |  84 (latest)| ✓ | ✓
+|  **Mac OSX Mavericks and Newer** |   | 83 | ✓ | ✓
+|   |   | 82 | ✓ | ✓
+|   |   | 81 | ✓ | ✓
+|   |   | 80 | ✓ | ✓
+|   |   | 79 | ✓ | ✓
+|   |   | 78 | ✓ | ✓
+| ↑  |  ↑  | 66 | ✓ | ✓
+| ↓  |  ↓  | 65 | X | X
+| **Windows 7, 8, 8.1 & 10 &**   | *Chrome*  |  87 (latest)
+| **Mac OSX Mavericks and Newer**  |   | 86 | ✓ | ✓
+|   |   | 85 | ✓ | ✓
+|   |   | 84 | ✓ | ✓
+|   |   | 83 | ✓ | ✓
+|   |   | 82 | ✓ | ✓
+|   |   | 81 | ✓ | ✓
+|   |   | 80 | ✓ | ✓
+| ↑ | ↑  | 61 | ✓ | ✓
+| ↓ | ↓  | 60 | X | X
+| **Windows 7, 8, 8.1 & 10 &**  | *Opera*  |  73 (latest) | ✓ | ✓
+| **Mac OSX Mavericks and Newer**  |   | 72 | ✓ | ✓
+|   |   | 71 | ✓ | ✓
+|   |   | 68 | ✓ | ✓
+|   |   | 67 | ✓ | ✓
+|   |   | 66 | ✓ | ✓
+|   |   | 65 | ✓ | ✓
+|  ↑ |  ↑ | 48 | ✓ | ✓
+|  ↓  |  ↓  | 47 | X | X
+
+For Mac systems nothing older than OSX Mavericks could sucessfully run the application, and for Windows nothing older than Windows 7. 
+
+- On Windows desktops it worked perfectly on all versions of Microsoft Edge from 80 upwards.
+- On Windows & Mac desktops it worked on all versions of Firefox from v66 upwards.
+- On Windows & Mac desktops it worked on all versions of Chrome from v61 upwards.
+- On Windows & Mac desktops it worked on all versions of Opera from v48 upwards.
+
+Below are just a selection of screenshots from the oldest version of each browser that is able to successfully run the application.
+
+1.  [Microsoft Edge v.80](assets/misc-images/browser-tests/edge80.png)
+2.  [Firefox v.66](assets/misc-images/browser-tests/firefox66.png)
+3.  [Chrome v.61](assets/misc-images/browser-tests/chrome61.png)
+4.  [Opera v.48](assets/misc-images/browser-tests/opera48.png)
+
+## Mobile Browser Testing
+
+The application's responsivity and functionality were tested across a wide platform of mobile devices, operating systems and mobile browsers as outlined below:
+
+| Mobile Device  | OS  | Browser | Design Check | Functionality Check | 
+| ---- | ------- | ------- | :---: | :---: |
+| **iPhone & iPad**   | 14  |  Safari & Chrome | ✓ | ✓
+|   | 13  | Safari & Chrome | ✓ | ✓
+|   | 12 | Safari & Chrome | ✓ | ✓
+|   | 11  | Safari | ✓ | ✓
+| ↓   | 10  | Safari | X | X
+| ↓   | 11  | Chrome | X | X
+| **Samsung Galaxy S20, S9, S8, S10+, S10e, S9+, S8+, S7, S6, S5, S4, A51, A11, A10, A8, Note 20 - Note3**  | *10, 9, 8, 7, 6, 5, 4.4, 4.3*  |  Chrome, Firefox, Samsung Internet & UC Browser| ✓ | ✓
+|  **Google Pixel 5, 4, 3a, 3, 2, Pixel, PixelXL, Nexus6P, Nexus 6, 5, 9, 7** | 11, 10, 9, 8, 7.1, 7, 6, 5, 4.4, 5.1, 6  | Chrome, Firefox & UC Browser | ✓ | ✓
+|  **OnePlus 8, 7T, 7, 6T** | 10, 9  | Chrome, Firefox & UC Browser | ✓ | ✓
+|  **Moto G7 Play, Moto X 2nd Gen, Moto G 2nd Gen** | 9, 6, 5  | Chrome, Firefox & UC Browser | ✓ | ✓
+
+As the above demonstrates there are issues running the application on Apple devices from versions 10 & 11 and older (depending on whether a user is using Safari or Chrome).
+
+Androids are far more backwards compatible, and using Browser Stack I found zero incompatibility testing the devices and OSs listed above.
+
+Below is a selection of randomly selected screenshots of the application successfully running on a spectrum of mobile devices:
+
+1. [Samsung Galaxy Note 20 - OS 10](assets/misc-images/browser-tests/samsung-galaxy-note-20.png)
+2. [Motorola - OS 5](assets/misc-images/browser-tests/motorola-5.png)
+3. [OnePlus - OS 10](assets/misc-images/browser-tests/oneplus-10.png)
+4. [iPhone - iOS 14](assets/misc-images/browser-tests/ios14.png)
+5. [Samsung Galaxy - OS 5](assets/misc-images/browser-tests/samsung-galaxy5.png)
+6. [Google Pixel - OS 5](assets/misc-images/browser-tests/google-pixel-5.png)
+7. [Google Nexus - OS 4.4](assets/misc-images/browser-tests/google-nexus-4.4.png)
+8. [Samsung Tab - OS 4.4](assets/misc-images/browser-tests/samsung-tab-4.4.png)
+9. [iPad iOS - 12](assets/misc-images/browser-tests/ios12.png)
+
+The above screenshots only represent a fraction of the automated browsers tests run, but they illustrate the testing procedure that I undertook for each and every permutation within Browser Stack.
+
+## A Side Note on Mobile Testing
+
+A rather unpleasant surprise I had halfway through designing the application was that the Chrome Dev Tools mobile emulator is not that good at emulating mobiles. Many of the application's features that worked fine in the emulator did not work or worked badly on mobile. I was able to fix all of these, but it highlighted the difficulties inherent in designing for mobile without constantly pushing to GitHub, making the site live and checking how it really works.
+
+In order to test accurately for mobile, I cloned my application into a separate gitHub app, and whenever I found a tough mobile bug that required multiple tiny commits and pushing the application live for each one, I used the cloned application. This way the commit history was not flooded with hundreds of useless commits that explained very little of the actual coding process. 
+
 # Code Validators
 
 ## HTML Validators
@@ -1075,6 +1113,25 @@ In summary the HTML validates perfectly, with the exceptions of the empty headin
 - I found no substantive errors using this tool. 
 
 - Mostly it enabled me to spot the hundreds of semi-colons I had omitted, which I corrected. 
+
+# Responsivity Testing
+
+In addition to the browser testing detailed above, I also used Chrome's [Responsive Viewer](https://chrome.google.com/webstore/detail/responsive-viewer/inmopeiepgfljkpkidclfgbgbmfcennb?hl=en) to test the application's features across a range of devices as I developed. This was automated testing insofar as it enabled me to test the application simultaneously on a number of devices, but also manual testing because you have to interact with the features manually. Below is one screenshot from this testing regime:
+
+<p align="center">
+  <img src="assets/misc-images/responsive-viewer.png">
+</p>
+
+Finally I used the standard Chrome Dev Tools Mobile emulator, however as already mentioned elsewhere, while this tool was fine for testing design across a range of devices, it was bad at emulating functionality. Here are a small selection of screenshots from the Chrome Dev Tools Mobile Device Emulator:
+
+
+<p align="center">
+  <img src="assets/misc-images/moto.png">
+  <img src="assets/misc-images/nexus.png">
+  <img src="assets/misc-images/iphone.png">
+</p>
+
+
 
 # Web Development Tools Testing
 

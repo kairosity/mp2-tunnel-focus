@@ -14,7 +14,7 @@
 * [1. Application Structure](#application-structure)
 * [2. JavaScript Code Testing](#javascript-code-testing)
     - [_*2.1 Global Functions*_](#global-functions)
-        - [confirmDeletion()](#confirmdeletion())
+        - [confirmDeletion()](#confirmdeletion)
         - [negateDeletion()](#negatedeletion())
     - [_*2.2 Timer Class*_](#timer-class)
         - [Timer.initialiseTimer()](#initialisetimer())

@@ -87,6 +87,13 @@ It combines a stopwatch timer with two pomodoro timers, one for 15 minutes and o
 - [8. Attribution](#attribution)
 - [9. Deployment](#deployment)
     - [Publishing to Github Pages](#publishing-to-github-pages)
+    - [Forking the repository](#forking-the-repository)
+    - [Opening this project locally](#opening-this-project-locally)
+        - [Clone with HTTPS](#clone-with-https)
+        - [Clone with SSH](#clone-with-ssh)
+        - [Clone with GitHub CLI](#clone-with-github-cli)
+        - [Clone using GitHub Desktop](#clone-using-github-desktop)
+        - [Clone by downloading a ZIP file](#clone-by-downloading-a-zip-file)
 - [10. Tools and Other Resources Used](#tools-and-other-resources-used)
     - [Design](#1.-design)
     - [HTML and CSS](#2.-html-and-css)
@@ -774,6 +781,7 @@ Using a variety of web development tools (further outlined in the testing.md doc
 7. Speech to text functionality for adding tasks to the list and making the application more accessible. 
 8. Daily task time targets. So that the user can set a time goal on a task, and then work towards reaching it. 
 9. Adding a CSS circular countdown animation to the task timer, that gets smaller by the percentage of time that remains.
+10. Add a sort feature to the tasks in order to reorder them by priority. 
 
 # Testing
 
@@ -860,6 +868,86 @@ This website was developed using GitPod in a Chrome browser and commits were pus
 ![branch](assets/misc-images/deployment2.png)
 
 5. Site Published.
+
+## Forking the repository
+
+To fork this project please do the following: 
+
+1. Go to the main page of the Tunnel Focus [repository](https://github.com/kairosity/mp2-tunnel-focus).
+
+2. At the top right hand corner of the page find and click the "Fork" button.
+
+<p align="left">
+  <img src="assets/misc-images/fork.png">
+</p>
+
+3. You have forked this repository.
+
+## Opening this project locally
+To make a local clone of this project please do the following:
+
+1. Go to the main page of the Tunnel Focus [repository](https://github.com/kairosity/mp2-tunnel-focus).
+
+2. Click on the button that says "Code" with a down arrow before the text.
+
+### Clone with HTTPS
+
+3. To clone using HTTPS click the clipboard icon pictured next to the repo link with HTTPS selected as below: 
+
+<p align="left">
+  <img src="assets/misc-images/clone-https.png">
+</p>
+
+### Clone with SSH 
+3. To clone using SSH click the clipboard icon pictured next to the repo link with SSH selected as below: 
+
+<p align="left">
+  <img src="assets/misc-images/clone-ssh.png">
+</p>
+
+### Clone with GitHub CLI 
+3. To clone using GitHub CLI click the clipboard icon pictured next to the repo link with GitHub CLI selected as below: 
+
+<p align="left">
+  <img src="assets/misc-images/clone-githubcli.png">
+</p>
+
+4. Open Terminal.
+
+5. Change your current working directory to where you want the cloned project saved.
+
+6. Type ```git clone``` and paste in whichever of the 3 URL choices you copied in step 3.
+
+7. Press enter and your repo has been cloned locally.
+
+## Clone using GitHub Desktop
+
+1. Go to the main page of the Tunnel Focus [repository](https://github.com/kairosity/mp2-tunnel-focus).
+
+2. Click on the button that says "Code" with a down arrow before the text.
+
+3. Click "Open with GitHub Desktop" to clone and open the repo with GitHub Desktop.
+
+<p align="left">
+  <img src="assets/misc-images/github-desktop-clone.png">
+</p>
+
+4. Follow GitHub Desktop's prompts to complete the process.
+
+## Clone by downloading a ZIP file 
+
+1. Go to the main page of the Tunnel Focus [repository](https://github.com/kairosity/mp2-tunnel-focus).
+
+2. Click on the button that says "Code" with a down arrow before the text.
+
+3. Click on "Download ZIP".
+
+<p align="left">
+  <img src="assets/misc-images/clone-zip.png">
+</p>
+
+4. A zip file with all the project files will be downloaded to your computer and may be opened locally using whatever code editor you choose.
+
 
 # Tools and Other Resources Used 
 

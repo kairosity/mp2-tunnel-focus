@@ -365,7 +365,8 @@ class Timer {
 			newTime.setAttribute("id", "edit" + measureOfTime);
 			newTime.setAttribute("class", "editTime edit-time-" + measureOfTime.toLowerCase());
 			newTime.setAttribute("oninput", "validity.valid||(value='')");
-			newTime.setAttribute("min", "0");
+            newTime.setAttribute("min", "0");
+            newTime.setAttribute("max", "9999");
 			longFormTime.parentNode.insertBefore(newTime, longFormTime);
 		}
 		/**

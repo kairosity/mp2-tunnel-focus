@@ -85,10 +85,14 @@
         - [getTodayTasks()](#gettodaytasks())
         - [completedTaskList(data)](#completedtasklist(data))
         - [responsivefy(svg)](#responsivefy(svg))
+* [Input Validation](#input-validation)
+    - [Add New Task Input](#add-new-task-input)
+    - [Edit Task Description Input](#edit-task-description-input)
+    - [Edit Task Time Inputs](#edit-task-time-inputs)
 * [Code Validators](#code-validators)
-    - [*HTML Validators*](#html-validators)
-    - [*CSS Validators*](#css-validators)
-    - [*JavaScript Validators*](#javascript-validators)
+    - [HTML Validators](#html-validators)
+    - [CSS Validators](#css-validators)
+    - [JavaScript Validators](#javascript-validators)
 * [Web Development Tools Testing](#web-development-tools-testing)
     - [Lighthouse](#lighthouse)
     - [web dev Measure](#web-dev-measure)
@@ -993,6 +997,31 @@ __FUNCTION SUMMARY:__ This function builds up the two lists: "Tasks Completed" a
 ## responsivefy(svg)
 
 __FUNCTION SUMMARY:__ This function is taken from Ben Clinkenbeard's Blog Article and originally written by Brendan Sudol. It effectively makes the charts responsive to window size changes and I use it as a filler function in between my media queries that change the sizing of the charts. 
+
+# Input Validation
+
+## Add New Task Input
+If a user tries to add a blank task, they are prompted to "Please enter a valid task". When they click the "OK" button they return to the landing page and can try again to enter a task.
+
+<p align="center">
+  <img src="assets/misc-images/validate-task-description.png">
+</p>
+
+## Edit Task Description Input
+If a user tries to edit a task to be blank, ie. if they just delete the task description and click the "SAVE" button, they are prompted to "Please enter a valid task". When they click the "OK" button they return to the edit task modal. 
+
+<p align="center">
+  <img src="assets/misc-images/edit-description-validate.png">
+</p>
+
+## Edit Task Time Inputs
+The task time inputs for hours, minutes and seconds are of the type 'number'. Using ``` ``` I've made is so that negative numbers cannot be inputted and the valid range for all inputs is between 0 - 9999. I felt this was a high enough range as 9999 hours equates to over a year focused on one task. For larger projects and if perhaps in the future, the application grows in scope, this range can be expanded to accomodate more time, but for the application's current manifestation, I think that range is more than sufficient. 
+
+I didn't include a message to the user if they attempt to input larger or smaller values than the acceptable range, because I thought that was unnecessary, particularly because most serious users would not be deviating from that range.
+
+<p align="center">
+  <img src="assets/misc-images/edit-range.png">
+</p>
 
 # Code Validators
 

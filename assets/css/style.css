@@ -13,7 +13,6 @@
 	padding: 0;
 }
 /*----------------------------------------------------------- Colours  */
-
 :root {
 	--pure-black: #000000;
 	--pure-white: #ffffff;
@@ -34,12 +33,12 @@
 	-ms-flex-pack: center;
 	justify-content: center;
 	background-color: var(--pure-white);
-	-ms-grid-columns: (1fr)12;
+	-ms-grid-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr; 
 	grid-template-columns: repeat(12, 1fr);
 	-ms-grid-rows: 150px auto auto 1fr;
 	grid-template-rows: 150px auto auto 1fr;
-    position: relative;
-    min-height: 100vh;
+	position: relative;
+	min-height: 100vh;
 }
 .page-container>*:nth-child(1) {
 	-ms-grid-row: 1;
@@ -234,7 +233,6 @@
 	-ms-grid-column: 12;
 }
 /*----------------------------------------------------------- Header  */
-
 .main-header {
 	background-color: var(--sun-yellow);
 	padding: 2rem;
@@ -271,16 +269,15 @@ h2.sub-heading {
 	text-align: center;
 }
 /*----------------------------------------------------------- Information Modal  */
-
 #info {
 	position: absolute;
 	top: 15px;
 	right: 15px;
 	font-size: 2em;
-    cursor: pointer;
-    border: none;
-    outline: none;
-    background-color: transparent;
+	cursor: pointer;
+	border: none;
+	outline: none;
+	background-color: transparent;
 }
 #information-modal {
 	width: 85%;
@@ -340,7 +337,6 @@ h2.sub-heading {
 	align-items: center;
 }
 /*------------- Skip Tasks Link: Accessibility for keyboard users. */
-
 #skip-tasks {
 	position: absolute;
 	top: 160px;
@@ -356,7 +352,6 @@ h2.sub-heading {
 	color: var(--pure-black);
 }
 /*----------------------------------------------------------- Timer  */
-
 .timer-container {
 	background-color: var(--light-blue);
 	-ms-grid-column: 1;
@@ -432,10 +427,10 @@ h2.sub-heading {
 }
 .timer-controls button {
 	color: var(--pure-white);
-    font-size: 2em;
-    outline: none;
-    border: none;
-    background-color: transparent;
+	font-size: 2em;
+	outline: none;
+	border: none;
+	background-color: transparent;
 }
 .timer-box h2 {
 	font-family: "Heebo", sans-serif;
@@ -614,7 +609,6 @@ h2.sub-heading {
 	}
 }
 /*----------------------------------------------------------- Popover Options Box  */
-
 #popover {
 	position: absolute;
 	left: -2100px;
@@ -685,7 +679,6 @@ h2.sub-heading {
 	background-color: var(--sun-yellow);
 }
 /*----------------------------------------------------------- Add New Task  */
-
 .add-new-task {
 	display: -webkit-box;
 	display: -ms-flexbox;
@@ -704,7 +697,6 @@ h2.sub-heading {
 #new-task-input:focus {
 	outline: none;
 }
-/* Make the placeholder text larger */
 #new-task-input::-webkit-input-placeholder {
 	font-size: 1rem;
 	font-family: "Heebo", sans-serif;
@@ -744,11 +736,10 @@ h2.sub-heading {
 	box-shadow: 2px 4px 0px 0px rgba(0, 0, 0, 1);
 	-webkit-transition: all ease-in-out 500ms;
 	-o-transition: all ease-in-out 500ms;
-    transition: all ease-in-out 500ms;
-    cursor: pointer;
+	transition: all ease-in-out 500ms;
+	cursor: pointer;
 }
 /*----------------------------------------------------------- Focus Overlay  */
-
 .overlay {
 	width: 100%;
 	height: 100%;
@@ -763,7 +754,6 @@ h2.sub-heading {
 	display: none;
 }
 /*----------------------------------------------------------- Task List  */
-
 .list-container {
 	background-color: white;
 	border-radius: 10px;
@@ -787,7 +777,7 @@ h2.sub-heading {
 	padding: 1.2em;
 	margin-top: 20px;
 }
-/* Each new task line */
+/* New task line */
 .task {
 	font-size: 1.2em;
 	padding-top: 0.5em;
@@ -868,12 +858,12 @@ li.task-description {
 .start-stopwatch, .task-options-icon {
 	cursor: pointer;
 }
-.task .task-list-icon{
-    border: none;
-    outline: none;
-    background-color: transparent;
-    appearance: none;
-    font-size: 1em;
+.task .task-list-icon {
+	border: none;
+	outline: none;
+	background-color: transparent;
+	appearance: none;
+	font-size: 1em;
 }
 .task:nth-of-type(9n+1) .task-list-icon {
 	color: var(--dark-blue);
@@ -881,7 +871,7 @@ li.task-description {
 .task:nth-of-type(9n+2) .task-list-icon {
 	color: var(--light-blue);
 }
-.task:nth-of-type(9n+3) .task-list-icon{
+.task:nth-of-type(9n+3) .task-list-icon {
 	color: var(--grass-green);
 }
 .task:nth-of-type(9n+4) .task-list-icon {
@@ -922,7 +912,6 @@ li.task-description {
 	color: var(--pure-black);
 }
 /*----------------------------------------------------------- Edit Task  */
-
 input.editedTask {
 	height: 50px;
 	width: 90%;
@@ -974,7 +963,6 @@ input.editedTask:focus {
 	outline: var(--dark-blue) dashed 4px;
 }
 /*----------------------------------------------------------- Manually Edit Task Time  */
-
 .edit-time-task {
 	font-family: "Roboto", sans-serif;
 	font-size: 1em;
@@ -1097,13 +1085,8 @@ input.editTime:focus {
 	outline: var(--dark-blue) dashed 4px;
 }
 /*----------------------------------------------------------- Charts   */
-#chart-label,
-#chart-selections-label,
-#total-time-focused-label,
-#total-time-focused-today-label,
-#tasks-completed-label,
-#tasks-completed-today-label{
-    display: none;
+#chart-label, #chart-selections-label, #total-time-focused-label, #total-time-focused-today-label, #tasks-completed-label, #tasks-completed-today-label {
+	display: none;
 }
 .focus-summary-container {
 	-ms-grid-row: 7;
@@ -1116,7 +1099,7 @@ input.editTime:focus {
 	display: -webkit-box;
 	display: -ms-flexbox;
 	display: flex;
-	-ms-grid-columns: (1fr)12;
+	-ms-grid-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr; 
 	grid-template-columns: repeat(12, 1fr);
 	-ms-grid-rows: auto;
 	grid-template-rows: auto;
@@ -1352,15 +1335,14 @@ div.tooltip-donut {
 	margin: 0 1em;
 	padding: 1em;
 	font-family: "Heebo", sans-serif;
-    font-size: 1em;
-    grid-column: 1;
+	font-size: 1em;
+	grid-column: 1;
 }
 ::marker {
 	color: var(--dark-blue);
 	font-weight: 700;
 }
 /*----------------------------------------------------------- Modals  */
-
 /* Modal Framework */
 .modal, #save-time-to-task-modal, #countdown-ended-modal, #enter-task-modal, #confirm-deletion-modal {
 	display: none;
@@ -1431,7 +1413,6 @@ div.tooltip-donut {
 	outline: var(--dark-blue) dashed 4px;
 }
 /*----------------------------------------------------------- Footer   */
-
 footer {
 	background-color: var(--sun-yellow);
 	padding: 0;
@@ -1439,51 +1420,51 @@ footer {
 	bottom: -100px;
 	left: 0;
 	right: 0;
-    height: 90px;
-    margin-top: 60px;
+	height: 90px;
+	margin-top: 60px;
 }
-
 /*---------------------------------------------------- Custom 404 Page */
-
 .body-404 {
-    text-align: center;
+	text-align: center;
 }
 .title-404 {
-    font-family: "Heebo", sans-serif;
-    font-size: 2em;
-    color: var(--pure-black);
-    padding: 1.5em;
+	font-family: "Heebo", sans-serif;
+	font-size: 2em;
+	color: var(--pure-black);
+	padding: 1.5em;
 }
 .instruction-404 {
-    font-family: "Heebo", sans-serif;
-    font-size: 1.6em;
-    color: var(--pure-black);
-    padding: 1.5em;
+	font-family: "Heebo", sans-serif;
+	font-size: 1.6em;
+	color: var(--pure-black);
+	padding: 1.5em;
 }
 .button-404 {
-    background-color: var(--sun-yellow);
-    color: var(--pure-black);
-    transition: 0.4s ease-in transform;
-    padding: 1em;
+	background-color: var(--sun-yellow);
+	color: var(--pure-black);
+	transition: 0.4s ease-in transform;
+	padding: 1em;
 }
 .button-404:hover {
-    background-color: var(--light-blue);
-    color: var(--pure-black);
-    transform: scale(1.1)
+	background-color: var(--light-blue);
+	color: var(--pure-black);
+	transform: scale(1.1)
 }
-@media screen and (max-width: 300px) and (min-width: 250px)  {
-	/*----------------------------------------------------------- Information Modal Small Screens  */
+/*----------------------------------------------------------- MEDIA QUERIES: XXS Screens   */
+
+@media screen and (max-width: 300px) and (min-width: 250px) {
 	#information-modal {
 		margin-top: 820px;
 	}
 }
+/*----------------------------------------------------------- MEDIA QUERIES: XS Screens   */
+
 @media screen and (min-width: 372px) {
-	/*----------------------------------------------------------- Information Modal Small Screens  */
 	#information-modal {
 		margin-top: 550px;
 	}
 }
-/*----------------------------------------------------------- MEDIA QUERIES: Small Screens   */
+/*----------------------------------------------------------- MEDIA QUERIES: Small Screens    */
 
 @media screen and (min-width: 576px) {
 	.page-container {
@@ -1627,7 +1608,6 @@ footer {
 		border-radius: 8px;
 		padding: 1em;
 		background-color: var(--pure-white);
-		/* justify-items: center; */
 		-webkit-box-shadow: 8px 10px 0px 0px rgba(0, 0, 0, 1);
 		box-shadow: 8px 10px 0px 0px rgba(0, 0, 0, 1);
 	}

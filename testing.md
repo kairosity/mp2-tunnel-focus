@@ -37,7 +37,7 @@
             - [makeElementsTabbable()](#makeelementstabbable)
             - [hideTaskIcons()](#hidetaskicons)
             - [showTaskIcons()](#showtaskicons)
-            - [createButton(buttonType)](#creatbutton)
+            - [createButton(buttonType)](#createbutton)
             - [makeTimeNumbersFromStrings(arrayOfStringTimes, arrayOfNumberTimes)](#maketimenumbersfromstrings)
             - [createNewInputsForManualTimeEdit(measureOfTime, timeVariableToEdit, longFormTime)](#createnewinputsformanualtimeedit)
             - [removeEditOptionElements(taskLine, saveButton, cancelButton, longFormTime)](#removeeditoptionelements)
@@ -1116,7 +1116,11 @@ Finally I used the standard Chrome Dev Tools Mobile emulator, however as already
 - Error 2: ``` Element span not allowed as child of element ul in this context.```
     The span tag was not needed and was changed to a ```<li>``` tag. 
 
-In summary the HTML validates perfectly, with the exceptions of the empty heading warnings & the viewport values which I have chosen to ignore for enhanced usability.
+In summary the HTML now validates perfectly, with the exceptions of the empty heading warnings & the viewport values which I have chosen to ignore for enhanced usability.
+
+<p align="center">
+  <img src="assets/misc-images/html-validator.png">
+</p>
 
 ## [W3C Link Checker](https://validator.w3.org/checklink)
 
@@ -1130,20 +1134,28 @@ In summary the HTML validates perfectly, with the exceptions of the empty headin
     ```"Value Error : background too few values for the property linear-gradient )"```
     However as [this discussion](https://stackoverflow.com/questions/12537546/w3-css-validation-value-error-for-gradients/12537684) explains this has more to do with the communication between the working version of CSS3 & the validator.
 
-- A number of warnings were thrown by the validator referencing my vendor extensions. But as the [following discussion](https://stackoverflow.com/questions/52490004/what-are-all-of-these-w3c-css-validation-warnings-about) illustrates, this is to be expected.
+- A number of warnings (434) were thrown by the validator referencing my vendor extensions. But as the [following discussion](https://stackoverflow.com/questions/52490004/what-are-all-of-these-w3c-css-validation-warnings-about) illustrates, this is to be expected.
 
 - The rest of the code validated.
+
+<p align="center">
+  <img src="assets/misc-images/css-validation.png">
+</p>
 
 ## JavaScript Validators
 
 ## [JSHint](https://jshint.com/)
 
-- Ran all functions through JSHint and its primary complaint was to do with how much of my code was written is ES6. The use of const & let and template literals. 
+- I ran all my functions through JSHint and its primary complaint was to do with how much of my code was written in ES6. The use of const & let and template literals. 
 
 - I found no substantive errors using this tool. 
 
 - Mostly it enabled me to spot the hundreds of semi-colons I had omitted, which I corrected. 
 
+Here is a typical example of what it returned for all my functions:
+<p align="center">
+  <img src="assets/misc-images/jshint.png">
+</p>
 
 # Web Development Tools Testing
 

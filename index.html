@@ -5,8 +5,8 @@
 	<meta content="width=device-width, initial-scale=1.0 maximum-scale=1.0,user-scalable=0" name="viewport">
 	<link href="https://unpkg.com/tippy.js@6/animations/scale.css" rel="stylesheet">
 	<link href="assets/css/style.css" rel="stylesheet">
-    <title>Tunnel Focus: Time Your Tasks</title>
-    <meta name="description" content="Tunnel Focus: A task list you can time! Enhance your to do productivity.">
+	<title>Tunnel Focus: Time Your Tasks</title>
+	<meta content="Tunnel Focus: A task list you can time! Enhance your to do productivity." name="description">
 </head>
 <body>
 	<!-- PAGE CONTAINER DIV -->
@@ -14,12 +14,8 @@
 		<!-- HEADER -->
 		<header class="main-header">
 			<h1 class="main-heading">Tunnel Focus</h1>
-			<h2 class="sub-heading">Time Your Tasks</h2>
-			<button id="info" tabindex="0" aria-label="Information Button" >
-				<i class="far fa-question-circle"  ></i>
-            </button>
-        </header>
-        <!-- TIMER -->
+			<h2 class="sub-heading">Time Your Tasks</h2><button aria-label="Information Button" id="info" tabindex="0"><i class="far fa-question-circle"></i></button>
+		</header><!-- TIMER -->
 		<div class="timer-container" role="dialog">
 			<h2 class="timer-task-description"></h2>
 			<div class="outer-timer-box">
@@ -31,18 +27,16 @@
 					<h2 id="seconds"></h2>
 				</div>
 				<div class="timer-controls">
-					<button class="alarm"  id="alarm-on" aria-label="alarm toggle"><i class="fas fa-bell"></i></button> <button id="pause" aria-label="pause timer"><i class="fas fa-pause"></i></button> <button  id="play" aria-label="play timer"><i class="fas fa-play" ></i></button> <button id="reset" aria-label="reset timer"><i class="fas fa-history"></i></button>
+					<button aria-label="alarm toggle" class="alarm" id="alarm-on"><i class="fas fa-bell"></i></button> <button aria-label="pause timer" id="pause"><i class="fas fa-pause"></i></button> <button aria-label="play timer" id="play"><i class="fas fa-play"></i></button> <button aria-label="reset timer" id="reset"><i class="fas fa-history"></i></button>
 				</div>
-			</div><button id="save-time-to-task">Save Time To Task</button> <button class="close-timer-x" tabindex="0" aria-label="close timer"><i class="fas fa-times"></i></button>
-        </div>
-        <!-- TASK LIST -->
+			</div><button id="save-time-to-task">Save Time To Task</button> <button aria-label="close timer" class="close-timer-x" tabindex="0"><i class="fas fa-times"></i></button>
+		</div><!-- TASK LIST -->
 		<div class="list-container">
 			<div class="add-new-task">
-				<input autofocus="" id="new-task-input" placeholder="Type to add a new task..." aria-label="type to add a new task" type="text"> <button id="add-new-task" title="add new task"><i class="fas fa-plus add-new-task-plus-icon" title="add new task"></i></button>
+				<input aria-label="type to add a new task" autofocus="" id="new-task-input" placeholder="Type to add a new task..." type="text"> <button id="add-new-task" title="add new task"><i class="fas fa-plus add-new-task-plus-icon" title="add new task"></i></button>
 			</div><a href="#charts-start" id="skip-tasks" tabindex="0">Skip Tasks</a>
 			<div id="list"></div>
-        </div>
-        <!-- OPTIONS POPOVER NAVIGATION -->
+		</div><!-- OPTIONS POPOVER NAVIGATION -->
 		<div class="popover-wrapper" id="popover">
 			<div class="popover-box">
 				<ul class="task-options-list">
@@ -53,8 +47,7 @@
 					<li class="task-option countdown25-task-option" tabindex="0"><i class="fas fa-hourglass-half task-icon countdown25-timer-icon"></i>Countdown 25 Mins</li>
 				</ul>
 			</div>
-        </div>
-        <!-- MODALS -->
+		</div><!-- MODALS -->
 		<!-- APP INFORMATION MODAL -->
 		<div class="modal" id="information-modal">
 			<div class="information-modal-content">
@@ -71,61 +64,49 @@
 					<p>If you need a break mid-task, you can pause & then play the timer again from where you left off.</p><i class="fas fa-history info-task-icon"></i>
 					<p>You can reset your time.</p>
 				</div>
-				<p class="info-last-line">Enjoy being more productive!</p><button class="close-timer-x close-info-x" aria-label="close information box" tabindex="0"><i class="fas fa-times"></i></button>
+				<p class="info-last-line">Enjoy being more productive!</p><button aria-label="close information box" class="close-timer-x close-info-x" tabindex="0"><i class="fas fa-times"></i></button>
 			</div>
-        </div>
-        <!-- SAVE TIME TO TASK MODAL -->
+		</div><!-- SAVE TIME TO TASK MODAL -->
 		<div id="save-time-to-task-modal">
 			<div class="sttt-modal-content">
 				<p class="sttt-modal-p">Do you want to save ${thistime} to ${thistask}?</p><button class="sttt-confirm-button sttt-modal-btn" tabindex="0">Yes, Save</button> <button class="sttt-negate-button sttt-modal-btn" tabindex="0">No, Cancel</button>
 			</div>
-        </div>
-        <!-- COUNTDOWN ENDED MODAL -->
+		</div><!-- COUNTDOWN ENDED MODAL -->
 		<div id="countdown-ended-modal">
 			<div class="countdown-ended-modal-content">
 				<p class="ce-modal-p">Congrats! You've worked for the full ${countdowntime} minutes! Do you want to save those ${countdownminutes} minutes to the task: ${}?</p><button class="ce-confirm-button ce-modal-btn" tabindex="0">Yes, Save</button> <button class="ce-negate-button ce-modal-btn" tabindex="0">No, Cancel</button>
 			</div>
-        </div>
-        <!-- CLOSE TIMER MODAL -->
+		</div><!-- CLOSE TIMER MODAL -->
 		<div class="modal" id="close-timer-modal">
 			<div class="modal-content">
 				<p class="close-timer-modal-p">Are you sure you want to exit the timer without saving?</p><button class="confirm-button close-timer-modal-btn" tabindex="0">Yes, Exit</button> <button class="negate-button close-timer-modal-btn" tabindex="0">No, Cancel</button>
 			</div>
-        </div>
-        <!-- CONFIRM DELETION MODAL -->
+		</div><!-- CONFIRM DELETION MODAL -->
 		<div class="modal" id="confirm-deletion-modal">
 			<div class="confirm-deletion-modal-content">
 				<p class="confirm-deletion-modal-p">Are you sure you want to delete ${thistask}?</p><button class="deletion-confirm-button confirm-deletion-modal-btn" tabindex="0">Yes</button> <button class="deletion-negate-button confirm-deletion-modal-btn" tabindex="0">No</button>
 			</div>
-        </div>
-        <!-- "PLEASE ENTER A VALID TASK" MODAL-->
+		</div><!-- "PLEASE ENTER A VALID TASK" MODAL-->
 		<div class="modal" id="enter-task-modal">
 			<div class="modal-content">
 				<p class="close-timer-modal-p">Please enter a valid task.</p><button class="confirm-button close-timer-modal-btn valid-task-confirm-button" tabindex="0">Ok, will do!</button>
 			</div>
-        </div>
-        <!-- PRODUCTIVITY CHARTS -->
+		</div><!-- PRODUCTIVITY CHARTS -->
 		<div class="focus-summary-container">
 			<div class="chart-header">
 				<h2 class="chart-heading">Productivity Charts</h2>
-            </div>
-            <label id="chart-label" for="charts-start">Charts Form</label>
-			<form class="custom-select" id="charts-start" tabindex="-1">     
+			</div>
+			<form class="custom-select" id="charts-start" name="charts-start" tabindex="-1">
 				<select id="chart-selections" name="chart-selections" tabindex="0">
-                    <label id="chart-selections-label" for="chart-selections">Productivity Charts: Select a chart</label> 
-                    <label id="total-time-focused-label" for="total-time-focused"> A chart showing the total time focused on each task</label>
 					<option id="total-time-focused" value="total-time-focused-on-each-task">
 						Total Time Focused on Each Task
-                    </option>
-                    <label id="total-time-focused-today-label" for="total-time-focused-today"> A chart showing the total time focused on each task today</label>
+					</option>
 					<option id="total-time-focused-today" value="total-time-focused-on-each-task-today">
 						Total time Focused on Each Task Today
-                    </option>
-                    <label id="tasks-completed-label" for="tasks-completed"> A list showing all the tasks completed</label>
+					</option>
 					<option value="tasks-completed">
 						Tasks Completed
-                    </option>
-                     <label id="tasks-completed-today-label" for="tasks-completed-today"> A list showing all the tasks completed today</label>
+					</option>
 					<option value="tasks-completed-today">
 						Tasks Completed Today
 					</option>
@@ -136,8 +117,7 @@
 				<div class="completed-tasks"></div>
 				<div class="chart-area"></div><svg class="legend-area"></svg>
 			</div>
-        </div>
-        <!-- FOOTER -->
+		</div><!-- FOOTER -->
 		<footer></footer>
 	</div>
 	<script src="https://kit.fontawesome.com/a27a231c02.js">

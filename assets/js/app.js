@@ -1490,9 +1490,9 @@ clearChartArea()
  * This function checks to see if there is time already recorded on a particular task.
  * If the totalTimeFocusedOnTask is not equal to 0 then the function returns true.
  */
-function timeOnTaskExists() {
+function timeOnTaskExists(dataArray) {
 	var isThereTimeOnThisTask;
-	var taskArray = list.taskList;
+	var taskArray = dataArray;
 	for (let i = 0; i < taskArray.length; i++) {
 		if (taskArray[i].totalTimeFocusedOnTask !== 0) {
 			isThereTimeOnThisTask = true;
@@ -1506,7 +1506,7 @@ function timeOnTaskExists() {
  * If any of the tasks have time stored on them then the first chart is shown.
  * Otherwise a message is shown that tells the user they have not timed any tasks yet.
  */
-if (timeOnTaskExists() === true) {
+if (timeOnTaskExists(list.taskList) === true) {
 	selectChart(totalTimeFocusedOnEachTask);
 } else {
 	emptyChartMessage.innerHTML = `<h2 class="no-timed-tasks">You have not timed any tasks yet.</h2>`;
@@ -1636,7 +1636,7 @@ d3.select('#chart-selections').on("change", function(event) {
 	var option = event.target.value;
 	totalTimeFocusedOnEachTaskToday = getTodayTasks();
 	if (option === "total-time-focused-on-each-task") {
-		if (timeOnTaskExists() === true) {
+		if (timeOnTaskExists(list.taskList) === true) {
 			selectChart(totalTimeFocusedOnEachTask);
 			emptyChartMessage.innerHTML = "";
 		} else {
@@ -1644,7 +1644,7 @@ d3.select('#chart-selections').on("change", function(event) {
 			emptyChartMessage.innerHTML = `<h2 class="no-timed-tasks">You have not timed any tasks yet.</h2>`;
 		}
 	} else if (option === "total-time-focused-on-each-task-today") {
-		if (timeOnTaskExists() === true) {
+		if (timeOnTaskExists(totalTimeFocusedOnEachTaskToday) === true) {
 			selectChart(totalTimeFocusedOnEachTaskToday);
 			emptyChartMessage.innerHTML = "";
 		} else {

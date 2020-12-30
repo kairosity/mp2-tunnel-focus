@@ -499,8 +499,8 @@ class Timer {
 		 * This function sets the initial countdown for the 25 minute countdown timer and then calls the countdown timer function. 
 		 */
 		function countDown25Play() {
-			seconds = 0;
-			minutes = 25;
+			seconds = 4;
+			minutes = 0;
 			hours = 0;
 			countdown();
 		}

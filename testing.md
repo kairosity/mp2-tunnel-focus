@@ -842,7 +842,7 @@ The chart functions are separate to the OOP approach in order to integrate corre
 
 ## timeOnTaskExists()
 
-__FUNCTION SUMMARY:__ This function looks to see if there is already time saved to a task, and then it returns true or false.
+__FUNCTION SUMMARY:__ This function looks to see if there is already time saved to a task, and then it returns true or false. It takes one parameter which is the array of data to looks at. In the application as it stands that data is either the total time spent on tasks, or the total time spent on tasks today.
 
 ## clearChartArea()
 

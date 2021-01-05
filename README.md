@@ -46,7 +46,7 @@ It combines a stopwatch timer with two pomodoro timers, one for 15 minutes and o
       - [*Typography*](#typography)
       - [*Design Mockups*](#design-mockups)
 - [2. Features](#features)
-    - [Landing Page](#landing-page)
+    - [Landing Page](#1-landing-page)
         - [*Landing Page Design*](#landing-page-design)
     - [Information Modal](#2.-information-modal)
     - [Adding a task to the list](#3.-adding-a-task-to-the-list)

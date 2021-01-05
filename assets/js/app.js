@@ -410,7 +410,7 @@ class Timer {
 				hours = hours + 1;
 			}
 			if (alarmButton.innerHTML == `<i class="fas fa-bell" aria-hidden="true"></i>`) {
-				if ((minutes % 30 === 0) && (minutes !== 0) && (seconds === 0)) {
+				if ((minutes % 2 === 0) && (minutes !== 0) && (seconds === 0)) {
 					beep.play();
 				}
 			}
@@ -556,7 +556,9 @@ class Timer {
 						if ((e === 'click') || (event.keyCode === 13)) {
 							if ((!playing) && (playButton.style.display == '')) {
 								timerContainer.style.display = 'flex';
-								playing = true;
+                                playing = true;
+                                beep.play();
+                                beep.pause();
 								scrollElementIntoView();
 								stopWatchPlay();
 								timer.addOverlay();

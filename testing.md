@@ -213,7 +213,7 @@ Continuous manual testing of all functions happened during development. Any time
 
 - I tested the application and all its functions on the selection of phones and iPads available in my home, as well as asking friends and family with different devices to test it on theirs.
 
-- All inputs were testing manually and their validations were developed based on these tests. 
+- All inputs were tested manually and their validations were developed based on these tests. 
 
 
 
@@ -499,9 +499,9 @@ These are the functions that take care of the foundations of the timing code.
 
 __FUNCTION SUMMARY:__ This is a click event listener on the stopwatch icons attached to each task in the task list. When clicked it starts the stopWatch timer *on that task* as long as certain conditions are met. The function is also responsible for taking the associated task description and playing it above the timer, so the user always has a reference of what task is being timed. This event listener also invokes stopWatchPause(), resetStopWatch() & playOnClick(stopWatchPlay) to access those functions from within its remit.
 
-__ISSUE 1:__ There are two separate routes to starting the stopwatch timer. A user can click on the stopwatch icon (and this will always be the first method, as until they click here, the timer box will not be visible). Once the timer is visible, they can start the timer by clicking the play button that appears if the timer has is paused. This initially caused a bug that meant two or more Interval timers (based on the stopWatchPlay function) could be triggered to run at the same time. This causes the timer to increase the speed at which the seconds and minutes increase, and it ceased being a reliable timer. 
+__ISSUE 1:__ There are two separate routes to starting the stopwatch timer. A user can click on the stopwatch icon (and this will always be the first method, as until they click here, the timer box will not be visible). Once the timer is visible, they can start the timer by clicking the play button that appears if the timer has been paused. This initially caused a bug that meant two or more interval timers (based on the stopWatchPlay function) could be triggered to run at the same time. This causes the timer to increase the speed at which the seconds and minutes increase, and it ceased being a reliable timer. 
 
-__FIX 1:__ The fix was to add a boolean variable called "playing" that I use anytime the timer is stopped or started. And then to add a small conditional in the stopwatch icon click event handler, that checks whether "playing" is false and if so, it is allowed trigger the stopwatch start function.  
+__FIX 1:__ The fix was to add a boolean variable called "playing" that I use anytime the timer is stopped or started. And then to add a small conditional in the stopwatch icon click event handler, that checks whether "playing" is false and if so, it is allowed to trigger the stopwatch start function.  
 
                         if (!playing){
                             stopWatchPlay();
@@ -514,7 +514,7 @@ __FIX 1:__ The fix was to add a boolean variable called "playing" that I use any
 
 ## countdownClickStartHelper()
 
-__FUNCTION SUMMARY:__  This function collates all elements and functions common to both countdownClickStart functions (detailed below) in one function in order to refactor code an save space. It takes two parameters: countdownClickStartHelper(countdownType, countdownNumber)
+__FUNCTION SUMMARY:__  This function collates all elements and functions common to both countdownClickStart functions (detailed below) in one function in order to refactor code and save space. It takes two parameters: countdownClickStartHelper(countdownType, countdownNumber)
 
 
 ## countDown15ClickStart()
@@ -729,7 +729,7 @@ This way the ids will always run from 0 upwards and they will always match the i
 
 __METHOD SUMMARY__: This method listens for a change event on the checkboxes. If the change is that the checkbox is 'checked' then the method adds a 'completed' class to the task and sets the checkboxes 'checked' attribute to be 'true'. Variables are then created to display the local time and date for when the task completion happened. The full taskList is then looped through to match the DOM task in question with its corresponding task object, and a number of things happen: 
 1. The task object is marked as completed = true.
-2. The task timeSegments array is added to, with the task id and properties representing the date and time, as well as the taskDescription. This is to get around a bug that happens if a user doesn't add any time to a task, but still decides to mark that task as completed. In the former situation (and without this timeSegment added), the task would not appear in the list of tasks completed 'today', as the dateTime stamp is normally applied to the task object, when time is added. This way, the date is added to the timeSegments array (which is where the function pertaining to the 'today tasks' looks for data) even though timeAdded remains 0. This bug and fix is further clarified in the associated [getTodayTasks()](#gettodaytasks()) function below.
+2. The task timeSegments array is added to, with the task id and properties representing the date and time, as well as the taskDescription. This is to get around a bug that happens if a user doesn't add any time to a task, but still decides to mark that task as completed. In the former situation (and without this timeSegment added), the task would not appear in the list of tasks completed 'today', as the dateTime stamp is normally applied to the task object, when time is added. This way, the date is added to the timeSegments array (which is where the function pertaining to the 'today tasks' looks for data) even though timeAdded remains 0. This bug and fix is further clarified in the associated getTodayTasks() function below.
 
 If the checkbox checked is false, the 'completed' class is removed from the tasks classList and the task object is also marked as not completed.
 
@@ -740,7 +740,7 @@ The tasks' new statuses are then saved to local storage.
 __METHOD SUMMARY__: This method deletes a task both from the taskList object array and from the DOM list of tasks. 
 
 __ISSUE 1:__ When I changed the connection between Task objects and their HTML representations from the task descriptions to the task ids, it led to 
-the following bug: when a user deletes a task, it is removed from the HTML and the taskList array. Therefore when a new task in instantiated based on 
+the following bug: when a user deletes a task, it is removed from the HTML and the taskList array. Therefore when a new task is instantiated based on 
 the length of the taskList array, it is most likely that there will be two tasks with the same id number in the array. Again this would completely break the application.
 
 __FIX 1:__ I fixed this by using two small for loops that run just after tasks are deleted. The first re-numbers the task object ids from 0 upwards: 
@@ -800,7 +800,7 @@ I started by using getBoundingClientRect() as illustrated below.
                 })
             }
 
-__FIX 1:__ I added an amount of px to the top and left of this, but that didn't work as the top and left values are dependent on page scroll. I.e. when I scrolled 
+__FIX 1:__ I added an amount of px to the top and left of this, but that didn't work as the top and left values are dependent on page scroll. i.e. when I scrolled 
 up the page, the location of the popover shifted dramatically. I needed to make it relative to the ellipsis itself **and** responsive to scroll events. I started 
 playing around with the x & y offsets on the page, and then in an angry burst of stack overflowing, I happened upon tippy.js, which enabled me to implement the exact 
 functionality I wanted in less than 15 minutes. Long live tippy.js
@@ -842,7 +842,7 @@ The chart functions are separate to the OOP approach in order to integrate corre
 
 ## timeOnTaskExists()
 
-__FUNCTION SUMMARY:__ This function looks to see if there is already time saved to a task, and then it returns true or false. It takes one parameter which is the array of data to looks at. In the application as it stands that data is either the total time spent on tasks, or the total time spent on tasks today.
+__FUNCTION SUMMARY:__ This function looks to see if there is already time saved to a task, and then it returns true or false. It takes one parameter which is the array of data to look at. In the application as it stands that data is either the total time spent on tasks, or the total time spent on tasks today.
 
 ## clearChartArea()
 
@@ -884,7 +884,7 @@ __FUNCTION SUMMARY:__ This function takes all the tasks in the taskList array of
 
 The function then loops through the todaysTasks array and pushes the tasks into a temporary object using their task Id as a key, and then it merges tasks with the same id and sums their timeToAdd values. The idea being that we will be left with a single amount of time spent on that task in the 'today' timespan. 
 
-Another array is then created called todaysTasksFiltered and the properties in the temp object are looped through and pushed into that array, so as to have the structure of an array of objects which is need to create the associated d3.js chart.
+Another array is then created called todaysTasksFiltered and the properties in the temp object are looped through and pushed into that array, so as to have the structure of an array of objects which is needed to create the associated d3.js chart.
 
 __ISSUE 1:__ This function introduced me to the concept of 'passing by reference' for JavaScript objects. Initially the following code meant that for multiple timeSegments on a task, on a particular day, the first timeSegments value in the original task object was changing to the fully summed value as undertaken by this function. This meant that each time the total time spent on a task "today" was calculated the result was artifically inflated because the summed result of previous calculations was being added to genuine time segments. This bug is easier to show than explain: 
 
@@ -953,7 +953,12 @@ If a user tries to edit a task to be blank, ie. if they just delete the task des
 </p>
 
 ## Edit Task Time Inputs
-The task time inputs for hours, minutes and seconds are of the type 'number'. Using ``` ``` I've made is so that negative numbers cannot be inputted and the valid range for all inputs is between 0 - 9999. I felt this was a high enough range as 9999 hours equates to over a year focused on one task. For larger projects and if perhaps in the future, the application grows in scope, this range can be expanded to accomodate more time, but for the application's current manifestation, I think that range is more than sufficient. 
+The task time inputs for hours, minutes and seconds are of the type 'number' and the following code validates the range:
+
+            newTime.setAttribute("oninput", "validity.valid||(value='')");
+			newTime.setAttribute("min", "0");
+			newTime.setAttribute("max", "9999");
+I've made is so that negative numbers cannot be inputed and the valid range for all inputs is between 0 - 9999. I felt this was a high enough range as 9999 hours equates to over a year focused on one task. For larger projects and if perhaps in the future, the application grows in scope, this range can be expanded to accomodate more time, but for the application's current manifestation, I think that range is more than sufficient. 
 
 I didn't include a message to the user if they attempt to input larger or smaller values than the acceptable range, because I thought that was unnecessary, particularly because most serious users would not be deviating from that range.
 
@@ -1134,7 +1139,7 @@ In summary the HTML now validates perfectly, with the exceptions of the empty he
     ```"Value Error : background too few values for the property linear-gradient )"```
     However as [this discussion](https://stackoverflow.com/questions/12537546/w3-css-validation-value-error-for-gradients/12537684) explains this has more to do with the communication between the working version of CSS3 & the validator.
 
-- A number of warnings (434) were thrown by the validator referencing my vendor extensions. But as the [following discussion](https://stackoverflow.com/questions/52490004/what-are-all-of-these-w3c-css-validation-warnings-about) illustrates, this is to be expected.
+- A number of warnings (434) were thrown by the validator referencing my vendor extensions. But as the [following discussion](https://stackoverflow.com/questions/52490004/what-are-all-of-these-w3c-css-validation-warnings-about) illustrates, this is to be expected, especially since I also used [Autoprefixer](https://autoprefixer.github.io/) to ensure good cross-browser compatibility. 
 
 - The rest of the code validated.
 

@@ -1424,26 +1424,29 @@ footer {
 	margin-top: 60px;
 }
 /*---------------------------------------------------- Custom 404 Page */
-.body-404 {
+.return-to-website {
 	text-align: center;
 }
 .title-404 {
 	font-family: "Heebo", sans-serif;
 	font-size: 2em;
 	color: var(--pure-black);
-	padding: 1.5em;
+    padding: 1.5em;
+    text-align: center;
 }
 .instruction-404 {
 	font-family: "Heebo", sans-serif;
 	font-size: 1.6em;
 	color: var(--pure-black);
-	padding: 1.5em;
+    padding: 1.5em;
+    text-align: center;
 }
 .button-404 {
 	background-color: var(--sun-yellow);
 	color: var(--pure-black);
 	transition: 0.4s ease-in transform;
-	padding: 1em;
+    padding: 1em;
+    text-align: center;
 }
 .button-404:hover {
 	background-color: var(--light-blue);

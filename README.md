@@ -46,7 +46,7 @@ It combines a stopwatch timer with two pomodoro timers, one for 15 minutes and o
       - [*Typography*](#typography)
       - [*Design Mockups*](#design-mockups)
 - [2. Features](#features)
-    - [Landing Page](#1.-landing-page)
+    - [Landing Page](#landing-page)
         - [*Landing Page Design*](#landing-page-design)
     - [Information Modal](#2.-information-modal)
     - [Adding a task to the list](#3.-adding-a-task-to-the-list)
@@ -331,7 +331,7 @@ Which brings me to another strong aspect of my interaction design, I've chosen t
 
 Within these confirmation modals I've also included specific information i.e. the task name & (for the save time function) the amount of time to be saved. This communicates and reinforces what they are doing in an elegant and detailed manner that enhances both usability, UX & trust in the application. 
 
-To further assure users and increase positive UX, I've included some subtle but fun hover effects on almost all of my buttons and icons. The task line icons and the timer icons tilt and scale up ever so slightly when hovered, the popover navigation includes a yellow background on hovera and almost all of the buttons (with the exception of the information button) have an animated box shadow effect when hovered, finally the checkboxes increase in size and display a rainbow effect. These hover effects add a fun twist to the application and they work to further affirm a user's interaction decisions. 
+To further assure users and increase positive UX, I've included some subtle but fun hover effects on almost all of my buttons and icons. The task line icons and the timer icons tilt and scale up ever so slightly when hovered, the popover navigation includes a yellow background on hover and almost all of the buttons (with the exception of the information button) have an animated box shadow effect when hovered, finally the checkboxes increase in size and display a rainbow effect. These hover effects add a fun twist to the application and they work to further affirm a user's interaction decisions. 
 
 The information button was excluded from having any hover effects, because it is not an integral part of the application, and is only present as a fallback, or should a user want more detailed information. 
 
@@ -353,7 +353,7 @@ As aforementioned the dashboard/hub & spoke hybrid build has lent itself to an a
 
 - The page elements have been grouped together in logical segments and the most important element (the task list) takes centre stage with the charts below it and the timers open on top of it. 
 
-- Visually the colours and bright, but clean and I have limited the features to those necessary to achieve a timed task list. Keeping it simple decreases the cognitive load on the user and increases UX. 
+- Visually the colours are bright but clean and I have limited the features to those necessary to achieve a timed task list. Keeping it simple decreases the cognitive load on the user and increases UX. 
 
 - Thankfully font awesome includes some brilliant icons that enabled me to represent the various features using strong metaphorical concepts further simplifying and enhancing user decision-making and understanding.
 
@@ -518,7 +518,7 @@ Other than the stopwatch timer, the rest of the navigation options are available
 - When an option is hovered over by the mouse, its background turns yellow. 
 -  I included a plugin called hideOnPopperBlur which was part of the tippy.js package and that ensured that only one popover could be opened at any one time, so when another element is tabbed to, the popover disappears.
 - When an option is selected via click or enter, the popover automatically disappears. This is my own plugin called 'hideOnOptionSelect', as the tippy.js code did not default to that functionality.
-- Separate from the popover, there is a "Skip tasks" link for keyboard users, the idea here is that because there are 6 tabbable options per task, and there could potentially be many many tasks in a list, a keyboard user could get very frustrated if they were trying to access the charts as these come after the tasks in the tab order. The "Skip Tasks" link is invisible to mouse users, but it comes after the "Add new task" button for keyboard users. It is a very important accessibility navigation feature. 
+- Separate from the popover, there is a "Skip tasks" link for keyboard users, the idea here is that because there are 6 tabable options per task, and there could potentially be many many tasks in a list, a keyboard user could get very frustrated if they were trying to access the charts as these come after the tasks in the tab order. The "Skip Tasks" link is invisible to mouse users, but it comes after the "Add new task" button for keyboard users. It is a very important accessibility navigation feature. 
 
 These customisations enhance the navigation UX and ensure its smooth and accessible functioning. 
 
@@ -563,7 +563,7 @@ The timers all share the same modal design, but their title and functionality ch
 
 ### Chart Design
 
-The charts were designed to scroll down to, more to show a general comparison between time spent on various tasks. As the specific amount of time spent on each task can be viewed on the main task list, the charts are meant to be comparative in nature. 
+The charts were designed to be scrolled down to, to show a general comparison between time spent on various tasks. As the specific amount of time spent on each task can be viewed on the main task list, the charts are meant to be comparative in nature. 
 
 They are screen reader & keyboard friendly and the dropdown select options can be accessed using mouse or keyboard (space bar and down/up arrows).
 

@@ -840,7 +840,8 @@ li.task-description {
 .taskCheckbox:active {
 	border: 2px solid var(--pure-black);
 }
-.taskCheckbox:hover {
+.taskCheckbox:hover,
+.taskCheckbox:focus {
 	background: -o-linear-gradient(340deg, var(--dark-blue), var(--light-blue), var(--grass-green), var(--sun-yellow), var(--orange), var(--coral), var(--happy-pink), var(--strong-lavendar), var(--purple-blush));
 	background: linear-gradient(110deg, var(--dark-blue), var(--light-blue), var(--grass-green), var(--sun-yellow), var(--orange), var(--coral), var(--happy-pink), var(--strong-lavendar), var(--purple-blush));
 	-webkit-transform: scale(1.1);
